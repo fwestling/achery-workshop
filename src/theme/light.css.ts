@@ -1,0 +1,71 @@
+import { createGlobalTheme } from '@vanilla-extract/css'
+import { vars } from './vars.css.js'
+import { fontFamilies } from '../tokens/typography.js'
+
+createGlobalTheme('[data-achery-root][data-theme="light"]', vars, {
+  color: {
+    bg: '#fbf8f0',
+    bg2: '#f0e9d6',
+    bgSunken: '#e6dec5',
+    surface: '#fdfaf3',
+    surface2: '#f0e9d6',
+    fg: '#1f1d18',
+    fg2: '#4a463c',
+    fg3: '#6e6a5e',
+    fgMute: '#8a8576',
+    border: '#1f1d18',
+    border2: '#6e6a5e',
+    borderMute: '#b8ad94',
+    rule: '#14130f',
+    accent: '#c46a3a',
+    accentFg: '#fbf8f0',
+    accent2: '#4a5a32',
+    accent3: '#5d4a6a',
+    success: '#6ba03d',
+    warn: '#b8924a',
+    danger: '#8a3a22',
+    info: '#7a5e8a',
+    selectionBg: '#b8924a',
+    selectionFg: '#1f1d18',
+  },
+  font: {
+    display: fontFamilies.display,
+    body: fontFamilies.body,
+    mono: fontFamilies.mono,
+  },
+  space: {
+    sp1: '2px',
+    sp2: '4px',
+    sp3: '6px',
+    sp4: '8px',
+    sp5: '12px',
+    sp6: '16px',
+    sp7: '20px',
+    sp8: '24px',
+    sp9: '32px',
+    sp10: '40px',
+    sp11: '56px',
+    sp12: '80px',
+  },
+  radius: {
+    none: '0',
+    hairline: '1px',
+    sm: '2px',
+    pill: '999px',
+  },
+  shadow: {
+    stamp: '2px 2px 0 0 #1f1d18',
+    stampLg: '4px 4px 0 0 #1f1d18',
+    press: 'inset 0 1px 0 rgba(20,19,15,0.18)',
+    soft: '0 1px 0 rgba(20,19,15,0.12), 0 0 0 1px rgba(20,19,15,0.04)',
+  },
+  duration: {
+    fast: '120ms',
+    base: '180ms',
+    slow: '320ms',
+  },
+  ease: {
+    out: 'cubic-bezier(.2,.7,.2,1)',
+    snap: 'cubic-bezier(.5,1.6,.4,1)',
+  },
+})

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls /Users/fred/Dev/ 2>/dev/null)",
+      "Read(//Users/fred/Dev/**)",
+      "Bash(pnpm --version)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm view *)",
+      "Bash(pnpm typecheck *)",
+      "Bash(pnpm storybook *)"
+    ]
+  }
+}
