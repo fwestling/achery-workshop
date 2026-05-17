@@ -13,7 +13,8 @@
       "types": "./dist/tokens/index.d.ts",
       "import": "./dist/tokens/index.js",
       "require": "./dist/tokens/index.cjs"
-    }
+    },
+    "./style.css": "./dist/index.css"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
