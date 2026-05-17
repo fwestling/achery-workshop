@@ -10,8 +10,6 @@ A React component library with a strong visual identity: square corners, stamp s
 
 ```sh
 pnpm add achery-ui
-# or
-npm install achery-ui
 ```
 
 **Peer dependencies** (install separately if not already present):
@@ -26,9 +24,11 @@ Requires **React 19+**.
 
 ## Quick start
 
-Wrap your application in `AcheryProvider` once, near the root:
-
 ```tsx
+// 1. Import styles once at your app entry point
+import 'achery-ui/style.css'
+
+// 2. Wrap your app in AcheryProvider
 import { AcheryProvider } from 'achery-ui'
 
 export default function App() {
@@ -38,11 +38,8 @@ export default function App() {
     </AcheryProvider>
   )
 }
-```
 
-Then use components anywhere in the tree:
-
-```tsx
+// 3. Use components anywhere in the tree
 import { Button, Badge, Card, Heading } from 'achery-ui'
 
 function RecipeCard({ recipe }) {
@@ -62,10 +59,11 @@ function RecipeCard({ recipe }) {
 
 | Import | Contents | React Native safe? |
 |---|---|---|
-| `achery-ui` | All 16 components + theme | No (DOM + CSS) |
+| `achery-ui` | All components + theme | No (DOM + CSS) |
+| `achery-ui/style.css` | Component styles | No |
 | `achery-ui/tokens` | Design tokens as TypeScript values | **Yes** |
 
-The `/tokens` entry is zero-DOM, zero-React — safe to import from React Native or any non-browser context. See [src/tokens/README.md](src/tokens/README.md).
+The `/tokens` entry is zero-DOM, zero-React — safe to import from React Native or any non-browser context.
 
 ---
 
@@ -94,10 +92,9 @@ The `/tokens` entry is zero-DOM, zero-React — safe to import from React Native
 | `AppBar` | Top bar: brand, search, accent picker, theme toggle |
 | `Table` | Sortable data table, row selection, hybrid state |
 | `Modal` | Accessible dialog with focus trap |
-| `ToastProvider` | Toast queue provider |
-| `useToast` | Hook: fire toast notifications imperatively |
+| `ToastProvider` + `useToast` | Imperative toast notifications |
 
-Full props reference: [src/components/README.md](src/components/README.md)
+Full props reference: [COMPONENTS.md](COMPONENTS.md) · Detailed docs: [src/components/README.md](src/components/README.md)
 
 ---
 
@@ -106,17 +103,11 @@ Full props reference: [src/components/README.md](src/components/README.md)
 ```tsx
 import { useTheme } from 'achery-ui'
 
-function Controls() {
-  const { theme, toggleTheme, accent, setAccent } = useTheme()
-  return (
-    <Button glyph={theme === 'dark' ? 'sun' : 'moon'} onClick={toggleTheme} />
-  )
-}
+const { theme, toggleTheme, accent, setAccent } = useTheme()
 ```
 
-**Accent colours:** `terracotta` · `moss` · `plum` · `ochre` · `rust` · `copper`
-
-**Themes:** `light` · `dark`
+**Themes:** `light` · `dark`  
+**Accents:** `terracotta` · `moss` · `plum` · `ochre` · `rust` · `copper`
 
 Full theming guide: [src/theme/README.md](src/theme/README.md)
 
@@ -124,7 +115,15 @@ Full theming guide: [src/theme/README.md](src/theme/README.md)
 
 ## Design language
 
-See [docs/styleguide.md](docs/styleguide.md) for the full visual language reference — palette, typography, spacing, glyphs, and design principles.
+See [docs/styleguide.md](docs/styleguide.md) for the full visual language reference — palette rationale, typography roles, spacing scale, glyphs, motion, and copy voice.
+
+---
+
+## Versioning
+
+Versions follow [Semantic Versioning](https://semver.org). Changes are documented in [CHANGELOG.md](CHANGELOG.md).
+
+On merge to `main`, a GitHub Action automatically creates a GitHub Release and publishes to npm if the version in `package.json` has changed since the last tag.
 
 ---
 
@@ -132,11 +131,16 @@ See [docs/styleguide.md](docs/styleguide.md) for the full visual language refere
 
 ```sh
 pnpm install
-pnpm storybook          # dev server at localhost:6006
+pnpm storybook          # component explorer at localhost:6006
 pnpm build              # build library → dist/
-pnpm build-storybook    # static storybook → storybook-static/
+pnpm build:watch        # rebuild on file changes
 pnpm typecheck          # tsc --noEmit
+pnpm build-storybook    # static storybook → storybook-static/
 ```
+
+### Working on a branch
+
+See [CLAUDE.md](CLAUDE.md) for the full contribution workflow, including versioning and changelog rules.
 
 ---
 
@@ -147,13 +151,11 @@ src/
   tokens/       # /tokens entry point — React Native safe
   types/        # Shared TypeScript types
   theme/        # ThemeProvider, useTheme, CSS contracts
-  glyphs/       # Glyph component + 33 SVGs
-  components/   # All 16 UI components (stories colocated)
+  glyphs/       # Glyph component + 33 inlined SVG components
+  components/   # All UI components (stories colocated)
+  docs/         # Storybook MDX documentation pages
 dist/           # Built output (gitignored)
+.github/
+  workflows/
+    release.yml # Auto-release on version bump to main
 ```
-
----
-
-## React Native
-
-The `/tokens` entry is the designed cross-platform seam. A sibling `achery-ui-native` package can consume `achery-ui/tokens` for full token parity without any DOM dependency. The main `achery-ui` entry (components + theme) is web-only.
