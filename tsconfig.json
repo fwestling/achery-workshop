@@ -16,15 +16,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@tokens": ["./src/tokens/index.ts"],
-      "@types/*": ["./src/types/*"],
-      "@theme": ["./src/theme/index.ts"],
-      "@glyphs": ["./src/glyphs/index.ts"],
-      "@components/*": ["./src/components/*/index.ts"]
-    }
+    "skipLibCheck": true
   },
   "include": ["src", "stories", ".storybook"],
   "exclude": ["node_modules", "dist"]
