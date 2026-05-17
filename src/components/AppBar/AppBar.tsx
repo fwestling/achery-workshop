@@ -5,22 +5,79 @@ import { accentColors, accentColorNames } from '../../tokens/accents.js'
 import type { AccentColor } from '../../types/theme.js'
 import * as styles from './AppBar.css.js'
 
+/** Props for the {@link AppBar} component. */
 export interface AppBarProps {
+  /**
+   * Primary brand name shown beside the hex mark.
+   * @default 'Achery'
+   */
   brandName?: string
+  /** Secondary brand descriptor shown after a divider — e.g. a workspace or project name. */
   brandSub?: string
+  /**
+   * Show the central search field.
+   * @default true
+   */
   showSearch?: boolean
+  /** Placeholder text for the search field. @default 'Search…' */
   searchPlaceholder?: string
+  /** Keyboard shortcut hint displayed inside the search field (display only). */
   searchKbd?: string
+  /**
+   * Arbitrary content inserted after the built-in controls (theme toggle, accent
+   * picker, new button) and before the avatar. Use for custom action buttons.
+   */
   actions?: ReactNode
+  /** Currently active accent colour — drives the accent picker selection indicator. */
   accent?: AccentColor
+  /**
+   * Called when the user selects a new accent colour via the built-in picker.
+   * When omitted, the accent picker is hidden.
+   */
   onAccentChange?: (accent: AccentColor) => void
+  /**
+   * Called when the theme toggle button is clicked.
+   * When omitted, the theme toggle is hidden.
+   */
   onToggleTheme?: () => void
+  /** Pass `true` when the dark theme is active to show the correct toggle icon. */
   isDark?: boolean
+  /** Up to two initials rendered in the avatar circle at the trailing edge. */
   avatarInitials?: string
+  /**
+   * Called when the "New" button is clicked.
+   * When omitted, the new button is hidden.
+   */
   onNewClick?: () => void
   className?: string
 }
 
+/**
+ * Top-of-page application bar. Contains brand identity, search, theme and
+ * accent controls, and a slot for custom actions.
+ *
+ * Each built-in slot is opt-in — only provide the callback/prop to show it:
+ * - `onAccentChange` → renders accent colour picker swatches
+ * - `onToggleTheme` → renders sun/moon theme toggle button
+ * - `onNewClick` → renders accent "New" button
+ * - `avatarInitials` → renders user avatar circle
+ *
+ * @example
+ * ```tsx
+ * const { theme, toggleTheme, accent, setAccent } = useTheme()
+ *
+ * <AppBar
+ *   brandName="Achery"
+ *   brandSub="Field Guide"
+ *   isDark={theme === 'dark'}
+ *   onToggleTheme={toggleTheme}
+ *   accent={accent}
+ *   onAccentChange={setAccent}
+ *   onNewClick={() => setModalOpen(true)}
+ *   avatarInitials="FW"
+ * />
+ * ```
+ */
 export function AppBar({
   brandName = 'Achery',
   brandSub,

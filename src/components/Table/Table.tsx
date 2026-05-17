@@ -4,29 +4,92 @@ import type { SortDirection } from '../../types/components.js'
 import { Glyph } from '../../glyphs/Glyph.js'
 import * as styles from './Table.css.js'
 
+/** Column definition for the {@link Table} component. */
 export interface ColumnDef<T> {
+  /** Field key on the row object — used for sorting and as the default cell value. */
   key: string
+  /** Column header label. */
   label: string
+  /** When true, the column header is clickable and cycles asc → desc → unsorted. */
   sortable?: boolean
+  /** Render cell content in monospace — useful for IDs, codes, and measurements. */
   mono?: boolean
+  /**
+   * Custom cell renderer. Receives the full row object; return any React node.
+   * When omitted, falls back to `String(row[key])`.
+   */
   render?: (row: T) => ReactNode
+  /** CSS width value applied to the column (e.g. `'120px'`, `'20%'`). */
   width?: string
 }
 
+/** Props for the {@link Table} component. */
 export interface TableProps<T extends { [K in string]: unknown }> {
+  /** Column configuration array — order determines display order. */
   columns: ColumnDef<T>[]
+  /** Array of row data objects. */
   data: T[]
+  /** Returns a stable unique string key for a row — used as the React key and for selection. */
   rowKey: (row: T) => string
+  /**
+   * Set of row keys that are currently selected. Selected rows receive a
+   * left accent-coloured rule.
+   */
   selectedKeys?: string[]
+  /**
+   * Called when a row is clicked. Receives the row's key and the full row object.
+   * When provided, rows become clickable (pointer cursor).
+   */
   onRowClick?: (key: string, row: T) => void
+  /**
+   * Controlled sort column key. Provide alongside `sortDir` and `onSortChange`
+   * for fully controlled sort state.
+   */
   sortKey?: string
+  /** Controlled sort direction. Use with `sortKey`. */
   sortDir?: SortDirection
+  /** Initial sort column key for uncontrolled usage. */
   defaultSortKey?: string
+  /**
+   * Initial sort direction for uncontrolled usage.
+   * @default null
+   */
   defaultSortDir?: SortDirection
+  /**
+   * Called when the sort state changes. Receives the column key and new direction.
+   * For controlled mode, apply these values to `sortKey`/`sortDir`.
+   * For uncontrolled mode, use this for side-effects (analytics, persistence) only.
+   */
   onSortChange?: (key: string, dir: SortDirection) => void
   className?: string
 }
 
+/**
+ * Data table with sortable columns, row selection, and hybrid controlled/uncontrolled
+ * sort state.
+ *
+ * **Sort modes:**
+ * - Uncontrolled: provide `defaultSortKey`/`defaultSortDir`; table manages state internally.
+ * - Controlled: provide `sortKey` + `sortDir` + `onSortChange`; caller owns state.
+ *
+ * Sorting cycles through asc → desc → unsorted on repeated clicks of the same column.
+ * Sort is performed client-side via `String.localeCompare` with `numeric: true`.
+ *
+ * @example
+ * ```tsx
+ * <Table
+ *   columns={[
+ *     { key: 'name', label: 'Name', sortable: true },
+ *     { key: 'status', label: 'Status', render: r => <Badge tone={r.tone}>{r.status}</Badge> },
+ *     { key: 'id', label: 'ID', mono: true, width: '100px' },
+ *   ]}
+ *   data={recipes}
+ *   rowKey={r => r.id}
+ *   defaultSortKey="name"
+ *   onRowClick={(key, row) => navigate(`/recipes/${key}`)}
+ * />
+ * ```
+ */
 export function Table<T extends { [K in string]: unknown }>({
   columns,
   data,

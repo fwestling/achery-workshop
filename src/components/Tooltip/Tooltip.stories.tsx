@@ -4,7 +4,13 @@ import { Button } from '../Button/Button'
 
 const meta = {
   title: 'Overlays/Tooltip',
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Contextual label on hover or focus. Built on Radix Tooltip — portaled, never clipped by overflow. Auto-flips when the preferred `side` lacks space. Use for supplementary information only; never for content required to complete a task.',
+      },
+    },
+  },
   argTypes: {
     side: { control: 'select', options: ['top', 'right', 'bottom', 'left'] },
   },

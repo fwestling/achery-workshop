@@ -4,7 +4,13 @@ import { Eyebrow } from './Eyebrow'
 const meta = {
   title: 'Primitives/Eyebrow',
   component: Eyebrow,
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Uppercase section label rendered in small-caps with tracked letter-spacing. Used to introduce content groups, label panels, and head navigation sections. Optionally shows a numeric count badge and an `after` slot for trailing actions.',
+      },
+    },
+  },
   argTypes: {
     count: { control: 'number' },
   },

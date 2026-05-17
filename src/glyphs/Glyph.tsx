@@ -74,13 +74,55 @@ const glyphMap: Record<GlyphName, SvgComponent> = {
   'wordmark': Wordmark,
 }
 
+/** Props for the {@link Glyph} component. */
 export interface GlyphProps extends SVGProps<SVGSVGElement> {
+  /**
+   * Name of the glyph to render. One of the 33 icons in the Achery glyph set.
+   *
+   * **Geometric:** `circle`, `square`, `triangle`, `triangle-down`, `hex`, `minus`, `plus`, `cross`, `tick`, `arrow-right`, `arrow-up`
+   *
+   * **Botanical / alchemical:** `fern`, `sprig`, `leaf`, `feather`, `flourish`, `asterism`, `sigil`, `salt`, `sulfur`, `mercury`
+   *
+   * **Editorial / tools:** `book`, `scroll`, `feather`, `key`, `flask`, `compass`, `eye`, `hand`, `star`, `moon`, `sun`
+   *
+   * **Brand:** `mark`, `wordmark`
+   */
   name: GlyphName
+  /**
+   * Size in pixels — applied to both `width` and `height`.
+   * @default 16
+   */
   size?: number
+  /**
+   * Accessible label for the glyph. When provided, sets `aria-label` and
+   * removes `aria-hidden`. Omit for decorative use.
+   */
   title?: string
   className?: string
 }
 
+/**
+ * Renders a single SVG glyph from the Achery icon set. Each glyph is a
+ * standalone React component imported as a `?react` SVG — tree-shakeable,
+ * inherits `currentColor` from the surrounding text.
+ *
+ * For decorative use, omit `title` (the glyph is `aria-hidden` by default).
+ * For semantic use (icon-only button labels etc.), provide a `title`.
+ *
+ * @example
+ * ```tsx
+ * // Decorative
+ * <Glyph name="fern" size={24} aria-hidden="true" />
+ *
+ * // Semantic (in an icon-only button)
+ * <button aria-label="Close"><Glyph name="cross" size={16} /></button>
+ *
+ * // Inherits text colour
+ * <span style={{ color: 'var(--color-accent)' }}>
+ *   <Glyph name="star" size={20} />
+ * </span>
+ * ```
+ */
 export function Glyph({ name, size = 16, title, className, style, ...props }: GlyphProps) {
   const SvgComponent = glyphMap[name]
 

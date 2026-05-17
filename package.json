@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^10.3.6",
+    "@storybook/addon-docs": "^10.4.0",
     "@storybook/addon-themes": "^10.3.6",
     "@storybook/react": "^10.3.6",
     "@storybook/react-vite": "^10.3.6",
@@ -56,6 +57,7 @@
     "@vanilla-extract/vite-plugin": "^5.2.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "remark-gfm": "^4.0.1",
     "storybook": "^10.3.6",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",

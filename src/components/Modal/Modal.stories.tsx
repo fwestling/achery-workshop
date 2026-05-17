@@ -6,7 +6,13 @@ import { Field, Input, Textarea, Select } from '../Input/Input'
 const meta = {
   title: 'Overlays/Modal',
   component: Modal,
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Accessible dialog built on Radix Dialog. Renders into a portal at `document.body` with a blurred backdrop. Includes focus trapping, `Escape` to close, and backdrop-click to dismiss. Pass a `trigger` element for uncontrolled usage, or control `open` externally.',
+      },
+    },
+  },
 } satisfies Meta<typeof Modal>
 
 export default meta

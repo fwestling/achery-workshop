@@ -4,11 +4,21 @@ import { createPortal } from 'react-dom'
 import { Glyph } from '../../glyphs/Glyph.js'
 import * as styles from './Toast.css.js'
 
+/** Shape of a single toast notification. */
 export interface ToastData {
+  /** Auto-generated unique ID — do not set manually; provided by {@link useToast}. */
   id: string
+  /** Primary message. Keep short — one clause. */
   title: string
+  /** Secondary detail line. Optional. */
   description?: string
+  /**
+   * How long (ms) before the toast auto-dismisses.
+   * Pass `0` to keep it on screen until manually dismissed.
+   * @default 4000
+   */
   duration?: number
+  /** Optional action element (e.g. an undo {@link Button}) rendered below the description. */
   action?: ReactNode
 }
 
@@ -18,16 +28,57 @@ interface ToastContextValue {
 
 const ToastContext = createContext<ToastContextValue | null>(null)
 
+/**
+ * Hook that returns the `toast()` imperative function for firing notifications.
+ * Must be called within a component tree wrapped by {@link ToastProvider}.
+ *
+ * @throws If called outside a `<ToastProvider>`.
+ *
+ * @example
+ * ```tsx
+ * function SaveButton() {
+ *   const { toast } = useToast()
+ *   return (
+ *     <Button onClick={() => toast({ title: 'Saved.', description: 'Changes committed.' })}>
+ *       Save
+ *     </Button>
+ *   )
+ * }
+ * ```
+ */
 export function useToast() {
   const ctx = useContext(ToastContext)
   if (!ctx) throw new Error('useToast must be used within <ToastProvider>')
   return ctx
 }
 
+/** Props for the {@link ToastProvider} component. */
 export interface ToastProviderProps {
   children: ReactNode
 }
 
+/**
+ * Context provider that manages the toast queue and renders the notification
+ * stack into a portal at `document.body`. Place once near the root of your app,
+ * inside `<AcheryProvider>`.
+ *
+ * Use the {@link useToast} hook anywhere in the subtree to fire toasts
+ * imperatively.
+ *
+ * @example
+ * ```tsx
+ * // app root
+ * <AcheryProvider>
+ *   <ToastProvider>
+ *     <App />
+ *   </ToastProvider>
+ * </AcheryProvider>
+ *
+ * // anywhere inside
+ * const { toast } = useToast()
+ * toast({ title: 'Entry deleted.', duration: 0, action: <Button size="sm">Undo</Button> })
+ * ```
+ */
 export function ToastProvider({ children }: ToastProviderProps) {
   const [toasts, setToasts] = useState<ToastData[]>([])
 

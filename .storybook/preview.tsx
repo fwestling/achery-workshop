@@ -5,6 +5,7 @@ import type { AccentColor } from '../src/types/theme'
 import type { ThemeMode } from '../src/types/theme'
 
 const preview: Preview = {
+  tags: ['autodocs'],
   globalTypes: {
     accent: {
       name: 'Accent',

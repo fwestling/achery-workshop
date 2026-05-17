@@ -5,7 +5,13 @@ import { Body } from '../Typography/Typography'
 const meta = {
   title: 'Layout/Tabs',
   component: Tabs,
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Accessible tab navigation built on Radix Tabs. Handles roving `tabindex`, arrow-key navigation, and ARIA roles automatically. Supports controlled (`value` + `onValueChange`) and uncontrolled (`defaultValue`) usage; defaults to the first tab when neither is specified.',
+      },
+    },
+  },
 } satisfies Meta<typeof Tabs>
 
 export default meta

@@ -1,0 +1,132 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Achery UI/Styleguide" />
+
+# Visual Language
+
+The design intent behind Achery UI. Not just what the values are — but why.
+
+## Philosophy
+
+Achery borrows from letterpress printing, botanical illustration, alchemical manuscripts, and 19th-century scientific publishing. The result is a UI that feels weighted, considered, and slightly antiquarian — without sacrificing usability.
+
+**Hard edges, dense type, and stamp shadows are not stylistic accidents.** They are the grammar of this system.
+
+## Colour
+
+### Light — parchment and ink
+
+The light theme uses warm parchment tones. Not black on white; ink on paper.
+
+| Role | Value | Name |
+|:---|:---|:---|
+| Background | `#fbf8f0` | Parchment |
+| Background 2 | `#f0e9d6` | Old paper |
+| Surface | `#fdfaf3` | Cream |
+| Foreground | `#1f1d18` | Ink |
+| Foreground 2 | `#4a463c` | Faded ink |
+| Border | `#1f1d18` | Ink rule |
+
+### Dark — lamp black and candlelight
+
+The dark theme is deep warm black — candlelight and shadow, not blue-grey screens.
+
+| Role | Value | Name |
+|:---|:---|:---|
+| Background | `#14130f` | Lamp black |
+| Surface | `#26241e` | Carbon |
+| Foreground | `#e8dfc8` | Candlelight |
+
+### Semantic colours
+
+Intentionally muted. They signal meaning without alarming.
+
+- **Success** `#6ba03d` — sage green, measured
+- **Warning** `#b8924a` — ochre, restrained
+- **Danger** `#8a3a22` — dark terracotta, serious
+- **Info** `#7a5e8a` — muted plum, quiet
+
+## Typography
+
+Three typefaces, each with a clear role.
+
+| Typeface | Role |
+|:---|:---|
+| **IM Fell English** (serif) | Display headings, pull quotes, editorial |
+| **Space Grotesk** (sans) | All UI text — labels, buttons, body |
+| **Space Mono** (mono) | Code, IDs, measurements, numeric data |
+
+The display face has genuine letterpress texture from its digital revival of the historic Fell Types. Its slight irregularity gives pages a handmade quality.
+
+Letter-spacing is **negative on display sizes** (−0.015em to −0.03em) — pulling the wide serif tighter for visual cohesion.
+
+## Spacing
+
+4px base. Dense at the low end — a deliberate nod to the density of printed reference material.
+
+| Step | Value | Use |
+|:---|:---|:---|
+| sp1 | 2px | Hairline gaps |
+| sp2 | 4px | Tight inline |
+| sp3 | 6px | Icon-to-label |
+| sp4 | 8px | Standard inline |
+| sp5 | 12px | Compact padding |
+| sp6 | 16px | Standard padding |
+| sp8 | 24px | Card padding |
+| sp9 | 32px | Section gap |
+
+## Elevation — stamp shadows
+
+One elevation model. No blur, no spread. A hard offset — as if pressed with a rubber stamp.
+
+```
+box-shadow: 2px 2px 0 0 var(--color-border);   /* stamp */
+box-shadow: 4px 4px 0 0 var(--color-border);   /* stamp-lg */
+```
+
+The offset colour is ink-dark in light mode and parchment-light in dark mode. The hard-edge character is maintained in both.
+
+## Corners
+
+**All corners are square by default.** `border-radius: 0`.
+
+Exceptions: toggle track and avatar (`border-radius: 999px`).
+
+## Glyphs
+
+33 SVG icons in the vocabulary of alchemical and botanical illustration. All stroke-based, all inherit `currentColor`.
+
+**Botanical & alchemical:** `fern` · `sprig` · `leaf` · `flourish` · `asterism` · `sigil` · `salt` · `sulfur` · `mercury`
+
+**Geometric primitives:** `circle` · `square` · `triangle` · `hex` · `cross` · `tick` · `plus` · `minus` · `arrow-right` · `arrow-up`
+
+**Instruments & editorial:** `book` · `scroll` · `key` · `flask` · `compass` · `eye` · `hand` · `star` · `moon` · `sun`
+
+**Brand:** `mark` · `wordmark`
+
+## Marginalia
+
+Large glyphs at low opacity (0.25–0.45) as corner decoration. The botanical/alchemical icons used as background ornament are a signature element — use them with restraint. Their impact depends on not appearing everywhere.
+
+## Motion
+
+Minimal and purposeful. Nothing bounces without reason.
+
+| Duration | Value | Use |
+|:---|:---|:---|
+| `fast` | 120ms | Hover colours, focus ring |
+| `base` | 180ms | Standard transitions |
+| `slow` | 320ms | Modal entrance, toast |
+
+Two easing curves:
+- **`out`** — decelerates naturally; the default
+- **`snap`** — slight spring overshoot; use for toggle, confirmation actions
+
+## UI copy voice
+
+Spare, precise, slightly bookish. No filler.
+
+- **Toasts:** declarative past tense — "Saved." not "Your changes have been saved."
+- **Buttons:** imperative verbs — "Save", "Delete", not "OK", "Submit"
+- **Placeholders:** concrete examples — `"e.g. Iron-gall ink"` not `"Enter a name"`
+- **Headings:** short nouns — "Recipes" not "Managing recipes"

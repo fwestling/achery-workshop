@@ -4,7 +4,13 @@ import { Marginalia } from './Marginalia'
 const meta = {
   title: 'Primitives/Marginalia',
   component: Marginalia,
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Decorative botanical/alchemical glyph for corner or edge ornamentation. Always `aria-hidden` — purely presentational. Position it absolutely within a relatively-positioned container. The `Card` component exposes a `marginalia` shorthand prop that handles positioning automatically.',
+      },
+    },
+  },
   argTypes: {
     glyph: { control: 'select', options: ['fern', 'leaf', 'sprig', 'sigil', 'compass', 'eye', 'hex', 'asterism', 'flourish'] },
     size: { control: { type: 'range', min: 40, max: 200, step: 10 } },

@@ -4,7 +4,13 @@ import { Display, Heading, Body, Mono } from './Typography'
 const meta = {
   title: 'Primitives/Typography',
   component: Heading,
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Four components covering the full type scale. `Display` uses IM Fell English (serif) for editorial headings. `Heading` renders the correct `<h1>`–`<h5>` element at the matching size. `Body` handles paragraph text in three sizes. `Mono` renders Space Mono for code, measurements, and IDs.',
+      },
+    },
+  },
 } satisfies Meta<typeof Heading>
 
 export default meta

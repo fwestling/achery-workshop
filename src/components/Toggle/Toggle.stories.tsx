@@ -4,7 +4,13 @@ import { Toggle } from './Toggle'
 const meta = {
   title: 'Primitives/Toggle',
   component: Toggle,
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Binary on/off switch built on Radix Toggle. Supports controlled (`pressed` + `onPressedChange`) and uncontrolled (`defaultPressed`) usage. Always provide a visible `label` or an `aria-label` for accessibility.',
+      },
+    },
+  },
   argTypes: {
     disabled: { control: 'boolean' },
     label: { control: 'text' },

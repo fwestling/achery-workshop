@@ -7,7 +7,12 @@
       "Bash(pnpm install *)",
       "Bash(pnpm view *)",
       "Bash(pnpm typecheck *)",
-      "Bash(pnpm storybook *)"
+      "Bash(pnpm storybook *)",
+      "WebSearch",
+      "Bash(pnpm build-storybook *)",
+      "Bash(find /Users/fred/Dev/achery-workshop/node_modules/.pnpm/storybook@10.3.6*/node_modules/storybook/dist -name \"*.js\")",
+      "Bash(find /Users/fred/Dev/achery-workshop/node_modules/.pnpm/@storybook+addon-docs*/node_modules/@storybook/addon-docs -name \"*.d.ts\")",
+      "Bash(find /Users/fred/Dev/achery-workshop/node_modules/.pnpm/storybook@10.3.6*/node_modules/storybook -name \"*.d.ts\")"
     ]
   }
 }

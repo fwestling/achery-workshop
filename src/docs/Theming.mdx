@@ -1,0 +1,79 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Achery UI/Theming" />
+
+# Theming
+
+Achery UI uses [vanilla-extract](https://vanilla-extract.style/) for styles. Theme switching is pure CSS — `data-*` attributes on the root element swap the entire token set with no runtime overhead.
+
+## How it works
+
+`AcheryProvider` renders a root div:
+
+```html
+<div data-achery-root data-theme="light" data-accent="terracotta">
+  …
+</div>
+```
+
+All CSS custom properties are scoped to that selector combination. Changing `data-theme` instantly swaps every colour. The same attributes are mirrored to `<html>` so portaled content (Modal, Tooltip, Toast) inherits the same vars.
+
+## Reading and changing theme
+
+```tsx
+import { useTheme } from 'achery-ui'
+
+function Controls() {
+  const { theme, toggleTheme, accent, setAccent } = useTheme()
+
+  return (
+    <AppBar
+      isDark={theme === 'dark'}
+      onToggleTheme={toggleTheme}
+      accent={accent}
+      onAccentChange={setAccent}
+    />
+  )
+}
+```
+
+`useTheme()` returns: `theme`, `setTheme`, `toggleTheme`, `accent`, `setAccent`.
+
+## Accent colours
+
+Six warm-spectrum accents — no cool blues. One per application instance.
+
+| Name | Character |
+|:---|:---|
+| `terracotta` | Fired clay, warm orange-red — the default |
+| `moss` | Deep forest green, earthy |
+| `plum` | Muted purple, considered |
+| `ochre` | Golden yellow, warm |
+| `rust` | Deep red-brown, dramatic |
+| `copper` | Metallic amber, refined |
+
+Switch accent live using the **Accent** toolbar above.
+
+## Type-safe token access in custom styles
+
+Import `vars` to reference the theme contract in your own vanilla-extract styles:
+
+```ts
+import { vars } from 'achery-ui'
+import { style } from '@vanilla-extract/css'
+
+export const myCard = style({
+  background: vars.color.surface,
+  border: `1px solid ${vars.color.border}`,
+  boxShadow: vars.shadow.stamp,
+  fontFamily: vars.font.body,
+})
+```
+
+## Server-side rendering
+
+Set the attributes on `<html>` server-side to avoid a flash on first paint:
+
+```html
+<html data-achery-root data-theme="light" data-accent="terracotta">
+```

@@ -25,8 +25,14 @@ const groups: NavGroupDef[] = [
 
 const meta = {
   title: 'Layout/Sidebar',
-  tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component: 'Vertical navigation sidebar. Groups of items can be labelled with an eyebrow heading. Each item can be a link (`href`) or a button (`onItemClick`). Active state is driven by `activeId` matching an item\'s `id` — the active item gets a filled accent background.',
+      },
+    },
+  },
 } satisfies Meta
 
 export default meta

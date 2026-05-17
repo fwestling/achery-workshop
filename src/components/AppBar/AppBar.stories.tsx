@@ -7,8 +7,14 @@ import type { AccentColor } from '../../types/theme'
 const meta = {
   title: 'Layout/AppBar',
   component: AppBar,
-  tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component: 'Top-of-page application bar with brand identity, search, and optional built-in controls. Each slot is opt-in: pass `onToggleTheme` to show the theme toggle, `onAccentChange` for the accent picker, `onNewClick` for the accent CTA, and `avatarInitials` for the user avatar.',
+      },
+    },
+  },
 } satisfies Meta<typeof AppBar>
 
 export default meta

@@ -4,7 +4,13 @@ import { Button } from './Button'
 const meta = {
   title: 'Primitives/Button',
   component: Button,
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'The primary interactive element. Five variants cover every emphasis level — use `accent` for the one CTA per view, `primary` for high-emphasis actions, `secondary` as the default, `ghost` for toolbar/icon buttons, and `danger` for destructive actions. Add a `glyph` for visual reinforcement and `kbd` to surface keyboard shortcuts.',
+      },
+    },
+  },
   argTypes: {
     variant: {
       control: 'select',

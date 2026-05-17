@@ -39,7 +39,13 @@ function ToastDemo() {
 
 const meta = {
   title: 'Overlays/Toast',
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Imperative toast notifications. Wrap your app in `ToastProvider` once, then call `useToast().toast()` anywhere in the tree to fire a notification. Toasts auto-dismiss after `duration` ms (default 4000); pass `duration: 0` for persistent toasts. Renders into a portal.',
+      },
+    },
+  },
 } satisfies Meta
 
 export default meta

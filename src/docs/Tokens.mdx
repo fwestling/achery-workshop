@@ -1,0 +1,112 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Achery UI/Tokens" />
+
+# Design Tokens
+
+All tokens are available from `achery-ui/tokens` — a zero-DOM, zero-React entry point safe for React Native and non-browser contexts.
+
+```ts
+import { palette, spacing, fontFamilies, shadows } from 'achery-ui/tokens'
+```
+
+## Colour palette
+
+Raw colour values as hex strings. Grouped into families: `parchment`, `fog`, `stone`, `ink`, plus each accent family.
+
+```ts
+palette.parchment   // '#fbf8f0'  — primary background (light)
+palette.ink         // '#1f1d18'  — primary foreground (light)
+palette.terracotta  // '#c46a3a'  — default accent
+```
+
+## Accent colours
+
+```ts
+import { accentColors, accentColorNames } from 'achery-ui/tokens'
+
+accentColorNames
+// ['terracotta', 'moss', 'plum', 'ochre', 'rust', 'copper']
+
+accentColors.terracotta
+// { main: '#c46a3a', fg: '#fbf8f0' }
+```
+
+## Spacing
+
+```ts
+import { spacing, px } from 'achery-ui/tokens'
+
+spacing.sp4  // '8px'
+spacing.sp6  // '16px'
+spacing.sp9  // '32px'
+
+px(4)        // '4px'
+```
+
+12-step 4px-base scale: 2 · 4 · 6 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 56 · 80
+
+## Typography
+
+```ts
+import { fontFamilies, fontSizes, fontWeights } from 'achery-ui/tokens'
+
+fontFamilies.display  // '"IM Fell English", Georgia, serif'
+fontFamilies.body     // '"Space Grotesk", system-ui, sans-serif'
+fontFamilies.mono     // '"Space Mono", "Fira Mono", monospace'
+
+fontSizes.md   // '14px'   — body text
+fontSizes.lg   // '16px'   — lead paragraphs
+fontSizes.disp // '36px'   — display headings
+```
+
+## Radius
+
+```ts
+import { radius } from 'achery-ui/tokens'
+
+radius.none      // '0'       — square corners (default)
+radius.hairline  // '1px'
+radius.sm        // '2px'
+radius.pill      // '999px'   — toggle track, avatar
+```
+
+## Shadows
+
+```ts
+import { shadows } from 'achery-ui/tokens'
+
+shadows.stamp    // hard 2px offset — standard elevation
+shadows.stampLg  // hard 4px offset — modal, hero card
+shadows.press    // inset — pressed / active state
+```
+
+## Motion
+
+```ts
+import { duration, easing, zIndex } from 'achery-ui/tokens'
+
+duration.fast   // '120ms'
+duration.base   // '180ms'
+duration.slow   // '320ms'
+
+easing.out      // 'cubic-bezier(.2,.7,.2,1)'   — decelerate
+easing.snap     // 'cubic-bezier(.5,1.6,.4,1)'  — spring
+
+zIndex.overlay  // 100
+zIndex.modal    // 101
+zIndex.toast    // 200
+```
+
+## Semantic tokens
+
+Light and dark colour maps — useful in non-browser contexts where CSS vars aren't available.
+
+```ts
+import { lightTokens, darkTokens } from 'achery-ui/tokens'
+
+lightTokens.color.bg      // '#fbf8f0'
+lightTokens.color.accent  // '#c46a3a'
+darkTokens.color.bg       // '#14130f'
+darkTokens.color.accent   // '#d97a4a'
+```

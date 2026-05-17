@@ -1,10 +1,21 @@
 import type { StorybookConfig } from '@storybook/react-vite'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
+import remarkGfm from 'remark-gfm'
 import svgr from 'vite-plugin-svgr'
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.stories.@(ts|tsx)'],
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
   addons: [
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        },
+      },
+    },
     '@storybook/addon-themes',
     '@storybook/addon-a11y',
   ],

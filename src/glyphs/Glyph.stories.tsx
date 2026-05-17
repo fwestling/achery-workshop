@@ -5,7 +5,13 @@ import type { GlyphName } from '../types/components'
 const meta = {
   title: 'Primitives/Glyph',
   component: Glyph,
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: '33 SVG icons drawn in the vocabulary of alchemical and botanical illustration. All use `stroke="currentColor"` — they inherit colour from context. Decorative by default (`aria-hidden`); pass `title` for semantic use in icon-only buttons.',
+      },
+    },
+  },
   argTypes: {
     name: { control: 'select', options: ['arrow-right', 'arrow-up', 'asterism', 'book', 'circle', 'compass', 'cross', 'eye', 'feather', 'fern', 'flask', 'flourish', 'hand', 'hex', 'key', 'leaf', 'mercury', 'minus', 'moon', 'plus', 'salt', 'scroll', 'sigil', 'sprig', 'square', 'star', 'sulfur', 'sun', 'tick', 'triangle', 'triangle-down'] },
     size: { control: { type: 'range', min: 12, max: 64, step: 2 } },

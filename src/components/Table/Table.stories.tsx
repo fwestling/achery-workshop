@@ -41,7 +41,13 @@ const columns: ColumnDef<Recipe>[] = [
 
 const meta = {
   title: 'Data/Table',
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Sortable data table with hybrid controlled/uncontrolled sort state. Sorting cycles asc → desc → unsorted on repeated column clicks. Client-side sort uses `localeCompare` with `numeric: true`. Selected rows show a left accent rule. Provide `onRowClick` to make rows interactive.',
+      },
+    },
+  },
 } satisfies Meta
 
 export default meta

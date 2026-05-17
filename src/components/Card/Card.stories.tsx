@@ -7,7 +7,13 @@ import { Badge } from '../Badge/Badge'
 const meta = {
   title: 'Layout/Card',
   component: Card,
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Surface container for grouping related content. `flat` is the standard bordered surface; `stamp` adds the characteristic hard-offset shadow. Use the `header` slot for section labels and `marginalia` to place a decorative botanical glyph in the corner.',
+      },
+    },
+  },
   argTypes: {
     variant: { control: 'select', options: ['flat', 'stamp', 'stampLg'] },
     padding: { control: 'select', options: ['none', 'sm', 'md', 'lg'] },

@@ -4,7 +4,13 @@ import { Badge } from './Badge'
 const meta = {
   title: 'Primitives/Badge',
   component: Badge,
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Compact inline label for status, category, or metadata. The `tone` prop carries semantic meaning (saved → green, drafting → amber, stopped → red). Combine with `dot` for a status-indicator style. Use `outline` for most contexts; `solid` where higher visual weight is needed.',
+      },
+    },
+  },
   argTypes: {
     tone: {
       control: 'select',

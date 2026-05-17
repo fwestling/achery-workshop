@@ -1,0 +1,66 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Achery UI/Getting Started" />
+
+# Getting Started
+
+Achery UI is a React component library with a strong visual identity: square corners, stamp shadows, compressed type, and decorative glyphs drawn from alchemical and botanical illustration traditions.
+
+## Install
+
+```sh
+pnpm add achery-ui
+```
+
+Requires **React 19+**.
+
+## Wrap your app
+
+Place `AcheryProvider` once at the top of your tree:
+
+```tsx
+import { AcheryProvider } from 'achery-ui'
+
+export default function App() {
+  return (
+    <AcheryProvider defaultTheme="light" defaultAccent="terracotta">
+      <YourApp />
+    </AcheryProvider>
+  )
+}
+```
+
+## Use components
+
+```tsx
+import { Button, Badge, Card, Heading } from 'achery-ui'
+
+function RecipeCard({ recipe }) {
+  return (
+    <Card variant="stamp" marginalia="fern">
+      <Heading level={2}>{recipe.name}</Heading>
+      <Badge tone="saved">Published</Badge>
+      <Button variant="accent" glyph="book">Open</Button>
+    </Card>
+  )
+}
+```
+
+## Entry points
+
+| Import | Contents | React Native safe? |
+|:---|:---|:---|
+| `achery-ui` | All components + theme | No (DOM + CSS) |
+| `achery-ui/tokens` | Design tokens as TypeScript values | **Yes** |
+
+The `/tokens` entry is zero-DOM, zero-React — safe from React Native or any non-browser context.
+
+## Storybook
+
+This Storybook is the complete reference. Use the sidebar to explore:
+
+- **Achery UI** — getting started, theming, tokens, styleguide
+- **Primitives** — Button, Badge, Glyph, Typography, and more
+- **Layout** — Card, Tabs, Sidebar, AppBar
+- **Data** — Table
+- **Overlays** — Modal, Tooltip, Toast

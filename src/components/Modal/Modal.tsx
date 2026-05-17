@@ -3,18 +3,63 @@ import type { ReactNode } from 'react'
 import { Glyph } from '../../glyphs/Glyph.js'
 import * as styles from './Modal.css.js'
 
+/** Props for the {@link Modal} component. */
 export interface ModalProps {
+  /**
+   * Controlled open state. When provided alongside `onOpenChange`, the
+   * component is fully controlled. Omit for uncontrolled usage with
+   * `defaultOpen` and a `trigger`.
+   */
   open?: boolean
+  /** Initial open state for uncontrolled usage. */
   defaultOpen?: boolean
+  /** Called when the open state changes — required for controlled usage. */
   onOpenChange?: (open: boolean) => void
+  /** Dialog title rendered in display typeface above the description. */
   title?: ReactNode
+  /** Secondary description line rendered below the title. */
   description?: ReactNode
+  /** Main body content of the dialog — typically a form or informational layout. */
   children?: ReactNode
+  /**
+   * Footer slot rendered below the body with a top border. Typically holds
+   * confirm/cancel {@link Button} elements aligned to the trailing edge.
+   */
   footer?: ReactNode
+  /**
+   * Element that opens the dialog when clicked. Rendered as a Radix
+   * `asChild` trigger — pass any single React element (e.g. a {@link Button}).
+   * Omit when controlling `open` externally.
+   */
   trigger?: ReactNode
   className?: string
 }
 
+/**
+ * Accessible dialog built on Radix Dialog. Renders into a portal at
+ * `document.body`, so it appears above all other content regardless of
+ * stacking context. Includes focus trapping, `Escape` to close, and
+ * backdrop click to dismiss.
+ *
+ * Theme CSS vars are inherited via `data-achery-root` on `<html>`, so
+ * the modal matches the active theme and accent even though it is portaled.
+ *
+ * @example
+ * ```tsx
+ * // Uncontrolled with trigger
+ * <Modal
+ *   trigger={<Button variant="accent" glyph="plus">New recipe</Button>}
+ *   title="New recipe"
+ *   description="Add a recipe to the field guide."
+ *   footer={<><Button variant="ghost">Cancel</Button><Button variant="primary">Save</Button></>}
+ * >
+ *   <Field label="Name"><Input autoFocus /></Field>
+ * </Modal>
+ *
+ * // Controlled
+ * <Modal open={isOpen} onOpenChange={setIsOpen} title="Confirm">…</Modal>
+ * ```
+ */
 export function Modal({
   open,
   defaultOpen,

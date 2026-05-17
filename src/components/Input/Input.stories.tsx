@@ -4,7 +4,13 @@ import { Field, Input, Textarea, Select, SearchInput } from './Input'
 const meta = {
   title: 'Primitives/Input',
   component: Input,
-  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Form primitives: `Field` (label + hint/error wrapper), `Input` (single-line), `Textarea` (multi-line), `Select` (native dropdown), and `SearchInput` (search with compass icon). Compose `Field` around any input element to add accessible labels and validation text.',
+      },
+    },
+  },
 } satisfies Meta<typeof Input>
 
 export default meta
