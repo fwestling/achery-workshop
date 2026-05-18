@@ -9,6 +9,10 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+---
+
+## [0.2.0] - 2026-05-18
+
 ### Added
 - `achery-ui/native` entry point: React Native component set (`NativeThemeProvider`, `useTheme`, `Text`, `Button`, `Card`, `Badge`, `Field`, `Input`) using achery-ui token values via `achery-ui/tokens` — no vanilla-extract dependency
 
