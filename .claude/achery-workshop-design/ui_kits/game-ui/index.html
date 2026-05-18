@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Achery · the workshop</title>
+<link rel="stylesheet" href="../../colors_and_type.css" />
+<link rel="icon" href="../../assets/mark.svg" />
+<style>
+  html, body { height: 100%; margin: 0; }
+  body {
+    /* Wood-grain backdrop */
+    background:
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%),
+      repeating-linear-gradient(95deg, #4a3422 0px, #4a3422 1px, transparent 1px, transparent 3px, #5a4028 3px, #5a4028 4px),
+      linear-gradient(180deg, #5a4028 0%, #3a2818 100%);
+    color: var(--cream);
+    font-family: var(--font-body);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+
+  /* ============================================================
+     SCREEN — fills viewport, 16:9-ish, scales
+     ============================================================ */
+  .gx-screen {
+    box-sizing: border-box;
+    width: min(100vw, 100vh * 1.75);
+    height: min(100vh, 100vw / 1.75);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr 360px;
+    grid-template-areas:
+      "hud   hud"
+      "main  quests"
+      "dialog dialog";
+    gap: 16px;
+    padding: 22px 28px;
+    position: relative;
+  }
+
+  /* ============================================================
+     HUD (top bar)
+     ============================================================ */
+  .gx-hud { grid-area: hud; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 28px; }
+
+  .gx-stats { display: flex; align-items: center; gap: 18px; }
+  .gx-stat { display: flex; align-items: center; gap: 6px; }
+  .gx-stat-icon {
+    width: 22px; height: 22px;
+    display: grid; place-items: center;
+    color: var(--cream);
+  }
+  .gx-stat-icon.hp { color: #d04a3a; }
+  .gx-stat-icon.mp { color: #5a8bc8; }
+  .gx-bar {
+    width: 124px; height: 12px;
+    border: 1px solid #2a1810;
+    background: #1a0e08;
+    box-shadow: 2px 2px 0 0 rgba(0,0,0,0.4), inset 0 0 0 1px var(--copper-deep);
+    position: relative;
+  }
+  .gx-bar-fill { height: 100%; background: linear-gradient(180deg, #e25a4a 0%, #b03020 100%); }
+  .gx-bar.mp .gx-bar-fill { background: linear-gradient(180deg, #6aa0d8 0%, #2c5a98 100%); }
+  .gx-bar-label {
+    position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+    font-family: var(--font-mono); font-size: 9px; color: var(--cream); letter-spacing: 0.04em;
+    text-shadow: 1px 1px 0 #000;
+  }
+
+  .gx-location {
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    text-shadow: 2px 2px 0 #000, 0 0 12px rgba(198,154,74,0.4);
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+  }
+  .gx-location::before, .gx-location::after {
+    content: '✦'; color: var(--gold); font-size: 14px;
+  }
+  .gx-location-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--cream-soft);
+    text-transform: uppercase;
+    margin-top: 2px;
+    text-shadow: 1px 1px 0 #000;
+  }
+
+  .gx-coin {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-display); font-weight: 900; font-size: 22px;
+    color: var(--gold-light);
+    text-shadow: 2px 2px 0 #000;
+  }
+  .gx-coin-icon {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--gold-light), var(--gold) 50%, var(--gold-deep) 100%);
+    border: 1px solid #4a3422;
+    box-shadow: 2px 2px 0 0 rgba(0,0,0,0.5);
+    position: relative;
+  }
+  .gx-coin-icon::after {
+    content: 'A'; position: absolute; inset: 0; display: grid; place-items: center;
+    font-family: var(--font-display); font-weight: 900; font-size: 13px; color: #6b3a0a;
+  }
+
+  /* ============================================================
+     LEATHER PANEL — reusable
+     ============================================================ */
+  .gx-panel {
+    background: linear-gradient(180deg, #6b3a26 0%, #4a2818 100%);
+    border: 2px solid #2a1410;
+    box-shadow:
+      inset 0 0 0 1px var(--copper-deep),
+      inset 0 0 24px rgba(0,0,0,0.4),
+      4px 4px 0 0 rgba(0,0,0,0.5);
+    position: relative;
+    padding: 18px 18px 16px;
+  }
+  /* Copper rivets in corners */
+  .gx-panel::before, .gx-panel::after,
+  .gx-rivet-tl, .gx-rivet-tr, .gx-rivet-bl, .gx-rivet-br {
+    content: '';
+    position: absolute;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--copper-light), var(--copper) 55%, var(--copper-deep) 100%);
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,0.4), 1px 1px 0 0 rgba(0,0,0,0.5);
+    border: 1px solid #2a1410;
+  }
+  .gx-panel::before { top: 8px; left: 8px; }
+  .gx-panel::after  { top: 8px; right: 8px; }
+  .gx-rivet-bl { left: 8px; bottom: 8px; }
+  .gx-rivet-br { right: 8px; bottom: 8px; }
+
+  .gx-panel-title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    text-align: center;
+    padding: 0 0 12px;
+    margin: 0 0 12px;
+    border-bottom: 1px solid var(--copper-deep);
+    text-shadow: 1px 1px 0 #000;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .gx-panel-title::before, .gx-panel-title::after {
+    content: ''; flex: 1; max-width: 24px; border-top: 1px solid var(--copper);
+  }
+
+  /* ============================================================
+     INVENTORY GRID
+     ============================================================ */
+  .gx-main { grid-area: main; display: grid; grid-template-rows: auto 1fr; gap: 14px; min-height: 0; }
+  .gx-inv {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 14px;
+    min-height: 0;
+  }
+  .gx-inv-grid-wrap { display: flex; flex-direction: column; min-height: 0; }
+  .gx-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 5px;
+    flex: 1;
+    align-content: start;
+  }
+  .gx-slot {
+    aspect-ratio: 1;
+    background: linear-gradient(180deg, #2a1a10 0%, #1a0e08 100%);
+    border: 1px solid #1a0e08;
+    box-shadow: inset 0 0 0 1px var(--copper-deep), inset 0 2px 4px rgba(0,0,0,0.6);
+    position: relative;
+    display: grid; place-items: center;
+    cursor: pointer;
+  }
+  .gx-slot:hover { box-shadow: inset 0 0 0 1px var(--gold), inset 0 2px 4px rgba(0,0,0,0.6); }
+  .gx-slot.sel { box-shadow: inset 0 0 0 2px var(--gold-light), inset 0 2px 4px rgba(0,0,0,0.6), 0 0 12px rgba(224,188,112,0.4); }
+  .gx-slot-glyph { font-family: var(--font-display); font-weight: 900; font-size: 22px; color: var(--cream); }
+  .gx-slot-qty {
+    position: absolute; right: 3px; bottom: 1px;
+    font-family: var(--font-mono); font-size: 10px; color: var(--cream); font-weight: 500;
+    text-shadow: 1px 1px 0 #000;
+  }
+  /* Rarity rings */
+  .gx-slot.rare    { box-shadow: inset 0 0 0 1px #6aa0d8, inset 0 2px 4px rgba(0,0,0,0.6); }
+  .gx-slot.epic    { box-shadow: inset 0 0 0 1px var(--plum-light), inset 0 2px 4px rgba(0,0,0,0.6); }
+  .gx-slot.legend  { box-shadow: inset 0 0 0 1px var(--gold-light), inset 0 2px 4px rgba(0,0,0,0.6), 0 0 8px rgba(224,188,112,0.3); }
+  .gx-slot.empty   { box-shadow: inset 0 0 0 1px #4a3422, inset 0 2px 4px rgba(0,0,0,0.4); }
+
+  /* Inspect panel */
+  .gx-inspect {
+    background: linear-gradient(180deg, #3a2818 0%, #2a1810 100%);
+    border: 1px solid #1a0e08;
+    box-shadow: inset 0 0 0 1px var(--copper-deep);
+    padding: 14px 14px 12px;
+    display: flex; flex-direction: column;
+    min-height: 0;
+  }
+  .gx-inspect-rarity { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 4px; }
+  .gx-inspect-name {
+    font-family: var(--font-display); font-weight: 900; font-size: 22px; line-height: 1; letter-spacing: -0.01em; color: var(--cream); margin: 0 0 6px;
+    text-shadow: 1px 1px 0 #000;
+  }
+  .gx-inspect-type { font-family: var(--font-body); font-style: italic; font-size: 11px; color: var(--silver-light); margin-bottom: 10px; }
+  .gx-inspect-divider { border: 0; border-top: 1px solid var(--copper-deep); margin: 8px 0; }
+  .gx-stat-row { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: var(--cream-soft); margin-bottom: 3px; }
+  .gx-stat-row b { font-weight: 600; color: var(--gold-light); font-family: var(--font-mono); }
+  .gx-inspect-flavor {
+    font-family: var(--font-display); font-style: italic; font-size: 11px; line-height: 1.4; color: var(--silver); margin-top: 10px;
+    border-left: 2px solid var(--copper); padding-left: 8px;
+  }
+  .gx-inspect-actions { display: flex; gap: 6px; margin-top: auto; padding-top: 12px; }
+
+  /* ============================================================
+     BUTTONS — pressed leather + copper
+     ============================================================ */
+  .gx-btn {
+    font-family: var(--font-display); font-weight: 700; font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 7px 14px;
+    background: linear-gradient(180deg, var(--leather-light) 0%, var(--leather) 60%, var(--leather-mid) 100%);
+    color: var(--cream); border: 1px solid #1a0e08;
+    box-shadow:
+      inset 0 1px 0 rgba(255,220,180,0.2),
+      inset 0 0 0 1px var(--copper-deep),
+      2px 2px 0 0 rgba(0,0,0,0.5);
+    cursor: pointer; text-shadow: 1px 1px 0 #000;
+  }
+  .gx-btn:hover { background: linear-gradient(180deg, #c08060 0%, var(--leather-light) 60%, var(--leather) 100%); }
+  .gx-btn:active { transform: translate(2px,2px); box-shadow: inset 0 1px 0 rgba(255,220,180,0.2), inset 0 0 0 1px var(--copper-deep); }
+  .gx-btn.gold {
+    background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, var(--gold-deep) 100%);
+    color: #2a1410; text-shadow: 1px 1px 0 rgba(255,255,255,0.2);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), inset 0 0 0 1px var(--gold-deep), 2px 2px 0 0 rgba(0,0,0,0.5);
+  }
+  .gx-btn.ghost {
+    background: transparent;
+    color: var(--silver-light);
+    box-shadow: inset 0 0 0 1px var(--silver-deep);
+  }
+
+  /* ============================================================
+     QUESTS PANEL
+     ============================================================ */
+  .gx-quests { grid-area: quests; display: flex; flex-direction: column; min-height: 0; }
+  .gx-quest-list { display: flex; flex-direction: column; gap: 10px; overflow: auto; }
+  .gx-quest {
+    border-left: 3px solid var(--copper);
+    padding: 6px 10px;
+    background: rgba(0,0,0,0.2);
+  }
+  .gx-quest.done { border-left-color: var(--moss-light); opacity: 0.6; }
+  .gx-quest.urgent { border-left-color: #d04a3a; }
+  .gx-quest-eye { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 2px; }
+  .gx-quest.done .gx-quest-eye { color: var(--moss-light); }
+  .gx-quest.urgent .gx-quest-eye { color: #d04a3a; }
+  .gx-quest-name { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--cream); margin-bottom: 2px; line-height: 1.15; }
+  .gx-quest.done .gx-quest-name { text-decoration: line-through; }
+  .gx-quest-desc { font-family: var(--font-body); font-size: 11px; line-height: 1.35; color: var(--silver-light); }
+  .gx-quest-progress { font-family: var(--font-mono); font-size: 10px; color: var(--gold-light); margin-top: 4px; letter-spacing: 0.06em; }
+
+  /* ============================================================
+     DIALOG BOX (bottom)
+     ============================================================ */
+  .gx-dialog { grid-area: dialog; display: grid; grid-template-columns: 92px 1fr 280px; gap: 14px; align-items: stretch; }
+
+  .gx-portrait {
+    width: 92px; height: 110px;
+    background: linear-gradient(180deg, var(--leather-light) 0%, var(--leather) 100%);
+    border: 2px solid #1a0e08;
+    box-shadow: inset 0 0 0 1px var(--copper-deep), 2px 2px 0 0 rgba(0,0,0,0.5);
+    position: relative;
+    display: grid; place-items: center;
+  }
+  .gx-portrait-face {
+    width: 56px; height: 56px;
+    background: linear-gradient(180deg, #d8b8a0, #a08068);
+    border-radius: 50%;
+    border: 2px solid #1a0e08;
+    position: relative;
+  }
+  .gx-portrait-face::before, .gx-portrait-face::after {
+    content: ''; position: absolute; width: 6px; height: 6px; border-radius: 50%;
+    background: #2a1410; top: 22px;
+  }
+  .gx-portrait-face::before { left: 14px; }
+  .gx-portrait-face::after { right: 14px; }
+  .gx-portrait-mouth {
+    position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+    width: 14px; height: 2px; background: #2a1410;
+  }
+  .gx-portrait-name {
+    position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: var(--gold-light);
+    padding: 2px 8px;
+    font-family: var(--font-display); font-weight: 700; font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1px solid var(--copper);
+    white-space: nowrap;
+  }
+
+  .gx-dialog-box {
+    padding: 14px 18px 12px;
+  }
+  .gx-dialog-eye {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 6px;
+  }
+  .gx-dialog-text {
+    font-family: var(--font-display); font-style: italic; font-size: 16px; line-height: 1.45; color: var(--cream);
+    text-wrap: pretty;
+  }
+  .gx-dialog-text b { font-style: normal; color: var(--gold-light); font-weight: 700; }
+
+  .gx-choices { display: flex; flex-direction: column; gap: 6px; padding-top: 4px; }
+  .gx-choice {
+    text-align: left;
+    font-family: var(--font-display); font-weight: 500; font-size: 13px; line-height: 1.25;
+    padding: 7px 10px 7px 22px;
+    background: rgba(0,0,0,0.25);
+    color: var(--cream);
+    border: 0; border-left: 2px solid var(--copper);
+    cursor: pointer; position: relative;
+  }
+  .gx-choice::before {
+    content: '▸'; position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+    color: var(--gold-light); font-size: 11px;
+  }
+  .gx-choice:hover { background: rgba(198,154,74,0.18); border-left-color: var(--gold-light); color: var(--gold-light); }
+  .gx-choice-key {
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    font-family: var(--font-mono); font-size: 9px; color: var(--silver); letter-spacing: 0.06em;
+    border: 1px solid var(--silver-deep); padding: 0 4px;
+  }
+
+  /* Keyboard hint */
+  .gx-hint {
+    position: absolute; right: 28px; bottom: 4px;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em;
+    color: var(--silver); opacity: 0.7;
+    display: flex; gap: 14px;
+  }
+  .gx-hint span { display: flex; align-items: center; gap: 4px; }
+  .gx-hint kbd {
+    border: 1px solid var(--silver-deep); padding: 0 5px; color: var(--silver-light);
+    background: rgba(0,0,0,0.3); font-family: var(--font-mono); font-size: 9px;
+  }
+</style>
+</head>
+<body>
+
+<div class="gx-screen">
+
+  <!-- ========================== HUD ========================== -->
+  <div class="gx-hud">
+    <div class="gx-stats">
+      <div class="gx-stat">
+        <span class="gx-stat-icon hp">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 21s-7-4.5-9-9C1 7 4 4 7 4c2 0 3 1 5 3 2-2 3-3 5-3 3 0 6 3 4 8-2 4.5-9 9-9 9z"/></svg>
+        </span>
+        <div class="gx-bar"><div class="gx-bar-fill" style="width: 68%"></div><span class="gx-bar-label">68 / 100</span></div>
+      </div>
+      <div class="gx-stat">
+        <span class="gx-stat-icon mp">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2 L18 12 L12 22 L6 12 Z"/></svg>
+        </span>
+        <div class="gx-bar mp"><div class="gx-bar-fill" style="width: 42%"></div><span class="gx-bar-label">21 / 50</span></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="gx-location">The Apothecary's Workshop</div>
+      <div class="gx-location-sub" style="text-align: center;">— hollow oak · third bell —</div>
+    </div>
+
+    <div class="gx-coin">
+      <span class="gx-coin-icon"></span>
+      <span>1,247</span>
+    </div>
+  </div>
+
+  <!-- ========================== INVENTORY / INSPECT ========================== -->
+  <div class="gx-main">
+    <div class="gx-inv">
+      <div class="gx-panel gx-inv-grid-wrap">
+        <span class="gx-rivet-bl"></span><span class="gx-rivet-br"></span>
+        <h3 class="gx-panel-title">Satchel · 24 / 32</h3>
+        <div class="gx-grid">
+          <div class="gx-slot rare"><span class="gx-slot-glyph" style="color:#6aa0d8">❉</span><span class="gx-slot-qty">3</span></div>
+          <div class="gx-slot"><span class="gx-slot-glyph" style="color:var(--moss-light)">✾</span><span class="gx-slot-qty">12</span></div>
+          <div class="gx-slot"><span class="gx-slot-glyph" style="color:var(--terracotta-light)">✿</span><span class="gx-slot-qty">7</span></div>
+          <div class="gx-slot legend sel"><span class="gx-slot-glyph" style="color:var(--gold-light)">✦</span><span class="gx-slot-qty">1</span></div>
+          <div class="gx-slot epic"><span class="gx-slot-glyph" style="color:var(--plum-light)">⚗</span><span class="gx-slot-qty">2</span></div>
+          <div class="gx-slot"><span class="gx-slot-glyph" style="color:var(--cream)">⚱</span><span class="gx-slot-qty">9</span></div>
+          <div class="gx-slot"><span class="gx-slot-glyph" style="color:var(--ochre)">☘</span><span class="gx-slot-qty">22</span></div>
+          <div class="gx-slot rare"><span class="gx-slot-glyph" style="color:#6aa0d8">❋</span><span class="gx-slot-qty">4</span></div>
+
+          <div class="gx-slot"><span class="gx-slot-glyph" style="color:var(--rust)">♅</span><span class="gx-slot-qty">5</span></div>
+          <div class="gx-slot"><span class="gx-slot-glyph" style="color:var(--copper-light)">☉</span><span class="gx-slot-qty">11</span></div>
+          <div class="gx-slot epic"><span class="gx-slot-glyph" style="color:var(--plum-light)">☽</span><span class="gx-slot-qty">1</span></div>
+          <div class="gx-slot"><span class="gx-slot-glyph" style="color:var(--silver-light)">☿</span><span class="gx-slot-qty">3</span></div>
+          <div class="gx-slot"><span class="gx-slot-glyph" style="color:var(--moss-light)">♃</span><span class="gx-slot-qty">8</span></div>
+          <div class="gx-slot"><span class="gx-slot-glyph" style="color:var(--terracotta-light)">♄</span><span class="gx-slot-qty">2</span></div>
+          <div class="gx-slot rare"><span class="gx-slot-glyph" style="color:#6aa0d8">♆</span><span class="gx-slot-qty">1</span></div>
+          <div class="gx-slot"><span class="gx-slot-glyph" style="color:var(--cream)">⚛</span><span class="gx-slot-qty">14</span></div>
+
+          <div class="gx-slot empty"></div>
+          <div class="gx-slot empty"></div>
+          <div class="gx-slot empty"></div>
+          <div class="gx-slot empty"></div>
+          <div class="gx-slot empty"></div>
+          <div class="gx-slot empty"></div>
+          <div class="gx-slot empty"></div>
+          <div class="gx-slot empty"></div>
+        </div>
+      </div>
+
+      <div class="gx-inspect">
+        <div class="gx-inspect-rarity">✦ Legendary</div>
+        <h2 class="gx-inspect-name">Phial of<br/>Iron-gall Ink</h2>
+        <div class="gx-inspect-type">Reagent · Ink · Stackable</div>
+        <hr class="gx-inspect-divider" />
+        <div class="gx-stat-row"><span>Potency</span><b>+14</b></div>
+        <div class="gx-stat-row"><span>Permanence</span><b>+22</b></div>
+        <div class="gx-stat-row"><span>Drying time</span><b>3 h</b></div>
+        <div class="gx-stat-row"><span>Value</span><b>180 ◉</b></div>
+        <div class="gx-inspect-flavor">"The page does most of the work. That is the point." — margin note, ch. I</div>
+        <div class="gx-inspect-actions">
+          <button class="gx-btn gold">Use</button>
+          <button class="gx-btn ghost">Drop</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================== QUESTS ========================== -->
+  <div class="gx-quests gx-panel">
+    <span class="gx-rivet-bl"></span><span class="gx-rivet-br"></span>
+    <h3 class="gx-panel-title">Ledger · 3 entries</h3>
+    <div class="gx-quest-list">
+      <div class="gx-quest urgent">
+        <div class="gx-quest-eye">! Urgent</div>
+        <div class="gx-quest-name">The Bookbinder's Order</div>
+        <div class="gx-quest-desc">Deliver three phials of iron-gall ink before the third bell.</div>
+        <div class="gx-quest-progress">▸ 2 / 3 phials brewed</div>
+      </div>
+      <div class="gx-quest">
+        <div class="gx-quest-eye">◆ Side</div>
+        <div class="gx-quest-name">A Walk in the Woods</div>
+        <div class="gx-quest-desc">Find oak galls in the eastern grove. Wasps optional.</div>
+        <div class="gx-quest-progress">▸ 7 / 12 galls gathered</div>
+      </div>
+      <div class="gx-quest done">
+        <div class="gx-quest-eye">✓ Done</div>
+        <div class="gx-quest-name">The Madder Pot</div>
+        <div class="gx-quest-desc">Render madder root into pigment.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================== DIALOG ========================== -->
+  <div class="gx-dialog">
+    <div class="gx-portrait">
+      <div class="gx-portrait-face"><div class="gx-portrait-mouth"></div></div>
+      <div class="gx-portrait-name">Master Wren</div>
+    </div>
+    <div class="gx-panel gx-dialog-box">
+      <span class="gx-rivet-bl"></span><span class="gx-rivet-br"></span>
+      <div class="gx-dialog-eye">Master Wren · the bookbinder</div>
+      <div class="gx-dialog-text">"You've brought two phials. I asked for three. The third bell is in <b>seven minutes</b>, and the courier will not wait for a slow apprentice — nor, frankly, will I."</div>
+    </div>
+    <div class="gx-choices">
+      <button class="gx-choice">I'll have the third by the bell.<span class="gx-choice-key">1</span></button>
+      <button class="gx-choice">Two phials is what I have.<span class="gx-choice-key">2</span></button>
+      <button class="gx-choice">[Persuade] Surely two will do?<span class="gx-choice-key">3</span></button>
+    </div>
+  </div>
+
+  <div class="gx-hint">
+    <span><kbd>↑↓</kbd> select</span>
+    <span><kbd>E</kbd> use</span>
+    <span><kbd>Q</kbd> quests</span>
+    <span><kbd>I</kbd> close</span>
+    <span><kbd>Esc</kbd> menu</span>
+  </div>
+
+</div>
+
+</body>
+</html>

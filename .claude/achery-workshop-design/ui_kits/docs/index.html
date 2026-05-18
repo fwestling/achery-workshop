@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Field Guide · Achery Workshop</title>
+<link rel="stylesheet" href="../../colors_and_type.css" />
+<link rel="icon" href="../../assets/mark.svg" />
+<style>
+  html, body { height: 100%; }
+  body { overflow: hidden; }
+  .dx-app { display: grid; grid-template-rows: 56px 1fr; height: 100vh; }
+  .dx-bar { display: grid; grid-template-columns: 280px 1fr auto; align-items: center; padding: 0 24px; border-bottom: 1px solid var(--border); background: var(--surface); gap: 20px; }
+  .dx-brand { display: flex; align-items: center; gap: 10px; }
+  .dx-brand img { width: 22px; height: 22px; }
+  :root[data-theme="dark"] .dx-brand img { filter: invert(0.94); }
+  .dx-brand-name { font-family: var(--font-display); font-weight: 900; letter-spacing: 0.02em; font-size: 15px; }
+  .dx-brand-sub  { font-family: var(--font-body); font-weight: 600; font-size: 9px; letter-spacing: 0.24em; color: var(--fg-3); }
+  .dx-search { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); background: var(--bg); padding: 6px 12px; max-width: 440px; flex: 1; }
+  .dx-search input { flex: 1; border: 0; background: transparent; color: var(--fg); font-family: var(--font-body); font-size: 13px; outline: none; }
+  .dx-search .dx-kbd { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); border: 1px solid var(--border-mute); padding: 1px 5px; }
+  .dx-bar-right { display: flex; align-items: center; gap: 10px; }
+  .dx-bar-link { font-family: var(--font-body); font-weight: 600; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-2); text-decoration: none; }
+  .dx-bar-link:hover { color: var(--accent); }
+  .dx-icon-btn { background: transparent; border: 1px solid var(--border-mute); padding: 5px; cursor: pointer; display: grid; place-items: center; }
+  .dx-icon-btn img { width: 14px; height: 14px; }
+  :root[data-theme="dark"] .dx-icon-btn img { filter: invert(0.94); }
+
+  .dx-shell { display: grid; grid-template-columns: 280px 1fr 240px; height: 100%; min-height: 0; }
+
+  /* Sidebar */
+  .dx-side { padding: 24px 20px; border-right: 1px solid var(--border); background: var(--bg-2); overflow: auto; }
+  .dx-side-group { margin-bottom: 22px; }
+  .dx-side-eye { font-family: var(--font-body); font-weight: 600; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .dx-side-eye::after { content: ''; flex: 1; border-top: 1px dashed var(--border-mute); }
+  .dx-side-item { display: block; padding: 4px 10px 4px 12px; font-family: var(--font-body); font-size: 13px; color: var(--fg-2); text-decoration: none; border-left: 2px solid transparent; cursor: pointer; }
+  .dx-side-item:hover { color: var(--fg); border-left-color: var(--border-mute); }
+  .dx-side-item.act { color: var(--fg); border-left-color: var(--accent); background: var(--paper-warm); }
+  :root[data-theme="dark"] .dx-side-item.act { background: var(--surface); }
+  .dx-side-item.sub { padding-left: 24px; font-size: 12px; color: var(--fg-3); }
+
+  /* Article */
+  .dx-main { padding: 32px 56px 64px; overflow: auto; max-width: 100%; position: relative; }
+  .dx-main-inner { max-width: 680px; margin: 0 auto; }
+  .dx-crumbs { display: flex; gap: 6px; font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); margin-bottom: 10px; letter-spacing: 0.04em; }
+  .dx-crumbs span:not(:last-child)::after { content: ' / '; color: var(--fg-mute); padding: 0 4px; }
+  .dx-crumbs span:last-child { color: var(--fg); }
+  .dx-title { font-family: var(--font-display); font-weight: 900; font-size: 56px; line-height: 0.95; letter-spacing: -0.025em; margin: 8px 0 16px; }
+  .dx-deck { font-family: var(--font-display); font-weight: 400; font-style: italic; font-size: 18px; line-height: 1.4; color: var(--fg-2); margin: 0 0 22px; }
+  .dx-rule-double { border: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); height: 3px; margin: 24px 0; }
+
+  .dx-prose h2 { font-family: var(--font-display); font-weight: 700; font-size: 28px; line-height: 1.1; letter-spacing: -0.015em; margin: 36px 0 10px; padding-top: 18px; border-top: 1px solid var(--border-mute); }
+  .dx-prose h2::before { content: '§'; font-family: var(--font-display); color: var(--accent); margin-right: 8px; font-weight: 400; }
+  .dx-prose h3 { font-family: var(--font-display); font-weight: 500; font-size: 20px; margin: 24px 0 8px; }
+  .dx-prose p { font-family: var(--font-body); font-size: 15px; line-height: 1.6; margin: 0 0 14px; text-wrap: pretty; }
+  .dx-prose p.lead { font-size: 17px; color: var(--fg-2); }
+  .dx-prose a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .dx-prose a:hover { color: var(--accent); }
+  .dx-prose ul, .dx-prose ol { font-family: var(--font-body); font-size: 15px; line-height: 1.6; padding-left: 22px; margin: 0 0 14px; }
+  .dx-prose li { margin-bottom: 6px; }
+  .dx-prose ul { list-style: none; padding-left: 0; }
+  .dx-prose ul li { padding-left: 20px; position: relative; }
+  .dx-prose ul li::before { content: '✦'; position: absolute; left: 0; color: var(--accent); font-size: 11px; top: 4px; }
+
+  /* Dropcap */
+  .dx-prose p.lead::first-letter {
+    font-family: var(--font-display); font-weight: 900; font-size: 64px;
+    float: left; line-height: 0.85; padding: 6px 10px 0 0; color: var(--accent);
+  }
+
+  /* Callout */
+  .dx-callout { border: 1px solid var(--border); background: var(--surface); padding: 14px 18px; margin: 18px 0; display: grid; grid-template-columns: 24px 1fr; gap: 12px; }
+  .dx-callout-glyph { font-family: var(--font-display); font-weight: 900; font-size: 18px; color: var(--accent); }
+  .dx-callout-eyebrow { font-family: var(--font-body); font-weight: 600; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .dx-callout p { font-size: 13px; line-height: 1.5; margin: 0; }
+  .dx-callout.note { border-left: 3px solid var(--accent); }
+  .dx-callout.warn { border-left: 3px solid var(--ochre); }
+  .dx-callout.warn .dx-callout-glyph, .dx-callout.warn .dx-callout-eyebrow { color: var(--ochre); }
+
+  /* Code */
+  .dx-prose code { font-family: var(--font-mono); font-size: 12px; background: var(--bg-2); border: 1px solid var(--border-mute); padding: 1px 5px; color: var(--copper); }
+  .dx-prose pre { font-family: var(--font-mono); font-size: 12px; line-height: 1.6; background: var(--bg-sunken); border: 1px solid var(--border); padding: 14px 18px; overflow: auto; margin: 14px 0; position: relative; }
+  .dx-prose pre code { background: transparent; border: 0; padding: 0; color: var(--fg); }
+  .dx-prose pre::before { content: attr(data-lang); position: absolute; right: 10px; top: 6px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-3); }
+  .tok-kw { color: var(--plum); font-weight: 600; }
+  .tok-str { color: var(--moss); }
+  .tok-num { color: var(--copper); }
+  .tok-com { color: var(--fg-3); font-style: italic; }
+
+  /* Footnote */
+  .dx-prose sup { font-family: var(--font-mono); font-size: 10px; color: var(--accent); padding: 0 1px; }
+  .dx-footnotes { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--border-mute); font-family: var(--font-body); font-size: 12px; color: var(--fg-2); line-height: 1.5; }
+  .dx-footnotes ol { padding-left: 22px; }
+  .dx-footnotes li { margin-bottom: 6px; }
+
+  /* Page navigation */
+  .dx-pagenav { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 36px; }
+  .dx-pagenav a { display: block; padding: 14px 16px; border: 1px solid var(--border); text-decoration: none; color: var(--fg); background: var(--surface); }
+  .dx-pagenav .eye { font-family: var(--font-body); font-weight: 600; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 4px; display: block; }
+  .dx-pagenav .ttl { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+  .dx-pagenav a:hover { background: var(--paper-warm); }
+  :root[data-theme="dark"] .dx-pagenav a:hover { background: var(--surface-2); }
+  .dx-pagenav a.next { text-align: right; }
+
+  /* TOC */
+  .dx-toc { padding: 32px 20px; border-left: 1px solid var(--border); background: var(--bg-2); overflow: auto; }
+  .dx-toc-eye { font-family: var(--font-body); font-weight: 600; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 10px; }
+  .dx-toc-list { display: flex; flex-direction: column; gap: 4px; }
+  .dx-toc-item { font-family: var(--font-body); font-size: 12px; color: var(--fg-2); text-decoration: none; padding: 3px 8px; border-left: 2px solid transparent; cursor: pointer; }
+  .dx-toc-item:hover { color: var(--fg); }
+  .dx-toc-item.act { border-left-color: var(--accent); color: var(--fg); }
+  .dx-toc-foot { margin-top: 20px; padding-top: 12px; border-top: 1px dashed var(--border-mute); font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); display: flex; flex-direction: column; gap: 4px; }
+
+  /* Marginalia */
+  .dx-marg { position: absolute; opacity: 0.45; pointer-events: none; }
+  .dx-marg.tl { top: 32px; right: 32px; }
+  :root[data-theme="dark"] .dx-marg img { filter: invert(0.94); }
+</style>
+</head>
+<body>
+<div class="dx-app">
+  <header class="dx-bar">
+    <div class="dx-brand">
+      <img src="../../assets/mark.svg" alt="" />
+      <div>
+        <div class="dx-brand-name">ACHERY · FIELD GUIDE</div>
+        <div class="dx-brand-sub">— v 0 . 4 · S T E E P I N G —</div>
+      </div>
+    </div>
+    <div class="dx-search">
+      <span style="color: var(--fg-3); font-family: var(--font-mono); font-size: 11px;">⌕</span>
+      <input placeholder="Search the guide…" />
+      <span class="dx-kbd">⌘ K</span>
+    </div>
+    <div class="dx-bar-right">
+      <a class="dx-bar-link" href="#">Recipes</a>
+      <a class="dx-bar-link" href="#">Almanac</a>
+      <a class="dx-bar-link" href="#">Workshop</a>
+      <button class="dx-icon-btn" id="darkBtn"><img src="../../assets/glyphs/moon.svg" alt="" /></button>
+    </div>
+  </header>
+
+  <div class="dx-shell">
+    <aside class="dx-side">
+      <div class="dx-side-group">
+        <div class="dx-side-eye">Begin</div>
+        <a class="dx-side-item">Preface</a>
+        <a class="dx-side-item">Tools of the bench</a>
+        <a class="dx-side-item">A note on patience</a>
+      </div>
+      <div class="dx-side-group">
+        <div class="dx-side-eye">Inks</div>
+        <a class="dx-side-item act">Iron-gall ink</a>
+        <a class="dx-side-item sub">Materials</a>
+        <a class="dx-side-item sub">Method</a>
+        <a class="dx-side-item sub">Variations</a>
+        <a class="dx-side-item">Lampblack ink</a>
+        <a class="dx-side-item">Walnut hull ink</a>
+      </div>
+      <div class="dx-side-group">
+        <div class="dx-side-eye">Dyes</div>
+        <a class="dx-side-item">Madder root</a>
+        <a class="dx-side-item">Cochineal carmine</a>
+        <a class="dx-side-item">Indigo (cold vat)</a>
+      </div>
+      <div class="dx-side-group">
+        <div class="dx-side-eye">Binders & stains</div>
+        <a class="dx-side-item">Beeswax binder</a>
+        <a class="dx-side-item">Gum arabic</a>
+        <a class="dx-side-item">Oak-apple stopper</a>
+      </div>
+    </aside>
+
+    <main class="dx-main">
+      <div class="dx-marg tl"><img src="../../assets/glyphs/fern.svg" width="56" height="64" alt="" /></div>
+      <div class="dx-main-inner">
+        <div class="dx-crumbs"><span>Field Guide</span><span>Inks</span><span>Iron-gall ink</span></div>
+        <h1 class="dx-title">Iron-gall<br/>ink.</h1>
+        <p class="dx-deck">A dark, permanent writing ink. The classic recipe is older than the calendars; the chemistry is simple and the patience required is not.</p>
+
+        <hr class="dx-rule-double" />
+
+        <div class="dx-prose">
+          <p class="lead">An iron-gall ink is what you get when tannin meets iron in a slightly acidic bath. The result is initially pale and turns deep blue-black on the page as it oxidises — the page does most of the work, which is the point. We measure in handfuls and hours, not grams and seconds<sup>1</sup>.</p>
+
+          <h2>Materials</h2>
+          <ul>
+            <li>Oak galls — a small handful, crushed. Wasp galls are best; cynips quercusfolii if you can name them.</li>
+            <li>Ferrous sulfate (<code>FeSO₄</code>) — about a teaspoon, dissolved in warm water.</li>
+            <li>Gum arabic — pea-sized lump, for body and to keep the iron in suspension.</li>
+            <li>Cloves or a drop of wintergreen — preservation. A small mercy against mould.</li>
+          </ul>
+
+          <div class="dx-callout note">
+            <div class="dx-callout-glyph">¶</div>
+            <div>
+              <div class="dx-callout-eyebrow">Footnote</div>
+              <p>The medieval recipe asks for wine instead of water. Wine works; it also stains. Water is fine. Use what's nearest.</p>
+            </div>
+          </div>
+
+          <h2>Method</h2>
+          <ol>
+            <li>Steep the crushed galls in water for two to three days. Cover. Stir on memory of it.</li>
+            <li>Strain the tannin liquor through cheesecloth. The colour should be a thin, pale tea — almost disappointing.</li>
+            <li>Dissolve the ferrous sulfate separately. Add it to the tannin liquor in a slow ribbon, stirring. The mixture darkens immediately.</li>
+            <li>Stir in the gum arabic. Bottle. <em>Label.</em></li>
+          </ol>
+
+          <pre data-lang="recipe"><code><span class="tok-com"># iron-gall ink — small batch</span>
+<span class="tok-kw">steep</span>  galls      <span class="tok-str">"a small handful, crushed"</span>  <span class="tok-num">72h</span>
+<span class="tok-kw">add</span>    FeSO₄      <span class="tok-str">"1 tsp in warm water"</span>      <span class="tok-num">1×</span>
+<span class="tok-kw">bind</span>   gum arabic <span class="tok-str">"pea-sized lump"</span>            <span class="tok-num">1×</span>
+<span class="tok-kw">keep</span>   cloves     <span class="tok-str">"three, whole"</span>              <span class="tok-num">∞</span></code></pre>
+
+          <div class="dx-callout warn">
+            <div class="dx-callout-glyph">!</div>
+            <div>
+              <div class="dx-callout-eyebrow">Check</div>
+              <p>Too much iron and the ink will eventually eat through the paper. Old manuscripts complain about this; modern ones still do.</p>
+            </div>
+          </div>
+
+          <h2>Variations</h2>
+          <p>The classical recipe is a starting point. Substitute pomegranate rinds for galls and you get a softer brown<sup>2</sup>. Replace ferrous sulfate with copper sulfate for a green-black that ages oddly. Adding a single clove changes the smell, not the chemistry — but smell is part of the recipe.</p>
+
+          <h3>On waiting</h3>
+          <p>The ink looks wrong for the first hour. It will look right after a day. <a href="#">See also: walnut hull stain.</a></p>
+
+          <div class="dx-footnotes">
+            <ol>
+              <li><strong>1.</strong> The exception is the iron, which you should weigh. The page is permanent; the binding is not.</li>
+              <li><strong>2.</strong> A brown not unlike old photographs. Use on cream paper.</li>
+            </ol>
+          </div>
+
+          <div class="dx-pagenav">
+            <a href="#" class="prev">
+              <span class="eye">← Previous</span>
+              <span class="ttl">A note on patience</span>
+            </a>
+            <a href="#" class="next">
+              <span class="eye">Next →</span>
+              <span class="ttl">Lampblack ink</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="dx-toc">
+      <div class="dx-toc-eye">On this page</div>
+      <div class="dx-toc-list">
+        <a class="dx-toc-item act">Materials</a>
+        <a class="dx-toc-item">Method</a>
+        <a class="dx-toc-item">Variations</a>
+        <a class="dx-toc-item sub" style="padding-left: 16px;">On waiting</a>
+      </div>
+      <div class="dx-toc-foot">
+        <span>Last edited 16:22</span>
+        <span>Edited by yourself</span>
+        <span style="color: var(--accent);">— see margin —</span>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+  document.getElementById('darkBtn').addEventListener('click', () => {
+    const r = document.documentElement;
+    r.dataset.theme = r.dataset.theme === 'dark' ? 'light' : 'dark';
+  });
+</script>
+</body>
+</html>
