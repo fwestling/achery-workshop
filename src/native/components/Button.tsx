@@ -1,6 +1,6 @@
 import { TouchableOpacity, View, Text, StyleSheet, type ViewStyle } from 'react-native'
 import { spacing, fontWeights } from 'achery-ui/tokens'
-import { useTheme } from '../theme/ThemeContext.js'
+import { useTheme } from '../theme/ThemeContext'
 import type { SemanticTokens } from 'achery-ui/tokens'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'accent' | 'ghost' | 'danger'

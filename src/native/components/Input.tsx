@@ -1,6 +1,6 @@
 import { View, TextInput, Text, type TextInputProps, type ViewStyle } from 'react-native'
 import { spacing, fontWeights } from 'achery-ui/tokens'
-import { useTheme } from '../theme/ThemeContext.js'
+import { useTheme } from '../theme/ThemeContext'
 
 export interface FieldProps {
   label?: string

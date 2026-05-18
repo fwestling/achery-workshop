@@ -1,6 +1,6 @@
 import { View, type ViewProps, type ViewStyle } from 'react-native'
 import { spacing } from 'achery-ui/tokens'
-import { useTheme } from '../theme/ThemeContext.js'
+import { useTheme } from '../theme/ThemeContext'
 
 export type CardVariant = 'flat' | 'stamp'
 export type CardPadding = 'none' | 'sm' | 'md' | 'lg'

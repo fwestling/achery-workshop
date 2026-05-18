@@ -1,14 +1,14 @@
-export { Text } from './Text.js'
-export type { TextProps } from './Text.js'
+export { Text } from './Text'
+export type { TextProps } from './Text'
 
-export { Button } from './Button.js'
-export type { ButtonProps, ButtonVariant, ButtonSize } from './Button.js'
+export { Button } from './Button'
+export type { ButtonProps, ButtonVariant, ButtonSize } from './Button'
 
-export { Card } from './Card.js'
-export type { CardProps, CardVariant, CardPadding } from './Card.js'
+export { Card } from './Card'
+export type { CardProps, CardVariant, CardPadding } from './Card'
 
-export { Badge } from './Badge.js'
-export type { BadgeProps, BadgeTone, BadgeVariant } from './Badge.js'
+export { Badge } from './Badge'
+export type { BadgeProps, BadgeTone, BadgeVariant } from './Badge'
 
-export { Field, Input } from './Input.js'
-export type { FieldProps, InputProps } from './Input.js'
+export { Field, Input } from './Input'
+export type { FieldProps, InputProps } from './Input'

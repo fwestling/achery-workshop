@@ -1,6 +1,6 @@
 import { View, Text, type ViewStyle } from 'react-native'
 import { palette, fontWeights, spacing } from 'achery-ui/tokens'
-import { useTheme } from '../theme/ThemeContext.js'
+import { useTheme } from '../theme/ThemeContext'
 
 export type BadgeTone = 'neutral' | 'saved' | 'drafting' | 'stopped' | 'archived'
 export type BadgeVariant = 'outline' | 'solid'

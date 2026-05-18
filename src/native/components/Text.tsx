@@ -1,6 +1,6 @@
 import { Text as RNText, type TextProps as RNTextProps, StyleSheet } from 'react-native'
 import { spacing, fontWeights, lineHeights } from 'achery-ui/tokens'
-import { useTheme } from '../theme/ThemeContext.js'
+import { useTheme } from '../theme/ThemeContext'
 
 type TextVariant = 'display' | 'heading' | 'body' | 'mono' | 'eyebrow' | 'caption'
 type TextSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'

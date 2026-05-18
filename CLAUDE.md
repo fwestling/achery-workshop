@@ -13,6 +13,20 @@
 
 **Related repos:**
 - `../achery-example` — consumer demo app (recipe manager); uses `file:` dependency on this repo
+- `../achery-exemplar` — fullstack monorepo boilerplate (Django + React + Expo); the primary driver of new component and pattern work
+
+---
+
+## The feedback loop
+
+`achery-ui` is refined by real usage in `achery-exemplar` and projects forked from it. When a consumer hits a gap, the fix comes back here.
+
+When adding or changing a component prompted by consumer feedback:
+1. Implement in `src/components/<Name>/`
+2. Update `COMPONENTS.md` — props, variants, usage example
+3. Update `CHANGELOG.md` under `## [Unreleased]`
+4. Bump `package.json` version (patch for fixes, minor for new components/variants)
+5. Rebuild (`pnpm build`) so the `file:` consumer picks it up immediately
 
 ---
 
