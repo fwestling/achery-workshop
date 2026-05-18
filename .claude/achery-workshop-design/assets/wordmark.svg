@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="currentColor" stroke="currentColor" stroke-linejoin="miter" stroke-linecap="square">
+  <g transform="translate(40,40) scale(0.72) translate(-40,-40)">
+    <polygon points="40,4 72,22 72,58 40,76 8,58 8,22" fill="none" stroke-width="6"></polygon>
+    <polygon points="40,12 56,32 24,32" stroke="none"></polygon>
+    <rect x="33" y="28" width="14" height="30" stroke="none"></rect>
+    <polygon points="24,50 33,58 33,52" stroke="none"></polygon>
+    <polygon points="56,50 47,58 47,52" stroke="none"></polygon>
+  </g>
+  <g transform="translate(82,52)" font-family="&#39;Roboto Slab&#39;, serif" font-weight="900" font-size="34" letter-spacing="2" stroke="none">
+    <text x="0" y="0">ACHERY</text>
+  </g>
+  <g transform="translate(82,72)" font-family="&#39;Space Grotesk&#39;, sans-serif" font-weight="600" font-size="10" letter-spacing="6" stroke="none">
+    <text x="2" y="0">— W O R K S H O P —</text>
+  </g>
+</svg>

@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Workshop · Mobile</title>
+<link rel="stylesheet" href="../../colors_and_type.css" />
+<link rel="icon" href="../../assets/mark.svg" />
+<style>
+  html, body { height: 100%; }
+  body { background: #2a2823; display: grid; place-items: center; padding: 24px; overflow: auto; }
+  .stage { display: flex; gap: 32px; align-items: flex-start; }
+
+  /* In-frame screen styles */
+  .m-screen { width: 100%; height: 100%; background: var(--bg); color: var(--fg); font-family: var(--font-body); display: flex; flex-direction: column; overflow: hidden; }
+  .m-shell { display: grid; grid-template-rows: auto 1fr auto; height: 100%; }
+  .m-body { overflow: auto; position: relative; }
+
+  /* Header */
+  .m-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px 12px; border-bottom: 1px solid var(--border); background: var(--bg); }
+  .m-brand { display: flex; align-items: center; gap: 8px; }
+  .m-brand-mark { width: 22px; height: 22px; color: var(--fg); }
+  :root[data-theme="dark"] .m-brand-mark { filter: invert(0.94); }
+  .m-brand-name { font-family: var(--font-display); font-weight: 900; font-size: 14px; letter-spacing: 0.02em; line-height: 1; }
+  .m-brand-sub  { font-family: var(--font-body); font-weight: 600; font-size: 8px; letter-spacing: 0.24em; color: var(--fg-3); margin-top: 2px; }
+  .m-icon-btn { background: transparent; border: 1px solid var(--border-mute); padding: 6px; cursor: pointer; display: grid; place-items: center; }
+  .m-icon-btn img { width: 14px; height: 14px; }
+  :root[data-theme="dark"] .m-icon-btn img { filter: invert(0.94); }
+
+  /* List page */
+  .m-list { padding: 18px 16px 24px; position: relative; }
+  .m-list-head { margin-bottom: 14px; }
+  .m-eyebrow { font-family: var(--font-body); font-weight: 600; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 6px; }
+  .m-list-title { font-family: var(--font-display); font-weight: 900; font-size: 38px; line-height: 0.95; letter-spacing: -0.025em; margin: 0 0 4px; }
+  .m-filter-row { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+  .m-chip { font-family: var(--font-body); font-weight: 600; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border-mute); background: transparent; color: var(--fg-2); cursor: pointer; white-space: nowrap; }
+  .m-chip.act { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+  :root[data-theme="dark"] .m-chip.act { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+
+  /* Row */
+  .m-row { display: grid; grid-template-columns: 28px 1fr auto; gap: 12px; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--border-mute); background: transparent; border-left: 0; border-right: 0; border-top: 0; width: 100%; text-align: left; cursor: pointer; color: var(--fg); }
+  .m-row:hover { background: var(--paper-warm); }
+  :root[data-theme="dark"] .m-row:hover { background: var(--surface); }
+  .m-row-ch { font-family: var(--font-display); font-weight: 900; font-size: 14px; color: var(--fg-2); letter-spacing: 0.05em; }
+  .m-row-title { font-family: var(--font-display); font-weight: 700; font-size: 16px; line-height: 1.1; letter-spacing: -0.01em; }
+  .m-row-sub   { font-family: var(--font-body); font-size: 11px; color: var(--fg-3); margin-top: 2px; line-height: 1.3; }
+  .m-pill { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-body); font-size: 9px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 2px 6px; border: 1px solid currentColor; }
+  .m-pill-dot { width: 5px; height: 5px; background: currentColor; }
+
+  /* Detail */
+  .m-detail { padding: 14px 16px 24px; }
+  .m-detail-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .m-back { background: transparent; border: 0; font-family: var(--font-body); font-weight: 600; font-size: 12px; color: var(--fg-2); cursor: pointer; padding: 4px 0; letter-spacing: 0.04em; }
+  .m-detail-eyebrow { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+  .m-detail-title { font-family: var(--font-display); font-weight: 700; font-size: 32px; line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+  .m-detail-meta { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-family: var(--font-mono); font-size: 10px; color: var(--fg-2); }
+  .m-sep { color: var(--fg-3); }
+  .m-mono { font-family: var(--font-mono); }
+  .m-rule-double { border: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); height: 3px; margin: 16px 0; }
+  .m-detail-body p { font-size: 13px; line-height: 1.5; margin: 0 0 10px; }
+  .m-foot { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); }
+  .m-foot a { color: var(--accent); }
+  .m-detail-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+
+  /* Buttons */
+  .m-btn { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-weight: 600; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 12px; border: 1px solid var(--border); background: var(--surface); color: var(--fg); cursor: pointer; }
+  .m-btn-primary { background: var(--ink); color: var(--paper); border-color: var(--ink); box-shadow: 2px 2px 0 0 var(--ink); }
+  :root[data-theme="dark"] .m-btn-primary { background: var(--cream); color: var(--ink); border-color: var(--cream); box-shadow: 2px 2px 0 0 var(--cream); }
+  .m-btn-ghost { background: transparent; border-color: var(--border-mute); color: var(--fg-2); }
+
+  /* Today view */
+  .m-today { display: flex; flex-direction: column; gap: 0; }
+  .m-today-row { display: grid; grid-template-columns: 48px 1fr; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border-mute); align-items: baseline; }
+  .m-today-time { font-family: var(--font-mono); font-size: 11px; color: var(--fg-2); letter-spacing: 0.04em; }
+  .m-today-text { font-family: var(--font-body); font-size: 13px; line-height: 1.4; color: var(--fg); }
+  .m-today-tag { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); margin-top: 2px; }
+  .m-foot-quote { font-family: var(--font-display); font-style: italic; font-size: 12px; color: var(--fg-3); margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--border-mute); }
+
+  /* Almanac */
+  .m-alm-row { display: grid; grid-template-columns: 44px 100px 1fr; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border-mute); align-items: center; }
+  .m-alm-day { font-family: var(--font-display); font-weight: 900; font-size: 16px; letter-spacing: 0.04em; }
+  .m-alm-cycle { font-family: var(--font-body); font-size: 11px; color: var(--fg-2); display: flex; align-items: center; gap: 6px; letter-spacing: 0.06em; }
+  .m-alm-glyph { font-size: 16px; color: var(--accent); }
+  .m-alm-note { font-family: var(--font-body); font-size: 12px; color: var(--fg-2); line-height: 1.35; }
+
+  /* Settings */
+  .m-set-section { margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--border-mute); }
+  .m-set-section:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+  .m-set-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-mute); font-family: var(--font-body); font-size: 13px; }
+  .m-set-row-col { flex-direction: column; align-items: stretch; gap: 10px; }
+  .m-sw { width: 36px; height: 18px; border: 1px solid var(--ink); background: var(--paper); cursor: pointer; padding: 0 1px; display: inline-flex; align-items: center; }
+  :root[data-theme="dark"] .m-sw { border-color: var(--cream); background: var(--bg-2); }
+  .m-sw-knob { width: 14px; height: 14px; background: var(--ink); }
+  :root[data-theme="dark"] .m-sw-knob { background: var(--cream); }
+  .m-sw.on { background: var(--accent); justify-content: flex-end; border-color: var(--ink); }
+  :root[data-theme="dark"] .m-sw.on { border-color: var(--cream); }
+  .m-sw.on .m-sw-knob { background: var(--paper); }
+  .m-accent-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .m-accent-chip { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--border-mute); background: transparent; cursor: pointer; font-family: var(--font-body); font-size: 11px; color: var(--fg); letter-spacing: 0.04em; }
+  .m-accent-chip.on { border-color: var(--ink); background: var(--paper-warm); }
+  :root[data-theme="dark"] .m-accent-chip.on { border-color: var(--cream); background: var(--surface); }
+  .m-accent-sw { width: 14px; height: 14px; flex: 0 0 14px; border: 1px solid var(--ink); }
+  :root[data-theme="dark"] .m-accent-sw { border-color: var(--cream); }
+
+  /* Tab bar */
+  .m-tabbar { display: grid; grid-template-columns: 1fr 1fr auto 1fr 1fr; align-items: center; gap: 0; padding: 8px 12px 22px; border-top: 1px solid var(--border); background: var(--bg-2); }
+  .m-tab { background: transparent; border: 0; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; gap: 3px; font-family: var(--font-body); font-weight: 600; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); cursor: pointer; }
+  .m-tab.act { color: var(--fg); }
+  .m-tab-dot { width: 6px; height: 6px; background: currentColor; opacity: 0.4; }
+  .m-tab.act .m-tab-dot { opacity: 1; background: var(--accent); }
+  .m-fab { width: 44px; height: 44px; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); font-family: var(--font-display); font-weight: 900; font-size: 24px; cursor: pointer; box-shadow: 2px 2px 0 0 var(--ink); margin: 0 4px; }
+  :root[data-theme="dark"] .m-fab { background: var(--cream); color: var(--ink); border-color: var(--cream); box-shadow: 2px 2px 0 0 var(--cream); }
+
+  /* Compose sheet */
+  .m-sheet-scrim { position: absolute; inset: 0; background: rgba(20,19,15,0.4); display: flex; align-items: flex-end; z-index: 10; }
+  .m-sheet { background: var(--surface); width: 100%; border-top: 2px solid var(--border); padding: 8px 18px 18px; max-height: 88%; overflow: auto; }
+  .m-sheet-handle { width: 36px; height: 4px; background: var(--border-mute); margin: 0 auto 10px; }
+  .m-sheet-title { font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 16px; }
+  .m-fld { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+  .m-fld-lbl { font-family: var(--font-body); font-weight: 600; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-2); }
+  .m-fld-input { font-family: var(--font-body); font-size: 13px; background: var(--bg); border: 1px solid var(--border); padding: 8px 10px; color: var(--fg); outline: none; resize: vertical; }
+  .m-fld-input:focus { border: 2px solid var(--accent); padding: 7px 9px; }
+  .m-chip-row { display: flex; gap: 4px; flex-wrap: wrap; }
+  .m-sheet-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="data.js"></script>
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="components.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+function App() {
+  const [dark, setDark] = useState(false);
+  const [accent, setAccent] = useState('terracotta');
+  const [tab, setTab] = useState('entries');
+  const [selectedId, setSelectedId] = useState(null);
+  const [composeOpen, setComposeOpen] = useState(false);
+  const [entries, setEntries] = useState(window.MOBILE_DATA.entries);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  }, [dark]);
+
+  useEffect(() => {
+    const map = {
+      terracotta: '#c46a3a', olive: '#6b6b3a', plum: '#5d4a6a',
+      ochre: '#b8924a', moss: '#4a5a32', rust: '#8a3a22',
+    };
+    document.documentElement.style.setProperty('--accent', map[accent]);
+  }, [accent]);
+
+  const selected = entries.find(e => e.id === selectedId);
+
+  let view;
+  if (tab === 'entries' && selected) {
+    view = <EntryDetail entry={selected} onBack={() => setSelectedId(null)} />;
+  } else if (tab === 'entries') {
+    view = <EntriesView entries={entries} onOpen={setSelectedId} />;
+  } else if (tab === 'today') {
+    view = <TodayView today={window.MOBILE_DATA.today} />;
+  } else if (tab === 'almanac') {
+    view = <AlmanacView almanac={window.MOBILE_DATA.almanac} />;
+  } else if (tab === 'settings') {
+    view = <SettingsView dark={dark} onDark={setDark} accent={accent} onAccent={setAccent} />;
+  }
+
+  return (
+    <div className="m-screen">
+      <MobShell tab={tab} onTab={(t) => { setTab(t); setSelectedId(null); }} onCompose={() => setComposeOpen(true)}>
+        {view}
+      </MobShell>
+      <ComposeSheet open={composeOpen} onClose={() => setComposeOpen(false)} onSave={(r) => {
+        const id = 'e' + (entries.length + 1);
+        const ch = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'][entries.length] || '·';
+        setEntries([{ id, ch, title: r.title, state: 'drafting', sub: 'a fresh draft', tag: r.tag }, ...entries]);
+        setTab('entries'); setSelectedId(id);
+      }} />
+    </div>
+  );
+}
+
+function Stage() {
+  // Render TWO frames side by side: light + dark
+  return (
+    <div className="stage">
+      <IOSDevice dark={false} width={360} height={760}>
+        <App />
+      </IOSDevice>
+      <DarkApp />
+    </div>
+  );
+}
+
+function DarkApp() {
+  // A second standalone app instance, forced dark, in its own scope
+  return (
+    <IOSDevice dark={true} width={360} height={760}>
+      <DarkInner />
+    </IOSDevice>
+  );
+}
+
+function DarkInner() {
+  // Set theme on a wrapping shadow root via inline class
+  return (
+    <div className="theme-dark" style={{ width: '100%', height: '100%', background: 'var(--bg)' }}>
+      <DarkAppContent />
+    </div>
+  );
+}
+
+function DarkAppContent() {
+  const [tab, setTab] = React.useState('entries');
+  const [selectedId, setSelectedId] = React.useState('e1');
+  const entries = window.MOBILE_DATA.entries;
+  const selected = entries.find(e => e.id === selectedId);
+  let view;
+  if (tab === 'entries' && selected) view = <EntryDetail entry={selected} onBack={() => setSelectedId(null)} />;
+  else if (tab === 'entries') view = <EntriesView entries={entries} onOpen={setSelectedId} />;
+  else if (tab === 'today') view = <TodayView today={window.MOBILE_DATA.today} />;
+  else if (tab === 'almanac') view = <AlmanacView almanac={window.MOBILE_DATA.almanac} />;
+  return (
+    <div className="m-screen">
+      <MobShell tab={tab} onTab={(t) => { setTab(t); setSelectedId(null); }} onCompose={() => {}}>
+        {view}
+      </MobShell>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('stage')).render(<Stage />);
+</script>
+</body>
+</html>
