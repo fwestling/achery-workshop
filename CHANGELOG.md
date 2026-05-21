@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.3.2] - 2026-05-21
+
+### Fixed
+- Modal: entry animation no longer jumps from top-left corner — `slideUp` keyframe now includes the centering transform
+
+---
+
 ## [0.3.1] - 2026-05-21
 
 ### Added
