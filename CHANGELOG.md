@@ -11,6 +11,11 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.3.1] - 2026-05-21
+
+### Added
+- Combobox: multi-select free-text component built on `@radix-ui/react-popover` — props: `value: string[]`, `onChange`, `options`, `allowCustom?`, `placeholder?`; selected values render as removable chips; keyboard navigation (↑↓, Enter, Backspace, Escape)
+
 ## [0.3.0] - 2026-05-21
 
 ### Added

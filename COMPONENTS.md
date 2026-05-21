@@ -415,6 +415,51 @@ Extends all native `<input>` attributes (except `type`, which is always `'date'`
 
 ---
 
+## Combobox
+
+```tsx
+import { Combobox } from 'achery-ui'
+
+// Fixed options
+<Combobox
+  value={tags}
+  onChange={setTags}
+  options={['computer', 'outside', 'quick-win']}
+  placeholder="Add tags…"
+/>
+
+// Free-text + suggestions
+<Combobox
+  value={contextTags}
+  onChange={setContextTags}
+  options={knownTags}
+  allowCustom
+  placeholder="Add context tags…"
+/>
+
+// With Field wrapper
+<Field label="Context">
+  <Combobox value={selected} onChange={setSelected} options={opts} allowCustom />
+</Field>
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `value` | `string[]` | — | Controlled selected values |
+| `onChange` | `(v: string[]) => void` | — | |
+| `options` | `string[]` | `[]` | Suggested values shown in dropdown |
+| `allowCustom` | `boolean` | `false` | Let user type values not in `options` |
+| `placeholder` | `string` | — | Shown when no values selected |
+| `disabled` | `boolean` | — | |
+| `error` | `boolean` | — | Applies danger border |
+| `className` | `string` | — | |
+
+**Keyboard:** ↑↓ navigate options, Enter/comma confirm, Backspace removes last chip, Escape closes.
+
+Renders the dropdown into a portal — safe inside overflow-hidden containers.
+
+---
+
 ## Known gaps (as of v0.1.0)
 
 Components not yet in achery-ui that commonly appear in apps:

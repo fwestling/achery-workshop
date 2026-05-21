@@ -83,5 +83,9 @@ export type { MenuProps, MenuItemDef, MenuSeparator } from './components/Menu/Me
 export { DatePicker } from './components/DatePicker/DatePicker.js'
 export type { DatePickerProps } from './components/DatePicker/DatePicker.js'
 
+// Combobox
+export { Combobox } from './components/Combobox/Combobox.js'
+export type { ComboboxProps } from './components/Combobox/Combobox.js'
+
 // Types
 export type { ThemeMode, AccentColor, ComponentSize, ButtonVariant, BadgeTone, SortDirection } from './types/index.js'
