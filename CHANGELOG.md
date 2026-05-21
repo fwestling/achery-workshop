@@ -11,6 +11,15 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.3.0] - 2026-05-21
+
+### Added
+- Checkbox: new component built on `@radix-ui/react-checkbox` — props: `checked` (`boolean | 'indeterminate'`), `onChange`, `defaultChecked`, `disabled`, `label`, `aria-label`
+- Menu: new dropdown component built on `@radix-ui/react-dropdown-menu` — props: `trigger`, `items: (MenuItemDef | MenuSeparator)[]` (with `label`, `glyph?`, `onSelect`, `disabled?`, `danger?`), `side`, `align`; renders into a portal
+- DatePicker: thin wrapper around `<input type="date">` styled to match achery-ui — props: `value`, `onChange`, `min`, `max`, `disabled`, `error`; extends all standard input attributes
+
+---
+
 ## [0.2.1] - 2026-05-21
 
 ### Added

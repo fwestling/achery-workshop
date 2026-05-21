@@ -331,17 +331,99 @@ Zero DOM, zero React — safe for React Native or any non-browser context.
 
 ---
 
+## Checkbox
+
+```tsx
+import { Checkbox } from 'achery-ui'
+
+<Checkbox label="Accept terms" />
+<Checkbox checked={done} onChange={setDone} label="Mark done" />
+<Checkbox checked="indeterminate" onChange={handleAll} label="Select all" />
+<Checkbox checked disabled label="Locked" />
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `checked` | `boolean \| 'indeterminate'` | — | Controlled state |
+| `defaultChecked` | `boolean \| 'indeterminate'` | — | Uncontrolled initial state |
+| `onChange` | `(v: boolean \| 'indeterminate') => void` | — | |
+| `disabled` | `boolean` | — | |
+| `label` | `ReactNode` | — | Rendered as associated `<label>` |
+| `aria-label` | `string` | — | Use when no visible label |
+| `id` | `string` | auto | Auto-generated when `label` is set |
+| `className` | `string` | — | |
+
+---
+
+## Menu
+
+```tsx
+import { Menu } from 'achery-ui'
+import type { MenuItemDef, MenuSeparator } from 'achery-ui'
+
+<Menu
+  trigger={<Button variant="ghost" size="sm">•••</Button>}
+  items={[
+    { id: 'edit', label: 'Edit', glyph: 'key', onSelect: () => {} },
+    { type: 'separator', id: 'sep1' },
+    { id: 'delete', label: 'Delete', danger: true, onSelect: () => {} },
+  ]}
+/>
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `trigger` | `ReactNode` | — | Rendered as Radix `asChild` trigger |
+| `items` | `(MenuItemDef \| MenuSeparator)[]` | — | |
+| `side` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` | Preferred open side |
+| `align` | `'start' \| 'center' \| 'end'` | `'end'` | Alignment to trigger |
+| `className` | `string` | — | Applied to content panel |
+
+**`MenuItemDef`:** `id`, `label`, `onSelect`, `glyph?`, `disabled?`, `danger?`
+
+**`MenuSeparator`:** `{ type: 'separator', id }`
+
+Renders into a portal — safe inside overflow-hidden containers.
+
+---
+
+## DatePicker
+
+```tsx
+import { DatePicker } from 'achery-ui'
+
+<DatePicker value={date} onChange={(e) => setDate(e.target.value)} />
+<DatePicker value={date} min="2026-01-01" max="2026-12-31" onChange={...} />
+
+// With Field wrapper
+<Field label="Scheduled date">
+  <DatePicker value={date} onChange={...} error={!!errors.date} />
+</Field>
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `value` | `string` | — | ISO date string `YYYY-MM-DD` |
+| `onChange` | `ChangeEventHandler<HTMLInputElement>` | — | |
+| `min` | `string` | — | ISO date string |
+| `max` | `string` | — | ISO date string |
+| `disabled` | `boolean` | — | |
+| `error` | `boolean` | — | Applies danger border |
+| `placeholder` | `string` | — | |
+
+Extends all native `<input>` attributes (except `type`, which is always `'date'`).
+
+---
+
 ## Known gaps (as of v0.1.0)
 
 Components not yet in achery-ui that commonly appear in apps:
 
-- **Checkbox / Radio** — no form selection primitives yet
-- **DatePicker / TimePicker** — no date inputs
+- **Radio** — no radio group primitives
 - **Pagination** — no page controls
 - **Breadcrumb** — no wayfinding
 - **Combobox / Autocomplete** — Select is native only; no searchable dropdown
 - **Avatar** — AppBar renders initials internally but no standalone component
 - **Progress / Spinner** — no loading states
 - **Accordion** — no collapsible sections
-- **Menu / ContextMenu / Dropdown** — no action menus
 - **NumberInput / Stepper** — no numeric input with increment/decrement

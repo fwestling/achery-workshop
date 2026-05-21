@@ -71,5 +71,17 @@ export type { ModalProps } from './components/Modal/Modal.js'
 export { ToastProvider, useToast } from './components/Toast/Toast.js'
 export type { ToastData, ToastProviderProps } from './components/Toast/Toast.js'
 
+// Checkbox
+export { Checkbox } from './components/Checkbox/Checkbox.js'
+export type { CheckboxProps } from './components/Checkbox/Checkbox.js'
+
+// Menu
+export { Menu } from './components/Menu/Menu.js'
+export type { MenuProps, MenuItemDef, MenuSeparator } from './components/Menu/Menu.js'
+
+// DatePicker
+export { DatePicker } from './components/DatePicker/DatePicker.js'
+export type { DatePickerProps } from './components/DatePicker/DatePicker.js'
+
 // Types
 export type { ThemeMode, AccentColor, ComponentSize, ButtonVariant, BadgeTone, SortDirection } from './types/index.js'
