@@ -11,6 +11,16 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.2.1] - 2026-05-21
+
+### Added
+- ProgressBar: new component — props: `value` (0–100), `size` (`sm | md`), `tone` (`neutral | accent`)
+
+### Changed
+- Sidebar: added `renderLink` prop (`ComponentType<SidebarLinkProps>`) so consumers can pass their router's `<Link>` for client-side navigation; falls back to `<a>` when omitted
+
+---
+
 ## [0.2.0] - 2026-05-18
 
 ### Added

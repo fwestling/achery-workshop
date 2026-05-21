@@ -12,7 +12,18 @@
       "Bash(pnpm build-storybook *)",
       "Bash(find /Users/fred/Dev/achery-workshop/node_modules/.pnpm/storybook@10.3.6*/node_modules/storybook/dist -name \"*.js\")",
       "Bash(find /Users/fred/Dev/achery-workshop/node_modules/.pnpm/@storybook+addon-docs*/node_modules/@storybook/addon-docs -name \"*.d.ts\")",
-      "Bash(find /Users/fred/Dev/achery-workshop/node_modules/.pnpm/storybook@10.3.6*/node_modules/storybook -name \"*.d.ts\")"
+      "Bash(find /Users/fred/Dev/achery-workshop/node_modules/.pnpm/storybook@10.3.6*/node_modules/storybook -name \"*.d.ts\")",
+      "Bash(find \"/Users/fred/Downloads/achery-workshop-design-system 2\" -type f \\\\\\( -name \"*.jsx\" -o -name \"*.js\" -o -name \"*.json\" \\\\\\) | head -20)",
+      "Read(//Users/fred/Downloads/achery-workshop-design-system 2/**)",
+      "Bash(uv run *)",
+      "Bash(grep -n \"project\\\\.name\\\\|task\\\\.description\\\\|task\\\\.priority\\\\|Tag\\\\b\" /Users/fred/Dev/field-office/apps/web/src/routes/_auth/projects/'$projectId'/index.tsx 2>/dev/null | head -20)",
+      "Read(//Users/fred/Dev/field-office/apps/web/src/routes/_auth/projects/$projectId/**)",
+      "Bash(cat /Users/fred/Dev/field-office/apps/web/src/routes/_auth/projects/'$projectId'/index.tsx)",
+      "Bash(cat /Users/fred/Dev/field-office/apps/web/src/routes/_auth/projects/'$projectId'/tasks/'$taskId'/index.tsx)",
+      "Read(//Users/fred/Dev/field-office/apps/web/src/routes/_auth/projects/$projectId/tasks/$taskId/**)",
+      "Bash(cat /Users/fred/Dev/field-office/apps/web/src/routes/_auth/projects/'$projectId'/tasks/'$taskId'/index.tsx | head -5)",
+      "Bash(pnpm build *)",
+      "Bash(pnpm --filter @fieldoffice/web typecheck)"
     ]
   }
 }

@@ -1,7 +1,16 @@
-import type { ReactNode } from 'react'
+import type { ComponentType, ReactNode } from 'react'
 import { Glyph } from '../../glyphs/Glyph.js'
 import type { GlyphName } from '../../types/components.js'
 import * as styles from './Sidebar.css.js'
+
+/** Props passed to the custom link renderer supplied via {@link SidebarProps.renderLink}. */
+export interface SidebarLinkProps {
+  href: string
+  className?: string
+  'data-active'?: boolean
+  'aria-current'?: 'page' | undefined
+  children: ReactNode
+}
 
 /** A single navigation item within a {@link NavGroupDef}. */
 export interface NavItemDef {
@@ -14,7 +23,7 @@ export interface NavItemDef {
   /** Numeric badge shown at the trailing edge — useful for unread counts. */
   count?: number
   /**
-   * When provided, the item renders as an `<a>` tag instead of a `<button>`.
+   * When provided, the item renders as a link instead of a `<button>`.
    * Use for top-level routes; omit for in-page actions.
    */
   href?: string
@@ -38,6 +47,18 @@ export interface SidebarProps {
    * Receives the `id` of the clicked item.
    */
   onItemClick?: (id: string) => void
+  /**
+   * Optional custom link component used to render items that have an `href`.
+   * Pass your router's `<Link>` here to enable client-side navigation.
+   * Falls back to a plain `<a>` tag if omitted.
+   *
+   * @example
+   * ```tsx
+   * import { Link } from '@tanstack/react-router'
+   * <Sidebar renderLink={Link} … />
+   * ```
+   */
+  renderLink?: ComponentType<SidebarLinkProps>
   /**
    * Content rendered at the bottom of the sidebar — typically user account
    * info, a settings link, or version text.
@@ -74,7 +95,7 @@ export interface SidebarProps {
  * />
  * ```
  */
-export function Sidebar({ groups, activeId, onItemClick, footer, className }: SidebarProps) {
+export function Sidebar({ groups, activeId, onItemClick, renderLink, footer, className }: SidebarProps) {
   return (
     <nav className={[styles.sidebar, className].filter(Boolean).join(' ')}>
       {groups.map((group, i) => (
@@ -84,6 +105,7 @@ export function Sidebar({ groups, activeId, onItemClick, footer, className }: Si
           items={group.items}
           activeId={activeId}
           onItemClick={onItemClick}
+          renderLink={renderLink}
         />
       ))}
       {footer && <div className={styles.footer}>{footer}</div>}
@@ -96,9 +118,10 @@ interface NavGroupProps {
   items: NavItemDef[]
   activeId: string | undefined
   onItemClick: ((id: string) => void) | undefined
+  renderLink: ComponentType<SidebarLinkProps> | undefined
 }
 
-function NavGroup({ label, items, activeId, onItemClick }: NavGroupProps) {
+function NavGroup({ label, items, activeId, onItemClick, renderLink }: NavGroupProps) {
   return (
     <div className={styles.group}>
       {label && <span className={styles.groupLabel}>{label}</span>}
@@ -108,6 +131,7 @@ function NavGroup({ label, items, activeId, onItemClick }: NavGroupProps) {
           item={item}
           active={item.id === activeId}
           onClick={() => onItemClick?.(item.id)}
+          renderLink={renderLink}
         />
       ))}
     </div>
@@ -118,27 +142,34 @@ interface NavItemProps {
   item: NavItemDef
   active: boolean
   onClick: () => void
+  renderLink: ComponentType<SidebarLinkProps> | undefined
 }
 
-function NavItem({ item, active, onClick }: NavItemProps) {
+function NavItem({ item, active, onClick, renderLink }: NavItemProps) {
   const glyphStyle = active ? { filter: 'invert(1)' } : undefined
+  const content = (
+    <>
+      {item.glyph
+        ? <Glyph name={item.glyph} size={14} style={glyphStyle} aria-hidden="true" />
+        : <span />}
+      <span>{item.label}</span>
+      {item.count !== undefined && (
+        <span className={styles.navItemCount}>{item.count}</span>
+      )}
+    </>
+  )
 
   if (item.href) {
+    const LinkComponent = renderLink ?? 'a'
     return (
-      <a
+      <LinkComponent
         href={item.href}
         className={styles.navItem}
         data-active={active}
         aria-current={active ? 'page' : undefined}
       >
-        {item.glyph
-          ? <Glyph name={item.glyph} size={14} style={glyphStyle} aria-hidden="true" />
-          : <span />}
-        <span>{item.label}</span>
-        {item.count !== undefined && (
-          <span className={styles.navItemCount}>{item.count}</span>
-        )}
-      </a>
+        {content}
+      </LinkComponent>
     )
   }
 
@@ -149,13 +180,7 @@ function NavItem({ item, active, onClick }: NavItemProps) {
       onClick={onClick}
       aria-current={active ? 'page' : undefined}
     >
-      {item.glyph
-        ? <Glyph name={item.glyph} size={14} style={glyphStyle} aria-hidden="true" />
-        : <span />}
-      <span>{item.label}</span>
-      {item.count !== undefined && (
-        <span className={styles.navItemCount}>{item.count}</span>
-      )}
+      {content}
     </button>
   )
 }

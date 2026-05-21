@@ -49,7 +49,11 @@ export type { TooltipProps } from './components/Tooltip/Tooltip.js'
 
 // Sidebar
 export { Sidebar } from './components/Sidebar/Sidebar.js'
-export type { SidebarProps, NavGroupDef, NavItemDef } from './components/Sidebar/Sidebar.js'
+export type { SidebarProps, SidebarLinkProps, NavGroupDef, NavItemDef } from './components/Sidebar/Sidebar.js'
+
+// ProgressBar
+export { ProgressBar } from './components/ProgressBar/ProgressBar.js'
+export type { ProgressBarProps } from './components/ProgressBar/ProgressBar.js'
 
 // AppBar
 export { AppBar } from './components/AppBar/AppBar.js'
