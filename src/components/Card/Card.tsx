@@ -1,8 +1,8 @@
 import type { HTMLAttributes, ReactNode } from 'react'
 import type { RecipeVariants } from '@vanilla-extract/recipes'
-import { Marginalia } from '../Marginalia/Marginalia.js'
-import type { GlyphName } from '../../types/components.js'
-import * as styles from './Card.css.js'
+import { Marginalia } from '../Marginalia/Marginalia'
+import type { GlyphName } from '../../types/components'
+import * as styles from './Card.css'
 
 type CardVariants = NonNullable<RecipeVariants<typeof styles.card>>
 

@@ -1,5 +1,5 @@
 import { style, keyframes } from '@vanilla-extract/css'
-import { vars } from '../../theme/vars.css.js'
+import { vars } from '../../theme/vars.css'
 
 const slideIn = keyframes({
   from: { opacity: 0, transform: 'translateY(8px)' },

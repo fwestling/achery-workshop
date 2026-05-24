@@ -4,8 +4,8 @@ import type {
   SelectHTMLAttributes,
   ReactNode,
 } from 'react'
-import { Glyph } from '../../glyphs/Glyph.js'
-import * as styles from './Input.css.js'
+import { Glyph } from '../../glyphs/Glyph'
+import * as styles from './Input.css'
 
 /** Props for the {@link Field} wrapper component. */
 export interface FieldProps {

@@ -1,4 +1,4 @@
-import type { AccentColor } from '../tokens/accents.js'
+import type { AccentColor } from '../tokens/accents'
 
 /** Light or dark colour mode. */
 export type ThemeMode = 'light' | 'dark'

@@ -1,4 +1,4 @@
-import * as styles from './ProgressBar.css.js'
+import * as styles from './ProgressBar.css'
 
 export interface ProgressBarProps {
   /** 0–100 */

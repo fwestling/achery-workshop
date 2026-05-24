@@ -1,6 +1,6 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { style } from '@vanilla-extract/css'
-import { vars } from '../../theme/vars.css.js'
+import { vars } from '../../theme/vars.css'
 
 const toneColors = {
   saved: '#4a5a32',

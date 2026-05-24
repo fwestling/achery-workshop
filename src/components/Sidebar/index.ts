@@ -1,2 +1,2 @@
-export { Sidebar } from './Sidebar.js'
-export type { SidebarProps, NavGroupDef, NavItemDef } from './Sidebar.js'
+export { Sidebar } from './Sidebar'
+export type { SidebarProps, NavGroupDef, NavItemDef } from './Sidebar'

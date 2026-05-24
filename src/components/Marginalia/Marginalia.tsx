@@ -1,6 +1,6 @@
-import type { GlyphName } from '../../types/components.js'
-import { Glyph } from '../../glyphs/Glyph.js'
-import * as styles from './Marginalia.css.js'
+import type { GlyphName } from '../../types/components'
+import { Glyph } from '../../glyphs/Glyph'
+import * as styles from './Marginalia.css'
 
 /** Props for the {@link Marginalia} component. */
 export interface MarginaliaProps {

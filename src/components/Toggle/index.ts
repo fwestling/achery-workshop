@@ -1,2 +1,2 @@
-export { Toggle } from './Toggle.js'
-export type { ToggleProps } from './Toggle.js'
+export { Toggle } from './Toggle'
+export type { ToggleProps } from './Toggle'

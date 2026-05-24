@@ -14,6 +14,19 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [0.3.2] - 2026-05-21
 
 ### Fixed
+- Imports migrated from .js to extensionless for better imports
+
+---
+
+### Fixed
+- `SemanticTokens`: widened from `typeof lightTokens` to `typeof lightTokens | typeof darkTokens` — dark theme tokens can now be assigned to `SemanticTokens` without a type error
+- `Sidebar`: added `collapsed` / `onCollapsedChange` props for icon-only mode (52px), `title` hint on collapsed items; `SidebarLinkProps` gains optional `title`
+
+---
+
+## [0.3.2] - 2026-05-21
+
+### Fixed
 - Modal: entry animation no longer jumps from top-left corner — `slideUp` keyframe now includes the centering transform
 
 ---

@@ -1,6 +1,6 @@
 import type { HTMLAttributes, ReactNode } from 'react'
 import type { RecipeVariants } from '@vanilla-extract/recipes'
-import * as styles from './Badge.css.js'
+import * as styles from './Badge.css'
 
 type BadgeVariants = NonNullable<RecipeVariants<typeof styles.badge>>
 

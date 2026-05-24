@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
-import { Glyph } from '../../glyphs/Glyph.js'
-import { Button } from '../Button/Button.js'
-import { accentColors, accentColorNames } from '../../tokens/accents.js'
-import type { AccentColor } from '../../types/theme.js'
-import * as styles from './AppBar.css.js'
+import { Glyph } from '../../glyphs/Glyph'
+import { Button } from '../Button/Button'
+import { accentColors, accentColorNames } from '../../tokens/accents'
+import type { AccentColor } from '../../types/theme'
+import * as styles from './AppBar.css'
 
 /** Props for the {@link AppBar} component. */
 export interface AppBarProps {

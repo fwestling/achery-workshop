@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react'
 import type { ReactNode } from 'react'
-import type { SortDirection } from '../../types/components.js'
-import { Glyph } from '../../glyphs/Glyph.js'
-import * as styles from './Table.css.js'
+import type { SortDirection } from '../../types/components'
+import { Glyph } from '../../glyphs/Glyph'
+import * as styles from './Table.css'
 
 /** Column definition for the {@link Table} component. */
 export interface ColumnDef<T> {

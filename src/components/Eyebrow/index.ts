@@ -1,2 +1,2 @@
-export { Eyebrow } from './Eyebrow.js'
-export type { EyebrowProps } from './Eyebrow.js'
+export { Eyebrow } from './Eyebrow'
+export type { EyebrowProps } from './Eyebrow'

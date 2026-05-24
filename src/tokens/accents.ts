@@ -1,4 +1,4 @@
-import { palette } from './palette.js'
+import { palette } from './palette'
 
 export const accentColors = {
   terracotta: {

@@ -1,5 +1,5 @@
 import { style, styleVariants } from '@vanilla-extract/css'
-import { vars } from '../../theme/vars.css.js'
+import { vars } from '../../theme/vars.css'
 
 export const wrapper = style({
   display: 'inline-flex',

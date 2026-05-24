@@ -1,5 +1,5 @@
 import { style, globalStyle } from '@vanilla-extract/css'
-import { vars } from '../../theme/vars.css.js'
+import { vars } from '../../theme/vars.css'
 
 export const fieldRoot = style({
   display: 'flex',

@@ -1,5 +1,5 @@
 import type { ReactNode, ElementType, HTMLAttributes } from 'react'
-import * as styles from './Typography.css.js'
+import * as styles from './Typography.css'
 
 type PolymorphicProps<E extends ElementType> = HTMLAttributes<HTMLElement> & {
   as?: E

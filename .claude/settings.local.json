@@ -23,7 +23,9 @@
       "Read(//Users/fred/Dev/field-office/apps/web/src/routes/_auth/projects/$projectId/tasks/$taskId/**)",
       "Bash(cat /Users/fred/Dev/field-office/apps/web/src/routes/_auth/projects/'$projectId'/tasks/'$taskId'/index.tsx | head -5)",
       "Bash(pnpm build *)",
-      "Bash(pnpm --filter @fieldoffice/web typecheck)"
+      "Bash(pnpm --filter @fieldoffice/web typecheck)",
+      "Bash(cat -n /Users/fred/Dev/field-office/apps/web/src/routes/_auth/projects/\\\\$projectId/index.tsx | head -268)",
+      "WebFetch(domain:docs.expo.dev)"
     ]
   }
 }

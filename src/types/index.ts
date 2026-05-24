@@ -1,4 +1,4 @@
-export type { ThemeMode, ThemeContextValue, AccentColor } from './theme.js'
+export type { ThemeMode, ThemeContextValue, AccentColor } from './theme'
 export type {
   ComponentSize,
   ButtonVariant,
@@ -7,4 +7,4 @@ export type {
   GlyphName,
   HeadingLevel,
   SortDirection,
-} from './components.js'
+} from './components'

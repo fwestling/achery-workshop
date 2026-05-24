@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { vars } from '../../theme/vars.css.js'
+import { vars } from '../../theme/vars.css'
 
 export const sidebar = style({
   display: 'flex',
@@ -10,6 +10,28 @@ export const sidebar = style({
   padding: `${vars.space.sp6} 0 0`,
   height: '100%',
   overflow: 'auto',
+  transition: `width ${vars.duration.base} ${vars.ease.out}`,
+  selectors: {
+    '&[data-collapsed="true"]': {
+      width: '52px',
+    },
+  },
+})
+
+export const collapseToggle = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: 'transparent',
+  border: 'none',
+  cursor: 'pointer',
+  padding: `0 0 ${vars.space.sp4}`,
+  color: vars.color.fg3,
+  width: '100%',
+  transition: `color ${vars.duration.fast} ${vars.ease.out}`,
+  selectors: {
+    '&:hover': { color: vars.color.fg },
+  },
 })
 
 export const group = style({
@@ -64,6 +86,11 @@ export const navItem = style({
     '&:focus-visible': {
       outline: `2px solid ${vars.color.accent}`,
       outlineOffset: '-2px',
+    },
+    '[data-collapsed="true"] &': {
+      gridTemplateColumns: '14px',
+      justifyContent: 'center',
+      padding: `8px 0`,
     },
   },
 })

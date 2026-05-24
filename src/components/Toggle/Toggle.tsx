@@ -1,6 +1,6 @@
 import * as RadixToggle from '@radix-ui/react-toggle'
 import type { ReactNode } from 'react'
-import * as styles from './Toggle.css.js'
+import * as styles from './Toggle.css'
 
 /** Props for the {@link Toggle} component. */
 export interface ToggleProps {

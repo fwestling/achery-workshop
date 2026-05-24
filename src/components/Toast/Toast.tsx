@@ -1,8 +1,8 @@
 import { useState, useCallback, createContext, useContext } from 'react'
 import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import { Glyph } from '../../glyphs/Glyph.js'
-import * as styles from './Toast.css.js'
+import { Glyph } from '../../glyphs/Glyph'
+import * as styles from './Toast.css'
 
 /** Shape of a single toast notification. */
 export interface ToastData {

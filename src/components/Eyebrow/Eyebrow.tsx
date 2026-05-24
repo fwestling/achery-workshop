@@ -1,5 +1,5 @@
 import type { ReactNode, HTMLAttributes } from 'react'
-import * as styles from './Eyebrow.css.js'
+import * as styles from './Eyebrow.css'
 
 /** Props for the {@link Eyebrow} component. */
 export interface EyebrowProps extends HTMLAttributes<HTMLSpanElement> {

@@ -1,8 +1,8 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 import type { RecipeVariants } from '@vanilla-extract/recipes'
-import { Glyph } from '../../glyphs/Glyph.js'
-import type { GlyphName } from '../../types/components.js'
-import * as styles from './Button.css.js'
+import { Glyph } from '../../glyphs/Glyph'
+import type { GlyphName } from '../../types/components'
+import * as styles from './Button.css'
 
 type ButtonVariants = NonNullable<RecipeVariants<typeof styles.button>>
 

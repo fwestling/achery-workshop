@@ -1,3 +1,3 @@
-export { AcheryProvider, useTheme, ThemeContext } from './ThemeProvider.js'
-export type { AcheryProviderProps } from './ThemeProvider.js'
-export { vars } from './vars.css.js'
+export { AcheryProvider, useTheme, ThemeContext } from './ThemeProvider'
+export type { AcheryProviderProps } from './ThemeProvider'
+export { vars } from './vars.css'

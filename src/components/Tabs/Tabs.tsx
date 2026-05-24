@@ -1,6 +1,6 @@
 import * as RadixTabs from '@radix-ui/react-tabs'
 import type { ReactNode } from 'react'
-import * as styles from './Tabs.css.js'
+import * as styles from './Tabs.css'
 
 /** A single tab definition passed to {@link Tabs}. */
 export interface TabItem {

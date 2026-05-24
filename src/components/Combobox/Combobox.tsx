@@ -1,5 +1,5 @@
 import { useState, useRef, useId, type KeyboardEvent } from 'react'
-import * as styles from './Combobox.css.js'
+import * as styles from './Combobox.css'
 
 /** Props for the {@link Combobox} component. */
 export interface ComboboxProps {

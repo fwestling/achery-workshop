@@ -1,4 +1,4 @@
-import { palette } from './palette.js'
+import { palette } from './palette'
 
 export const lightTokens = {
   bg: palette.paper,
@@ -62,4 +62,4 @@ export const darkTokens = {
   selectionFg: palette.inkDeep,
 } as const
 
-export type SemanticTokens = typeof lightTokens
+export type SemanticTokens = typeof lightTokens | typeof darkTokens

@@ -1,7 +1,7 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
 import type { ReactNode } from 'react'
-import { Glyph } from '../../glyphs/Glyph.js'
-import * as styles from './Modal.css.js'
+import { Glyph } from '../../glyphs/Glyph'
+import * as styles from './Modal.css'
 
 /** Props for the {@link Modal} component. */
 export interface ModalProps {

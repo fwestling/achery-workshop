@@ -1,5 +1,5 @@
 import { globalStyle } from '@vanilla-extract/css'
-import { vars } from './vars.css.js'
+import { vars } from './vars.css'
 
 type AccentEntry = { light: { main: string; fg: string }; dark: { main: string; fg: string } }
 

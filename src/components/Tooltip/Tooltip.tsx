@@ -1,6 +1,6 @@
 import * as RadixTooltip from '@radix-ui/react-tooltip'
 import type { ReactNode } from 'react'
-import * as styles from './Tooltip.css.js'
+import * as styles from './Tooltip.css'
 
 /** Props for the {@link Tooltip} component. */
 export interface TooltipProps {

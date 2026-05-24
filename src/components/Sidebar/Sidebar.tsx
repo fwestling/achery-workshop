@@ -1,7 +1,7 @@
 import type { ComponentType, ReactNode } from 'react'
-import { Glyph } from '../../glyphs/Glyph.js'
-import type { GlyphName } from '../../types/components.js'
-import * as styles from './Sidebar.css.js'
+import { Glyph } from '../../glyphs/Glyph'
+import type { GlyphName } from '../../types/components'
+import * as styles from './Sidebar.css'
 
 /** Props passed to the custom link renderer supplied via {@link SidebarProps.renderLink}. */
 export interface SidebarLinkProps {
@@ -9,6 +9,7 @@ export interface SidebarLinkProps {
   className?: string
   'data-active'?: boolean
   'aria-current'?: 'page' | undefined
+  title?: string
   children: ReactNode
 }
 
@@ -64,6 +65,13 @@ export interface SidebarProps {
    * info, a settings link, or version text.
    */
   footer?: ReactNode
+  /**
+   * When `true`, the sidebar collapses to icon-only mode (52px wide).
+   * Labels, counts, and group headings are hidden; glyphs remain.
+   */
+  collapsed?: boolean
+  /** Called when the user clicks the collapse toggle button. */
+  onCollapsedChange?: (collapsed: boolean) => void
   className?: string
 }
 
@@ -95,9 +103,17 @@ export interface SidebarProps {
  * />
  * ```
  */
-export function Sidebar({ groups, activeId, onItemClick, renderLink, footer, className }: SidebarProps) {
+export function Sidebar({ groups, activeId, onItemClick, renderLink, footer, collapsed, onCollapsedChange, className }: SidebarProps) {
   return (
-    <nav className={[styles.sidebar, className].filter(Boolean).join(' ')}>
+    <nav className={[styles.sidebar, className].filter(Boolean).join(' ')} data-collapsed={collapsed ?? false}>
+      <button
+        className={styles.collapseToggle}
+        onClick={() => onCollapsedChange?.(!collapsed)}
+        aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        title={collapsed ? 'Expand' : 'Collapse'}
+      >
+        {collapsed ? '›' : '‹'}
+      </button>
       {groups.map((group, i) => (
         <NavGroup
           key={i}
@@ -106,6 +122,7 @@ export function Sidebar({ groups, activeId, onItemClick, renderLink, footer, cla
           activeId={activeId}
           onItemClick={onItemClick}
           renderLink={renderLink}
+          collapsed={collapsed ?? false}
         />
       ))}
       {footer && <div className={styles.footer}>{footer}</div>}
@@ -119,12 +136,13 @@ interface NavGroupProps {
   activeId: string | undefined
   onItemClick: ((id: string) => void) | undefined
   renderLink: ComponentType<SidebarLinkProps> | undefined
+  collapsed: boolean
 }
 
-function NavGroup({ label, items, activeId, onItemClick, renderLink }: NavGroupProps) {
+function NavGroup({ label, items, activeId, onItemClick, renderLink, collapsed }: NavGroupProps) {
   return (
     <div className={styles.group}>
-      {label && <span className={styles.groupLabel}>{label}</span>}
+      {label && !collapsed && <span className={styles.groupLabel}>{label}</span>}
       {items.map(item => (
         <NavItem
           key={item.id}
@@ -132,6 +150,7 @@ function NavGroup({ label, items, activeId, onItemClick, renderLink }: NavGroupP
           active={item.id === activeId}
           onClick={() => onItemClick?.(item.id)}
           renderLink={renderLink}
+          collapsed={collapsed}
         />
       ))}
     </div>
@@ -143,21 +162,24 @@ interface NavItemProps {
   active: boolean
   onClick: () => void
   renderLink: ComponentType<SidebarLinkProps> | undefined
+  collapsed: boolean
 }
 
-function NavItem({ item, active, onClick, renderLink }: NavItemProps) {
+function NavItem({ item, active, onClick, renderLink, collapsed }: NavItemProps) {
   const glyphStyle = active ? { filter: 'invert(1)' } : undefined
   const content = (
     <>
       {item.glyph
         ? <Glyph name={item.glyph} size={14} style={glyphStyle} aria-hidden="true" />
         : <span />}
-      <span>{item.label}</span>
-      {item.count !== undefined && (
+      {!collapsed && <span>{item.label}</span>}
+      {!collapsed && item.count !== undefined && (
         <span className={styles.navItemCount}>{item.count}</span>
       )}
     </>
   )
+
+  const titleProp = collapsed ? { title: item.label } : {}
 
   if (item.href) {
     const LinkComponent = renderLink ?? 'a'
@@ -167,6 +189,7 @@ function NavItem({ item, active, onClick, renderLink }: NavItemProps) {
         className={styles.navItem}
         data-active={active}
         aria-current={active ? 'page' : undefined}
+        {...titleProp}
       >
         {content}
       </LinkComponent>
@@ -179,6 +202,7 @@ function NavItem({ item, active, onClick, renderLink }: NavItemProps) {
       data-active={active}
       onClick={onClick}
       aria-current={active ? 'page' : undefined}
+      {...titleProp}
     >
       {content}
     </button>

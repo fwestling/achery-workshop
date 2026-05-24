@@ -1,5 +1,5 @@
 import type { InputHTMLAttributes } from 'react'
-import * as styles from './DatePicker.css.js'
+import * as styles from './DatePicker.css'
 
 /** Props for the {@link DatePicker} component. */
 export interface DatePickerProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {

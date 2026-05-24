@@ -1,7 +1,7 @@
 import type { SVGProps, FC } from 'react'
-import type { GlyphName } from '../types/components.js'
-import * as styles from './Glyph.css.js'
-import * as GlyphComponents from './GlyphComponents.js'
+import type { GlyphName } from '../types/components'
+import * as styles from './Glyph.css'
+import * as GlyphComponents from './GlyphComponents'
 
 type SvgComponent = FC<SVGProps<SVGSVGElement>>
 

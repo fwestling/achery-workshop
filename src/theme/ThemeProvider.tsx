@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
-import type { ThemeContextValue, ThemeMode, AccentColor } from '../types/theme.js'
+import type { ThemeContextValue, ThemeMode, AccentColor } from '../types/theme'
 
 import './light.css.js'
 import './dark.css.js'

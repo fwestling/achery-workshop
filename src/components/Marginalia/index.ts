@@ -1,2 +1,2 @@
-export { Marginalia } from './Marginalia.js'
-export type { MarginaliaProps } from './Marginalia.js'
+export { Marginalia } from './Marginalia'
+export type { MarginaliaProps } from './Marginalia'

@@ -1,2 +1,2 @@
-export { AppBar } from './AppBar.js'
-export type { AppBarProps } from './AppBar.js'
+export { AppBar } from './AppBar'
+export type { AppBarProps } from './AppBar'

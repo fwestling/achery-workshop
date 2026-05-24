@@ -1,6 +1,6 @@
 import { createGlobalTheme } from '@vanilla-extract/css'
-import { vars } from './vars.css.js'
-import { fontFamilies } from '../tokens/typography.js'
+import { vars } from './vars.css'
+import { fontFamilies } from '../tokens/typography'
 
 createGlobalTheme('[data-achery-root][data-theme="dark"]', vars, {
   color: {

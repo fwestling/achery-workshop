@@ -1,91 +1,91 @@
 // Theme
-export { AcheryProvider, useTheme } from './theme/ThemeProvider.js'
-export type { AcheryProviderProps } from './theme/ThemeProvider.js'
-export { vars } from './theme/vars.css.js'
+export { AcheryProvider, useTheme } from './theme/ThemeProvider'
+export type { AcheryProviderProps } from './theme/ThemeProvider'
+export { vars } from './theme/vars.css'
 
 // Glyphs
-export { Glyph } from './glyphs/Glyph.js'
-export type { GlyphProps, GlyphName } from './glyphs/index.js'
+export { Glyph } from './glyphs/Glyph'
+export type { GlyphProps, GlyphName } from './glyphs/index'
 
 // Typography
-export { Display, Heading, Body, Mono } from './components/Typography/Typography.js'
-export type { HeadingProps, BodyProps, MonoProps } from './components/Typography/Typography.js'
+export { Display, Heading, Body, Mono } from './components/Typography/Typography'
+export type { HeadingProps, BodyProps, MonoProps } from './components/Typography/Typography'
 
 // Eyebrow
-export { Eyebrow } from './components/Eyebrow/Eyebrow.js'
-export type { EyebrowProps } from './components/Eyebrow/Eyebrow.js'
+export { Eyebrow } from './components/Eyebrow/Eyebrow'
+export type { EyebrowProps } from './components/Eyebrow/Eyebrow'
 
 // Badge
-export { Badge } from './components/Badge/Badge.js'
-export type { BadgeProps } from './components/Badge/Badge.js'
+export { Badge } from './components/Badge/Badge'
+export type { BadgeProps } from './components/Badge/Badge'
 
 // Button
-export { Button } from './components/Button/Button.js'
-export type { ButtonProps } from './components/Button/Button.js'
+export { Button } from './components/Button/Button'
+export type { ButtonProps } from './components/Button/Button'
 
 // Toggle
-export { Toggle } from './components/Toggle/Toggle.js'
-export type { ToggleProps } from './components/Toggle/Toggle.js'
+export { Toggle } from './components/Toggle/Toggle'
+export type { ToggleProps } from './components/Toggle/Toggle'
 
 // Marginalia
-export { Marginalia } from './components/Marginalia/Marginalia.js'
-export type { MarginaliaProps } from './components/Marginalia/Marginalia.js'
+export { Marginalia } from './components/Marginalia/Marginalia'
+export type { MarginaliaProps } from './components/Marginalia/Marginalia'
 
 // Input
-export { Field, Input, Textarea, Select, SearchInput } from './components/Input/Input.js'
-export type { FieldProps, InputProps, TextareaProps, SelectProps, SearchInputProps } from './components/Input/Input.js'
+export { Field, Input, Textarea, Select, SearchInput } from './components/Input/Input'
+export type { FieldProps, InputProps, TextareaProps, SelectProps, SearchInputProps } from './components/Input/Input'
 
 // Card
-export { Card } from './components/Card/Card.js'
-export type { CardProps } from './components/Card/Card.js'
+export { Card } from './components/Card/Card'
+export type { CardProps } from './components/Card/Card'
 
 // Tabs
-export { Tabs } from './components/Tabs/Tabs.js'
-export type { TabsProps, TabItem } from './components/Tabs/Tabs.js'
+export { Tabs } from './components/Tabs/Tabs'
+export type { TabsProps, TabItem } from './components/Tabs/Tabs'
 
 // Tooltip
-export { Tooltip } from './components/Tooltip/Tooltip.js'
-export type { TooltipProps } from './components/Tooltip/Tooltip.js'
+export { Tooltip } from './components/Tooltip/Tooltip'
+export type { TooltipProps } from './components/Tooltip/Tooltip'
 
 // Sidebar
-export { Sidebar } from './components/Sidebar/Sidebar.js'
-export type { SidebarProps, SidebarLinkProps, NavGroupDef, NavItemDef } from './components/Sidebar/Sidebar.js'
+export { Sidebar } from './components/Sidebar/Sidebar'
+export type { SidebarProps, SidebarLinkProps, NavGroupDef, NavItemDef } from './components/Sidebar/Sidebar'
 
 // ProgressBar
-export { ProgressBar } from './components/ProgressBar/ProgressBar.js'
-export type { ProgressBarProps } from './components/ProgressBar/ProgressBar.js'
+export { ProgressBar } from './components/ProgressBar/ProgressBar'
+export type { ProgressBarProps } from './components/ProgressBar/ProgressBar'
 
 // AppBar
-export { AppBar } from './components/AppBar/AppBar.js'
-export type { AppBarProps } from './components/AppBar/AppBar.js'
+export { AppBar } from './components/AppBar/AppBar'
+export type { AppBarProps } from './components/AppBar/AppBar'
 
 // Table
-export { Table } from './components/Table/Table.js'
-export type { TableProps, ColumnDef } from './components/Table/Table.js'
+export { Table } from './components/Table/Table'
+export type { TableProps, ColumnDef } from './components/Table/Table'
 
 // Modal
-export { Modal } from './components/Modal/Modal.js'
-export type { ModalProps } from './components/Modal/Modal.js'
+export { Modal } from './components/Modal/Modal'
+export type { ModalProps } from './components/Modal/Modal'
 
 // Toast
-export { ToastProvider, useToast } from './components/Toast/Toast.js'
-export type { ToastData, ToastProviderProps } from './components/Toast/Toast.js'
+export { ToastProvider, useToast } from './components/Toast/Toast'
+export type { ToastData, ToastProviderProps } from './components/Toast/Toast'
 
 // Checkbox
-export { Checkbox } from './components/Checkbox/Checkbox.js'
-export type { CheckboxProps } from './components/Checkbox/Checkbox.js'
+export { Checkbox } from './components/Checkbox/Checkbox'
+export type { CheckboxProps } from './components/Checkbox/Checkbox'
 
 // Menu
-export { Menu } from './components/Menu/Menu.js'
-export type { MenuProps, MenuItemDef, MenuSeparator } from './components/Menu/Menu.js'
+export { Menu } from './components/Menu/Menu'
+export type { MenuProps, MenuItemDef, MenuSeparator } from './components/Menu/Menu'
 
 // DatePicker
-export { DatePicker } from './components/DatePicker/DatePicker.js'
-export type { DatePickerProps } from './components/DatePicker/DatePicker.js'
+export { DatePicker } from './components/DatePicker/DatePicker'
+export type { DatePickerProps } from './components/DatePicker/DatePicker'
 
 // Combobox
-export { Combobox } from './components/Combobox/Combobox.js'
-export type { ComboboxProps } from './components/Combobox/Combobox.js'
+export { Combobox } from './components/Combobox/Combobox'
+export type { ComboboxProps } from './components/Combobox/Combobox'
 
 // Types
-export type { ThemeMode, AccentColor, ComponentSize, ButtonVariant, BadgeTone, SortDirection } from './types/index.js'
+export type { ThemeMode, AccentColor, ComponentSize, ButtonVariant, BadgeTone, SortDirection } from './types/index'

@@ -1,8 +1,8 @@
 import * as RadixDropdownMenu from '@radix-ui/react-dropdown-menu'
 import type { ReactNode } from 'react'
-import { Glyph } from '../../glyphs/Glyph.js'
-import type { GlyphName } from '../../glyphs/index.js'
-import * as styles from './Menu.css.js'
+import { Glyph } from '../../glyphs/Glyph'
+import type { GlyphName } from '../../glyphs/index'
+import * as styles from './Menu.css'
 
 /** A single item in a {@link Menu}. */
 export interface MenuItemDef {
