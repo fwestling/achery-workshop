@@ -23,6 +23,7 @@ const glyphMap: Record<GlyphName, SvgComponent> = {
   'key': GlyphComponents.Key,
   'leaf': GlyphComponents.Leaf,
   'mark': GlyphComponents.Mark,
+  'menu': GlyphComponents.Menu,
   'mercury': GlyphComponents.Mercury,
   'minus': GlyphComponents.Minus,
   'moon': GlyphComponents.Moon,

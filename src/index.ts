@@ -84,8 +84,36 @@ export { DatePicker } from './components/DatePicker/DatePicker'
 export type { DatePickerProps } from './components/DatePicker/DatePicker'
 
 // Combobox
-export { Combobox } from './components/Combobox/Combobox'
-export type { ComboboxProps } from './components/Combobox/Combobox'
+export { Combobox, SingleCombobox } from './components/Combobox/Combobox'
+export type { ComboboxProps, SingleComboboxProps } from './components/Combobox/Combobox'
+
+// LetterStamp
+export { LetterStamp } from './components/LetterStamp/LetterStamp'
+export type { LetterStampProps, LetterStampTone, LetterStampSize } from './components/LetterStamp/LetterStamp'
+
+// EntityPill
+export { EntityPill } from './components/EntityPill/EntityPill'
+export type { EntityPillProps } from './components/EntityPill/EntityPill'
+
+// Sparkline
+export { Sparkline } from './components/Sparkline/Sparkline'
+export type { SparklineProps, SparklineTone } from './components/Sparkline/Sparkline'
+
+// KpiTile
+export { KpiTile } from './components/KpiTile/KpiTile'
+export type { KpiTileProps } from './components/KpiTile/KpiTile'
+
+// StatePill
+export { StatePill } from './components/StatePill/StatePill'
+export type { StatePillProps, SubscriptionState } from './components/StatePill/StatePill'
+
+// TypeTag
+export { TypeTag } from './components/TypeTag/TypeTag'
+export type { TypeTagProps, TransactionType } from './components/TypeTag/TypeTag'
+
+// Avatar
+export { Avatar } from './components/Avatar/Avatar'
+export type { AvatarProps, AvatarTone, AvatarSize } from './components/Avatar/Avatar'
 
 // Types
 export type { ThemeMode, AccentColor, ComponentSize, ButtonVariant, BadgeTone, SortDirection } from './types/index'

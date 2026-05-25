@@ -3,13 +3,20 @@ import * as styles from './DatePicker.css'
 
 /** Props for the {@link DatePicker} component. */
 export interface DatePickerProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
-  /** ISO date string value (`YYYY-MM-DD`). */
+  /**
+   * Input type.
+   * - `date` — ISO date string `YYYY-MM-DD` (default)
+   * - `datetime-local` — ISO datetime string `YYYY-MM-DDTHH:mm`
+   * @default 'date'
+   */
+  type?: 'date' | 'datetime-local'
+  /** ISO date or datetime string value. */
   value?: string
   /** Called when the date changes — receives the new ISO string (or empty string when cleared). */
   onChange?: InputHTMLAttributes<HTMLInputElement>['onChange']
-  /** Minimum selectable date (`YYYY-MM-DD`). */
+  /** Minimum selectable date/datetime. */
   min?: string
-  /** Maximum selectable date (`YYYY-MM-DD`). */
+  /** Maximum selectable date/datetime. */
   max?: string
   disabled?: boolean
   /** When true, applies error border styling. */
@@ -19,28 +26,22 @@ export interface DatePickerProps extends Omit<InputHTMLAttributes<HTMLInputEleme
 }
 
 /**
- * Date input component using the native `<input type="date">`. Styled to match
- * the achery-ui design system — no calendar popover; relies on the browser's
- * native date picker UX.
+ * Date (or datetime-local) input component. Styled to match the achery-ui design
+ * system — no calendar popover; relies on the browser's native date picker UX.
  *
- * Values are ISO date strings (`YYYY-MM-DD`). Pass `value` and `onChange` for
- * controlled usage, or `defaultValue` for uncontrolled.
+ * Values are ISO strings. Pass `value` and `onChange` for controlled usage.
  *
  * @example
  * ```tsx
- * // Controlled
+ * // Date-only
  * <DatePicker value={date} onChange={(e) => setDate(e.target.value)} />
  *
- * // With Field wrapper
- * <Field label="Scheduled date">
- *   <DatePicker value={scheduled} onChange={(e) => setScheduled(e.target.value)} />
- * </Field>
- *
- * // With min/max constraints
- * <DatePicker min={today} max={deadline} value={date} onChange={...} />
+ * // Datetime-local
+ * <DatePicker type="datetime-local" value={datetime} onChange={(e) => setDatetime(e.target.value)} />
  * ```
  */
 export function DatePicker({
+  type = 'date',
   value,
   onChange,
   min,
@@ -53,7 +54,7 @@ export function DatePicker({
 }: DatePickerProps) {
   return (
     <input
-      type="date"
+      type={type}
       value={value}
       onChange={onChange}
       min={min}

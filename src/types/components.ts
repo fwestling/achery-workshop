@@ -51,6 +51,7 @@ export type GlyphName =
   | 'key'
   | 'leaf'
   | 'mark'
+  | 'menu'
   | 'mercury'
   | 'minus'
   | 'moon'

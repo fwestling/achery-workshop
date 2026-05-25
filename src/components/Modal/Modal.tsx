@@ -32,6 +32,20 @@ export interface ModalProps {
    * Omit when controlling `open` externally.
    */
   trigger?: ReactNode
+  /**
+   * Dialog width preset.
+   * - `sm` — 400px (default)
+   * - `md` — 560px
+   * - `lg` — 760px
+   * @default 'sm'
+   */
+  size?: 'sm' | 'md' | 'lg'
+  /**
+   * When true, the body area becomes scrollable with `max-height: 70vh`.
+   * Use for modals with variable-length content.
+   * @default false
+   */
+  scrollable?: boolean
   className?: string
 }
 
@@ -50,14 +64,14 @@ export interface ModalProps {
  * <Modal
  *   trigger={<Button variant="accent" glyph="plus">New recipe</Button>}
  *   title="New recipe"
- *   description="Add a recipe to the field guide."
+ *   size="md"
  *   footer={<><Button variant="ghost">Cancel</Button><Button variant="primary">Save</Button></>}
  * >
  *   <Field label="Name"><Input autoFocus /></Field>
  * </Modal>
  *
- * // Controlled
- * <Modal open={isOpen} onOpenChange={setIsOpen} title="Confirm">…</Modal>
+ * // Controlled + scrollable
+ * <Modal open={isOpen} onOpenChange={setIsOpen} title="Confirm" scrollable>…</Modal>
  * ```
  */
 export function Modal({
@@ -69,6 +83,8 @@ export function Modal({
   children,
   footer,
   trigger,
+  size = 'sm',
+  scrollable = false,
   className,
 }: ModalProps) {
   return (
@@ -81,7 +97,7 @@ export function Modal({
       <RadixDialog.Portal>
         <RadixDialog.Overlay className={styles.overlay} />
         <RadixDialog.Content
-          className={[styles.content, className].filter(Boolean).join(' ')}
+          className={[styles.contentSized({ size }), className].filter(Boolean).join(' ')}
           aria-describedby={description ? 'modal-description' : undefined}
         >
           <div className={styles.header}>
@@ -99,7 +115,7 @@ export function Modal({
               <Glyph name="cross" size={14} aria-hidden="true" />
             </RadixDialog.Close>
           </div>
-          <div className={styles.body}>{children}</div>
+          <div className={scrollable ? styles.bodyScrollable : styles.body}>{children}</div>
           {footer && <div className={styles.footer}>{footer}</div>}
         </RadixDialog.Content>
       </RadixDialog.Portal>

@@ -99,3 +99,38 @@ export const footer = style({
   paddingTop: vars.space.sp6,
   borderTop: `1px solid ${vars.color.borderMute}`,
 })
+
+import { recipe } from '@vanilla-extract/recipes'
+
+export const contentSized = recipe({
+  base: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    background: vars.color.surface,
+    border: `1px solid ${vars.color.border}`,
+    boxShadow: vars.shadow.stampLg,
+    padding: `${vars.space.sp8} ${vars.space.sp8}`,
+    width: 'calc(100vw - 48px)',
+    maxHeight: 'calc(100vh - 48px)',
+    overflow: 'auto',
+    zIndex: 101,
+    borderRadius: vars.radius.none,
+    animation: `${slideUp} ${vars.duration.slow} ${vars.ease.out}`,
+  },
+  variants: {
+    size: {
+      sm: { maxWidth: '400px' },
+      md: { maxWidth: '560px' },
+      lg: { maxWidth: '760px' },
+    },
+  },
+  defaultVariants: { size: 'sm' },
+})
+
+export const bodyScrollable = style({
+  overflowY: 'auto',
+  maxHeight: '70vh',
+  marginTop: vars.space.sp6,
+})

@@ -61,3 +61,5 @@ export function Wordmark(props: P) { return <svg viewBox="0 0 320 80" fill="curr
     <text x="2" y="0">— W O R K S H O P —</text>
   </g>
 </svg> }
+
+export function Menu(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" {...props}><line x1="3" y1="7" x2="21" y2="7"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="17" x2="21" y2="17"></line></svg> }

@@ -50,3 +50,68 @@ export const Default: Story = {
     </Modal>
   ),
 }
+
+export const SmallModal: Story = {
+  render: () => (
+    <Modal
+      defaultOpen
+      size="sm"
+      title="Small modal"
+      description="400px wide. Default size."
+      trigger={<Button variant="accent">Open sm</Button>}
+      footer={<Button variant="ghost">Cancel</Button>}
+    >
+      <p style={{ fontSize: 13 }}>This is a small modal.</p>
+    </Modal>
+  ),
+}
+
+export const MediumModal: Story = {
+  render: () => (
+    <Modal
+      defaultOpen
+      size="md"
+      title="Medium modal"
+      description="560px wide."
+      trigger={<Button variant="accent">Open md</Button>}
+      footer={<Button variant="ghost">Cancel</Button>}
+    >
+      <p style={{ fontSize: 13 }}>This is a medium modal.</p>
+    </Modal>
+  ),
+}
+
+export const LargeModal: Story = {
+  render: () => (
+    <Modal
+      defaultOpen
+      size="lg"
+      title="Large modal"
+      description="760px wide."
+      trigger={<Button variant="accent">Open lg</Button>}
+      footer={<Button variant="ghost">Cancel</Button>}
+    >
+      <p style={{ fontSize: 13 }}>This is a large modal.</p>
+    </Modal>
+  ),
+}
+
+export const ScrollableBody: Story = {
+  render: () => (
+    <Modal
+      defaultOpen
+      size="md"
+      scrollable
+      title="Scrollable body"
+      description="Content area is scrollable, capped at 70vh."
+      trigger={<Button variant="accent">Open scrollable</Button>}
+      footer={<Button variant="ghost">Close</Button>}
+    >
+      {Array.from({ length: 20 }).map((_, i) => (
+        <p key={i} style={{ fontSize: 13, margin: '8px 0' }}>
+          Paragraph {i + 1} — long content that causes the body to scroll…
+        </p>
+      ))}
+    </Modal>
+  ),
+}

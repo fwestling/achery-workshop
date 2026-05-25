@@ -91,3 +91,44 @@ export const Sortable: Story = {
     />
   ),
 }
+
+export const EmptyState: Story = {
+  render: () => (
+    <Table
+      columns={columns}
+      data={[]}
+      rowKey={r => r.id}
+      emptyState={<span>No subscriptions found.</span>}
+    />
+  ),
+}
+
+export const WithToolbarSlot: Story = {
+  render: () => (
+    <Table
+      columns={columns}
+      data={data}
+      rowKey={r => r.id}
+      toolbar={<input placeholder="Filter…" style={{ border: '1px solid #ccc', padding: '4px 8px', fontSize: 13 }} />}
+    />
+  ),
+}
+
+export const WithPagination: Story = {
+  render: () => {
+    const [page, setPage] = useState(0)
+    const pageSize = 2
+    const pageData = data.slice(page * pageSize, page * pageSize + pageSize)
+    return (
+      <Table
+        columns={columns}
+        data={pageData}
+        rowKey={r => r.id}
+        pageIndex={page}
+        pageSize={pageSize}
+        totalRows={data.length}
+        onPageChange={setPage}
+      />
+    )
+  },
+}

@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import type { ReactNode } from 'react'
 import type { SortDirection } from '../../types/components'
 import { Glyph } from '../../glyphs/Glyph'
+import { Button } from '../Button/Button'
 import * as styles from './Table.css'
 
 /** Column definition for the {@link Table} component. */
@@ -61,6 +62,18 @@ export interface TableProps<T extends { [K in string]: unknown }> {
    * For uncontrolled mode, use this for side-effects (analytics, persistence) only.
    */
   onSortChange?: (key: string, dir: SortDirection) => void
+  /** Current page index (0-based). Provide with `pageSize` for pagination. */
+  pageIndex?: number
+  /** Number of rows per page. Enables the pagination row below the table. */
+  pageSize?: number
+  /** Total row count across all pages — used to compute total page count. */
+  totalRows?: number
+  /** Called when the user navigates to a new page. */
+  onPageChange?: (page: number) => void
+  /** Content rendered above the table in a toolbar strip. */
+  toolbar?: ReactNode
+  /** Rendered when `data` is empty, in place of the table body. @default "No data." */
+  emptyState?: ReactNode
   className?: string
 }
 
@@ -101,6 +114,12 @@ export function Table<T extends { [K in string]: unknown }>({
   defaultSortKey,
   defaultSortDir = null,
   onSortChange,
+  pageIndex = 0,
+  pageSize,
+  totalRows,
+  onPageChange,
+  toolbar,
+  emptyState,
   className,
 }: TableProps<T>) {
   const [internalSortKey, setInternalSortKey] = useState<string | null>(defaultSortKey ?? null)
@@ -136,8 +155,13 @@ export function Table<T extends { [K in string]: unknown }>({
     })
   }, [data, activeSortKey, activeSortDir])
 
+  const totalPages = pageSize && totalRows ? Math.ceil(totalRows / pageSize) : null
+  const isFirstPage = pageIndex === 0
+  const isLastPage = totalPages !== null ? pageIndex >= totalPages - 1 : true
+
   return (
     <div className={[styles.tableWrapper, className].filter(Boolean).join(' ')}>
+      {toolbar && <div className={styles.toolbar}>{toolbar}</div>}
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr>
@@ -164,27 +188,59 @@ export function Table<T extends { [K in string]: unknown }>({
           </tr>
         </thead>
         <tbody>
-          {sortedData.map(row => {
-            const key = rowKey(row)
-            const isSelected = selectedKeys?.includes(key) ?? false
-            return (
-              <tr
-                key={key}
-                className={styles.tr}
-                data-selected={isSelected}
-                onClick={onRowClick ? () => onRowClick(key, row) : undefined}
-                style={onRowClick ? { cursor: 'pointer' } : undefined}
-              >
-                {columns.map(col => (
-                  <td key={col.key} className={col.mono ? styles.tdMono : styles.td}>
-                    {col.render ? col.render(row) : String(row[col.key] ?? '')}
-                  </td>
-                ))}
-              </tr>
-            )
-          })}
+          {data.length === 0 ? (
+            <tr>
+              <td colSpan={columns.length}>
+                <div className={styles.emptyState}>
+                  {emptyState ?? 'No data.'}
+                </div>
+              </td>
+            </tr>
+          ) : (
+            sortedData.map(row => {
+              const key = rowKey(row)
+              const isSelected = selectedKeys?.includes(key) ?? false
+              return (
+                <tr
+                  key={key}
+                  className={styles.tr}
+                  data-selected={isSelected}
+                  onClick={onRowClick ? () => onRowClick(key, row) : undefined}
+                  style={onRowClick ? { cursor: 'pointer' } : undefined}
+                >
+                  {columns.map(col => (
+                    <td key={col.key} className={col.mono ? styles.tdMono : styles.td}>
+                      {col.render ? col.render(row) : String(row[col.key] ?? '')}
+                    </td>
+                  ))}
+                </tr>
+              )
+            })
+          )}
         </tbody>
       </table>
+      {pageSize && totalPages !== null && (
+        <div className={styles.pagination}>
+          <Button
+            variant="ghost"
+            size="sm"
+            glyph="arrow-right"
+            onClick={() => onPageChange?.(pageIndex - 1)}
+            disabled={isFirstPage}
+            aria-label="Previous page"
+            style={{ transform: 'rotate(180deg)' }}
+          />
+          <span>Page {pageIndex + 1} of {totalPages}</span>
+          <Button
+            variant="ghost"
+            size="sm"
+            glyph="arrow-right"
+            onClick={() => onPageChange?.(pageIndex + 1)}
+            disabled={isLastPage}
+            aria-label="Next page"
+          />
+        </div>
+      )}
     </div>
   )
 }
