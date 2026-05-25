@@ -20,6 +20,7 @@ export const pill = recipe({
     background: vars.color.bg,
     border: `1px solid ${vars.color.border}`,
     padding: '0 8px 0 0',
+    overflow: 'hidden',
     fontFamily: vars.font.body,
     color: vars.color.fg,
     textDecoration: 'none',

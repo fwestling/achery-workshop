@@ -2,14 +2,14 @@ import { recipe } from '@vanilla-extract/recipes'
 import { style } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
 
-const toneColors: Record<string, { bg: string; fg: string }> = {
+const toneColors = {
   moss:    { bg: '#4a5a32', fg: vars.color.bg },
   rust:    { bg: '#8a3a22', fg: vars.color.bg },
   ochre:   { bg: '#b8924a', fg: vars.color.bg },
   plum:    { bg: '#5d4a6a', fg: vars.color.bg },
   copper:  { bg: '#b8742a', fg: vars.color.bg },
   neutral: { bg: vars.color.bg2, fg: vars.color.fg },
-}
+} as const
 
 export const stamp = recipe({
   base: {
@@ -44,8 +44,12 @@ export const stamp = recipe({
 })
 
 export const letter = style({
+  display: 'block',
   fontFamily: vars.font.display,
   fontWeight: 900,
   lineHeight: 1,
   color: 'inherit',
+  // Roboto Slab's cap-height sits above the optical midpoint of the em square.
+  // Nudge down slightly to visually centre the letter in the stamp box.
+  transform: 'translateY(0.08em)',
 })

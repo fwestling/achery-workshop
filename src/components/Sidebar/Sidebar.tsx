@@ -1,4 +1,3 @@
-import { createPortal } from 'react-dom'
 import type { ComponentType, ReactNode } from 'react'
 import { Glyph } from '../../glyphs/Glyph'
 import type { GlyphName } from '../../types/components'
@@ -165,15 +164,13 @@ export function Sidebar({
   if (isMobileMode) {
     return (
       <>
-        {mobileOpen &&
-          createPortal(
-            <div
-              className={styles.backdrop}
-              onClick={() => onMobileOpenChange?.(false)}
-              aria-hidden="true"
-            />,
-            document.body,
-          )}
+        {mobileOpen && (
+          <div
+            className={styles.backdrop}
+            onClick={() => onMobileOpenChange?.(false)}
+            aria-hidden="true"
+          />
+        )}
         {nav}
       </>
     )

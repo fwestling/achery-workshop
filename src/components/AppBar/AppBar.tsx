@@ -112,7 +112,7 @@ export function AppBar({
         <Button
           variant="ghost"
           size="sm"
-          glyph="asterism"
+          glyph="menu"
           onClick={onMenuClick}
           aria-label="Open navigation menu"
         />

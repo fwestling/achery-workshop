@@ -29,7 +29,7 @@ export function Avatar({ initials, size = 'md', tone = 'neutral', className }: A
       className={[styles.avatar({ size, tone }), className].filter(Boolean).join(' ')}
       aria-label={`User: ${display}`}
     >
-      {display}
+      <span className={styles.initials}>{display}</span>
     </span>
   )
 }

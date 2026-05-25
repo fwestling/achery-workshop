@@ -1,4 +1,5 @@
 import { recipe } from '@vanilla-extract/recipes'
+import { style } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
 
 export const avatar = recipe({
@@ -29,4 +30,11 @@ export const avatar = recipe({
     size: 'md',
     tone: 'neutral',
   },
+})
+
+export const initials = style({
+  display: 'block',
+  lineHeight: 1,
+  // Roboto Slab cap-height optical correction (same as LetterStamp)
+  transform: 'translateY(0.08em)',
 })
