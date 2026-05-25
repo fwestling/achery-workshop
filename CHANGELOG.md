@@ -11,6 +11,19 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.5.1] - 2026-05-26
+
+### Added
+- `ThemeMode`: extended to `'light' | 'dark' | 'system'`; added `ResolvedTheme = 'light' | 'dark'` for the applied value
+- `AcheryProvider`: persists colour-mode preference to `localStorage` under `'achery-theme-mode'`; restores it on mount; defaults to `'system'`; subscribes to `prefers-color-scheme` changes when mode is `'system'`
+- `ThemeContextValue`: added `mode` (the user preference) alongside `theme` (the resolved DOM value); `setTheme` now accepts `'system'`
+
+### Fixed
+- ProgressBar: track background changed from `border` (#1f1d18, near-black) to `borderMute` (#b8ad94, warm light-grey); neutral fill changed from `fg2` to `fg` — bar is now clearly visible against the light background
+- Sidebar: `navItem` link styles now correctly override the global `[data-achery-root] a` rule; nav links no longer show the accent-colour underline
+
+---
+
 ## [0.5.0] - 2026-05-25
 
 ### Added

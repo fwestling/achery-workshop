@@ -1,19 +1,39 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
-import type { ThemeContextValue, ThemeMode, AccentColor } from '../types/theme'
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
+import type { ThemeContextValue, ThemeMode, ResolvedTheme, AccentColor } from '../types/theme'
 
 import './light.css.js'
 import './dark.css.js'
 import './accents.css.js'
 import './global.css.js'
 
+const STORAGE_KEY = 'achery-theme-mode'
+
 const ThemeContext = createContext<ThemeContextValue | null>(null)
+
+function getSystemTheme(): ResolvedTheme {
+  if (typeof window === 'undefined') return 'light'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
+function resolveTheme(mode: ThemeMode): ResolvedTheme {
+  return mode === 'system' ? getSystemTheme() : mode
+}
+
+function readStoredMode(fallback: ThemeMode): ThemeMode {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored === 'light' || stored === 'dark' || stored === 'system') return stored
+  } catch {}
+  return fallback
+}
 
 /** Props for the {@link AcheryProvider} component. */
 export interface AcheryProviderProps {
   children: ReactNode
   /**
-   * Initial colour theme.
-   * @default 'light'
+   * Initial colour-mode preference. Overridden by any persisted localStorage
+   * value from a previous session.
+   * @default 'system'
    */
   defaultTheme?: ThemeMode
   /**
@@ -33,6 +53,9 @@ export interface AcheryProviderProps {
  *
  * Responsibilities:
  * - Injects theme CSS (light, dark, accents, global reset) as side-effect imports
+ * - Persists the colour-mode preference in `localStorage` under `'achery-theme-mode'`
+ * - Supports `'system'` mode — resolves to light/dark based on `prefers-color-scheme`
+ *   and updates live when the OS setting changes
  * - Renders a `[data-achery-root][data-theme][data-accent]` div that scopes all
  *   CSS custom properties
  * - Mirrors those attributes onto `<html>` so portaled content (Modal, Tooltip,
@@ -41,12 +64,11 @@ export interface AcheryProviderProps {
  *
  * @example
  * ```tsx
- * // app entry point
  * import { AcheryProvider } from 'achery-ui'
  *
  * export default function App() {
  *   return (
- *     <AcheryProvider defaultTheme="light" defaultAccent="terracotta">
+ *     <AcheryProvider defaultTheme="system" defaultAccent="terracotta">
  *       <YourApp />
  *     </AcheryProvider>
  *   )
@@ -55,23 +77,45 @@ export interface AcheryProviderProps {
  */
 export function AcheryProvider({
   children,
-  defaultTheme = 'light',
+  defaultTheme = 'system',
   defaultAccent = 'terracotta',
   className,
   style,
 }: AcheryProviderProps) {
-  const [theme, setThemeState] = useState<ThemeMode>(defaultTheme)
+  const [mode, setModeState] = useState<ThemeMode>(() => readStoredMode(defaultTheme))
   const [accent, setAccentState] = useState<AccentColor>(defaultAccent)
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => resolveTheme(readStoredMode(defaultTheme)))
 
-  const setTheme = (next: ThemeMode) => setThemeState(next)
-  const toggleTheme = () => setThemeState(t => (t === 'light' ? 'dark' : 'light'))
-  const setAccent = (next: AccentColor) => setAccentState(next)
+  const setTheme = useCallback((next: ThemeMode) => {
+    setModeState(next)
+    setResolvedTheme(resolveTheme(next))
+    try { localStorage.setItem(STORAGE_KEY, next) } catch {}
+  }, [])
+
+  const toggleTheme = useCallback(() => {
+    setTheme(resolvedTheme === 'light' ? 'dark' : 'light')
+  }, [resolvedTheme, setTheme])
+
+  const setAccent = useCallback((next: AccentColor) => setAccentState(next), [])
+
+  // When mode is 'system', subscribe to OS preference changes
+  useEffect(() => {
+    if (mode !== 'system') return
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    const handler = (e: MediaQueryListEvent) => {
+      setResolvedTheme(e.matches ? 'dark' : 'light')
+    }
+    mq.addEventListener('change', handler)
+    // Sync immediately in case OS changed since mount
+    setResolvedTheme(mq.matches ? 'dark' : 'light')
+    return () => mq.removeEventListener('change', handler)
+  }, [mode])
 
   // Mirror theme attrs onto <html> so portaled content (Modal, Tooltip, Toast)
   // inherits CSS vars even though they render outside [data-achery-root].
   useEffect(() => {
     const html = document.documentElement
-    html.dataset['theme'] = theme
+    html.dataset['theme'] = resolvedTheme
     html.dataset['accent'] = accent
     html.dataset['acheryRoot'] = ''
     return () => {
@@ -79,13 +123,13 @@ export function AcheryProvider({
       delete html.dataset['accent']
       delete html.dataset['acheryRoot']
     }
-  }, [theme, accent])
+  }, [resolvedTheme, accent])
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, accent, setAccent }}>
+    <ThemeContext.Provider value={{ mode, theme: resolvedTheme, setTheme, toggleTheme, accent, setAccent }}>
       <div
         data-achery-root=""
-        data-theme={theme}
+        data-theme={resolvedTheme}
         data-accent={accent}
         className={className}
         style={style}
@@ -105,13 +149,15 @@ export function AcheryProvider({
  * @example
  * ```tsx
  * function ThemeToggle() {
- *   const { theme, toggleTheme, accent, setAccent } = useTheme()
+ *   const { mode, setTheme } = useTheme()
  *   return (
- *     <Button
- *       glyph={theme === 'dark' ? 'sun' : 'moon'}
- *       onClick={toggleTheme}
- *       aria-label="Toggle theme"
- *     />
+ *     <div style={{ display: 'flex', gap: 8 }}>
+ *       {(['light', 'system', 'dark'] as const).map(m => (
+ *         <Button key={m} variant={mode === m ? 'accent' : 'secondary'} onClick={() => setTheme(m)}>
+ *           {m}
+ *         </Button>
+ *       ))}
+ *     </div>
  *   )
  * }
  * ```

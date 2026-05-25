@@ -99,12 +99,25 @@ export const navItem = style({
   outline: 'none',
   textDecoration: 'none',
   selectors: {
+    // Override [data-achery-root] a global rule which has higher specificity
+    '[data-achery-root] &': {
+      textDecoration: 'none',
+      color: vars.color.fg,
+    },
     '&:hover': {
       background: vars.color.bg,
+    },
+    '[data-achery-root] &:hover': {
+      color: vars.color.fg,
+      textDecoration: 'none',
     },
     '&[data-active="true"]': {
       background: vars.color.fg,
       color: vars.color.bg,
+    },
+    '[data-achery-root] &[data-active="true"]': {
+      color: vars.color.bg,
+      textDecoration: 'none',
     },
     '&:focus-visible': {
       outline: `2px solid ${vars.color.accent}`,

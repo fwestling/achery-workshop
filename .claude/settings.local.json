@@ -25,7 +25,11 @@
       "Bash(pnpm build *)",
       "Bash(pnpm --filter @fieldoffice/web typecheck)",
       "Bash(cat -n /Users/fred/Dev/field-office/apps/web/src/routes/_auth/projects/\\\\$projectId/index.tsx | head -268)",
-      "WebFetch(domain:docs.expo.dev)"
+      "WebFetch(domain:docs.expo.dev)",
+      "Bash(grep -n \"deadline\" /Users/fred/Dev/pinion/apps/web/src/routes/_auth/projects/\\\\$projectId/index.tsx)",
+      "Read(//Users/fred/Dev/pinion/apps/web/src/routes/_auth/projects/$projectId/**)",
+      "Bash(grep -n \"deadline\\\\|edit\\\\|settings\\\\|SettingsTab\\\\|EditProject\\\\|projectForm\\\\|form\\\\.\" /Users/fred/Dev/pinion/apps/web/src/routes/_auth/projects/\\\\$projectId/index.tsx | head -80)",
+      "Bash(pnpm --filter @pinion/web typecheck)"
     ]
   }
 }

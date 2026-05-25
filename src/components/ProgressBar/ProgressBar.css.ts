@@ -3,7 +3,7 @@ import { vars } from '../../theme/vars.css'
 
 export const track = style({
   width: '100%',
-  background: vars.color.border,
+  background: vars.color.borderMute,
   overflow: 'hidden',
   borderRadius: vars.radius.none,
 })
@@ -20,6 +20,6 @@ export const fill = style({
 })
 
 export const fillTone = styleVariants({
-  neutral: { background: vars.color.fg2 },
+  neutral: { background: vars.color.fg },
   accent: { background: vars.color.accent },
 })
