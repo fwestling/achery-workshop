@@ -56,3 +56,30 @@ export const Minimal: Story = {
     showSearch: false,
   },
 }
+
+export const WithMenuButton: Story = {
+  args: {
+    brandName: 'Achery',
+    brandSub: 'Workshop',
+    showSearch: true,
+    avatarInitials: 'FW',
+    onMenuClick: () => alert('menu toggled'),
+  },
+}
+
+export const WithSearchCallback: Story = {
+  args: {
+    brandName: 'Achery',
+    showSearch: true,
+    onSearch: (q) => alert(`Search: ${q}`),
+  },
+}
+
+export const WithSearchFocusIntercept: Story = {
+  args: {
+    brandName: 'Achery',
+    showSearch: true,
+    onSearchFocus: () => console.log('search focused'),
+    onSearch: (q) => alert(`Search: ${q}`),
+  },
+}

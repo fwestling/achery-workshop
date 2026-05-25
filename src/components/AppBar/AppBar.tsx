@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Glyph } from '../../glyphs/Glyph'
 import { Button } from '../Button/Button'
+import { Avatar } from '../Avatar/Avatar'
 import { accentColors, accentColorNames } from '../../tokens/accents'
 import type { AccentColor } from '../../types/theme'
 import * as styles from './AppBar.css'
@@ -42,6 +43,15 @@ export interface AppBarProps {
   onToggleTheme?: () => void
   /** Pass `true` when the dark theme is active to show the correct toggle icon. */
   isDark?: boolean
+  /**
+   * When provided, renders a hamburger menu button at the leading edge of the bar.
+   * Use to toggle the mobile sidebar overlay.
+   */
+  onMenuClick?: () => void
+  /** Called when the user presses Enter in the search field. */
+  onSearch?: (query: string) => void
+  /** Called when the search input gains focus. */
+  onSearchFocus?: () => void
   /** Up to two initials rendered in the avatar circle at the trailing edge. */
   avatarInitials?: string
   /**
@@ -91,10 +101,22 @@ export function AppBar({
   isDark,
   avatarInitials,
   onNewClick,
+  onMenuClick,
+  onSearch,
+  onSearchFocus,
   className,
 }: AppBarProps) {
   return (
     <header className={[styles.appBar, className].filter(Boolean).join(' ')}>
+      {onMenuClick && (
+        <Button
+          variant="ghost"
+          size="sm"
+          glyph="asterism"
+          onClick={onMenuClick}
+          aria-label="Open navigation menu"
+        />
+      )}
       <div className={styles.brand}>
         <Glyph name="hex" size={20} aria-hidden="true" />
         <span className={styles.brandName}>{brandName}</span>
@@ -114,6 +136,10 @@ export function AppBar({
             placeholder={searchPlaceholder}
             className={styles.searchInput}
             aria-label="Search"
+            onFocus={() => onSearchFocus?.()}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') onSearch?.((e.target as HTMLInputElement).value)
+            }}
           />
           {searchKbd && <span className={styles.searchKbd}>{searchKbd}</span>}
         </div>
@@ -155,9 +181,7 @@ export function AppBar({
         {actions}
 
         {avatarInitials && (
-          <div className={styles.avatar} aria-label={`User: ${avatarInitials}`}>
-            {avatarInitials.slice(0, 2).toUpperCase()}
-          </div>
+          <Avatar initials={avatarInitials} size="sm" tone="neutral" />
         )}
       </div>
     </header>

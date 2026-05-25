@@ -18,6 +18,29 @@ export const sidebar = style({
   },
 })
 
+export const sidebarMobile = style({
+  position: 'fixed',
+  top: 0,
+  left: '-220px',
+  height: '100%',
+  width: '220px',
+  zIndex: 200,
+  transition: `left ${vars.duration.base} ${vars.ease.out}`,
+  selectors: {
+    '&[data-mobile-open="true"]': {
+      left: '0',
+    },
+  },
+})
+
+export const backdrop = style({
+  position: 'fixed',
+  inset: 0,
+  background: 'rgba(20,19,15,0.45)',
+  zIndex: 199,
+  animation: 'none',
+})
+
 export const collapseToggle = style({
   display: 'flex',
   alignItems: 'center',
@@ -106,4 +129,13 @@ export const footer = style({
   marginTop: 'auto',
   padding: vars.space.sp5,
   borderTop: `1px solid ${vars.color.borderMute}`,
+})
+
+export const countAccent = style({
+  fontFamily: vars.font.mono,
+  fontSize: '10px',
+  background: vars.color.accent,
+  color: vars.color.accentFg,
+  padding: '1px 5px',
+  borderRadius: vars.radius.none,
 })

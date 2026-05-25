@@ -104,6 +104,10 @@ Then rebuild. Do not edit `GlyphComponents.tsx` directly.
    - Lead with the component or area: `Button: added \`loading\` prop`
    - Note the why only when non-obvious
 
+### Phased / multi-version work
+
+When a task is broken into versioned phases (e.g. v0.5.0 then v0.5.1), **pause between phases** so Fred can review, commit, and tag each version separately before continuing to the next phase. Do not implement multiple planned versions in a single unbroken session. Ask explicitly: "Ready to continue with v0.5.1?" before starting the next phase.
+
 ### Before merging a branch to main
 
 Promote `[Unreleased]` to a dated version heading and update the comparison links at the bottom:

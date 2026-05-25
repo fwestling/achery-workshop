@@ -77,3 +77,31 @@ export const tdMono = style([td, {
   fontSize: '11px',
   color: vars.color.fg2,
 }])
+
+export const toolbar = style({
+  padding: `${vars.space.sp4} ${vars.space.sp6}`,
+  borderBottom: `1px solid ${vars.color.border}`,
+  display: 'flex',
+  alignItems: 'center',
+  gap: vars.space.sp4,
+})
+
+export const emptyState = style({
+  textAlign: 'center',
+  padding: `${vars.space.sp10} ${vars.space.sp8}`,
+  fontFamily: vars.font.body,
+  fontSize: '13px',
+  color: vars.color.fg3,
+})
+
+export const pagination = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: vars.space.sp5,
+  padding: `${vars.space.sp4} ${vars.space.sp6}`,
+  borderTop: `1px solid ${vars.color.borderMute}`,
+  fontFamily: vars.font.body,
+  fontSize: '13px',
+  color: vars.color.fg3,
+})

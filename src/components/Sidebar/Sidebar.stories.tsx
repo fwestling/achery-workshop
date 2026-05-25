@@ -53,3 +53,80 @@ export const Default: Story = {
     )
   },
 }
+
+export const Desktop: Story = {
+  render: () => {
+    const [active, setActive] = useState('workbench')
+    return (
+      <div style={{ height: '600px', display: 'flex' }}>
+        <Sidebar
+          groups={groups}
+          activeId={active}
+          onItemClick={setActive}
+          footer={<Mono variant="small">achery-ui v0.5.0</Mono>}
+        />
+      </div>
+    )
+  },
+}
+
+export const MobileOverlayClosed: Story = {
+  render: () => {
+    const [active, setActive] = useState('workbench')
+    return (
+      <div style={{ height: '600px', position: 'relative', overflow: 'hidden' }}>
+        <Sidebar
+          groups={groups}
+          activeId={active}
+          onItemClick={setActive}
+          mobileOpen={false}
+          onMobileOpenChange={() => {}}
+          footer={<Mono variant="small">achery-ui v0.5.0</Mono>}
+        />
+        <p style={{ padding: 16 }}>Sidebar is off-screen (closed)</p>
+      </div>
+    )
+  },
+}
+
+export const MobileOverlayOpen: Story = {
+  render: () => {
+    const [open, setOpen] = useState(true)
+    const [active, setActive] = useState('workbench')
+    return (
+      <div style={{ height: '600px', position: 'relative', overflow: 'hidden' }}>
+        <Sidebar
+          groups={groups}
+          activeId={active}
+          onItemClick={setActive}
+          mobileOpen={open}
+          onMobileOpenChange={setOpen}
+          footer={<Mono variant="small">achery-ui v0.5.0</Mono>}
+        />
+        <p style={{ padding: 16 }}>Click backdrop to close</p>
+        <button onClick={() => setOpen(o => !o)} style={{ margin: 16 }}>Toggle</button>
+      </div>
+    )
+  },
+}
+
+export const WithAccentCount: Story = {
+  render: () => {
+    const [active, setActive] = useState('workbench')
+    return (
+      <div style={{ height: '600px', display: 'flex' }}>
+        <Sidebar
+          groups={[{
+            label: 'Workbench',
+            items: [
+              { id: 'workbench', label: 'All entries', glyph: 'scroll', count: 24, countTone: 'accent' },
+              { id: 'saved', label: 'Saved', glyph: 'feather', count: 3, countTone: 'neutral' },
+            ],
+          }]}
+          activeId={active}
+          onItemClick={setActive}
+        />
+      </div>
+    )
+  },
+}

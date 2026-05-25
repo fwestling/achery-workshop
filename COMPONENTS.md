@@ -30,17 +30,20 @@ Top-of-page bar with brand, search, theme/accent controls, avatar, custom action
 
 ```tsx
 <AppBar
-  brandName="My App"         // string
-  brandSub="subtitle"        // string
-  showSearch                 // boolean (default true)
-  searchPlaceholder="…"      // string
-  isDark={theme === 'dark'}  // boolean
-  onToggleTheme={toggleTheme}// () => void — shows toggle if present
-  accent={accent}            // AccentColor — shows picker if present
-  onAccentChange={setAccent} // (AccentColor) => void
-  avatarInitials="AB"        // string — shows avatar if present
-  onNewClick={() => {}}      // () => void — shows "New" button if present
-  actions={<Node />}         // ReactNode — custom slot
+  brandName="My App"           // string
+  brandSub="subtitle"          // string
+  showSearch                   // boolean (default true)
+  searchPlaceholder="…"        // string
+  isDark={theme === 'dark'}    // boolean
+  onToggleTheme={toggleTheme}  // () => void — shows toggle if present
+  accent={accent}              // AccentColor — shows picker if present
+  onAccentChange={setAccent}   // (AccentColor) => void
+  avatarInitials="AB"          // string — shows <Avatar> at trailing edge
+  onNewClick={() => {}}        // () => void — shows "New" button if present
+  actions={<Node />}           // ReactNode — custom slot
+  onMenuClick={() => {}}       // () => void — shows hamburger at leading edge
+  onSearch={(q) => {}}         // (query: string) => void — fires on Enter in search
+  onSearchFocus={() => {}}     // () => void — fires when search input focuses
 />
 ```
 
@@ -170,6 +173,8 @@ Accessible dialog, portaled to `document.body`.
   description="…"               // ReactNode
   footer={<><Button>Cancel</Button><Button variant="accent">Save</Button></>}
   trigger={<Button>Open</Button>}// ReactNode — alternative to controlled open
+  size="md"                      // 'sm' (400px, default) | 'md' (560px) | 'lg' (760px)
+  scrollable                     // boolean — body overflow-y: auto, max-height: 70vh
 >
   {/* body content */}
 </Modal>
@@ -195,13 +200,20 @@ const groups: NavGroupDef[] = [
 
 <Sidebar
   groups={groups}
-  activeId={currentPath}       // string
+  activeId={currentPath}           // string
   onItemClick={id => navigate(id)}
   footer={<Node />}
+  collapsed={isCollapsed}          // boolean — icon-only mode (52px)
+  onCollapsedChange={setCollapsed} // (boolean) => void
+  mobileOpen={menuOpen}            // boolean — fixed overlay mode
+  onMobileOpenChange={setMenuOpen} // (boolean) => void — backdrop click fires this
 />
 ```
 
 Items render as `<a>` when `href` is set, otherwise `<button>`.
+
+`NavItemDef` props: `id`, `label`, `glyph?`, `href?`, `count?`, `countTone?: 'accent' | 'neutral'`  
+`countTone='accent'` renders the count badge in the current accent colour.
 
 ---
 
@@ -221,12 +233,18 @@ const columns: ColumnDef<Row>[] = [
   columns={columns}
   data={rows}
   rowKey={r => r.id}
-  selectedKeys={selected}       // string[] — controlled selection
-  onRowClick={(key, row) => {}} // row click handler
-  defaultSortKey="name"         // uncontrolled initial sort
-  sortKey={sortKey}             // controlled sort column
-  sortDir={sortDir}             // 'asc' | 'desc' | null
+  selectedKeys={selected}          // string[] — controlled selection
+  onRowClick={(key, row) => {}}    // row click handler
+  defaultSortKey="name"            // uncontrolled initial sort
+  sortKey={sortKey}                // controlled sort column
+  sortDir={sortDir}                // 'asc' | 'desc' | null
   onSortChange={(key, dir) => {}}
+  toolbar={<SearchInput … />}      // ReactNode — rendered above table with bottom border
+  emptyState={<span>No rows.</span>} // ReactNode — shown when data is empty
+  pageIndex={page}                 // number (0-based) — enables pagination row
+  pageSize={25}                    // number — rows per page
+  totalRows={total}                // number — total across all pages
+  onPageChange={setPage}           // (page: number) => void
 />
 ```
 
@@ -401,17 +419,23 @@ import { DatePicker } from 'achery-ui'
 </Field>
 ```
 
+```tsx
+// datetime-local
+<DatePicker type="datetime-local" value={dt} onChange={(e) => setDt(e.target.value)} />
+```
+
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `value` | `string` | — | ISO date string `YYYY-MM-DD` |
+| `type` | `'date' \| 'datetime-local'` | `'date'` | Input type |
+| `value` | `string` | — | ISO date (`YYYY-MM-DD`) or datetime (`YYYY-MM-DDTHH:mm`) |
 | `onChange` | `ChangeEventHandler<HTMLInputElement>` | — | |
-| `min` | `string` | — | ISO date string |
-| `max` | `string` | — | ISO date string |
+| `min` | `string` | — | ISO date/datetime string |
+| `max` | `string` | — | ISO date/datetime string |
 | `disabled` | `boolean` | — | |
 | `error` | `boolean` | — | Applies danger border |
 | `placeholder` | `string` | — | |
 
-Extends all native `<input>` attributes (except `type`, which is always `'date'`).
+Extends all native `<input>` attributes (except `type`).
 
 ---
 
@@ -456,19 +480,220 @@ import { Combobox } from 'achery-ui'
 
 **Keyboard:** ↑↓ navigate options, Enter/comma confirm, Backspace removes last chip, Escape closes.
 
-Renders the dropdown into a portal — safe inside overflow-hidden containers.
+---
+
+## SingleCombobox
+
+Single-select variant of `Combobox`. Selected value is shown directly in the input (no chips). Backspace/Delete when empty clears the selection.
+
+```tsx
+import { SingleCombobox } from 'achery-ui'
+
+<SingleCombobox
+  value={category}
+  onChange={setCategory}
+  options={['Subscriptions', 'Utilities', 'Groceries']}
+  placeholder="Select a category…"
+/>
+
+// Free-text allowed
+<SingleCombobox value={val} onChange={setVal} options={opts} allowCustom />
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `value` | `string \| null` | — | Controlled selected value |
+| `onChange` | `(v: string \| null) => void` | — | |
+| `options` | `string[]` | `[]` | Suggested values |
+| `allowCustom` | `boolean` | `false` | Accept typed values not in options |
+| `placeholder` | `string` | — | |
+| `disabled` | `boolean` | — | |
+| `error` | `boolean` | — | Applies danger border |
+| `className` | `string` | — | |
+
+**Keyboard:** ↑↓ navigate, Enter selects, Backspace/Delete clears, Escape closes.
 
 ---
 
-## Known gaps (as of v0.1.0)
+## Avatar
+
+Circular initials avatar.
+
+```tsx
+import { Avatar } from 'achery-ui'
+
+<Avatar initials="FW" />
+<Avatar initials="FW" size="lg" tone="moss" />
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `initials` | `string` | — | Up to 2 chars, uppercased automatically |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 24 / 32 / 40 px |
+| `tone` | `'moss' \| 'neutral'` | `'neutral'` | `neutral` = bg2 fill; `moss` = green fill |
+| `className` | `string` | — | |
+
+---
+
+## LetterStamp
+
+Hard-edged square stamp displaying a single letter or glyph. Used inside `EntityPill`.
+
+```tsx
+import { LetterStamp } from 'achery-ui'
+
+<LetterStamp letter="A" tone="moss" size={28} />
+<LetterStamp glyph="flask" tone="rust" size={36} />
+<LetterStamp letter="X" colour="#2a5c8a" size={28} />  // hex escape hatch
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `letter` | `string` | — | Single char, uppercased. Mutually exclusive with `glyph` |
+| `glyph` | `GlyphName` | — | Glyph rendered centred. Mutually exclusive with `letter` |
+| `size` | `14 \| 20 \| 28 \| 36 \| 48` | `28` | Stamp dimension in px |
+| `tone` | `'moss' \| 'rust' \| 'ochre' \| 'plum' \| 'copper' \| 'neutral'` | `'neutral'` | Fill colour pair |
+| `colour` | `string` | — | Raw hex — overrides `tone` background |
+| `className` | `string` | — | |
+
+---
+
+## EntityPill
+
+Compact entity identifier — `LetterStamp` + label. Renders as `<button>`, `<a>`, or `<span>`.
+
+```tsx
+import { EntityPill } from 'achery-ui'
+
+<EntityPill label="Acme Corp" letter="A" tone="moss" />
+<EntityPill label="Open" glyph="flask" tone="rust" href="/entities/1" />
+<EntityPill label="Click me" letter="C" tone="ochre" onClick={handleClick} />
+<EntityPill label="Small" letter="S" tone="neutral" size="sm" />
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — | Visible text |
+| `letter` | `string` | — | Single char for stamp. Mutually exclusive with `glyph` |
+| `glyph` | `GlyphName` | — | Glyph for stamp. Mutually exclusive with `letter` |
+| `tone` | `'moss' \| 'rust' \| 'ochre' \| 'plum' \| 'copper' \| 'neutral'` | `'neutral'` | Stamp fill + border colour |
+| `colour` | `string` | — | Hex escape hatch for stamp background |
+| `size` | `'sm' \| 'md'` | `'md'` | `sm` = 22px height; `md` = 28px |
+| `onClick` | `() => void` | — | Makes pill a `<button>` |
+| `href` | `string` | — | Makes pill an `<a>` |
+| `className` | `string` | — | |
+
+---
+
+## Sparkline
+
+Inline SVG sparkline chart. Pure SVG, no dependencies, SSR-safe.
+
+```tsx
+import { Sparkline } from 'achery-ui'
+
+<Sparkline data={[1, 3, 2, 5, 4, 6]} tone="positive" />
+<Sparkline data={values} tone="negative" width={120} height={36} />
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `data` | `number[]` | — | Data points. Fewer than 2 renders empty |
+| `width` | `number` | `80` | SVG width in px |
+| `height` | `number` | `28` | SVG height in px |
+| `tone` | `'positive' \| 'negative' \| 'neutral'` | `'neutral'` | Line colour: success / danger / accent |
+| `className` | `string` | — | |
+
+---
+
+## KpiTile
+
+KPI summary tile — eyebrow label, large value, optional delta badge, optional sparkline.
+
+```tsx
+import { KpiTile } from 'achery-ui'
+
+<KpiTile
+  label="Total Income"
+  value="$4,200"
+  delta="+$340 vs last month"
+  deltaTone="positive"
+  sparkData={[3200, 3500, 3800, 4200]}
+  onClick={() => navigate('/income')}
+/>
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — | Eyebrow text above value |
+| `value` | `string` | — | Pre-formatted value string |
+| `delta` | `string` | — | Delta label shown as a Badge |
+| `deltaTone` | `'positive' \| 'negative' \| 'neutral'` | `'neutral'` | Badge and Sparkline colour |
+| `sparkData` | `number[]` | — | Passed to Sparkline |
+| `onClick` | `() => void` | — | Makes tile a clickable `<button>` |
+| `className` | `string` | — | |
+
+---
+
+## StatePill
+
+Subscription state indicator wrapping `Badge`.
+
+```tsx
+import { StatePill } from 'achery-ui'
+import type { SubscriptionState } from 'achery-ui'
+
+<StatePill state="drift-up" />
+<StatePill state="stable" />
+```
+
+| State | Badge tone | Label |
+|-------|-----------|-------|
+| `stable` | neutral | Stable |
+| `drift-up` | stopped | Drift up |
+| `drift-down` | saved | Drift down |
+| `new-price` | drafting | New price |
+| `renewing` | drafting | Renewing soon |
+
+| Prop | Type | Default |
+|---|---|---|
+| `state` | `SubscriptionState` | — |
+| `className` | `string` | — |
+
+---
+
+## TypeTag
+
+Monospace transaction type tag with colour-coded border and background.
+
+```tsx
+import { TypeTag } from 'achery-ui'
+import type { TransactionType } from 'achery-ui'
+
+<TypeTag type="basic" />
+<TypeTag type="exceptional" />
+```
+
+| Type | Text colour | Background |
+|------|------------|-----------|
+| `basic` | `fg3` | transparent |
+| `internal` | `fg3` | transparent |
+| `exceptional` | `danger` | danger at 8% |
+| `fee` | `warn` | warn at 8% |
+
+| Prop | Type | Default |
+|---|---|---|
+| `type` | `'basic' \| 'internal' \| 'exceptional' \| 'fee'` | — |
+| `className` | `string` | — |
+
+---
+
+## Known gaps (as of v0.5.0)
 
 Components not yet in achery-ui that commonly appear in apps:
 
 - **Radio** — no radio group primitives
-- **Pagination** — no page controls
 - **Breadcrumb** — no wayfinding
-- **Combobox / Autocomplete** — Select is native only; no searchable dropdown
-- **Avatar** — AppBar renders initials internally but no standalone component
-- **Progress / Spinner** — no loading states
+- **Progress / Spinner** — no loading states (ProgressBar exists, but no indeterminate spinner)
 - **Accordion** — no collapsible sections
 - **NumberInput / Stepper** — no numeric input with increment/decrement

@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import type { ComponentType, ReactNode } from 'react'
 import { Glyph } from '../../glyphs/Glyph'
 import type { GlyphName } from '../../types/components'
@@ -23,6 +24,8 @@ export interface NavItemDef {
   glyph?: GlyphName
   /** Numeric badge shown at the trailing edge — useful for unread counts. */
   count?: number
+  /** Colour tone for the count badge. @default 'neutral' */
+  countTone?: 'accent' | 'neutral'
   /**
    * When provided, the item renders as a link instead of a `<button>`.
    * Use for top-level routes; omit for in-page actions.
@@ -72,6 +75,15 @@ export interface SidebarProps {
   collapsed?: boolean
   /** Called when the user clicks the collapse toggle button. */
   onCollapsedChange?: (collapsed: boolean) => void
+  /**
+   * Controlled mobile overlay open state. When true, sidebar slides in from
+   * the left as a fixed overlay below `mobileBreakpoint`.
+   */
+  mobileOpen?: boolean
+  /** Called when the backdrop is clicked or the sidebar should close on mobile. */
+  onMobileOpenChange?: (open: boolean) => void
+  /** Viewport width (px) below which mobile overlay mode activates. @default 768 */
+  mobileBreakpoint?: number
   className?: string
 }
 
@@ -103,9 +115,30 @@ export interface SidebarProps {
  * />
  * ```
  */
-export function Sidebar({ groups, activeId, onItemClick, renderLink, footer, collapsed, onCollapsedChange, className }: SidebarProps) {
-  return (
-    <nav className={[styles.sidebar, className].filter(Boolean).join(' ')} data-collapsed={collapsed ?? false}>
+export function Sidebar({
+  groups,
+  activeId,
+  onItemClick,
+  renderLink,
+  footer,
+  collapsed,
+  onCollapsedChange,
+  mobileOpen,
+  onMobileOpenChange,
+  className,
+}: SidebarProps) {
+  const isMobileMode = mobileOpen !== undefined
+
+  const nav = (
+    <nav
+      className={[
+        styles.sidebar,
+        isMobileMode ? styles.sidebarMobile : undefined,
+        className,
+      ].filter(Boolean).join(' ')}
+      data-collapsed={collapsed ?? false}
+      data-mobile-open={isMobileMode ? String(mobileOpen) : undefined}
+    >
       <button
         className={styles.collapseToggle}
         onClick={() => onCollapsedChange?.(!collapsed)}
@@ -128,6 +161,25 @@ export function Sidebar({ groups, activeId, onItemClick, renderLink, footer, col
       {footer && <div className={styles.footer}>{footer}</div>}
     </nav>
   )
+
+  if (isMobileMode) {
+    return (
+      <>
+        {mobileOpen &&
+          createPortal(
+            <div
+              className={styles.backdrop}
+              onClick={() => onMobileOpenChange?.(false)}
+              aria-hidden="true"
+            />,
+            document.body,
+          )}
+        {nav}
+      </>
+    )
+  }
+
+  return nav
 }
 
 interface NavGroupProps {
@@ -174,7 +226,9 @@ function NavItem({ item, active, onClick, renderLink, collapsed }: NavItemProps)
         : <span />}
       {!collapsed && <span>{item.label}</span>}
       {!collapsed && item.count !== undefined && (
-        <span className={styles.navItemCount}>{item.count}</span>
+        <span className={item.countTone === 'accent' ? styles.countAccent : styles.navItemCount}>
+          {item.count}
+        </span>
       )}
     </>
   )

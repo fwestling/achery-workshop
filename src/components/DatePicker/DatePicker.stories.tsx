@@ -39,3 +39,11 @@ export const Controlled = () => {
     </Field>
   )
 }
+
+export const DateOnly: Story = {
+  args: { type: 'date', value: '2026-06-15' },
+}
+
+export const DatetimeLocal: Story = {
+  args: { type: 'datetime-local', value: '2026-06-15T14:30' },
+}

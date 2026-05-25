@@ -208,3 +208,170 @@ export function Combobox({
     </div>
   )
 }
+
+/** Props for the {@link SingleCombobox} component. */
+export interface SingleComboboxProps {
+  /** Currently selected value, or null for no selection. */
+  value: string | null
+  /** Called when the selection changes. */
+  onChange: (value: string | null) => void
+  /** Suggested options. */
+  options?: string[]
+  /**
+   * When true, typed text not in options is accepted on Enter.
+   * @default false
+   */
+  allowCustom?: boolean
+  placeholder?: string
+  disabled?: boolean
+  /** When true, applies error border styling. */
+  error?: boolean
+  className?: string
+}
+
+/**
+ * Single-select combobox. Selected value is shown in the input directly (no chips).
+ * Backspace/Delete when input is empty clears the current value.
+ *
+ * @example
+ * ```tsx
+ * <SingleCombobox value={category} onChange={setCategory} options={categories} />
+ * ```
+ */
+export function SingleCombobox({
+  value,
+  onChange,
+  options = [],
+  allowCustom = false,
+  placeholder,
+  disabled,
+  error,
+  className,
+}: SingleComboboxProps) {
+  const [inputValue, setInputValue] = useState(value ?? '')
+  const [open, setOpen] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(-1)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const id = useId()
+
+  const filteredOptions = options.filter((opt) =>
+    opt.toLowerCase().includes(inputValue.toLowerCase())
+  )
+
+  const customOption =
+    allowCustom &&
+    inputValue.trim() &&
+    !options.includes(inputValue.trim())
+      ? inputValue.trim()
+      : null
+
+  const visibleOptions = [...filteredOptions, ...(customOption ? [customOption] : [])]
+  const showDropdown = open && visibleOptions.length > 0
+
+  function selectValue(v: string) {
+    onChange(v)
+    setInputValue(v)
+    setOpen(false)
+    setActiveIndex(-1)
+  }
+
+  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      const active = activeIndex >= 0 ? visibleOptions[activeIndex] : undefined
+      if (active) {
+        selectValue(active)
+      } else if (allowCustom && inputValue.trim()) {
+        selectValue(inputValue.trim())
+      } else if (filteredOptions[0]) {
+        selectValue(filteredOptions[0])
+      }
+      return
+    }
+    if ((e.key === 'Backspace' || e.key === 'Delete') && !inputValue) {
+      onChange(null)
+      return
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setActiveIndex((i) => Math.min(i + 1, visibleOptions.length - 1))
+      return
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setActiveIndex((i) => Math.max(i - 1, -1))
+      return
+    }
+    if (e.key === 'Escape') {
+      setOpen(false)
+      setActiveIndex(-1)
+    }
+  }
+
+  return (
+    <div
+      className={[styles.wrapper, className].filter(Boolean).join(' ')}
+      onClick={() => { if (!disabled) inputRef.current?.focus() }}
+    >
+      <div
+        className={styles.trigger}
+        data-open={showDropdown || undefined}
+        data-error={error || undefined}
+      >
+        <input
+          ref={inputRef}
+          id={id}
+          className={styles.input}
+          value={inputValue}
+          disabled={disabled}
+          placeholder={placeholder}
+          autoComplete="off"
+          onChange={(e) => {
+            setInputValue(e.target.value)
+            onChange(null)
+            setOpen(true)
+            setActiveIndex(-1)
+          }}
+          onFocus={() => setOpen(true)}
+          onBlur={() => {
+            setTimeout(() => {
+              setOpen(false)
+              // Restore display to selected value if user typed something invalid
+              setInputValue(value ?? '')
+            }, 150)
+          }}
+          onKeyDown={handleKeyDown}
+          aria-autocomplete="list"
+          aria-expanded={showDropdown}
+          aria-controls={showDropdown ? `${id}-list` : undefined}
+          aria-activedescendant={activeIndex >= 0 ? `${id}-opt-${activeIndex}` : undefined}
+        />
+      </div>
+
+      {showDropdown && (
+        <div id={`${id}-list`} role="listbox" className={styles.popover}>
+          {visibleOptions.map((opt, i) => {
+            const isSelected = value === opt
+            const isCustom = opt === customOption
+            return (
+              <div
+                key={opt}
+                id={`${id}-opt-${i}`}
+                role="option"
+                aria-selected={isSelected}
+                className={styles.option}
+                data-active={activeIndex === i || undefined}
+                data-selected={isSelected || undefined}
+                onMouseDown={(e) => { e.preventDefault(); selectValue(opt) }}
+                onMouseEnter={() => setActiveIndex(i)}
+              >
+                <span>{isCustom ? `Add "${opt}"` : opt}</span>
+                {isSelected && <span className={styles.optionCheck}>✓</span>}
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
