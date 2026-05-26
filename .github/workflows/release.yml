@@ -52,6 +52,13 @@ jobs:
         if: steps.tag_check.outputs.exists == 'false'
         run: pnpm build
 
+      - name: Publish to npm
+        if: steps.tag_check.outputs.exists == 'false'
+        run: pnpm publish --no-git-checks --access public --provenance
+
+      # GitHub release is created after a successful npm publish so that a
+      # failed publish doesn't leave an orphaned tag that would cause all
+      # subsequent runs to skip the publish step.
       - name: Create GitHub Release
         if: steps.tag_check.outputs.exists == 'false'
         env:
@@ -60,7 +67,3 @@ jobs:
           gh release create "v${{ steps.pkg.outputs.version }}" \
             --title "v${{ steps.pkg.outputs.version }}" \
             --notes-file /tmp/release_notes.md
-
-      - name: Publish to npm
-        if: steps.tag_check.outputs.exists == 'false'
-        run: pnpm publish --no-git-checks --access public --provenance
