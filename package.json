@@ -2,6 +2,11 @@
   "name": "achery-ui",
   "version": "0.5.2",
   "description": "Achery Workshop design system — autumn alchemy, hard edges, botanical marginalia.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fwestling/achery-workshop"
+  },
+  "homepage": "https://github.com/fwestling/achery-workshop#readme",
   "type": "module",
   "exports": {
     ".": {
