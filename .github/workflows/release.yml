@@ -24,9 +24,6 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-          # registry-url is needed to set up .npmrc for OIDC auth, but we
-          # must NOT let it inject NODE_AUTH_TOKEN — that conflicts with
-          # provenance OIDC publishing and causes a 404 on PUT.
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
@@ -57,12 +54,9 @@ jobs:
 
       - name: Publish to npm
         if: steps.tag_check.outputs.exists == 'false'
-        # Unset NODE_AUTH_TOKEN — actions/setup-node injects the GitHub OIDC
-        # token here, which conflicts with npm's own OIDC provenance flow and
-        # causes a 404. With it unset, npm fetches the OIDC token itself.
+        run: npm publish --access public --provenance
         env:
-          NODE_AUTH_TOKEN: ''
-        run: pnpm publish --no-git-checks --access public --provenance
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # GitHub release is created after a successful npm publish so that a
       # failed publish doesn't leave an orphaned tag that would cause all
