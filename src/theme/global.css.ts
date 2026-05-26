@@ -1,6 +1,54 @@
 import { globalStyle } from '@vanilla-extract/css'
 import { vars } from './vars.css'
 
+/**
+ * Stable CSS custom property aliases under the `--achery-*` namespace.
+ * These point at the hashed vanilla-extract vars so consumers can safely
+ * reference them in inline styles, e.g. `var(--achery-color-fg)`.
+ */
+globalStyle('[data-achery-root], :root[data-achery-root]', {
+  vars: {
+    // Colour
+    '--achery-color-bg': vars.color.bg,
+    '--achery-color-bg2': vars.color.bg2,
+    '--achery-color-bgSunken': vars.color.bgSunken,
+    '--achery-color-surface': vars.color.surface,
+    '--achery-color-surface2': vars.color.surface2,
+    '--achery-color-fg': vars.color.fg,
+    '--achery-color-fg2': vars.color.fg2,
+    '--achery-color-fg3': vars.color.fg3,
+    '--achery-color-fgMute': vars.color.fgMute,
+    '--achery-color-border': vars.color.border,
+    '--achery-color-border2': vars.color.border2,
+    '--achery-color-borderMute': vars.color.borderMute,
+    '--achery-color-rule': vars.color.rule,
+    '--achery-color-accent': vars.color.accent,
+    '--achery-color-accentFg': vars.color.accentFg,
+    '--achery-color-accent2': vars.color.accent2,
+    '--achery-color-accent3': vars.color.accent3,
+    '--achery-color-success': vars.color.success,
+    '--achery-color-warn': vars.color.warn,
+    '--achery-color-danger': vars.color.danger,
+    '--achery-color-info': vars.color.info,
+    '--achery-color-selectionBg': vars.color.selectionBg,
+    '--achery-color-selectionFg': vars.color.selectionFg,
+    // Font
+    '--achery-font-display': vars.font.display,
+    '--achery-font-body': vars.font.body,
+    '--achery-font-mono': vars.font.mono,
+    // Space
+    '--achery-space-sp1': vars.space.sp1,
+    '--achery-space-sp2': vars.space.sp2,
+    '--achery-space-sp3': vars.space.sp3,
+    '--achery-space-sp4': vars.space.sp4,
+    '--achery-space-sp5': vars.space.sp5,
+    '--achery-space-sp6': vars.space.sp6,
+    '--achery-space-sp7': vars.space.sp7,
+    '--achery-space-sp8': vars.space.sp8,
+    '--achery-space-sp9': vars.space.sp9,
+  },
+})
+
 globalStyle('[data-achery-root]', {
   boxSizing: 'border-box',
   fontFamily: vars.font.body,
@@ -14,6 +62,13 @@ globalStyle('[data-achery-root]', {
 
 globalStyle('[data-achery-root] *, [data-achery-root] *::before, [data-achery-root] *::after', {
   boxSizing: 'inherit',
+})
+
+// Reset UA button/input/select/textarea colour so they inherit the theme fg
+// rather than the OS "ButtonText" system colour.
+globalStyle('[data-achery-root] button, [data-achery-root] input, [data-achery-root] select, [data-achery-root] textarea', {
+  color: 'inherit',
+  fontFamily: 'inherit',
 })
 
 globalStyle('[data-achery-root] ::selection', {

@@ -11,6 +11,16 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.5.2] - 2026-05-26
+
+### Added
+- `global.css`: stable `--achery-color-*` / `--achery-font-*` / `--achery-space-*` CSS custom property aliases on `[data-achery-root]`; consumers can now safely use e.g. `var(--achery-color-fg)` in inline styles and they will resolve correctly across theme changes
+
+### Fixed
+- `global.css`: raw `<button>`, `<input>`, `<select>`, `<textarea>` elements inside `[data-achery-root]` now inherit `color` and `font-family` from the theme root, overriding the browser UA `ButtonText` system colour that previously caused raw buttons to show dark text in dark mode
+
+---
+
 ## [0.5.1] - 2026-05-26
 
 ### Added
