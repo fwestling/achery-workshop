@@ -11,6 +11,16 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.5.5] - 2026-05-27
+
+### Added
+- `AppBar` + `Sidebar`: automatic mobile search mirroring — when `AppBar` renders with `showSearch={true}`, it publishes its search config into a shared `AppBarSearchContext` (provided by `AcheryProvider`); `Sidebar` reads this and renders a matching search field above the footer, visible only on mobile (below 768px). Zero consumer changes required.
+
+### Fixed
+- `AppBar`: when `showSearch={false}`, actions were left-aligned instead of trailing — the search area now always renders as a flex-grow spacer; its contents are conditionally omitted
+
+---
+
 ## [0.5.4] - 2026-05-27
 
 ### Changed
@@ -137,7 +147,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.4...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.5...HEAD
+[0.5.5]: https://github.com/fwestling/achery-workshop/compare/v0.5.4...v0.5.5
 [0.5.4]: https://github.com/fwestling/achery-workshop/compare/v0.5.3...v0.5.4
 [0.5.3]: https://github.com/fwestling/achery-workshop/compare/v0.5.2...v0.5.3
 [0.5.2]: https://github.com/fwestling/achery-workshop/compare/v0.5.1...v0.5.2

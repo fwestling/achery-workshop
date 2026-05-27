@@ -1,9 +1,10 @@
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { Glyph } from '../../glyphs/Glyph'
 import { Button } from '../Button/Button'
 import { Avatar } from '../Avatar/Avatar'
 import { accentColors, accentColorNames } from '../../tokens/accents'
 import type { AccentColor } from '../../types/theme'
+import { useAppBarSearch } from '../../context/AppBarSearchContext'
 import * as styles from './AppBar.css'
 
 /** Props for the {@link AppBar} component. */
@@ -111,6 +112,21 @@ export function AppBar({
   onSearchFocus,
   className,
 }: AppBarProps) {
+  const searchCtx = useAppBarSearch()
+
+  // Publish search config into context so Sidebar can render it in mobile overlay
+  useEffect(() => {
+    if (!searchCtx || !showSearch) return
+    searchCtx.setSearchConfig({
+      placeholder: searchPlaceholder,
+      ...(searchKbd !== undefined && { kbd: searchKbd }),
+      ...(onSearch !== undefined && { onSearch }),
+      ...(onSearchFocus !== undefined && { onSearchFocus }),
+    })
+    return () => searchCtx.setSearchConfig(null)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showSearch, searchPlaceholder, searchKbd, onSearch, onSearchFocus])
+
   return (
     <header className={[styles.appBar, className].filter(Boolean).join(' ')}>
       {onMenuClick && (
@@ -133,22 +149,24 @@ export function AppBar({
         )}
       </div>
 
-      {showSearch && (
-        <div className={styles.searchArea}>
-          <Glyph name="compass" size={12} aria-hidden="true" />
-          <input
-            type="search"
-            placeholder={searchPlaceholder}
-            className={styles.searchInput}
-            aria-label="Search"
-            onFocus={() => onSearchFocus?.()}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') onSearch?.((e.target as HTMLInputElement).value)
-            }}
-          />
-          {searchKbd && <span className={styles.searchKbd}>{searchKbd}</span>}
-        </div>
-      )}
+      <div className={showSearch ? styles.searchArea : styles.searchSpacer}>
+        {showSearch && (
+          <>
+            <Glyph name="compass" size={12} aria-hidden="true" />
+            <input
+              type="search"
+              placeholder={searchPlaceholder}
+              className={styles.searchInput}
+              aria-label="Search"
+              onFocus={() => onSearchFocus?.()}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') onSearch?.((e.target as HTMLInputElement).value)
+              }}
+            />
+            {searchKbd && <span className={styles.searchKbd}>{searchKbd}</span>}
+          </>
+        )}
+      </div>
 
       <div className={styles.actions}>
         <div className={styles.actionsInner}>

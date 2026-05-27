@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
 import type { ThemeContextValue, ThemeMode, ResolvedTheme, AccentColor } from '../types/theme'
+import { AppBarSearchProvider } from '../context/AppBarSearchContext'
 
 import './light.css.js'
 import './dark.css.js'
@@ -127,15 +128,17 @@ export function AcheryProvider({
 
   return (
     <ThemeContext.Provider value={{ mode, theme: resolvedTheme, setTheme, toggleTheme, accent, setAccent }}>
-      <div
-        data-achery-root=""
-        data-theme={resolvedTheme}
-        data-accent={accent}
-        className={className}
-        style={style}
-      >
-        {children}
-      </div>
+      <AppBarSearchProvider>
+        <div
+          data-achery-root=""
+          data-theme={resolvedTheme}
+          data-accent={accent}
+          className={className}
+          style={style}
+        >
+          {children}
+        </div>
+      </AppBarSearchProvider>
     </ThemeContext.Provider>
   )
 }

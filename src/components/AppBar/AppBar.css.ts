@@ -52,6 +52,12 @@ export const brandSub = style({
   },
 })
 
+/** Invisible flex-grow spacer used when `showSearch={false}` to push actions to the trailing edge. */
+export const searchSpacer = style({
+  flex: 1,
+  minWidth: 0,
+})
+
 export const searchArea = style({
   flex: 1,
   display: 'flex',

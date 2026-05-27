@@ -144,6 +144,40 @@ export const footer = style({
   borderTop: `1px solid ${vars.color.borderMute}`,
 })
 
+/**
+ * Search field rendered in the Sidebar on mobile, mirroring the AppBar search
+ * that is CSS-hidden below 768px. Hidden on desktop.
+ */
+export const mobileSearch = style({
+  display: 'none',
+  '@media': {
+    '(max-width: 767px)': {
+      display: 'flex',
+      alignItems: 'center',
+      gap: vars.space.sp4,
+      padding: `6px ${vars.space.sp5}`,
+      margin: `0 ${vars.space.sp5} ${vars.space.sp4}`,
+      border: `1px solid ${vars.color.border}`,
+      background: vars.color.bg,
+    },
+  },
+})
+
+export const mobileSearchInput = style({
+  flex: 1,
+  border: 'none',
+  background: 'transparent',
+  fontFamily: vars.font.body,
+  fontSize: '13px',
+  color: vars.color.fg,
+  outline: 'none',
+  selectors: {
+    '&::placeholder': {
+      color: vars.color.fgMute,
+    },
+  },
+})
+
 export const countAccent = style({
   fontFamily: vars.font.mono,
   fontSize: '10px',

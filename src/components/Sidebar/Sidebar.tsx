@@ -1,6 +1,7 @@
 import type { ComponentType, ReactNode } from 'react'
 import { Glyph } from '../../glyphs/Glyph'
 import type { GlyphName } from '../../types/components'
+import { useAppBarSearch } from '../../context/AppBarSearchContext'
 import * as styles from './Sidebar.css'
 
 /** Props passed to the custom link renderer supplied via {@link SidebarProps.renderLink}. */
@@ -141,6 +142,8 @@ export function Sidebar({
   className,
 }: SidebarProps) {
   const isMobileMode = mobileOpen !== undefined
+  const searchCtx = useAppBarSearch()
+  const searchConfig = searchCtx?.searchConfig ?? null
 
   const nav = (
     <nav
@@ -171,6 +174,22 @@ export function Sidebar({
           collapsed={collapsed ?? false}
         />
       ))}
+      {searchConfig && (
+        <div className={styles.mobileSearch}>
+          <Glyph name="compass" size={12} aria-hidden="true" />
+          <input
+            type="search"
+            placeholder={searchConfig.placeholder}
+            className={styles.mobileSearchInput}
+            aria-label="Search"
+            onFocus={() => searchConfig.onSearchFocus?.()}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') searchConfig.onSearch?.((e.target as HTMLInputElement).value)
+            }}
+          />
+          {searchConfig.kbd && <span>{searchConfig.kbd}</span>}
+        </div>
+      )}
       {footer && <div className={styles.footer}>{footer}</div>}
     </nav>
   )
