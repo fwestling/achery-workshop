@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.5.3] - 2026-05-27
+
+### Fixed
+- `Sidebar`: removed `filter: invert(1)` from the active nav item glyph; glyphs now inherit `currentColor` from the nav item (which is already set to `--color-bg` when active), rendering correctly on non-white backgrounds such as the parchment theme
+
+---
+
 ## [0.5.2] - 2026-05-26
 
 ### Added
@@ -62,10 +69,6 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 - Imports migrated from .js to extensionless for better imports
-
----
-
-### Fixed
 - `SemanticTokens`: widened from `typeof lightTokens` to `typeof lightTokens | typeof darkTokens` — dark theme tokens can now be assigned to `SemanticTokens` without a type error
 - `Sidebar`: added `collapsed` / `onCollapsedChange` props for icon-only mode (52px), `title` hint on collapsed items; `SidebarLinkProps` gains optional `title`
 
@@ -123,7 +126,10 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.3...HEAD
+[0.5.3]: https://github.com/fwestling/achery-workshop/compare/v0.5.2...v0.5.3
+[0.5.2]: https://github.com/fwestling/achery-workshop/compare/v0.5.1...v0.5.2
+[0.5.1]: https://github.com/fwestling/achery-workshop/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/fwestling/achery-workshop/releases/tag/v0.5.0
 [0.4.0]: https://github.com/fwestling/achery-workshop/releases/tag/v0.4.0
 [0.3.2]: https://github.com/fwestling/achery-workshop/releases/tag/v0.3.2

@@ -215,11 +215,10 @@ interface NavItemProps {
 }
 
 function NavItem({ item, active, onClick, renderLink, collapsed }: NavItemProps) {
-  const glyphStyle = active ? { filter: 'invert(1)' } : undefined
   const content = (
     <>
       {item.glyph
-        ? <Glyph name={item.glyph} size={14} style={glyphStyle} aria-hidden="true" />
+        ? <Glyph name={item.glyph} size={14} aria-hidden="true" />
         : <span />}
       {!collapsed && <span>{item.label}</span>}
       {!collapsed && item.count !== undefined && (
