@@ -65,6 +65,20 @@ export interface SidebarProps {
   /**
    * Content rendered at the bottom of the sidebar — typically user account
    * info, a settings link, or version text.
+   *
+   * **Responsive action pattern:** `AppBar` hides its `actions` slot on mobile
+   * via CSS (below 768 px). If those actions must remain accessible on mobile,
+   * pass the same node here so it appears at the foot of the mobile overlay.
+   *
+   * @example
+   * ```tsx
+   * // Month selector: visible in AppBar on desktop, in Sidebar footer on mobile
+   * const isMobile = useIsMobile()
+   * const monthPicker = <MonthSelect value={month} onChange={setMonth} />
+   *
+   * <Sidebar footer={isMobile ? monthPicker : undefined} … />
+   * <AppBar actions={monthPicker} … />
+   * ```
    */
   footer?: ReactNode
   /**

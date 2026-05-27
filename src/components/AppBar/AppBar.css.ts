@@ -31,6 +31,11 @@ export const brandDivider = style({
   width: '1px',
   height: '16px',
   background: vars.color.borderMute,
+  '@media': {
+    '(max-width: 767px)': {
+      display: 'none',
+    },
+  },
 })
 
 export const brandSub = style({
@@ -40,6 +45,11 @@ export const brandSub = style({
   letterSpacing: '0.18em',
   textTransform: 'uppercase',
   color: vars.color.fg3,
+  '@media': {
+    '(max-width: 767px)': {
+      display: 'none',
+    },
+  },
 })
 
 export const searchArea = style({
@@ -51,6 +61,11 @@ export const searchArea = style({
   background: vars.color.bg,
   padding: `6px ${vars.space.sp5}`,
   minWidth: 0,
+  '@media': {
+    '(max-width: 767px)': {
+      display: 'none',
+    },
+  },
 })
 
 export const searchInput = style({
@@ -82,6 +97,18 @@ export const actions = style({
   alignItems: 'center',
   gap: vars.space.sp4,
   flexShrink: 0,
+})
+
+/** Wraps all action slots except the avatar — hidden on mobile. */
+export const actionsInner = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: vars.space.sp4,
+  '@media': {
+    '(max-width: 767px)': {
+      display: 'none',
+    },
+  },
 })
 
 export const accentPicker = style({

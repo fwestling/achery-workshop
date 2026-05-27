@@ -27,6 +27,11 @@ export interface AppBarProps {
   /**
    * Arbitrary content inserted after the built-in controls (theme toggle, accent
    * picker, new button) and before the avatar. Use for custom action buttons.
+   *
+   * **Mobile note:** the `actions` slot (along with search and `brandSub`) is
+   * hidden via CSS below 768 px. If an action must remain reachable on mobile,
+   * also pass it as `footer` to the accompanying `<Sidebar>` so it appears in
+   * the mobile overlay. See {@link SidebarProps.footer} for a usage example.
    */
   actions?: ReactNode
   /** Currently active accent colour — drives the accent picker selection indicator. */
@@ -146,39 +151,41 @@ export function AppBar({
       )}
 
       <div className={styles.actions}>
-        {onAccentChange && (
-          <div className={styles.accentPicker} role="group" aria-label="Brand colour">
-            {accentColorNames.map(name => (
-              <button
-                key={name}
-                className={styles.accentSwatch}
-                data-active={name === accent}
-                onClick={() => onAccentChange(name)}
-                aria-label={name}
-                aria-pressed={name === accent}
-                style={{ background: accentColors[name].main }}
-              />
-            ))}
-          </div>
-        )}
+        <div className={styles.actionsInner}>
+          {onAccentChange && (
+            <div className={styles.accentPicker} role="group" aria-label="Brand colour">
+              {accentColorNames.map(name => (
+                <button
+                  key={name}
+                  className={styles.accentSwatch}
+                  data-active={name === accent}
+                  onClick={() => onAccentChange(name)}
+                  aria-label={name}
+                  aria-pressed={name === accent}
+                  style={{ background: accentColors[name].main }}
+                />
+              ))}
+            </div>
+          )}
 
-        {onToggleTheme && (
-          <Button
-            variant="ghost"
-            size="sm"
-            glyph={isDark ? 'sun' : 'moon'}
-            onClick={onToggleTheme}
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-          />
-        )}
+          {onToggleTheme && (
+            <Button
+              variant="ghost"
+              size="sm"
+              glyph={isDark ? 'sun' : 'moon'}
+              onClick={onToggleTheme}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            />
+          )}
 
-        {onNewClick && (
-          <Button variant="accent" size="sm" glyph="plus" onClick={onNewClick}>
-            New
-          </Button>
-        )}
+          {onNewClick && (
+            <Button variant="accent" size="sm" glyph="plus" onClick={onNewClick}>
+              New
+            </Button>
+          )}
 
-        {actions}
+          {actions}
+        </div>
 
         {avatarInitials && (
           <Avatar initials={avatarInitials} size="sm" tone="neutral" />

@@ -11,6 +11,17 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.5.4] - 2026-05-27
+
+### Changed
+- `AppBar`: responsive layout — below 768px, the search field, `brandSub`, and all action slots except the avatar are hidden via CSS media query; no JS or prop changes required by consumers
+
+### Documentation
+- `AppBar.actions`: added note that the slot is CSS-hidden on mobile and cross-references the `Sidebar.footer` pattern for keeping actions accessible in the mobile overlay
+- `Sidebar.footer`: expanded TSDoc to document the responsive action pattern — pass the same node to both `AppBar.actions` (desktop) and `Sidebar.footer` (mobile overlay); includes a code example
+
+---
+
 ## [0.5.3] - 2026-05-27
 
 ### Fixed
@@ -126,7 +137,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.3...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.4...HEAD
+[0.5.4]: https://github.com/fwestling/achery-workshop/compare/v0.5.3...v0.5.4
 [0.5.3]: https://github.com/fwestling/achery-workshop/compare/v0.5.2...v0.5.3
 [0.5.2]: https://github.com/fwestling/achery-workshop/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/fwestling/achery-workshop/compare/v0.5.0...v0.5.1
