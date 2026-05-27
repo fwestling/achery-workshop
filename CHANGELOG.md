@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.5.6] - 2026-05-27
+
+### Fixed
+- `Sidebar`: mobile search field and footer now wrapped in a shared `bottomSlot` container with `marginTop: auto`, so both sit together at the bottom of the sidebar regardless of which combination is present
+
+---
+
 ## [0.5.5] - 2026-05-27
 
 ### Added
@@ -147,7 +154,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.5...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.6...HEAD
+[0.5.6]: https://github.com/fwestling/achery-workshop/compare/v0.5.5...v0.5.6
 [0.5.5]: https://github.com/fwestling/achery-workshop/compare/v0.5.4...v0.5.5
 [0.5.4]: https://github.com/fwestling/achery-workshop/compare/v0.5.3...v0.5.4
 [0.5.3]: https://github.com/fwestling/achery-workshop/compare/v0.5.2...v0.5.3

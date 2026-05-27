@@ -174,23 +174,25 @@ export function Sidebar({
           collapsed={collapsed ?? false}
         />
       ))}
-      {searchConfig && (
-        <div className={styles.mobileSearch}>
-          <Glyph name="compass" size={12} aria-hidden="true" />
-          <input
-            type="search"
-            placeholder={searchConfig.placeholder}
-            className={styles.mobileSearchInput}
-            aria-label="Search"
-            onFocus={() => searchConfig.onSearchFocus?.()}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') searchConfig.onSearch?.((e.target as HTMLInputElement).value)
-            }}
-          />
-          {searchConfig.kbd && <span>{searchConfig.kbd}</span>}
-        </div>
-      )}
-      {footer && <div className={styles.footer}>{footer}</div>}
+      <div className={styles.bottomSlot}>
+        {searchConfig && (
+          <div className={styles.mobileSearch}>
+            <Glyph name="compass" size={12} aria-hidden="true" />
+            <input
+              type="search"
+              placeholder={searchConfig.placeholder}
+              className={styles.mobileSearchInput}
+              aria-label="Search"
+              onFocus={() => searchConfig.onSearchFocus?.()}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') searchConfig.onSearch?.((e.target as HTMLInputElement).value)
+              }}
+            />
+            {searchConfig.kbd && <span>{searchConfig.kbd}</span>}
+          </div>
+        )}
+        {footer && <div className={styles.footer}>{footer}</div>}
+      </div>
     </nav>
   )
 

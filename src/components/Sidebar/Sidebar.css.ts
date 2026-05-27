@@ -139,9 +139,13 @@ export const navItemCount = style({
 })
 
 export const footer = style({
-  marginTop: 'auto',
   padding: vars.space.sp5,
   borderTop: `1px solid ${vars.color.borderMute}`,
+})
+
+/** Wraps the mobile search field and footer so they sit together at the bottom. */
+export const bottomSlot = style({
+  marginTop: 'auto',
 })
 
 /**
@@ -156,7 +160,7 @@ export const mobileSearch = style({
       alignItems: 'center',
       gap: vars.space.sp4,
       padding: `6px ${vars.space.sp5}`,
-      margin: `0 ${vars.space.sp5} ${vars.space.sp4}`,
+      margin: `${vars.space.sp4} ${vars.space.sp5}`,
       border: `1px solid ${vars.color.border}`,
       background: vars.color.bg,
     },
