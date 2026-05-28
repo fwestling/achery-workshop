@@ -2,7 +2,6 @@ import { useState, useMemo } from 'react'
 import type { ReactNode } from 'react'
 import type { SortDirection } from '../../types/components'
 import { Glyph } from '../../glyphs/Glyph'
-import { Button } from '../Button/Button'
 import * as styles from './Table.css'
 
 /** Column definition for the {@link Table} component. */
@@ -70,11 +69,45 @@ export interface TableProps<T extends { [K in string]: unknown }> {
   totalRows?: number
   /** Called when the user navigates to a new page. */
   onPageChange?: (page: number) => void
+  /**
+   * Called when the user selects a new page size. Provide alongside `pageSizeOptions`.
+   * Caller is responsible for resetting `pageIndex` to 0.
+   */
+  onPageSizeChange?: (size: number) => void
+  /**
+   * List of page size options rendered in a selector next to the pagination controls.
+   * When omitted, no size selector is shown.
+   * @example [25, 50, 100]
+   */
+  pageSizeOptions?: number[]
+  /**
+   * Number of page buttons to show either side of the current page.
+   * @default 2
+   */
+  paginationWindow?: number
   /** Content rendered above the table in a toolbar strip. */
   toolbar?: ReactNode
   /** Rendered when `data` is empty, in place of the table body. @default "No data." */
   emptyState?: ReactNode
   className?: string
+}
+
+/** Builds the page number window: always includes 0 and last, current ± window, with nulls for gaps. */
+function buildPageWindow(current: number, total: number, window: number): (number | null)[] {
+  const pages = new Set<number>()
+  pages.add(0)
+  pages.add(total - 1)
+  for (let i = Math.max(0, current - window); i <= Math.min(total - 1, current + window); i++) {
+    pages.add(i)
+  }
+  const sorted = Array.from(pages).sort((a, b) => a - b)
+  const result: (number | null)[] = []
+  for (let i = 0; i < sorted.length; i++) {
+    const page = sorted[i]!
+    if (i > 0 && page - sorted[i - 1]! > 1) result.push(null)
+    result.push(page)
+  }
+  return result
 }
 
 /**
@@ -118,6 +151,9 @@ export function Table<T extends { [K in string]: unknown }>({
   pageSize,
   totalRows,
   onPageChange,
+  onPageSizeChange,
+  pageSizeOptions,
+  paginationWindow = 2,
   toolbar,
   emptyState,
   className,
@@ -226,24 +262,37 @@ export function Table<T extends { [K in string]: unknown }>({
       </div>
       {pageSize && totalPages !== null && (
         <div className={styles.pagination}>
-          <Button
-            variant="ghost"
-            size="sm"
-            glyph="arrow-right"
-            onClick={() => onPageChange?.(pageIndex - 1)}
-            disabled={isFirstPage}
-            aria-label="Previous page"
-            style={{ transform: 'rotate(180deg)' }}
-          />
-          <span>Page {pageIndex + 1} of {totalPages}</span>
-          <Button
-            variant="ghost"
-            size="sm"
-            glyph="arrow-right"
-            onClick={() => onPageChange?.(pageIndex + 1)}
-            disabled={isLastPage}
-            aria-label="Next page"
-          />
+          {pageSizeOptions && (
+            <select
+              className={styles.pageSizeSelect}
+              value={pageSize}
+              onChange={e => onPageSizeChange?.(Number(e.target.value))}
+              aria-label="Rows per page"
+            >
+              {pageSizeOptions.map(n => (
+                <option key={n} value={n}>{n} / page</option>
+              ))}
+            </select>
+          )}
+          <div className={styles.paginationControls}>
+            <button className={styles.pageNavButton} onClick={() => onPageChange?.(0)} disabled={isFirstPage} aria-label="First page">«</button>
+            <button className={styles.pageNavButton} onClick={() => onPageChange?.(pageIndex - 1)} disabled={isFirstPage} aria-label="Previous page">‹</button>
+            {buildPageWindow(pageIndex, totalPages, paginationWindow).map((entry, i) =>
+              entry === null
+                ? <span key={`ellipsis-${i}`} className={styles.paginationEllipsis}>…</span>
+                : <button
+                    key={entry}
+                    className={entry === pageIndex ? styles.pageButtonActive : styles.pageButton}
+                    onClick={() => onPageChange?.(entry)}
+                    aria-label={`Page ${entry + 1}`}
+                    aria-current={entry === pageIndex ? 'page' : undefined}
+                  >
+                    {entry + 1}
+                  </button>
+            )}
+            <button className={styles.pageNavButton} onClick={() => onPageChange?.(pageIndex + 1)} disabled={isLastPage} aria-label="Next page">›</button>
+            <button className={styles.pageNavButton} onClick={() => onPageChange?.(totalPages - 1)} disabled={isLastPage} aria-label="Last page">»</button>
+          </div>
         </div>
       )}
     </div>

@@ -101,11 +101,79 @@ export const emptyState = style({
 export const pagination = style({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'space-between',
   gap: vars.space.sp5,
   padding: `${vars.space.sp4} ${vars.space.sp6}`,
   borderTop: `1px solid ${vars.color.borderMute}`,
   fontFamily: vars.font.body,
   fontSize: '13px',
   color: vars.color.fg3,
+})
+
+export const paginationControls = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: vars.space.sp2,
+  flex: 1,
+  justifyContent: 'center',
+})
+
+export const pageButton = style({
+  fontFamily: vars.font.body,
+  fontSize: '13px',
+  color: vars.color.fg2,
+  background: 'none',
+  border: 'none',
+  borderRadius: '3px',
+  padding: `2px 6px`,
+  cursor: 'pointer',
+  minWidth: '28px',
+  textAlign: 'center',
+  lineHeight: 1,
+  selectors: {
+    '&:hover:not(:disabled)': {
+      background: vars.color.surface,
+      color: vars.color.fg,
+    },
+    '&:disabled': {
+      opacity: 0.3,
+      cursor: 'default',
+    },
+  },
+})
+
+export const pageNavButton = style([pageButton, {
+  fontSize: '16px',
+  minWidth: '28px',
+  color: vars.color.fg3,
+}])
+
+export const pageButtonActive = style([pageButton, {
+  background: vars.color.surface,
+  color: vars.color.accent,
+  fontWeight: 600,
+}])
+
+export const paginationEllipsis = style({
+  fontFamily: vars.font.body,
+  fontSize: '12px',
+  color: vars.color.fg3,
+  padding: `2px 2px`,
+  userSelect: 'none',
+})
+
+export const pageSizeSelect = style({
+  fontFamily: vars.font.body,
+  fontSize: '12px',
+  color: vars.color.fg2,
+  background: vars.color.bg,
+  border: `1px solid ${vars.color.border}`,
+  borderRadius: '3px',
+  padding: `2px ${vars.space.sp3}`,
+  cursor: 'pointer',
+  selectors: {
+    '&:hover': {
+      borderColor: vars.color.fg3,
+    },
+  },
 })

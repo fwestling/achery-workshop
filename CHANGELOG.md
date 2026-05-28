@@ -11,6 +11,18 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.5.8] - 2026-05-28
+
+### Added
+- `Table`: first/last page buttons (`«`/`»`) and single-step prev/next (`‹`/`›`) alongside the existing page number window
+- `Table`: clickable page number window — always shows page 1 and last, current ± `paginationWindow` pages, with `…` ellipsis for gaps
+- `Table`: `paginationWindow` prop (default `2`) — controls how many pages either side of the current page appear in the number window
+- `Table`: `pageSizeOptions` prop — when provided, renders a rows-per-page selector on the left of the pagination bar
+- `Table`: `onPageSizeChange` prop — called when the user picks a new page size; caller is responsible for resetting `pageIndex` to `0`
+- `Table`: `WithPaginationWindow` and `WithPageSizeSelector` stories for verifying pagination controls
+
+---
+
 ## [0.5.7] - 2026-05-28
 
 ### Fixed
@@ -166,7 +178,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.7...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.8...HEAD
+[0.5.8]: https://github.com/fwestling/achery-workshop/compare/v0.5.7...v0.5.8
 [0.5.7]: https://github.com/fwestling/achery-workshop/compare/v0.5.6...v0.5.7
 [0.5.6]: https://github.com/fwestling/achery-workshop/compare/v0.5.5...v0.5.6
 [0.5.5]: https://github.com/fwestling/achery-workshop/compare/v0.5.4...v0.5.5

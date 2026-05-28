@@ -162,3 +162,55 @@ export const WithPagination: Story = {
     )
   },
 }
+
+const manyRows: Recipe[] = Array.from({ length: 42 }, (_, i) => ({
+  id: `r${i + 1}`,
+  ch: String(i + 1),
+  name: `Recipe ${i + 1}`,
+  chapter: ['Ink', 'Pigment', 'Dye', 'Finish'][i % 4]!,
+  state: ['saved', 'drafting', 'stopped', 'archived'][i % 4]!,
+  yield: `${(i + 1) * 50} ml`,
+  updated: `${String((i % 28) + 1).padStart(2, '0')} NOV 2026`,
+}))
+
+export const WithPaginationWindow: Story = {
+  render: () => {
+    const [page, setPage] = useState(0)
+    const pageSize = 5
+    const pageData = manyRows.slice(page * pageSize, (page + 1) * pageSize)
+    return (
+      <Table
+        columns={columns}
+        data={pageData}
+        rowKey={r => r.id}
+        pageIndex={page}
+        pageSize={pageSize}
+        totalRows={manyRows.length}
+        onPageChange={setPage}
+        paginationWindow={2}
+      />
+    )
+  },
+}
+
+export const WithPageSizeSelector: Story = {
+  render: () => {
+    const [page, setPage] = useState(0)
+    const [pageSize, setPageSize] = useState(5)
+    const pageData = manyRows.slice(page * pageSize, (page + 1) * pageSize)
+    return (
+      <Table
+        columns={columns}
+        data={pageData}
+        rowKey={r => r.id}
+        pageIndex={page}
+        pageSize={pageSize}
+        totalRows={manyRows.length}
+        onPageChange={setPage}
+        pageSizeOptions={[5, 10, 20]}
+        onPageSizeChange={size => { setPageSize(size); setPage(0) }}
+        paginationWindow={1}
+      />
+    )
+  },
+}
