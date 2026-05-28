@@ -85,6 +85,12 @@ export interface TableProps<T extends { [K in string]: unknown }> {
    * @default 2
    */
   paginationWindow?: number
+  /**
+   * Fixed height for the table wrapper (e.g. `'600px'`, `'80vh'`). When set, the table
+   * wrapper becomes a fixed-height flex column: the header and pagination stay in place
+   * and only the body scrolls. When omitted, the table grows with its content.
+   */
+  height?: string
   /** Content rendered above the table in a toolbar strip. */
   toolbar?: ReactNode
   /** Rendered when `data` is empty, in place of the table body. @default "No data." */
@@ -154,6 +160,7 @@ export function Table<T extends { [K in string]: unknown }>({
   onPageSizeChange,
   pageSizeOptions,
   paginationWindow = 2,
+  height,
   toolbar,
   emptyState,
   className,
@@ -196,11 +203,14 @@ export function Table<T extends { [K in string]: unknown }>({
   const isLastPage = totalPages !== null ? pageIndex >= totalPages - 1 : true
 
   return (
-    <div className={[styles.tableWrapper, className].filter(Boolean).join(' ')}>
+    <div
+      className={[styles.tableWrapper, className].filter(Boolean).join(' ')}
+      style={height ? { height, display: 'flex', flexDirection: 'column' } : undefined}
+    >
       {toolbar && <div className={styles.toolbar}>{toolbar}</div>}
       <div
         className={styles.tableScroll}
-        style={pageSize ? { minHeight: 37 + pageSize * 38 } : undefined}
+        style={height ? { flex: 1, overflowY: 'auto', minHeight: 0 } : pageSize ? { minHeight: 37 + pageSize * 38 } : undefined}
       >
       <table className={styles.table}>
         <thead className={styles.thead}>

@@ -193,6 +193,41 @@ export const WithPaginationWindow: Story = {
   },
 }
 
+export const FixedHeight: Story = {
+  render: () => (
+    <Table
+      columns={columns}
+      data={manyRows}
+      rowKey={r => r.id}
+      height="400px"
+      defaultSortKey="name"
+      defaultSortDir="asc"
+    />
+  ),
+}
+
+export const FixedHeightWithPagination: Story = {
+  render: () => {
+    const [page, setPage] = useState(0)
+    const [pageSize, setPageSize] = useState(10)
+    const pageData = manyRows.slice(page * pageSize, (page + 1) * pageSize)
+    return (
+      <Table
+        columns={columns}
+        data={pageData}
+        rowKey={r => r.id}
+        height="500px"
+        pageIndex={page}
+        pageSize={pageSize}
+        totalRows={manyRows.length}
+        onPageChange={setPage}
+        pageSizeOptions={[5, 10, 20]}
+        onPageSizeChange={size => { setPageSize(size); setPage(0) }}
+      />
+    )
+  },
+}
+
 export const WithPageSizeSelector: Story = {
   render: () => {
     const [page, setPage] = useState(0)

@@ -11,6 +11,15 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.5.9] - 2026-05-28
+
+### Added
+- `Table`: `height` prop — when set, the wrapper becomes a fixed-height flex column; toolbar and pagination stay in place and only the body scrolls
+- `Table`: `thead` is now `position: sticky; top: 0` so the header remains visible during body scroll (harmless no-op when no scroll container is present)
+- `Table`: `FixedHeight` and `FixedHeightWithPagination` stories
+
+---
+
 ## [0.5.8] - 2026-05-28
 
 ### Added
@@ -178,7 +187,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.8...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.9...HEAD
+[0.5.9]: https://github.com/fwestling/achery-workshop/compare/v0.5.8...v0.5.9
 [0.5.8]: https://github.com/fwestling/achery-workshop/compare/v0.5.7...v0.5.8
 [0.5.7]: https://github.com/fwestling/achery-workshop/compare/v0.5.6...v0.5.7
 [0.5.6]: https://github.com/fwestling/achery-workshop/compare/v0.5.5...v0.5.6

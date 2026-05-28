@@ -20,6 +20,9 @@ export const table = style({
 export const thead = style({
   background: vars.color.bg2,
   borderBottom: `1px solid ${vars.color.border}`,
+  position: 'sticky',
+  top: 0,
+  zIndex: 1,
 })
 
 export const th = style({
