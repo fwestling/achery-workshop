@@ -1,6 +1,16 @@
 import { recipe } from '@vanilla-extract/recipes'
-import { style } from '@vanilla-extract/css'
+import { style, keyframes } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
+
+const spin = keyframes({
+  from: { transform: 'rotate(0deg)' },
+  to: { transform: 'rotate(360deg)' },
+})
+
+export const spinner = style({
+  display: 'inline-flex',
+  animation: `${spin} 1s linear infinite`,
+})
 
 export const button = recipe({
   base: {

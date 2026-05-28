@@ -59,6 +59,7 @@ export type GlyphName =
   | 'salt'
   | 'scroll'
   | 'sigil'
+  | 'spinner'
   | 'sprig'
   | 'square'
   | 'star'

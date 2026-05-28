@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Card } from '../Card/Card'
 import { Eyebrow } from '../Eyebrow/Eyebrow'
 import { Badge } from '../Badge/Badge'
+import { Skeleton } from '../Skeleton/Skeleton'
 import { Sparkline } from '../Sparkline/Sparkline'
 import type { SparklineTone } from '../Sparkline/Sparkline'
 import type { BadgeTone } from '../../types'
@@ -27,6 +28,11 @@ export interface KpiTileProps {
   sparkData?: number[]
   /** Makes the tile a clickable button. */
   onClick?: () => void
+  /**
+   * When true, renders skeleton placeholders in place of the value and delta.
+   * The card shell stays in place so the layout doesn't shift when data arrives.
+   */
+  loading?: boolean
   className?: string
 }
 
@@ -53,20 +59,30 @@ export function KpiTile({
   deltaTone = 'neutral',
   sparkData,
   onClick,
+  loading = false,
   className,
 }: KpiTileProps) {
   const inner: ReactNode = (
     <Card variant="stamp" padding="md" {...(className !== undefined ? { className } : {})}>
       <div className={styles.inner}>
         <Eyebrow>{label}</Eyebrow>
-        <span className={styles.value}>{value}</span>
-        {delta && (
-          <Badge tone={deltaToneToBadge[deltaTone]} dot>
-            {delta}
-          </Badge>
-        )}
-        {sparkData && sparkData.length >= 2 && (
-          <Sparkline data={sparkData} tone={deltaTone} width={80} height={24} />
+        {loading ? (
+          <>
+            <Skeleton width="55%" />
+            <Skeleton width="70%" />
+          </>
+        ) : (
+          <>
+            <span className={styles.value}>{value}</span>
+            {delta && (
+              <Badge tone={deltaToneToBadge[deltaTone]} dot>
+                {delta}
+              </Badge>
+            )}
+            {sparkData && sparkData.length >= 2 && (
+              <Sparkline data={sparkData} tone={deltaTone} width={80} height={24} />
+            )}
+          </>
         )}
       </div>
     </Card>

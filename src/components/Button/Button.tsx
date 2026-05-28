@@ -39,6 +39,17 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    * @example kbd="⌘K"
    */
   kbd?: string
+  /**
+   * When true, replaces the button content with a spinning `spinner` glyph and an optional
+   * `loadingLabel`, and sets `disabled` to prevent double-submission. The button keeps
+   * its current dimensions so the layout does not shift.
+   */
+  loading?: boolean
+  /**
+   * Label shown alongside the spinner when `loading` is true.
+   * @default 'Loading…'
+   */
+  loadingLabel?: string
   children?: ReactNode
   className?: string
 }
@@ -60,6 +71,8 @@ export function Button({
   glyph,
   glyphPosition = 'start',
   kbd,
+  loading = false,
+  loadingLabel = 'Loading…',
   children,
   className,
   ...props
@@ -69,16 +82,29 @@ export function Button({
   return (
     <button
       className={[styles.button({ variant, size }), className].filter(Boolean).join(' ')}
+      disabled={loading || props.disabled}
+      aria-busy={loading || undefined}
       {...props}
     >
-      {glyph && glyphPosition === 'start' && (
-        <Glyph name={glyph} size={glyphSize} aria-hidden="true" />
+      {loading ? (
+        <>
+          <span className={styles.spinner} aria-hidden="true">
+            <Glyph name="spinner" size={glyphSize} />
+          </span>
+          {loadingLabel}
+        </>
+      ) : (
+        <>
+          {glyph && glyphPosition === 'start' && (
+            <Glyph name={glyph} size={glyphSize} aria-hidden="true" />
+          )}
+          {children}
+          {glyph && glyphPosition === 'end' && (
+            <Glyph name={glyph} size={glyphSize} aria-hidden="true" />
+          )}
+          {kbd && <span className={styles.kbdHint}>{kbd}</span>}
+        </>
       )}
-      {children}
-      {glyph && glyphPosition === 'end' && (
-        <Glyph name={glyph} size={glyphSize} aria-hidden="true" />
-      )}
-      {kbd && <span className={styles.kbdHint}>{kbd}</span>}
     </button>
   )
 }

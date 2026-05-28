@@ -49,10 +49,23 @@ export function Field({ label, hint, error, children, className }: FieldProps) {
   )
 }
 
+/**
+ * Auto-save feedback state for inputs.
+ * - `'saving'` — spinning indicator; prevents confusing "done" flash before round-trip completes
+ * - `'saved'` — accent-coloured tick; shown briefly after a successful save
+ * - `'error'` — danger-coloured cross; save failed
+ */
+export type InputStatus = 'idle' | 'saving' | 'saved' | 'error'
+
 /** Props for the {@link Input} component. */
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   /** When true, applies error border colouring. Pair with {@link Field} `error` prop. */
   error?: boolean
+  /**
+   * Auto-save feedback state. When set to anything other than `'idle'`, a small
+   * icon appears at the trailing edge of the input.
+   */
+  status?: InputStatus
   className?: string
 }
 
@@ -64,14 +77,29 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
  * ```tsx
  * <Input placeholder="Search recipes…" type="search" />
  * <Input error value={value} onChange={handleChange} />
+ * <Input status="saving" value={value} onChange={handleChange} />
  * ```
  */
-export function Input({ error, className, ...props }: InputProps) {
+export function Input({ error, status, className, ...props }: InputProps) {
+  const hasStatus = status && status !== 'idle'
+  if (!hasStatus) {
+    return (
+      <input
+        className={[styles.inputBase, error && styles.inputError, className].filter(Boolean).join(' ')}
+        {...props}
+      />
+    )
+  }
   return (
-    <input
-      className={[styles.inputBase, error && styles.inputError, className].filter(Boolean).join(' ')}
-      {...props}
-    />
+    <div className={[styles.inputWrapper, className].filter(Boolean).join(' ')}>
+      <input
+        className={[styles.inputBase, styles.inputWithStatus, error && styles.inputError].filter(Boolean).join(' ')}
+        {...props}
+      />
+      <span className={[styles.statusIcon, styles.statusIconVariants[status]].join(' ')} aria-hidden="true">
+        <Glyph name={status === 'saving' ? 'spinner' : status === 'saved' ? 'tick' : 'cross'} size={12} />
+      </span>
+    </div>
   )
 }
 
@@ -79,6 +107,8 @@ export function Input({ error, className, ...props }: InputProps) {
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   /** When true, applies error border colouring. Pair with {@link Field} `error` prop. */
   error?: boolean
+  /** Auto-save feedback state. When set to anything other than `'idle'`, a small icon appears at the top-right. */
+  status?: InputStatus
   className?: string
 }
 
@@ -93,12 +123,26 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
  * </Field>
  * ```
  */
-export function Textarea({ error, className, ...props }: TextareaProps) {
+export function Textarea({ error, status, className, ...props }: TextareaProps) {
+  const hasStatus = status && status !== 'idle'
+  if (!hasStatus) {
+    return (
+      <textarea
+        className={[styles.textarea, error && styles.inputError, className].filter(Boolean).join(' ')}
+        {...props}
+      />
+    )
+  }
   return (
-    <textarea
-      className={[styles.textarea, error && styles.inputError, className].filter(Boolean).join(' ')}
-      {...props}
-    />
+    <div className={[styles.inputWrapper, className].filter(Boolean).join(' ')}>
+      <textarea
+        className={[styles.textarea, styles.textareaWithStatus, error && styles.inputError].filter(Boolean).join(' ')}
+        {...props}
+      />
+      <span className={[styles.statusIconTextarea, styles.statusIconVariants[status]].join(' ')} aria-hidden="true">
+        <Glyph name={status === 'saving' ? 'spinner' : status === 'saved' ? 'tick' : 'cross'} size={12} />
+      </span>
+    </div>
   )
 }
 
@@ -106,6 +150,8 @@ export function Textarea({ error, className, ...props }: TextareaProps) {
 export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   /** When true, applies error border colouring. Pair with {@link Field} `error` prop. */
   error?: boolean
+  /** Auto-save feedback state. When set to anything other than `'idle'`, a small icon appears at the trailing edge (beside the native chevron). */
+  status?: InputStatus
   children: ReactNode
   className?: string
 }
@@ -127,14 +173,30 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
  * </Field>
  * ```
  */
-export function Select({ error, children, className, ...props }: SelectProps) {
+export function Select({ error, status, children, className, ...props }: SelectProps) {
+  const hasStatus = status && status !== 'idle'
+  if (!hasStatus) {
+    return (
+      <select
+        className={[styles.selectInput, error && styles.inputError, className].filter(Boolean).join(' ')}
+        {...props}
+      >
+        {children}
+      </select>
+    )
+  }
   return (
-    <select
-      className={[styles.selectInput, error && styles.inputError, className].filter(Boolean).join(' ')}
-      {...props}
-    >
-      {children}
-    </select>
+    <div className={[styles.inputWrapper, className].filter(Boolean).join(' ')}>
+      <select
+        className={[styles.selectInput, styles.selectWithStatus, error && styles.inputError].filter(Boolean).join(' ')}
+        {...props}
+      >
+        {children}
+      </select>
+      <span className={[styles.statusIcon, styles.statusIconVariants[status]].join(' ')} aria-hidden="true" style={{ right: '28px' }}>
+        <Glyph name={status === 'saving' ? 'spinner' : status === 'saved' ? 'tick' : 'cross'} size={12} />
+      </span>
+    </div>
   )
 }
 

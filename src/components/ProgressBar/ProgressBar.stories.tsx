@@ -14,3 +14,5 @@ export const Accent: Story = { args: { tone: 'accent' } }
 export const Small: Story = { args: { size: 'sm', tone: 'accent' } }
 export const Empty: Story = { args: { value: 0 } }
 export const Full: Story = { args: { value: 100, tone: 'accent' } }
+export const Loading: Story = { args: { value: 0, loading: true } }
+export const LoadingSm: Story = { args: { value: 0, size: 'sm', loading: true } }

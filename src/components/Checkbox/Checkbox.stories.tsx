@@ -44,3 +44,12 @@ export const Controlled = () => {
 export const NoLabel: Story = {
   args: { 'aria-label': 'Toggle selection', checked: false },
 }
+
+export const SaveStatus = () => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+    <Checkbox checked label="Auto-synced (saving)" status="saving" />
+    <Checkbox checked label="Auto-synced (saved)" status="saved" />
+    <Checkbox checked label="Auto-synced (error)" status="error" />
+    <Checkbox checked label="No status" />
+  </div>
+)

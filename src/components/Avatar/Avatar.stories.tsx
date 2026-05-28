@@ -28,6 +28,16 @@ export const AllTones: Story = {
   ),
 }
 
+export const Loading: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+      <Avatar initials="" size="sm" loading />
+      <Avatar initials="" size="md" loading />
+      <Avatar initials="" size="lg" loading />
+    </div>
+  ),
+}
+
 export const DarkMode: Story = {
   parameters: { backgrounds: { default: 'dark' } },
   render: () => (

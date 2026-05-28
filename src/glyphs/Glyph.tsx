@@ -31,6 +31,7 @@ const glyphMap: Record<GlyphName, SvgComponent> = {
   'salt': GlyphComponents.Salt,
   'scroll': GlyphComponents.Scroll,
   'sigil': GlyphComponents.Sigil,
+  'spinner': GlyphComponents.Spinner,
   'sprig': GlyphComponents.Sprig,
   'square': GlyphComponents.Square,
   'star': GlyphComponents.Star,
@@ -51,7 +52,7 @@ export interface GlyphProps extends SVGProps<SVGSVGElement> {
    *
    * **Botanical / alchemical:** `fern`, `sprig`, `leaf`, `feather`, `flourish`, `asterism`, `sigil`, `salt`, `sulfur`, `mercury`
    *
-   * **Editorial / tools:** `book`, `scroll`, `feather`, `key`, `flask`, `compass`, `eye`, `hand`, `star`, `moon`, `sun`
+   * **Editorial / tools:** `book`, `scroll`, `feather`, `key`, `flask`, `compass`, `eye`, `hand`, `star`, `moon`, `sun`, `spinner`
    *
    * **Brand:** `mark`, `wordmark`
    */

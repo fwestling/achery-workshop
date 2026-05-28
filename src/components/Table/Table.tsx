@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import type { ReactNode } from 'react'
 import type { SortDirection } from '../../types/components'
 import { Glyph } from '../../glyphs/Glyph'
+import { Skeleton } from '../Skeleton/Skeleton'
 import * as styles from './Table.css'
 
 /** Column definition for the {@link Table} component. */
@@ -95,8 +96,16 @@ export interface TableProps<T extends { [K in string]: unknown }> {
   toolbar?: ReactNode
   /** Rendered when `data` is empty, in place of the table body. @default "No data." */
   emptyState?: ReactNode
+  /**
+   * When true, the table body renders skeleton placeholder rows instead of data.
+   * The header, toolbar, and pagination controls remain visible so the layout
+   * doesn't jump when data arrives. Row count defaults to `pageSize` (or 10).
+   */
+  loading?: boolean
   className?: string
 }
+
+const skeletonWidths = ['75%', '90%', '65%', '85%', '70%', '95%', '60%', '80%']
 
 /** Builds the page number window: always includes 0 and last, current ± window, with nulls for gaps. */
 function buildPageWindow(current: number, total: number, window: number): (number | null)[] {
@@ -163,6 +172,7 @@ export function Table<T extends { [K in string]: unknown }>({
   height,
   toolbar,
   emptyState,
+  loading = false,
   className,
 }: TableProps<T>) {
   const [internalSortKey, setInternalSortKey] = useState<string | null>(defaultSortKey ?? null)
@@ -238,7 +248,17 @@ export function Table<T extends { [K in string]: unknown }>({
           </tr>
         </thead>
         <tbody>
-          {data.length === 0 ? (
+          {loading ? (
+            Array.from({ length: pageSize ?? 10 }, (_, i) => (
+              <tr key={i} className={styles.tr} aria-hidden="true">
+                {columns.map(col => (
+                  <td key={col.key} className={col.mono ? styles.tdMono : styles.td}>
+                    <Skeleton width={col.width ? '80%' : skeletonWidths[i % skeletonWidths.length]!} />
+                  </td>
+                ))}
+              </tr>
+            ))
+          ) : data.length === 0 ? (
             <tr>
               <td colSpan={columns.length}>
                 <div className={styles.emptyState}>

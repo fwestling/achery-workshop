@@ -17,7 +17,7 @@ const meta = {
       options: ['primary', 'secondary', 'accent', 'ghost', 'danger'],
     },
     size: { control: 'select', options: ['sm', 'md'] },
-    glyph: { control: 'select', options: [undefined, 'plus', 'arrow-right', 'compass', 'leaf', 'flask', 'key', 'moon', 'sun'] },
+    glyph: { control: 'select', options: [undefined, 'plus', 'arrow-right', 'compass', 'leaf', 'flask', 'key', 'moon', 'sun', 'spinner'] },
     glyphPosition: { control: 'select', options: ['start', 'end'] },
     kbd: { control: 'text' },
     disabled: { control: 'boolean' },
@@ -81,6 +81,28 @@ export const Disabled: Story = {
       <Button variant="primary" disabled>Primary</Button>
       <Button variant="accent" disabled>Accent</Button>
       <Button variant="danger" disabled>Danger</Button>
+    </div>
+  ),
+}
+
+export const Loading: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+      <Button variant="primary" loading>Primary</Button>
+      <Button variant="secondary" loading>Secondary</Button>
+      <Button variant="accent" loading>Accent</Button>
+      <Button variant="ghost" loading>Ghost</Button>
+      <Button variant="danger" loading>Danger</Button>
+    </div>
+  ),
+}
+
+export const LoadingCustomLabel: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+      <Button variant="accent" loading loadingLabel="Saving…">Save</Button>
+      <Button variant="primary" loading loadingLabel="Deleting…">Delete</Button>
+      <Button variant="secondary" loading loadingLabel="Importing…">Import</Button>
     </div>
   ),
 }

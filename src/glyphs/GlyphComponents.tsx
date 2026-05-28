@@ -26,6 +26,7 @@ export function Mark(props: P) { return <svg viewBox="0 0 80 80" fill="currentCo
   <polygon points="24,50 33,58 33,52" stroke="none"></polygon>
   <polygon points="56,50 47,58 47,52" stroke="none"></polygon>
 </svg> }
+export function Menu(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" {...props}><line x1="3" y1="7" x2="21" y2="7"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="17" x2="21" y2="17"></line></svg> }
 export function Mercury(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...props}>
   <circle cx="12" cy="9" r="5"></circle>
   <path d="M12 14v7"></path>
@@ -38,6 +39,7 @@ export function Plus(props: P) { return <svg viewBox="0 0 24 24" fill="none" str
 export function Salt(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="8"></circle><path d="M4 12h16"></path></svg> }
 export function Scroll(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" strokeLinecap="round" {...props}><path d="M5 6a2 2 0 0 1 4 0v12a2 2 0 0 0 4 0V8h6v10a3 3 0 0 1-3 3H7"></path><path d="M5 6v0a2 2 0 0 0 2 2h6"></path></svg> }
 export function Sigil(props: P) { return <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.2" {...props}><circle cx="24" cy="24" r="20"></circle><circle cx="24" cy="24" r="14"></circle><polygon points="24,8 38,32 10,32"></polygon><polygon points="24,40 10,16 38,16"></polygon><circle cx="24" cy="24" r="3"></circle></svg> }
+export function Spinner(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" {...props}><path d="M12 3a9 9 0 1 0 9 9"></path></svg> }
 export function Sprig(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" {...props}><path d="M12 3v18"></path><path d="M12 7c-2-1-3-1-5-1 0 2 1 3 5 4"></path><path d="M12 11c2-1 3-1 5-1 0 2-1 3-5 4"></path><path d="M12 15c-2-1-3-1-5-1 0 2 1 3 5 4"></path></svg> }
 export function Square(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" {...props}><rect x="4" y="4" width="16" height="16"></rect></svg> }
 export function Star(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" {...props}><polygon points="12,3 14,10 21,10 15.5,14 17.5,21 12,17 6.5,21 8.5,14 3,10 10,10"></polygon></svg> }
@@ -61,5 +63,3 @@ export function Wordmark(props: P) { return <svg viewBox="0 0 320 80" fill="curr
     <text x="2" y="0">— W O R K S H O P —</text>
   </g>
 </svg> }
-
-export function Menu(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" {...props}><line x1="3" y1="7" x2="21" y2="7"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="17" x2="21" y2="17"></line></svg> }

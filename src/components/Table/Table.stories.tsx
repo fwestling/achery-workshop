@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Table } from './Table'
 import { Badge } from '../Badge/Badge'
 import type { ColumnDef } from './Table'
-import type { BadgeTone } from '../../types/components'
+import type { BadgeTone, SortDirection } from '../../types/components'
 
 interface Recipe {
   [key: string]: unknown
@@ -224,6 +224,60 @@ export const FixedHeightWithPagination: Story = {
         pageSizeOptions={[5, 10, 20]}
         onPageSizeChange={size => { setPageSize(size); setPage(0) }}
       />
+    )
+  },
+}
+
+export const Loading: Story = {
+  render: () => (
+    <Table
+      columns={columns}
+      data={[]}
+      rowKey={r => r.id}
+      loading
+      pageSize={5}
+    />
+  ),
+}
+
+export const LoadingWithPaginationAndSort: Story = {
+  render: () => {
+    const [loading, setLoading] = useState(true)
+    const [page, setPage] = useState(0)
+    const [sortKey, setSortKey] = useState('name')
+    const [sortDir, setSortDir] = useState<SortDirection>('asc')
+    const pageSize = 3
+    const pageData = loading ? [] : manyRows.slice(page * pageSize, (page + 1) * pageSize)
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div style={{ display: 'flex', gap: 12 }}>
+          <button
+            onClick={() => setLoading(l => !l)}
+            style={{ fontSize: 12, padding: '4px 10px', cursor: 'pointer' }}
+          >
+            {loading ? 'Simulate data arrived' : 'Simulate loading'}
+          </button>
+          <span style={{ fontSize: 12, color: '#888', lineHeight: '26px' }}>
+            {loading ? 'loading=true — skeleton rows, pagination and sort still available' : 'loading=false — real data'}
+          </span>
+        </div>
+        <Table
+          columns={columns}
+          data={pageData}
+          rowKey={r => r.id}
+          loading={loading}
+          pageIndex={page}
+          pageSize={pageSize}
+          totalRows={manyRows.length}
+          onPageChange={p => { setPage(p) }}
+          pageSizeOptions={[3, 5, 10]}
+          onPageSizeChange={_size => { setPage(0) }}
+          sortKey={sortKey}
+          sortDir={sortDir}
+          onSortChange={(k, d) => { setSortKey(k); setSortDir(d) }}
+        />
+      </div>
     )
   },
 }

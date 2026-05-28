@@ -11,6 +11,23 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.6.0] - 2026-05-28
+
+### Added
+- `Skeleton`: new component — animated shimmer placeholder for loading states. Supports `lines` (stacked text lines), `width` (single value or per-line array), `block` (tall rectangular placeholder), `height` (block height override), and `style` (inline escape hatch for shape overrides like circular avatars). Exported from the package root.
+- `Table`: `loading` prop — when true, renders skeleton placeholder rows in the tbody while keeping the header, toolbar, and pagination controls live. Row count defaults to `pageSize` (or 10). Skeleton widths vary per row for a natural appearance.
+- `KpiTile`: `loading` prop — when true, renders skeleton lines in place of the value and delta while keeping the card shell in place to prevent layout shift.
+- `Avatar`: `loading` prop — when true, renders a circular skeleton at the correct size for the given `size` variant.
+- `ProgressBar`: `loading` prop — when true, renders a skeleton track at the correct height for the given `size` variant.
+- `Button`: `loading` prop — when true, replaces the button content with a spinning `spinner` glyph and a `loadingLabel` (default `'Loading…'`), and disables the button to prevent double-submission. Layout does not shift.
+- `Input`, `Textarea`, `Select`: `status` prop (`'idle' | 'saving' | 'saved' | 'error'`) — when set to anything other than `'idle'`, renders a small trailing icon: spinning `spinner` glyph for `'saving'`, accent-coloured `tick` for `'saved'`, danger-coloured `cross` for `'error'`. Intended for auto-save feedback on blur. `InputStatus` type exported from the package root.
+- `Checkbox`, `Toggle`: `status` prop (same `InputStatus` type) — renders the same status icon inline after the label. Useful for controls that immediately persist their state.
+- `DatePicker`: `status` prop (same `InputStatus` type) — trailing icon in the same position as `Input`.
+- `Glyph`: new `spinner` glyph — 3/4-arc circle; designed to read clearly when spinning. Available as `'spinner'` in `GlyphName`.
+- Stories: `Loading` and `LoadingCustomLabel` stories added for `Button`; `Loading` stories added for `Table`, `KpiTile`, `Avatar`, `ProgressBar`, and `Skeleton`; `SaveStatus` stories added for `Input`, `Checkbox`, `Toggle`, and `DatePicker`.
+
+---
+
 ## [0.5.9] - 2026-05-28
 
 ### Added
@@ -187,7 +204,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.9...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/fwestling/achery-workshop/compare/v0.5.9...v0.6.0
 [0.5.9]: https://github.com/fwestling/achery-workshop/compare/v0.5.8...v0.5.9
 [0.5.8]: https://github.com/fwestling/achery-workshop/compare/v0.5.7...v0.5.8
 [0.5.7]: https://github.com/fwestling/achery-workshop/compare/v0.5.6...v0.5.7

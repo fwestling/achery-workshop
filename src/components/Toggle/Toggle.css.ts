@@ -1,5 +1,10 @@
-import { style } from '@vanilla-extract/css'
+import { style, styleVariants, keyframes } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
+
+const spin = keyframes({
+  from: { transform: 'rotate(0deg)' },
+  to: { transform: 'rotate(360deg)' },
+})
 
 export const track = style({
   display: 'inline-flex',
@@ -54,4 +59,16 @@ export const label = style({
   fontSize: '13px',
   color: vars.color.fg,
   userSelect: 'none',
+})
+
+export const statusIndicator = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  flexShrink: 0,
+})
+
+export const statusIndicatorVariants = styleVariants({
+  saving: { color: vars.color.fg3, animation: `${spin} 1s linear infinite` },
+  saved: { color: vars.color.accent },
+  error: { color: vars.color.danger },
 })

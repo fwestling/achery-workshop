@@ -47,3 +47,19 @@ export const DateOnly: Story = {
 export const DatetimeLocal: Story = {
   args: { type: 'datetime-local', value: '2026-06-15T14:30' },
 }
+
+export const SaveStatus: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '300px' }}>
+      <Field label="Saving">
+        <DatePicker value="2026-06-01" status="saving" />
+      </Field>
+      <Field label="Saved">
+        <DatePicker value="2026-06-01" status="saved" />
+      </Field>
+      <Field label="Error">
+        <DatePicker value="" status="error" error />
+      </Field>
+    </div>
+  ),
+}

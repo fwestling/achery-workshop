@@ -44,6 +44,20 @@ export const FullExample: Story = {
   },
 }
 
+export const Loading: Story = {
+  args: { label: 'Total Income', value: '', loading: true },
+}
+
+export const LoadingRow: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 16, width: 640 }}>
+      <KpiTile label="Total Income" value="" loading />
+      <KpiTile label="Total Spend" value="" loading />
+      <KpiTile label="Net" value="" loading />
+    </div>
+  ),
+}
+
 export const DarkMode: Story = {
   parameters: { backgrounds: { default: 'dark' } },
   args: { label: 'Total Income', value: '$4,200', delta: '+$340 vs last month', deltaTone: 'positive', sparkData: spark },

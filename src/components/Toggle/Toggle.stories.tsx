@@ -25,3 +25,14 @@ export const Default: Story = {}
 export const On: Story = { args: { defaultPressed: true } }
 export const WithLabel: Story = { args: { label: 'Enable notifications', defaultPressed: true } }
 export const Disabled: Story = { args: { disabled: true, defaultPressed: true, label: 'Disabled' } }
+
+export const SaveStatus: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <Toggle pressed label="Auto-sync (saving)" status="saving" />
+      <Toggle pressed label="Auto-sync (saved)" status="saved" />
+      <Toggle pressed label="Auto-sync (error)" status="error" />
+      <Toggle pressed label="No status" />
+    </div>
+  ),
+}

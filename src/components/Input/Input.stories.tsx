@@ -57,3 +57,31 @@ export const Disabled: Story = {
     </div>
   ),
 }
+
+export const SaveStatus: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '400px' }}>
+      <Field label="Saving">
+        <Input value="Iron-gall ink" status="saving" onChange={() => {}} />
+      </Field>
+      <Field label="Saved">
+        <Input value="Iron-gall ink" status="saved" onChange={() => {}} />
+      </Field>
+      <Field label="Error">
+        <Input value="Iron-gall ink" status="error" error onChange={() => {}} />
+      </Field>
+      <Field label="Notes (saving)">
+        <Textarea value="Left to cure for 48 hours." status="saving" rows={3} onChange={() => {}} />
+      </Field>
+      <Field label="Notes (saved)">
+        <Textarea value="Left to cure for 48 hours." status="saved" rows={3} onChange={() => {}} />
+      </Field>
+      <Field label="Chapter (saved)">
+        <Select status="saved" value="ink" onChange={() => {}}>
+          <option value="ink">Ink</option>
+          <option value="pigment">Pigment</option>
+        </Select>
+      </Field>
+    </div>
+  ),
+}

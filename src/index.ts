@@ -33,7 +33,7 @@ export type { MarginaliaProps } from './components/Marginalia/Marginalia'
 
 // Input
 export { Field, Input, Textarea, Select, SearchInput } from './components/Input/Input'
-export type { FieldProps, InputProps, TextareaProps, SelectProps, SearchInputProps } from './components/Input/Input'
+export type { FieldProps, InputProps, TextareaProps, SelectProps, SearchInputProps, InputStatus } from './components/Input/Input'
 
 // Card
 export { Card } from './components/Card/Card'
@@ -62,6 +62,10 @@ export type { AppBarProps } from './components/AppBar/AppBar'
 // Table
 export { Table } from './components/Table/Table'
 export type { TableProps, ColumnDef } from './components/Table/Table'
+
+// Skeleton
+export { Skeleton } from './components/Skeleton/Skeleton'
+export type { SkeletonProps } from './components/Skeleton/Skeleton'
 
 // Modal
 export { Modal } from './components/Modal/Modal'

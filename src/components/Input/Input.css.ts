@@ -1,5 +1,10 @@
-import { style, globalStyle } from '@vanilla-extract/css'
+import { style, globalStyle, keyframes, styleVariants } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
+
+const spin = keyframes({
+  from: { transform: 'rotate(0deg)' },
+  to: { transform: 'rotate(360deg)' },
+})
 
 export const fieldRoot = style({
   display: 'flex',
@@ -76,6 +81,54 @@ export const selectInput = style([inputBase, {
   backgroundPosition: 'right 8px center',
   cursor: 'pointer',
 }])
+
+export const inputWrapper = style({
+  position: 'relative',
+  width: '100%',
+})
+
+export const inputWithStatus = style([inputBase, {
+  paddingRight: '28px',
+  selectors: {
+    '&:focus': {
+      paddingRight: '27px',
+    },
+  },
+}])
+
+export const textareaWithStatus = style({
+  paddingRight: '28px',
+  selectors: {
+    '&:focus': {
+      paddingRight: '27px',
+    },
+  },
+})
+
+export const selectWithStatus = style({
+  paddingRight: '48px',
+})
+
+export const statusIcon = style({
+  position: 'absolute',
+  right: '9px',
+  top: '50%',
+  transform: 'translateY(-50%)',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+})
+
+export const statusIconTextarea = style([statusIcon, {
+  top: '10px',
+  transform: 'none',
+}])
+
+export const statusIconVariants = styleVariants({
+  saving: { color: vars.color.fg3, animation: `${spin} 1s linear infinite` },
+  saved: { color: vars.color.accent },
+  error: { color: vars.color.danger },
+})
 
 export const searchWrapper = style({
   position: 'relative',

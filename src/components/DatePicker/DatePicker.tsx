@@ -1,4 +1,6 @@
 import type { InputHTMLAttributes } from 'react'
+import { Glyph } from '../../glyphs/Glyph'
+import type { InputStatus } from '../Input/Input'
 import * as styles from './DatePicker.css'
 
 /** Props for the {@link DatePicker} component. */
@@ -21,6 +23,8 @@ export interface DatePickerProps extends Omit<InputHTMLAttributes<HTMLInputEleme
   disabled?: boolean
   /** When true, applies error border styling. */
   error?: boolean
+  /** Auto-save feedback state. When set to anything other than `'idle'`, a small trailing icon appears. */
+  status?: InputStatus
   placeholder?: string
   className?: string
 }
@@ -48,11 +52,13 @@ export function DatePicker({
   max,
   disabled,
   error,
+  status,
   placeholder,
   className,
   ...rest
 }: DatePickerProps) {
-  return (
+  const hasStatus = status && status !== 'idle'
+  const input = (
     <input
       type={type}
       value={value}
@@ -62,8 +68,18 @@ export function DatePicker({
       disabled={disabled}
       placeholder={placeholder}
       data-error={error || undefined}
-      className={[styles.input, className].filter(Boolean).join(' ')}
+      data-has-status={hasStatus || undefined}
+      className={[styles.input, !hasStatus && className].filter(Boolean).join(' ')}
       {...rest}
     />
+  )
+  if (!hasStatus) return input
+  return (
+    <div className={[styles.wrapper, className].filter(Boolean).join(' ')}>
+      {input}
+      <span className={[styles.statusIcon, styles.statusIconVariants[status]].join(' ')} aria-hidden="true">
+        <Glyph name={status === 'saving' ? 'spinner' : status === 'saved' ? 'tick' : 'cross'} size={12} />
+      </span>
+    </div>
   )
 }

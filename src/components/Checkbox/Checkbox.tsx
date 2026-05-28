@@ -1,5 +1,7 @@
 import * as RadixCheckbox from '@radix-ui/react-checkbox'
 import type { ReactNode } from 'react'
+import { Glyph } from '../../glyphs/Glyph'
+import type { InputStatus } from '../Input/Input'
 import * as styles from './Checkbox.css'
 
 /** Props for the {@link Checkbox} component. */
@@ -16,6 +18,11 @@ export interface CheckboxProps {
   /** Accessible label when no visible label is present. */
   'aria-label'?: string
   id?: string
+  /**
+   * Auto-save feedback state. When set to anything other than `'idle'`, a small
+   * icon appears after the label (or after the checkbox if there is no label).
+   */
+  status?: InputStatus
   className?: string
 }
 
@@ -43,6 +50,7 @@ export function Checkbox({
   disabled,
   label,
   id,
+  status,
   className,
   'aria-label': ariaLabel,
 }: CheckboxProps) {
@@ -75,6 +83,11 @@ export function Checkbox({
         <label htmlFor={resolvedId} className={styles.label} style={{ cursor: disabled ? 'not-allowed' : 'pointer' }}>
           {label}
         </label>
+      )}
+      {status && status !== 'idle' && (
+        <span className={[styles.statusIndicator, styles.statusIndicatorVariants[status]].join(' ')} aria-hidden="true">
+          <Glyph name={status === 'saving' ? 'spinner' : status === 'saved' ? 'tick' : 'cross'} size={12} />
+        </span>
       )}
     </span>
   )

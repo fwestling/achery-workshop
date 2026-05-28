@@ -1,3 +1,4 @@
+import { Skeleton } from '../Skeleton/Skeleton'
 import * as styles from './Avatar.css'
 
 export type AvatarTone = 'moss' | 'neutral'
@@ -11,6 +12,8 @@ export interface AvatarProps {
   size?: AvatarSize
   /** Tone. @default 'neutral' */
   tone?: AvatarTone
+  /** When true, renders a circular skeleton placeholder instead of the initials. */
+  loading?: boolean
   className?: string
 }
 
@@ -22,7 +25,20 @@ export interface AvatarProps {
  * <Avatar initials="FW" size="md" tone="moss" />
  * ```
  */
-export function Avatar({ initials, size = 'md', tone = 'neutral', className }: AvatarProps) {
+const avatarPx: Record<AvatarSize, string> = { sm: '24px', md: '32px', lg: '40px' }
+
+export function Avatar({ initials, size = 'md', tone = 'neutral', loading = false, className }: AvatarProps) {
+  if (loading) {
+    const px = avatarPx[size]
+    return (
+      <Skeleton
+        block
+        height={px}
+        className={className}
+        style={{ width: px, borderRadius: '50%', flexShrink: 0 }}
+      />
+    )
+  }
   const display = initials.slice(0, 2).toUpperCase()
   return (
     <span
