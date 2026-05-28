@@ -114,6 +114,36 @@ export const WithToolbarSlot: Story = {
   ),
 }
 
+export const WideOverflow: Story = {
+  render: () => (
+    <div style={{ width: 600, border: '2px dashed tomato', resize: 'horizontal', overflow: 'hidden' }}>
+      <Table
+        columns={[
+          { key: 'date', label: 'Date', mono: true, width: '120px', sortable: true },
+          { key: 'description', label: 'Description', width: '220px' },
+          { key: 'amount', label: 'Amount', mono: true, width: '100px', sortable: true },
+          { key: 'type', label: 'Type', width: '100px' },
+          { key: 'category', label: 'Category', width: '160px' },
+          { key: 'account', label: 'Account', width: '160px' },
+          { key: 'vendor', label: 'Vendor', width: '160px' },
+          { key: 'subscription', label: 'Subscription', width: '160px' },
+          { key: 'comments', label: 'Comments', width: '200px' },
+          { key: 'delete', label: 'Delete', width: '80px' },
+        ]}
+        data={[
+          { id: 't1', date: '1 Mar 2026', description: 'Woolworths Supermarkets MACQUARIE CENTRE', amount: '$-84.23', type: 'basic', category: 'Household', account: 'ING Daily', vendor: 'Woolworths', subscription: '—', comments: 'Weekly groceries', delete: '×' },
+          { id: 't2', date: '1 Mar 2026', description: 'HARRY HARTOG BOOKSELLER NORTH RYDE', amount: '$-13.11', type: 'basic', category: 'Baby', account: 'ING Daily', vendor: 'Harry Hartog', subscription: '—', comments: '—', delete: '×' },
+          { id: 't3', date: '1 Mar 2026', description: 'MISTER MINIT MACQUARIE CENTRE', amount: '$-20.24', type: 'basic', category: 'Household', account: 'ING Daily', vendor: 'Mister Minit', subscription: '—', comments: 'Sharpening knife', delete: '×' },
+          { id: 't4', date: '19 Mar 2026', description: 'Spotify Australia STOCKHOLM', amount: '$-11.99', type: 'basic', category: 'Entertainment', account: 'Westpac Black', vendor: 'Spotify', subscription: 'Music', comments: '—', delete: '×' },
+          { id: 't5', date: '19 Mar 2026', description: 'iinet Limited PERTH', amount: '$-89.95', type: 'basic', category: 'Utilities', account: 'Westpac Black', vendor: 'iinet', subscription: 'WiFi', comments: '—', delete: '×' },
+        ]}
+        rowKey={r => r.id as string}
+        toolbar={<div style={{ fontSize: 12, color: '#666' }}>Resize the red box to verify horizontal scroll ↔</div>}
+      />
+    </div>
+  ),
+}
+
 export const WithPagination: Story = {
   render: () => {
     const [page, setPage] = useState(0)

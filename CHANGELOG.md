@@ -11,6 +11,18 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.5.7] - 2026-05-28
+
+### Fixed
+- `Table`: horizontal overflow now scrolls correctly — only the `<table>` element is wrapped in the scroll container; toolbar and pagination sit outside it, so they never stretch wider than the component boundary
+- `Table`: when `pageSize` is set, the scroll area reserves a stable `minHeight` (`37px` thead + `pageSize × 38px` per row), preventing the pagination controls from jumping when navigating to a partial last page
+- `Table`: removed the `&:last-child { borderBottom: none }` row rule; the scroll container now carries the bottom border, so the table edge is consistent on both full and partial pages
+
+### Added
+- `Table`: `WideOverflow` story — resizable 600px container with a 10-column wide table for verifying horizontal scroll behaviour
+
+---
+
 ## [0.5.6] - 2026-05-27
 
 ### Fixed
@@ -154,7 +166,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.6...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.5.7...HEAD
+[0.5.7]: https://github.com/fwestling/achery-workshop/compare/v0.5.6...v0.5.7
 [0.5.6]: https://github.com/fwestling/achery-workshop/compare/v0.5.5...v0.5.6
 [0.5.5]: https://github.com/fwestling/achery-workshop/compare/v0.5.4...v0.5.5
 [0.5.4]: https://github.com/fwestling/achery-workshop/compare/v0.5.3...v0.5.4

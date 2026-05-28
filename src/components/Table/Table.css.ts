@@ -3,8 +3,12 @@ import { vars } from '../../theme/vars.css'
 
 export const tableWrapper = style({
   width: '100%',
-  overflow: 'auto',
   border: `1px solid ${vars.color.border}`,
+})
+
+export const tableScroll = style({
+  overflowX: 'auto',
+  borderBottom: `1px solid ${vars.color.borderMute}`,
 })
 
 export const table = style({
@@ -54,12 +58,12 @@ export const tr = style({
     '&:hover': {
       background: vars.color.bg2,
     },
+    '&:last-child': {
+      borderBottom: 'none',
+    },
     '&[data-selected="true"]': {
       background: vars.color.bg2,
       boxShadow: `inset 3px 0 0 ${vars.color.accent}`,
-    },
-    '&:last-child': {
-      borderBottom: 'none',
     },
   },
 })

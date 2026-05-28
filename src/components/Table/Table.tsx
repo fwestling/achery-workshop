@@ -162,6 +162,10 @@ export function Table<T extends { [K in string]: unknown }>({
   return (
     <div className={[styles.tableWrapper, className].filter(Boolean).join(' ')}>
       {toolbar && <div className={styles.toolbar}>{toolbar}</div>}
+      <div
+        className={styles.tableScroll}
+        style={pageSize ? { minHeight: 37 + pageSize * 38 } : undefined}
+      >
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr>
@@ -219,6 +223,7 @@ export function Table<T extends { [K in string]: unknown }>({
           )}
         </tbody>
       </table>
+      </div>
       {pageSize && totalPages !== null && (
         <div className={styles.pagination}>
           <Button
