@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.6.1] - 2026-05-28
+
+### Fixed
+- `Table`: row `onClick` now ignores clicks that originate from within an interactive element (`a`, `button`, `input`, `select`, `textarea`, or any element with `role="checkbox"` or `role="button"`). Previously, clicking a chip, action button, or checkbox inside a cell would fire both the cell's own handler and the row navigation.
+
+---
+
 ## [0.6.0] - 2026-05-28
 
 ### Added
@@ -204,7 +211,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.6.1...HEAD
+[0.6.1]: https://github.com/fwestling/achery-workshop/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/fwestling/achery-workshop/compare/v0.5.9...v0.6.0
 [0.5.9]: https://github.com/fwestling/achery-workshop/compare/v0.5.8...v0.5.9
 [0.5.8]: https://github.com/fwestling/achery-workshop/compare/v0.5.7...v0.5.8

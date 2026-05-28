@@ -275,7 +275,11 @@ export function Table<T extends { [K in string]: unknown }>({
                   key={key}
                   className={styles.tr}
                   data-selected={isSelected}
-                  onClick={onRowClick ? () => onRowClick(key, row) : undefined}
+                  onClick={onRowClick ? (e) => {
+                    const target = e.target as HTMLElement
+                    if (target.closest('a, button, input, select, textarea, [role="checkbox"], [role="button"]')) return
+                    onRowClick(key, row)
+                  } : undefined}
                   style={onRowClick ? { cursor: 'pointer' } : undefined}
                 >
                   {columns.map(col => (
