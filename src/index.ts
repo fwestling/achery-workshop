@@ -23,6 +23,10 @@ export type { BadgeProps } from './components/Badge/Badge'
 export { Button } from './components/Button/Button'
 export type { ButtonProps } from './components/Button/Button'
 
+// ConfirmDialog
+export { ConfirmDialogProvider, useConfirm } from './components/ConfirmDialog/ConfirmDialog'
+export type { ConfirmOptions } from './components/ConfirmDialog/ConfirmDialog'
+
 // Toggle
 export { Toggle } from './components/Toggle/Toggle'
 export type { ToggleProps } from './components/Toggle/Toggle'
