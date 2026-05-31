@@ -1,7 +1,7 @@
 // AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs
 import { Svg, Polygon, Rect } from 'react-native-svg'
 interface Props { size?: number; color?: string }
-export default function Mark({ size = 24, color = '#000000' }: Props) {
+export default function GMark({ size = 24, color = '#000000' }: Props) {
   return (
     <Svg width={size} height={size} viewBox="0 0 80 80" fill="none">
       <Polygon points="40,4 72,22 72,58 40,76 8,58 8,22" fill="none" strokeWidth="6" stroke={color} strokeLinecap="square" strokeLinejoin="miter"></Polygon>
