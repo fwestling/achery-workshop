@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Glyph } from './Glyph'
+import { GlyphCategories } from './glyphMeta'
 import type { GlyphName } from '../types/components'
+
+const allGlyphs = Object.values(GlyphCategories).flat() as GlyphName[]
 
 const meta = {
   title: 'Primitives/Glyph',
@@ -8,12 +11,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '33 SVG icons drawn in the vocabulary of alchemical and botanical illustration. All use `stroke="currentColor"` — they inherit colour from context. Decorative by default (`aria-hidden`); pass `title` for semantic use in icon-only buttons.',
+        component: '394 SVG icons + 3 brand marks drawn in the vocabulary of alchemical and botanical illustration. All use `stroke="currentColor"` — they inherit colour from context. Decorative by default (`aria-hidden`); pass `title` for semantic use in icon-only buttons. See the **GlyphGallery** story for a searchable reference.',
       },
     },
   },
   argTypes: {
-    name: { control: 'select', options: ['arrow-right', 'arrow-up', 'asterism', 'book', 'circle', 'compass', 'cross', 'eye', 'feather', 'fern', 'flask', 'flourish', 'hand', 'hex', 'key', 'leaf', 'mercury', 'minus', 'moon', 'plus', 'salt', 'scroll', 'sigil', 'sprig', 'square', 'star', 'sulfur', 'sun', 'tick', 'triangle', 'triangle-down'] },
+    name: { control: 'select', options: allGlyphs },
     size: { control: { type: 'range', min: 12, max: 64, step: 2 } },
   },
   args: { name: 'hex', size: 24 },
@@ -23,14 +26,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
-
-const allGlyphs: GlyphName[] = [
-  'mercury', 'sulfur', 'salt', 'sun', 'moon', 'star', 'sigil', 'flask', 'key',
-  'leaf', 'sprig', 'fern',
-  'triangle', 'triangle-down', 'square', 'circle', 'hex', 'cross',
-  'tick', 'plus', 'minus', 'arrow-up', 'arrow-right', 'eye', 'hand', 'compass', 'feather', 'book', 'scroll',
-  'asterism', 'flourish',
-]
 
 export const AllGlyphs: Story = {
   render: () => (

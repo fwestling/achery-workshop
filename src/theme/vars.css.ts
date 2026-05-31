@@ -25,6 +25,12 @@ export const vars = createThemeContract({
     info: null,
     selectionBg: null,
     selectionFg: null,
+    // Material system — only populated inside .material objects; never used on the working page
+    material: null,
+    materialFg: null,
+    materialBtnFg: null,
+    metal: null,
+    metalDeep: null,
   },
   font: {
     display: null,

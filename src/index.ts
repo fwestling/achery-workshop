@@ -6,6 +6,12 @@ export { vars } from './theme/vars.css'
 // Glyphs
 export { Glyph } from './glyphs/Glyph'
 export type { GlyphProps, GlyphName } from './glyphs/index'
+export { searchGlyphs, glyphLabel, glyphCategory, GlyphCategories, GlyphAliases } from './glyphs/glyphMeta'
+export type { GlyphCategory, GlyphSearchResult } from './glyphs/glyphMeta'
+
+// GlyphPicker
+export { GlyphPicker } from './components/GlyphPicker/GlyphPicker'
+export type { GlyphPickerProps } from './components/GlyphPicker/GlyphPicker'
 
 // Typography
 export { Display, Heading, Body, Mono } from './components/Typography/Typography'
@@ -123,5 +129,9 @@ export type { TypeTagProps, TransactionType } from './components/TypeTag/TypeTag
 export { Avatar } from './components/Avatar/Avatar'
 export type { AvatarProps, AvatarTone, AvatarSize } from './components/Avatar/Avatar'
 
+// MaterialCard
+export { MaterialCard } from './components/MaterialCard/MaterialCard'
+export type { MaterialCardProps } from './components/MaterialCard/MaterialCard'
+
 // Types
-export type { ThemeMode, AccentColor, ComponentSize, ButtonVariant, BadgeTone, SortDirection } from './types/index'
+export type { ThemeMode, AccentColor, AccentDial, MaterialSignature, MaterialIntensity, ComponentSize, ButtonVariant, BadgeTone, SortDirection } from './types/index'

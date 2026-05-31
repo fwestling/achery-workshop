@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
-import type { ThemeContextValue, ThemeMode, ResolvedTheme, AccentColor } from '../types/theme'
+import type { ThemeContextValue, ThemeMode, ResolvedTheme, AccentColor, AccentDial, MaterialSignature } from '../types/theme'
 import { AppBarSearchProvider } from '../context/AppBarSearchContext'
 
 import './light.css.js'
 import './dark.css.js'
 import './accents.css.js'
+import './dial.css.js'
+import './material.css.js'
 import './global.css.js'
 
 const STORAGE_KEY = 'achery-theme-mode'
@@ -42,6 +44,23 @@ export interface AcheryProviderProps {
    * @default 'terracotta'
    */
   defaultAccent?: AccentColor
+  /**
+   * How loudly the accent runs across the working UI.
+   * - `'underline'` — accent on links, focus, and active-tab underline only
+   * - `'chrome'`    — accent threads the wiring: tabs, ticks, eyebrows, outlines
+   * - `'surface'`   — one `.signature-surface` panel floods with accent (default for storefront/game products)
+   * @default 'chrome'
+   */
+  defaultDial?: AccentDial
+  /**
+   * Hero material signature for contained, occasional objects (modals, dialogs, featured cards).
+   * - `'none'`    — no material; objects use plain paper/ink
+   * - `'leather'` — cordovan + gilt
+   * - `'wood'`    — walnut + pewter
+   * - `'copper'`  — oxidised copper + patina
+   * @default 'none'
+   */
+  defaultMaterial?: MaterialSignature
   /** className applied to the root `[data-achery-root]` div. */
   className?: string
   /** Inline styles applied to the root `[data-achery-root]` div. */
@@ -80,12 +99,29 @@ export function AcheryProvider({
   children,
   defaultTheme = 'system',
   defaultAccent = 'terracotta',
+  defaultDial = 'chrome',
+  defaultMaterial = 'none',
   className,
   style,
 }: AcheryProviderProps) {
   const [mode, setModeState] = useState<ThemeMode>(() => readStoredMode(defaultTheme))
   const [accent, setAccentState] = useState<AccentColor>(defaultAccent)
+  const [dial, setDialState] = useState<AccentDial>(defaultDial)
+  const [material, setMaterialState] = useState<MaterialSignature>(defaultMaterial)
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => resolveTheme(readStoredMode(defaultTheme)))
+
+  // Sync explicit light/dark prop changes (e.g. Storybook toolbar) into state.
+  // 'system' is intentionally excluded — it should not override a user's stored preference.
+  useEffect(() => {
+    if (defaultTheme === 'light' || defaultTheme === 'dark') {
+      setModeState(defaultTheme)
+      setResolvedTheme(defaultTheme)
+    }
+  }, [defaultTheme])
+
+  useEffect(() => { setAccentState(defaultAccent) }, [defaultAccent])
+  useEffect(() => { setDialState(defaultDial) }, [defaultDial])
+  useEffect(() => { setMaterialState(defaultMaterial) }, [defaultMaterial])
 
   const setTheme = useCallback((next: ThemeMode) => {
     setModeState(next)
@@ -98,6 +134,8 @@ export function AcheryProvider({
   }, [resolvedTheme, setTheme])
 
   const setAccent = useCallback((next: AccentColor) => setAccentState(next), [])
+  const setDial = useCallback((next: AccentDial) => setDialState(next), [])
+  const setMaterial = useCallback((next: MaterialSignature) => setMaterialState(next), [])
 
   // When mode is 'system', subscribe to OS preference changes
   useEffect(() => {
@@ -118,21 +156,28 @@ export function AcheryProvider({
     const html = document.documentElement
     html.dataset['theme'] = resolvedTheme
     html.dataset['accent'] = accent
+    html.dataset['dial'] = dial
+    if (material !== 'none') html.dataset['material'] = material
+    else delete html.dataset['material']
     html.dataset['acheryRoot'] = ''
     return () => {
       delete html.dataset['theme']
       delete html.dataset['accent']
+      delete html.dataset['dial']
+      delete html.dataset['material']
       delete html.dataset['acheryRoot']
     }
-  }, [resolvedTheme, accent])
+  }, [resolvedTheme, accent, dial, material])
 
   return (
-    <ThemeContext.Provider value={{ mode, theme: resolvedTheme, setTheme, toggleTheme, accent, setAccent }}>
+    <ThemeContext.Provider value={{ mode, theme: resolvedTheme, setTheme, toggleTheme, accent, setAccent, dial, setDial, material, setMaterial }}>
       <AppBarSearchProvider>
         <div
           data-achery-root=""
           data-theme={resolvedTheme}
           data-accent={accent}
+          data-dial={dial}
+          {...(material !== 'none' ? { 'data-material': material } : {})}
           className={className}
           style={style}
         >

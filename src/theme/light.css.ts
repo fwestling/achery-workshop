@@ -27,6 +27,12 @@ createGlobalTheme('[data-achery-root][data-theme="light"]', vars, {
     info: '#7a5e8a',
     selectionBg: '#b8924a',
     selectionFg: '#1f1d18',
+    // Material fallbacks — leather is the default signature; overridden by data-material or explicit CSS vars
+    material: '#6b3a26',
+    materialFg: '#fbf8f0',
+    materialBtnFg: '#1f1d18',
+    metal: '#c69a4a',
+    metalDeep: '#9a7430',
   },
   font: {
     display: fontFamilies.display,

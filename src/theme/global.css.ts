@@ -66,7 +66,9 @@ globalStyle('[data-achery-root] *, [data-achery-root] *::before, [data-achery-ro
 
 // Reset UA button/input/select/textarea colour so they inherit the theme fg
 // rather than the OS "ButtonText" system colour.
-globalStyle('[data-achery-root] button, [data-achery-root] input, [data-achery-root] select, [data-achery-root] textarea', {
+// Reset UA colour on bare/unstyled form elements. Exclude elements that already
+// carry a class (e.g. Button, Input recipes) so their own color declarations win.
+globalStyle('[data-achery-root] button:not([class]), [data-achery-root] input:not([class]), [data-achery-root] select:not([class]), [data-achery-root] textarea:not([class])', {
   color: 'inherit',
   fontFamily: 'inherit',
 })

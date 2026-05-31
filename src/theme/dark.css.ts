@@ -27,6 +27,12 @@ createGlobalTheme('[data-achery-root][data-theme="dark"]', vars, {
     info: '#7a5e8a',
     selectionBg: '#8da866',
     selectionFg: '#14130f',
+    // Material fallbacks for dark mode — gilt bumped to gold-light so it stays legible
+    material: '#6b3a26',
+    materialFg: '#fbf8f0',
+    materialBtnFg: '#1f1d18',
+    metal: '#c69a4a',
+    metalDeep: '#e0bc70',
   },
   font: {
     display: fontFamilies.display,

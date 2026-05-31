@@ -12,3 +12,6 @@ export type { BadgeProps, BadgeTone, BadgeVariant } from './Badge'
 
 export { Field, Input } from './Input'
 export type { FieldProps, InputProps } from './Input'
+
+export { MaterialCard, MaterialEyebrow } from './MaterialCard'
+export type { NativeMaterialCardProps, MaterialIntensity } from './MaterialCard'

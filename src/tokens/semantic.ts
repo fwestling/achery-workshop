@@ -1,5 +1,21 @@
 import { palette } from './palette'
 
+const materialDefaults = {
+  // Material system — leather signature defaults; overridden by setMaterial in native context
+  materialLeather: palette.leather,
+  materialLeatherFg: palette.paper,
+  materialWood: palette.wood,
+  materialWoodFg: palette.paper,
+  materialCopper: palette.copper,
+  materialCopperFg: palette.ink,
+  gold: palette.gold,
+  goldDeep: palette.goldDeep,
+  goldLight: palette.goldLight,
+  silverLight: palette.silverLight,
+  silverDeep: palette.silverDeep,
+  copperPatina: palette.copperPatina,
+}
+
 export const lightTokens = {
   bg: palette.paper,
   bg2: palette.paperWarm,
@@ -29,6 +45,8 @@ export const lightTokens = {
 
   selectionBg: palette.ochre,
   selectionFg: palette.ink,
+
+  ...materialDefaults,
 } as const
 
 export const darkTokens = {
@@ -60,6 +78,11 @@ export const darkTokens = {
 
   selectionBg: palette.mossLight,
   selectionFg: palette.inkDeep,
+
+  ...materialDefaults,
+  // In dark mode, gilt is bumped to gold-light so it stays legible on dark paper
+  goldDeep: palette.goldLight,
+  silverDeep: palette.silverLight,
 } as const
 
 export type SemanticTokens = typeof lightTokens | typeof darkTokens

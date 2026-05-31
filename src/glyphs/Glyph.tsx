@@ -5,56 +5,23 @@ import * as GlyphComponents from './GlyphComponents'
 
 type SvgComponent = FC<SVGProps<SVGSVGElement>>
 
-const glyphMap: Record<GlyphName, SvgComponent> = {
-  'arrow-right': GlyphComponents.ArrowRight,
-  'arrow-up': GlyphComponents.ArrowUp,
-  'asterism': GlyphComponents.Asterism,
-  'book': GlyphComponents.Book,
-  'circle': GlyphComponents.Circle,
-  'compass': GlyphComponents.Compass,
-  'cross': GlyphComponents.Cross,
-  'eye': GlyphComponents.Eye,
-  'feather': GlyphComponents.Feather,
-  'fern': GlyphComponents.Fern,
-  'flask': GlyphComponents.Flask,
-  'flourish': GlyphComponents.Flourish,
-  'hand': GlyphComponents.Hand,
-  'hex': GlyphComponents.Hex,
-  'key': GlyphComponents.Key,
-  'leaf': GlyphComponents.Leaf,
-  'mark': GlyphComponents.Mark,
-  'menu': GlyphComponents.Menu,
-  'mercury': GlyphComponents.Mercury,
-  'minus': GlyphComponents.Minus,
-  'moon': GlyphComponents.Moon,
-  'plus': GlyphComponents.Plus,
-  'salt': GlyphComponents.Salt,
-  'scroll': GlyphComponents.Scroll,
-  'sigil': GlyphComponents.Sigil,
-  'spinner': GlyphComponents.Spinner,
-  'sprig': GlyphComponents.Sprig,
-  'square': GlyphComponents.Square,
-  'star': GlyphComponents.Star,
-  'sulfur': GlyphComponents.Sulfur,
-  'sun': GlyphComponents.Sun,
-  'tick': GlyphComponents.Tick,
-  'triangle': GlyphComponents.Triangle,
-  'triangle-down': GlyphComponents.TriangleDown,
-  'wordmark': GlyphComponents.Wordmark,
-}
+// `import *` means all 397 glyphs are bundled together — consumers can't
+// tree-shake individual glyphs. Acceptable at current scale (~103KB gzipped).
+// If bundle size becomes a concern, split GlyphComponents into one file per
+// glyph and replace this with per-glyph dynamic imports (React.lazy).
+const toComponentName = (name: GlyphName): string =>
+  name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('')
+
+const lookup = (name: GlyphName): SvgComponent | undefined =>
+  (GlyphComponents as Record<string, SvgComponent>)[toComponentName(name)]
 
 /** Props for the {@link Glyph} component. */
 export interface GlyphProps extends SVGProps<SVGSVGElement> {
   /**
-   * Name of the glyph to render. One of the 33 icons in the Achery glyph set.
+   * Name of the glyph to render. One of the 394 icons + 3 brand marks in the Achery glyph set.
+   * Use `searchGlyphs()` to find glyphs by keyword, or browse categories via `GlyphCategories`.
    *
-   * **Geometric:** `circle`, `square`, `triangle`, `triangle-down`, `hex`, `minus`, `plus`, `cross`, `tick`, `arrow-right`, `arrow-up`
-   *
-   * **Botanical / alchemical:** `fern`, `sprig`, `leaf`, `feather`, `flourish`, `asterism`, `sigil`, `salt`, `sulfur`, `mercury`
-   *
-   * **Editorial / tools:** `book`, `scroll`, `feather`, `key`, `flask`, `compass`, `eye`, `hand`, `star`, `moon`, `sun`, `spinner`
-   *
-   * **Brand:** `mark`, `wordmark`
+   * **Brand:** `mark`, `wordmark`, `sigil`
    */
   name: GlyphName
   /**
@@ -76,18 +43,9 @@ export interface GlyphProps extends SVGProps<SVGSVGElement> {
  *
  * For decorative use, omit `title` (the glyph is `aria-hidden` by default).
  * For semantic use (icon-only button labels etc.), provide a `title`.
- *
- * @example
- * ```tsx
- * // Decorative
- * <Glyph name="fern" size={24} />
- *
- * // Semantic (in an icon-only button)
- * <button aria-label="Close"><Glyph name="cross" size={16} /></button>
- * ```
  */
 export function Glyph({ name, size = 16, title, className, style, ...props }: GlyphProps) {
-  const SvgComponent = glyphMap[name]
+  const SvgComponent = lookup(name)
 
   if (!SvgComponent) {
     return (

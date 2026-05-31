@@ -11,6 +11,37 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.7.0] - 2026-05-31
+
+### Added
+- **Accent dial system**: `AcheryProvider` now accepts `defaultDial` (`'underline' | 'chrome' | 'surface'`), which controls how loudly the accent runs across the working UI. Sets `data-dial` on the root element. `useTheme()` exposes `dial` + `setDial`. CSS rules in `theme/dial.css.ts` implement `.signature-surface` flooding under `surface` mode and exposes `--achery-dial-*` custom properties for components to adopt.
+- **Material system**: `AcheryProvider` now accepts `defaultMaterial` (`'none' | 'leather' | 'wood' | 'copper'`), the project's hero material signature for contained, occasional objects. Sets `data-material` on the root element and mirrors it onto `<html>` for portaled content. `useTheme()` exposes `material` + `setMaterial`. CSS rules in `theme/material.css.ts` implement three signature presets and three intensities (`.m-chrome`, `.m-surface`, `.m-full`). Material CSS vars (`--material`, `--material-fg`, `--metal`, `--metal-deep`) added to the theme contract.
+- **`MaterialCard` component** (web): React wrapper around the `.material` CSS pattern. `intensity` prop (`'chrome' | 'surface' | 'full'`) controls how much of the material surfaces. `header` and `footer` slots handle the bar and foot areas automatically.
+- **`MaterialCard` + `MaterialEyebrow`** (native): React Native equivalents, driven by the same `material` + `intensity` props from `NativeThemeProvider`. `signature` prop allows per-instance override.
+- **`NativeThemeProvider`** extended: now accepts `defaultAccent`, `defaultDial`, `defaultMaterial`; `useTheme()` context exposes all three with setters.
+- New exported types: `AccentDial`, `MaterialSignature`, `MaterialIntensity`.
+- Material color tokens added to `SemanticTokens` (for native): `materialLeather`, `materialWood`, `materialCopper` + their foreground/metal tokens.
+- **Glyph set expanded to 394 icons** (from 34). All new SVGs follow the same `stroke="currentColor"` convention as the originals — tree-shakeable and colour-inheriting.
+- **`GlyphCategories`**: 22 named categories grouping all 394 glyphs, exported from `achery-ui`.
+- **`GlyphAliases`**: per-glyph ordered synonym lists (search terms), exported from `achery-ui`.
+- **`searchGlyphs(query, names, limit?)`**: ranked full-text search across glyph names, label words, and aliases. Multi-word queries use AND semantics. Exported from `achery-ui`.
+- **`glyphLabel(name)`** and **`glyphCategory(name)`** helper functions, exported from `achery-ui`.
+- **`GlyphPicker` component**: trigger button showing the selected glyph (or placeholder), opens a Radix Popover with a search input and a categorised grid of all 394 glyphs. `value`, `onChange`, `placeholder`, `disabled`, and `clearable` props. Exported from `achery-ui`.
+- **GlyphGallery Storybook story** (`Primitives/GlyphGallery`): live searchable reference for all glyphs, click any to copy its name. Mirrors the design of `glyphs-gallery.html`.
+- **GlyphPicker Storybook stories** (`Components/GlyphPicker`): Default, WithInitialValue, NotClearable, Disabled, InAForm.
+- Storybook: light/dark theme toggle, accent picker, and material picker added to the global toolbar. Theme selection now drives `AcheryProvider` live.
+
+### Known limitations
+- `Glyph`/`GlyphComponents`: all 397 glyphs are bundled together (~103KB gzipped). Consumers cannot tree-shake individual glyphs. Acceptable at current scale; if bundle size becomes a concern the fix is to split into one file per glyph and use `React.lazy` dynamic imports.
+
+### Fixed
+- `Glyph`: replaced 397-entry static `glyphMap` with a dynamic property lookup — eliminates a 30-second Vite dev-mode stall caused by eagerly evaluating all 397 exports at module load time.
+- `ThemeProvider`: `AcheryProvider` now syncs `defaultTheme`, `defaultAccent`, `defaultDial`, and `defaultMaterial` prop changes into state, so toolbar controls update live.
+- `global.css.ts`: button/input UA reset now scoped to `:not([class])` — previously `[data-achery-root] button { color: inherit }` had higher specificity than vanilla-extract recipe classes, overriding `primary` button text colour to black-on-black.
+- Storybook: `MaterialCard` stories no longer nest their own `AcheryProvider`, so they correctly inherit the toolbar theme.
+
+---
+
 ## [0.6.2] - 2026-05-29
 
 ### Added
@@ -218,7 +249,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.6.2...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/fwestling/achery-workshop/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/fwestling/achery-workshop/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/fwestling/achery-workshop/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/fwestling/achery-workshop/compare/v0.5.9...v0.6.0
