@@ -58,7 +58,7 @@ export const GlyphPicker = ({
     : null
 
   return (
-    <PopoverPrimitive.Root open={open} onOpenChange={disabled ? () => {} : setOpen}>
+    <PopoverPrimitive.Root open={open} onOpenChange={disabled ? () => {} : setOpen} modal={false}>
       <PopoverPrimitive.Trigger asChild>
         <button
           type="button"

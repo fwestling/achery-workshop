@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.7.1] - 2026-05-31
+
+### Fixed
+- `GlyphPicker`: add `modal={false}` to Radix Popover root so the picker works when nested inside a Modal/Dialog
+
+---
+
 ## [0.7.0] - 2026-05-31
 
 ### Added
@@ -249,7 +256,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.7.1...HEAD
+[0.7.1]: https://github.com/fwestling/achery-workshop/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/fwestling/achery-workshop/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/fwestling/achery-workshop/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/fwestling/achery-workshop/compare/v0.6.0...v0.6.1
