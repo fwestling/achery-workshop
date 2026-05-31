@@ -1,0 +1,4 @@
+// AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs
+import type { SVGProps } from 'react'
+type P = SVGProps<SVGSVGElement>
+export default function SigilWheel(props: P) { return <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="miter" strokeLinecap="square" {...props}><circle cx="24" cy="24" r="20"></circle><circle cx="24" cy="24" r="6"></circle><line x1="30" y1="24" x2="44" y2="24"></line><line x1="28.24" y1="28.24" x2="38.14" y2="38.14"></line><line x1="24" y1="30" x2="24" y2="44"></line><line x1="19.76" y1="28.24" x2="9.86" y2="38.14"></line><line x1="18" y1="24" x2="4" y2="24"></line><line x1="19.76" y1="19.76" x2="9.86" y2="9.86"></line><line x1="24" y1="18" x2="24" y2="4"></line><line x1="28.24" y1="19.76" x2="38.14" y2="9.86"></line><circle cx="24" cy="24" r="2" fill="currentColor"></circle></svg> }

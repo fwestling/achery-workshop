@@ -1,19 +1,26 @@
-import type { SVGProps, FC } from 'react'
+import { lazy, Suspense } from 'react'
+import type { SVGProps } from 'react'
 import type { GlyphName } from '../types/components'
 import * as styles from './Glyph.css'
-import * as GlyphComponents from './GlyphComponents'
 
-type SvgComponent = FC<SVGProps<SVGSVGElement>>
-
-// `import *` means all 397 glyphs are bundled together — consumers can't
-// tree-shake individual glyphs. Acceptable at current scale (~103KB gzipped).
-// If bundle size becomes a concern, split GlyphComponents into one file per
-// glyph and replace this with per-glyph dynamic imports (React.lazy).
 const toComponentName = (name: GlyphName): string =>
   name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('')
 
-const lookup = (name: GlyphName): SvgComponent | undefined =>
-  (GlyphComponents as Record<string, SvgComponent>)[toComponentName(name)]
+// Cache lazy components so re-renders don't create new lazy() calls
+const lazyCache = new Map<string, React.LazyExoticComponent<React.FC<SVGProps<SVGSVGElement>>>>()
+
+const getLazy = (name: GlyphName) => {
+  const compName = toComponentName(name)
+  if (!lazyCache.has(compName)) {
+    lazyCache.set(
+      compName,
+      lazy(() =>
+        import(`./svg-components/${compName}.tsx`).then(m => ({ default: m.default }))
+      ),
+    )
+  }
+  return lazyCache.get(compName)!
+}
 
 /** Props for the {@link Glyph} component. */
 export interface GlyphProps extends SVGProps<SVGSVGElement> {
@@ -37,35 +44,36 @@ export interface GlyphProps extends SVGProps<SVGSVGElement> {
   className?: string
 }
 
+const Placeholder = ({ size, className, style }: { size: number; className?: string | undefined; style?: React.CSSProperties | undefined }) => (
+  <span
+    className={[styles.glyph, className].filter(Boolean).join(' ')}
+    style={{ width: size, height: size, display: 'inline-block', ...style }}
+    aria-hidden="true"
+  />
+)
+
 /**
- * Renders a single SVG glyph from the Achery icon set. Each glyph is inlined
- * as a React component — tree-shakeable, inherits `currentColor`.
+ * Renders a single SVG glyph from the Achery icon set. Each glyph is loaded
+ * lazily via dynamic import — only the requested glyph's module is fetched,
+ * keeping the initial bundle small. Inherits `currentColor`.
  *
  * For decorative use, omit `title` (the glyph is `aria-hidden` by default).
  * For semantic use (icon-only button labels etc.), provide a `title`.
  */
-export function Glyph({ name, size = 16, title, className, style, ...props }: GlyphProps) {
-  const SvgComponent = lookup(name)
-
-  if (!SvgComponent) {
-    return (
-      <span
-        className={[styles.glyph, className].filter(Boolean).join(' ')}
-        style={{ width: size, height: size, display: 'inline-block', ...style }}
-        aria-hidden="true"
-      />
-    )
-  }
+export const Glyph = ({ name, size = 16, title, className, style, ...props }: GlyphProps) => {
+  const SvgComponent = getLazy(name)
 
   return (
-    <SvgComponent
-      width={size}
-      height={size}
-      aria-hidden={title ? undefined : true}
-      aria-label={title}
-      className={[styles.glyph, className].filter(Boolean).join(' ')}
-      style={style}
-      {...props}
-    />
+    <Suspense fallback={<Placeholder size={size} className={className} style={style} />}>
+      <SvgComponent
+        width={size}
+        height={size}
+        aria-hidden={title ? undefined : true}
+        aria-label={title}
+        className={[styles.glyph, className].filter(Boolean).join(' ')}
+        style={style}
+        {...props}
+      />
+    </Suspense>
   )
 }

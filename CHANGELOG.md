@@ -11,6 +11,15 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.7.2] - 2026-05-31
+
+### Fixed
+- `GlyphPicker`: remove `PopoverPrimitive.Portal` so the popover renders inside the dialog DOM subtree — fixes Radix Dialog's `aria-hidden` blocking pointer events on the picker when used inside a `Modal`
+- `Glyph`: split `GlyphComponents.tsx` into one file per glyph under `src/glyphs/svg-components/` and switched to `React.lazy` + dynamic imports — eliminates the eager load of all 397 glyphs at startup which was causing Storybook dev-server timeouts and blocking CSS injection
+- `AcheryProvider`: `resolveTheme` now treats any unrecognised string (e.g. empty string from Storybook toolbar before globals resolve) as `'system'` rather than setting a blank `data-theme` attribute
+
+---
+
 ## [0.7.1] - 2026-05-31
 
 ### Fixed
@@ -256,7 +265,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.7.1...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.7.2...HEAD
+[0.7.2]: https://github.com/fwestling/achery-workshop/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/fwestling/achery-workshop/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/fwestling/achery-workshop/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/fwestling/achery-workshop/compare/v0.6.1...v0.6.2

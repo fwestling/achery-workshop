@@ -1,0 +1,4 @@
+// AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs
+import type { SVGProps } from 'react'
+type P = SVGProps<SVGSVGElement>
+export default function Ship(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M3 14h18l-1.6 4.5a2 2 0 0 1-1.9 1.3H6.5a2 2 0 0 1-1.9-1.3z"></path><line x1="12" y1="4" x2="12" y2="14"></line><path d="M12 5.5l5 2.2-5 2.2z"></path><path d="M11.5 7.5L7 10.5l4.5 1z"></path></svg> }

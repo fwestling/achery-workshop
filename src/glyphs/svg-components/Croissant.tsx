@@ -1,0 +1,4 @@
+// AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs
+import type { SVGProps } from 'react'
+type P = SVGProps<SVGSVGElement>
+export default function Croissant(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M4 14.5c2.5-5.5 9.5-7 15.5-4-1.5 3-5 4.2-8.5 4.2 2 1.3 3 3 2.8 5.3-3.5-.4-6.8-1.8-9.8-5.7z"></path><path d="M2.8 13.5L4 14.5l-.6 2M19.5 10.5l1.2-1-2 .2"></path><path d="M8 12.5l1 1.5M12 11.8l.6 1.7"></path></svg> }

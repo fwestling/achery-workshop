@@ -1,7 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react'
 import type { MaterialIntensity } from '../../types/theme'
 
-import '../../theme/material.css.js'
+import '../../theme/material.css'
 
 /** Props for the {@link MaterialCard} component. */
 export interface MaterialCardProps extends HTMLAttributes<HTMLDivElement> {

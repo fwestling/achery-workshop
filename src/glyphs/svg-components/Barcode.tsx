@@ -1,0 +1,4 @@
+// AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs
+import type { SVGProps } from 'react'
+type P = SVGProps<SVGSVGElement>
+export default function Barcode(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M4 5v14M6.5 5v14M8 5v14M11 5v14M12.5 5v14M15 5v14M17.5 5v14M20 5v14"></path></svg> }

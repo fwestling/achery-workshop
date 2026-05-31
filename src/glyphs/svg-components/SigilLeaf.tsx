@@ -1,0 +1,4 @@
+// AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs
+import type { SVGProps } from 'react'
+type P = SVGProps<SVGSVGElement>
+export default function SigilLeaf(props: P) { return <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="24" cy="24" r="20"></circle><circle cx="24" cy="24" r="14"></circle><circle cx="24" cy="7" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="41" cy="24" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="24" cy="41" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="7" cy="24" r="0.9" fill="currentColor" stroke="none"></circle><path d="M24 12 C 16 17, 16 31, 24 36 C 32 31, 32 17, 24 12 Z"></path><line x1="24" y1="12" x2="24" y2="36"></line><path d="M24 19 L 28 22"></path><path d="M24 24 L 20 27"></path><path d="M24 29 L 28 31"></path></svg> }

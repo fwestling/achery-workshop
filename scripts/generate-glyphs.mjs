@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync, readdirSync } from 'fs'
+import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'fs'
 import { join, basename } from 'path'
 
 const svgDir = new URL('../src/glyphs/svg', import.meta.url).pathname
-const outFile = new URL('../src/glyphs/GlyphComponents.tsx', import.meta.url).pathname
+const componentsDir = new URL('../src/glyphs/svg-components', import.meta.url).pathname
+const indexFile = new URL('../src/glyphs/GlyphComponents.tsx', import.meta.url).pathname
 
 const files = readdirSync(svgDir).filter(f => f.endsWith('.svg')).sort()
 
@@ -26,13 +27,7 @@ function svgToJsx(svg) {
     .replace(/xmlns="[^"]*"\s*/g, '')  // remove xmlns (not needed in JSX)
 }
 
-const lines = [
-  '// AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs',
-  "import type { SVGProps } from 'react'",
-  '',
-  'type P = SVGProps<SVGSVGElement>',
-  '',
-]
+mkdirSync(componentsDir, { recursive: true })
 
 const exports = []
 
@@ -41,9 +36,26 @@ for (const file of files) {
   const compName = toPascal(name)
   const raw = readFileSync(join(svgDir, file), 'utf8').trim()
   const jsx = svgToJsx(raw)
-  lines.push(`export function ${compName}(props: P) { return ${jsx} }`)
+
+  // One file per glyph for lazy loading
+  const content = [
+    '// AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs',
+    "import type { SVGProps } from 'react'",
+    'type P = SVGProps<SVGSVGElement>',
+    `export default function ${compName}(props: P) { return ${jsx} }`,
+  ].join('\n') + '\n'
+
+  writeFileSync(join(componentsDir, `${compName}.tsx`), content)
   exports.push({ name, compName })
 }
 
-writeFileSync(outFile, lines.join('\n') + '\n')
-console.log(`Generated ${files.length} glyph components → src/glyphs/GlyphComponents.tsx`)
+// GlyphComponents.tsx — intentionally empty, individual files are in svg-components/
+const indexLines = [
+  '// AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs',
+  '// Individual glyph components live in ./svg-components/ and are loaded lazily by Glyph.tsx.',
+  'export {}',
+]
+
+writeFileSync(indexFile, indexLines.join('\n') + '\n')
+console.log(`Generated ${files.length} individual glyph files → src/glyphs/svg-components/`)
+console.log(`Updated GlyphComponents.tsx`)

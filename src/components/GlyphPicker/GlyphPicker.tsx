@@ -84,8 +84,7 @@ export const GlyphPicker = ({
         </button>
       </PopoverPrimitive.Trigger>
 
-      <PopoverPrimitive.Portal>
-        <PopoverPrimitive.Content
+      <PopoverPrimitive.Content
           className={styles.popoverContent}
           sideOffset={4}
           align="start"
@@ -139,7 +138,6 @@ export const GlyphPicker = ({
             )}
           </div>
         </PopoverPrimitive.Content>
-      </PopoverPrimitive.Portal>
     </PopoverPrimitive.Root>
   )
 }

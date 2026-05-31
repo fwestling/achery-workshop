@@ -2,12 +2,12 @@ import { createContext, useContext, useState, useEffect, useCallback, type React
 import type { ThemeContextValue, ThemeMode, ResolvedTheme, AccentColor, AccentDial, MaterialSignature } from '../types/theme'
 import { AppBarSearchProvider } from '../context/AppBarSearchContext'
 
-import './light.css.js'
-import './dark.css.js'
-import './accents.css.js'
-import './dial.css.js'
-import './material.css.js'
-import './global.css.js'
+import './light.css'
+import './dark.css'
+import './accents.css'
+import './dial.css'
+import './material.css'
+import './global.css'
 
 const STORAGE_KEY = 'achery-theme-mode'
 
@@ -18,8 +18,9 @@ function getSystemTheme(): ResolvedTheme {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
-function resolveTheme(mode: ThemeMode): ResolvedTheme {
-  return mode === 'system' ? getSystemTheme() : mode
+function resolveTheme(mode: ThemeMode | string): ResolvedTheme {
+  if (mode === 'light' || mode === 'dark') return mode
+  return getSystemTheme()
 }
 
 function readStoredMode(fallback: ThemeMode): ThemeMode {
@@ -113,10 +114,8 @@ export function AcheryProvider({
   // Sync explicit light/dark prop changes (e.g. Storybook toolbar) into state.
   // 'system' is intentionally excluded — it should not override a user's stored preference.
   useEffect(() => {
-    if (defaultTheme === 'light' || defaultTheme === 'dark') {
-      setModeState(defaultTheme)
-      setResolvedTheme(defaultTheme)
-    }
+    setModeState(defaultTheme)
+    setResolvedTheme(resolveTheme(defaultTheme))
   }, [defaultTheme])
 
   useEffect(() => { setAccentState(defaultAccent) }, [defaultAccent])

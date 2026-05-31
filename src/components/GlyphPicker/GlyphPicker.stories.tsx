@@ -4,6 +4,9 @@ import { GlyphPicker } from './GlyphPicker'
 import type { GlyphName } from '../../types/components'
 import { Glyph } from '../../glyphs/Glyph'
 import { glyphLabel } from '../../glyphs/glyphMeta'
+import { Modal } from '../Modal/Modal'
+import { Button } from '../Button/Button'
+import { Field, Input } from '../Input/Input'
 
 const meta: Meta<typeof GlyphPicker> = {
   title: 'Components/GlyphPicker',
@@ -54,6 +57,50 @@ export const Disabled: Story = {
   render: () => (
     <GlyphPicker value="moon" disabled />
   ),
+}
+
+export const InsideModal: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false)
+    const [icon, setIcon] = useState<GlyphName | undefined>(undefined)
+    const [label, setLabel] = useState('My Task')
+    return (
+      <>
+        <Button variant="accent" onClick={() => setOpen(true)}>Open modal</Button>
+        <Modal
+          open={open}
+          onOpenChange={setOpen}
+          title="Edit task"
+          footer={
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', width: '100%' }}>
+              <Button variant="ghost" size="sm" onClick={() => setOpen(false)}>Cancel</Button>
+              <Button variant="accent" size="sm" onClick={() => setOpen(false)}>Save</Button>
+            </div>
+          }
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <Field label="Title">
+              <Input value={label} onChange={e => setLabel(e.target.value)} />
+            </Field>
+            <Field label="Glyph">
+              <GlyphPicker
+                {...(icon ? { value: icon } : {})}
+                onChange={setIcon}
+                clearable
+                placeholder="No glyph"
+              />
+            </Field>
+            {icon && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, opacity: 0.7 }}>
+                <Glyph name={icon} size={16} />
+                <span style={{ fontSize: 13 }}>{glyphLabel(icon)}</span>
+              </div>
+            )}
+          </div>
+        </Modal>
+      </>
+    )
+  },
 }
 
 export const InAForm: Story = {

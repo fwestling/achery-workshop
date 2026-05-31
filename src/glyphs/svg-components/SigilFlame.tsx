@@ -1,0 +1,4 @@
+// AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs
+import type { SVGProps } from 'react'
+type P = SVGProps<SVGSVGElement>
+export default function SigilFlame(props: P) { return <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="24" cy="24" r="20"></circle><circle cx="24" cy="24" r="14"></circle><circle cx="24" cy="7" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="41" cy="24" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="24" cy="41" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="7" cy="24" r="0.9" fill="currentColor" stroke="none"></circle><path d="M24 13 C 17 22, 17 29, 24 35 C 31 29, 31 22, 24 13 Z"></path><path d="M24 22 C 21 25, 21 28, 24 31 C 27 28, 27 25, 24 22 Z"></path></svg> }

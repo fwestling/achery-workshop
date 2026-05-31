@@ -1,0 +1,4 @@
+// AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs
+import type { SVGProps } from 'react'
+type P = SVGProps<SVGSVGElement>
+export default function Gavel(props: P) { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="11.5" y="4.5" width="7" height="5" rx="1" transform="rotate(45 15 7)"></rect><line x1="12.6" y1="9.4" x2="6.6" y2="15.4"></line><rect x="3.5" y="18" width="8" height="2.4" rx="0.6"></rect><line x1="6.6" y1="15.4" x2="7.5" y2="18"></line><line x1="16" y1="3.4" x2="18.6" y2="6"></line><line x1="12" y1="7.4" x2="14.6" y2="10"></line></svg> }
