@@ -19,5 +19,5 @@
     "skipLibCheck": true
   },
   "include": ["src", "stories", ".storybook"],
-  "exclude": ["node_modules", "dist", "src/native"]
+  "exclude": ["node_modules", "dist", "src/native", "src/glyphs/svg-components-native"]
 }

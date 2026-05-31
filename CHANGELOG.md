@@ -11,6 +11,24 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.8.0] - 2026-05-31
+
+### Added
+- **Native glyph system**: `generate-glyphs.mjs` now generates 396 react-native-svg components in `src/glyphs/svg-components-native/` (one per glyph). Root-level SVG presentation attributes are explicitly stamped onto child elements to compensate for react-native-svg not propagating inherited attrs. The `wordmark` glyph (uses `<g>`/`<text>`) is skipped on native.
+- **`Glyph` component** (native): renders any `GlyphName` via a synchronous barrel import from `svg-components-native/`. Accepts `name`, `size` (default 24), `color` (defaults to theme `fg` token), `accessibilityLabel`, `style`. Exported from `achery-ui/native`.
+- **`GlyphPicker` component** (native): trigger button + React Native `Modal` bottom sheet with search input and an 8-column `FlatList` of all 396 glyphs. Same prop API as the web `GlyphPicker` (`value`, `onChange`, `placeholder`, `disabled`, `clearable`). Uses `searchGlyphs()` internally.
+- **`Skeleton` component** (native): animated opacity-pulsing placeholder. Props: `lines`, `width`, `block`, `height`, `style`. Background uses `tokens.surface2`.
+- **`ProgressBar` component** (native): `value` (0–100), `size` (`'sm' | 'md'`), `tone` (`'neutral' | 'accent'`).
+- **`Checkbox` component** (native): controlled/uncontrolled, `checked` (`boolean | 'indeterminate'`), `label`, `disabled`. Uses native `Glyph` for tick and minus indicators.
+- **`Toggle` component** (native): animated pill switch. Props: `value`, `defaultValue`, `onChange`, `disabled`, `label`. Note: uses `value`/`onChange` rather than the web's `pressed`/`onPressedChange`.
+- **`Tabs` component** (native): horizontal scrollable tab bar with active underline indicator. Props: `items: TabItem[]`, `value`, `defaultValue`, `onValueChange`.
+- **`ToastProvider` + `useToast()`** (native): context-based toast system rendered in an absolute overlay at the bottom of the screen. Must be placed at the navigation root. `useToast()` returns a `toast(opts)` function.
+- **Glyph utilities re-exported from `achery-ui/native`**: `GlyphName` type, `searchGlyphs`, `glyphLabel`, `glyphCategory`, `GlyphCategories`, `GlyphAliases` — all pure TS, safe for native consumers.
+- `react-native-svg >= 13` added as optional peer dependency.
+- `src/glyphs/svg-components-native`, `src/glyphs/glyphMeta.ts`, and `src/types` added to the npm `files` array so native consumers receive the full source tree they need.
+
+---
+
 ## [0.7.3] - 2026-05-31
 
 ### Fixed
@@ -272,7 +290,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.7.3...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/fwestling/achery-workshop/compare/v0.7.3...v0.8.0
 [0.7.3]: https://github.com/fwestling/achery-workshop/compare/v0.7.2...v0.7.3
 [0.7.2]: https://github.com/fwestling/achery-workshop/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/fwestling/achery-workshop/compare/v0.7.0...v0.7.1
