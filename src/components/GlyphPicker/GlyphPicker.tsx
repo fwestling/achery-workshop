@@ -59,30 +59,32 @@ export const GlyphPicker = ({
 
   return (
     <PopoverPrimitive.Root open={open} onOpenChange={disabled ? () => {} : setOpen} modal={false}>
-      <PopoverPrimitive.Trigger asChild>
-        <button
-          type="button"
-          className={[styles.trigger, className].filter(Boolean).join(' ')}
-          disabled={disabled}
-          aria-label={value ? `Selected glyph: ${glyphLabel(value)}` : placeholder}
-        >
-          {value ? (
-            <Glyph name={value} size={16} />
-          ) : (
-            <span className={styles.triggerPlaceholder}>{placeholder}</span>
-          )}
-          {clearable && value && (
-            <button
-              type="button"
-              className={styles.clearBtn}
-              onClick={handleClear}
-              aria-label="Clear glyph"
-            >
-              <Glyph name="close" size={12} />
-            </button>
-          )}
-        </button>
-      </PopoverPrimitive.Trigger>
+      <div className={[styles.triggerWrap, className].filter(Boolean).join(' ')}>
+        <PopoverPrimitive.Trigger asChild>
+          <button
+            type="button"
+            className={styles.trigger}
+            disabled={disabled}
+            aria-label={value ? `Selected glyph: ${glyphLabel(value)}` : placeholder}
+          >
+            {value ? (
+              <Glyph name={value} size={16} />
+            ) : (
+              <span className={styles.triggerPlaceholder}>{placeholder}</span>
+            )}
+          </button>
+        </PopoverPrimitive.Trigger>
+        {clearable && value && (
+          <button
+            type="button"
+            className={styles.clearBtn}
+            onClick={handleClear}
+            aria-label="Clear glyph"
+          >
+            <Glyph name="close" size={12} />
+          </button>
+        )}
+      </div>
 
       <PopoverPrimitive.Content
           className={styles.popoverContent}

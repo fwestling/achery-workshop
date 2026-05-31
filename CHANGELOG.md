@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.7.3] - 2026-05-31
+
+### Fixed
+- `GlyphPicker`: move clear button outside `<PopoverPrimitive.Trigger>` into a sibling `triggerWrap` div — fixes invalid nested `<button>` HTML and React hydration warning
+
+---
+
 ## [0.7.2] - 2026-05-31
 
 ### Fixed
@@ -265,7 +272,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.7.2...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.7.3...HEAD
+[0.7.3]: https://github.com/fwestling/achery-workshop/compare/v0.7.2...v0.7.3
 [0.7.2]: https://github.com/fwestling/achery-workshop/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/fwestling/achery-workshop/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/fwestling/achery-workshop/compare/v0.6.2...v0.7.0

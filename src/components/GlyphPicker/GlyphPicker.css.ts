@@ -1,6 +1,12 @@
 import { style } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
 
+export const triggerWrap = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: vars.space.sp2,
+})
+
 export const trigger = style({
   display: 'inline-flex',
   alignItems: 'center',
