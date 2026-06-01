@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.8.2] - 2026-06-01
+
+### Fixed
+- `Glyph` (native): replace `import * as NativeGlyphs` barrel with inline `require()` at render time — prevents all 396 react-native-svg component modules from initialising before the native module is ready, fixing `RNSVGCircle is undefined` crash on New Architecture
+
+---
+
 ## [0.8.1] - 2026-06-01
 
 ### Fixed
@@ -297,7 +304,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.8.1...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.8.2...HEAD
+[0.8.2]: https://github.com/fwestling/achery-workshop/compare/v0.8.1...v0.8.2
 [0.8.1]: https://github.com/fwestling/achery-workshop/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/fwestling/achery-workshop/compare/v0.7.3...v0.8.0
 [0.7.3]: https://github.com/fwestling/achery-workshop/compare/v0.7.2...v0.7.3
