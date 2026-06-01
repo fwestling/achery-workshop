@@ -688,6 +688,105 @@ import type { TransactionType } from 'achery-ui'
 
 ---
 
+## React Native (`achery-ui/native`)
+
+A subset of components available for React Native via `achery-ui/native`. Uses React Native's `StyleSheet` system and `SemanticTokens` directly — no vanilla-extract, no CSS.
+
+### Setup
+
+```sh
+# Required native peer deps
+pnpm add react-native-svg
+pnpm add -D react-native-svg-transformer
+```
+
+**`metro.config.js`** — add the transformer and force registry singletons:
+
+```js
+const { getDefaultConfig } = require('expo/metro-config')
+const path = require('path')
+const config = getDefaultConfig(__dirname)
+
+// Singleton modules — must resolve from one location only.
+// react-native's view config registry must be a singleton or native component
+// registrations (e.g. RNSVGCircle) land in a different Map than the renderer uses.
+const singletonDir = path.resolve(__dirname, 'node_modules')
+const singletonModules = new Set([
+  'react',
+  'react-native',
+  'react-native/Libraries/Renderer/shims/ReactNativeViewConfigRegistry',
+  'react-native/Libraries/NativeComponent/NativeComponentRegistry',
+])
+config.resolver.resolveRequest = (context, moduleName, platform) => {
+  if (singletonModules.has(moduleName)) {
+    return context.resolveRequest(
+      { ...context, originModulePath: path.join(singletonDir, 'react-native', 'index.js') },
+      moduleName, platform,
+    )
+  }
+  return context.resolveRequest(context, moduleName, platform)
+}
+
+// SVG transformer — required for Glyph component
+config.transformer = {
+  ...config.transformer,
+  babelTransformerPath: require.resolve('react-native-svg-transformer/expo'),
+}
+config.resolver = {
+  ...config.resolver,
+  assetExts: config.resolver.assetExts.filter(ext => ext !== 'svg'),
+  sourceExts: [...config.resolver.sourceExts, 'svg'],
+}
+module.exports = config
+```
+
+**`.svgrrc`** (in your app root) — maps `currentColor` to the `color` prop:
+
+```json
+{ "replaceAttrValues": { "currentColor": "{props.color}" } }
+```
+
+### Available components
+
+| Component | Notes |
+|---|---|
+| `NativeThemeProvider` / `useTheme` | Theme + accent + dial + material context |
+| `Text` | Display/heading/body/mono/eyebrow/caption variants |
+| `Button` | primary/secondary/accent/ghost/danger variants |
+| `Card` | flat/stamp variants, optional header |
+| `Badge` | tone-based (neutral/saved/drafting/stopped/archived), solid/outline |
+| `Field` / `Input` | Label + hint + error wrapper + text input |
+| `MaterialCard` / `MaterialEyebrow` | Leather/wood/copper material cards |
+| `Glyph` | All 397 glyphs via react-native-svg-transformer. Requires setup above. |
+| `GlyphPicker` | Modal sheet with search + 8-column grid |
+| `Skeleton` | Animated opacity-pulse placeholder (lines or block) |
+| `ProgressBar` | 0–100 value, sm/md, neutral/accent tone |
+| `Checkbox` | Controlled/uncontrolled, indeterminate, optional label |
+| `Toggle` | Animated pill switch (`value`/`onChange` — note: differs from web's `pressed`/`onPressedChange`) |
+| `Tabs` | Horizontal scrollable tab bar with active underline |
+| `ToastProvider` / `useToast` | Absolute overlay toasts, auto-dismiss. Mount at nav root. |
+
+### `Glyph` (native)
+
+```tsx
+import { Glyph } from 'achery-ui/native'
+
+<Glyph name="flask" size={24} />
+<Glyph name="moon" color="#ff0000" size={20} />
+```
+
+| Prop | Type | Default |
+|---|---|---|
+| `name` | `GlyphName` | required |
+| `size` | `number` | `24` |
+| `color` | `string` | theme `fg` token |
+| `accessibilityLabel` | `string` | — |
+| `style` | `ViewStyle` | — |
+
+The `wordmark` glyph is not available on native (uses unsupported SVG features).
+
+---
+
 ## Known gaps (as of v0.5.0)
 
 Components not yet in achery-ui that commonly appear in apps:
