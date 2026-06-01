@@ -212,12 +212,29 @@ const indexLines = [
 ]
 writeFileSync(indexFile, indexLines.join('\n') + '\n')
 
-// Native barrel index
+// Native barrel index — named re-exports for static Metro resolution
 const nativeIndexLines = [
   '// AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs',
   ...nativeExports.map(compName => `export { default as ${compName} } from './${compName}'`),
 ]
 writeFileSync(join(nativeComponentsDir, 'index.ts'), nativeIndexLines.join('\n') + '\n')
+
+// Native lookup — static switch so Metro can resolve each path individually
+// without bundling all 396 at module load time (unlike import *)
+const lookupLines = [
+  '// AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs',
+  "import type { ViewStyle } from 'react-native'",
+  'type GlyphFC = React.ComponentType<{ size?: number; color?: string; style?: ViewStyle }>',
+  'export function lookupNativeGlyph(name: string): GlyphFC | null {',
+  '  switch (name) {',
+  ...nativeExports.map(compName =>
+    `    case '${compName}': return require('./${compName}').default`
+  ),
+  '    default: return null',
+  '  }',
+  '}',
+]
+writeFileSync(join(nativeComponentsDir, 'lookup.ts'), lookupLines.join('\n') + '\n')
 
 console.log(`✓ Generated ${exports.length} web glyph components → src/glyphs/svg-components/`)
 console.log(`✓ Generated ${nativeExports.length} native glyph components → src/glyphs/svg-components-native/`)

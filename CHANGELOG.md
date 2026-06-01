@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.8.4] - 2026-06-01
+
+### Fixed
+- `Glyph` (native): replace dynamic template-literal `require()` with a generated static switch in `svg-components-native/lookup.ts` — Metro cannot resolve template-literal paths at bundle time, causing all glyphs to silently return `null` and render invisible
+
+---
+
 ## [0.8.3] - 2026-06-01
 
 ### Fixed
@@ -313,7 +320,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.8.3...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.8.4...HEAD
+[0.8.4]: https://github.com/fwestling/achery-workshop/compare/v0.8.3...v0.8.4
 [0.8.3]: https://github.com/fwestling/achery-workshop/compare/v0.8.2...v0.8.3
 [0.8.2]: https://github.com/fwestling/achery-workshop/compare/v0.8.1...v0.8.2
 [0.8.1]: https://github.com/fwestling/achery-workshop/compare/v0.8.0...v0.8.1
