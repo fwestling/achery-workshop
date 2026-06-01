@@ -46,6 +46,26 @@ export const SizeSm: Story = {
   args: { label: 'Small pill', letter: 'S', tone: 'moss', size: 'sm' },
 }
 
+export const CustomColour: Story = {
+  args: { label: 'Household', letter: 'H', colour: '#7c4dff' },
+}
+
+export const CustomColourWithGlyph: Story = {
+  args: { label: 'Health', glyph: 'heart', colour: '#d64c4c' },
+}
+
+export const CustomColours: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <EntityPill label="Household" letter="H" colour="#7c4dff" />
+      <EntityPill label="Food/Drinks out" letter="FO" colour="#e07b39" />
+      <EntityPill label="Health" glyph="heart" colour="#d64c4c" />
+      <EntityPill label="Work" glyph="briefcase" colour="#2e7d6b" />
+      <EntityPill label="Travel" letter="T" colour="#4a90d9" />
+    </div>
+  ),
+}
+
 export const DarkMode: Story = {
   parameters: { backgrounds: { default: 'dark' } },
   render: () => (

@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import type { GlyphName } from '../../types/components'
 import { LetterStamp } from '../LetterStamp/LetterStamp'
 import type { LetterStampTone } from '../LetterStamp/LetterStamp'
@@ -13,7 +14,10 @@ export interface EntityPillProps {
   glyph?: GlyphName
   /** Tone applied to both stamp fill and border. @default 'neutral' */
   tone?: LetterStampTone
-  /** Raw hex escape hatch — passed to LetterStamp. */
+  /**
+   * Raw hex colour — sets the stamp fill AND the pill border.
+   * Takes precedence over `tone` for both.
+   */
   colour?: string
   /** Size variant. @default 'md' */
   size?: 'sm' | 'md'
@@ -22,6 +26,7 @@ export interface EntityPillProps {
   /** Makes the pill an `<a>` link. */
   href?: string
   className?: string
+  style?: CSSProperties
 }
 
 /**
@@ -44,6 +49,7 @@ export function EntityPill({
   onClick,
   href,
   className,
+  style,
 }: EntityPillProps) {
   const stampSize = size === 'sm' ? 20 : 28
   const isInteractive = Boolean(onClick || href)
@@ -52,6 +58,11 @@ export function EntityPill({
     styles.pill({ tone, size, interactive: isInteractive }),
     className,
   ].filter(Boolean).join(' ')
+
+  const pillStyle: CSSProperties = {
+    ...(colour ? { borderColor: colour } : {}),
+    ...style,
+  }
 
   const labelClass = size === 'sm' ? styles.labelSm : styles.labelMd
 
@@ -70,7 +81,7 @@ export function EntityPill({
 
   if (href) {
     return (
-      <a href={href} className={pillClass}>
+      <a href={href} className={pillClass} style={pillStyle}>
         {content}
       </a>
     )
@@ -78,11 +89,11 @@ export function EntityPill({
 
   if (onClick) {
     return (
-      <button type="button" onClick={onClick} className={pillClass}>
+      <button type="button" onClick={onClick} className={pillClass} style={pillStyle}>
         {content}
       </button>
     )
   }
 
-  return <span className={pillClass}>{content}</span>
+  return <span className={pillClass} style={pillStyle}>{content}</span>
 }

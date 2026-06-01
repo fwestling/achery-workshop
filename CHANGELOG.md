@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.9.1] - 2026-06-01
+
+### Changed
+- **`EntityPill`**: `colour` prop now also sets the pill border colour (previously only the stamp fill was affected). Accepts a `style` prop for additional inline overrides.
+
+---
+
 ## [0.9.0] - 2026-06-01
 
 ### Changed
@@ -363,6 +370,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 [0.2.1]: https://github.com/fwestling/achery-workshop/releases/tag/v0.2.1
 [0.2.0]: https://github.com/fwestling/achery-workshop/releases/tag/v0.2.0
 [0.1.0]: https://github.com/fwestling/achery-workshop/releases/tag/v0.1.0
+
+[0.9.1]: https://github.com/fwestling/achery-workshop/compare/v0.9.0...v0.9.1
 
 <!-- When promoting Unreleased → versioned, update the Unreleased link to compare/vNEW...HEAD
      and add a new link: [NEW]: .../releases/tag/vNEW -->
