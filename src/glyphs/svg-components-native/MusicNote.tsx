@@ -1,9 +1,10 @@
 // AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs
 import { Svg, Circle, Path } from 'react-native-svg'
-interface Props { size?: number; color?: string }
-export default function GMusicNote({ size = 24, color = '#000000' }: Props) {
+import type { ViewStyle } from 'react-native'
+interface Props { size?: number; color?: string; style?: ViewStyle }
+export default function GMusicNote({ size = 24, color = '#000000', style }: Props) {
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
       <Path d="M9 18V5l11-2v13" stroke={color} fill="none" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"></Path><Circle cx="6.5" cy="18" r="2.5" stroke={color} fill="none" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"></Circle><Circle cx="17.5" cy="16" r="2.5" stroke={color} fill="none" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"></Circle>
     </Svg>
   )

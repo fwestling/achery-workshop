@@ -11,6 +11,15 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.8.3] - 2026-06-01
+
+### Fixed
+- `Glyph` (native): remove `View` wrapper — SVG renders directly, fixing invisible glyphs
+- `Glyph` (native): pass `style` through to the underlying SVG component
+- Native glyph components: add `style?: ViewStyle` to generated `Props` interface and forward to `<Svg>`
+
+---
+
 ## [0.8.2] - 2026-06-01
 
 ### Fixed
@@ -304,7 +313,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.8.2...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.8.3...HEAD
+[0.8.3]: https://github.com/fwestling/achery-workshop/compare/v0.8.2...v0.8.3
 [0.8.2]: https://github.com/fwestling/achery-workshop/compare/v0.8.1...v0.8.2
 [0.8.1]: https://github.com/fwestling/achery-workshop/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/fwestling/achery-workshop/compare/v0.7.3...v0.8.0

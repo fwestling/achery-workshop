@@ -8,7 +8,7 @@ const toComponentName = (name: GlyphName): string =>
 
 // Inline require() at render time — avoids the import* barrel forcing all
 // 396 react-native-svg component modules to initialise before native is ready.
-function getGlyphComponent(compName: string): React.ComponentType<{ size?: number; color?: string }> | null {
+function getGlyphComponent(compName: string): React.ComponentType<{ size?: number; color?: string; style?: ViewStyle }> | null {
   try {
     // Metro resolves this as a static require map because the path prefix is constant.
     const mod = require(`../../glyphs/svg-components-native/${compName}.tsx`)
@@ -46,8 +46,10 @@ export const Glyph = ({ name, size = 24, color, accessibilityLabel, style }: Nat
   }
 
   return (
-    <View style={style} accessibilityLabel={accessibilityLabel} accessible={!!accessibilityLabel}>
-      <SvgComponent size={size} color={resolvedColor} />
-    </View>
+    <SvgComponent
+      size={size}
+      color={resolvedColor}
+      style={style}
+    />
   )
 }

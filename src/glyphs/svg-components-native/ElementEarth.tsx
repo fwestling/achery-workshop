@@ -1,9 +1,10 @@
 // AUTO-GENERATED — do not edit manually. Run: node scripts/generate-glyphs.mjs
 import { Svg, Line, Polygon } from 'react-native-svg'
-interface Props { size?: number; color?: string }
-export default function GElementEarth({ size = 24, color = '#000000' }: Props) {
+import type { ViewStyle } from 'react-native'
+interface Props { size?: number; color?: string; style?: ViewStyle }
+export default function GElementEarth({ size = 24, color = '#000000', style }: Props) {
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
       <Polygon points="4,5 20,5 12,20" stroke={color} fill="none" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"></Polygon><Line x1="7" y1="11" x2="17" y2="11" stroke={color} fill="none" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"></Line>
     </Svg>
   )
