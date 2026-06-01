@@ -2,7 +2,7 @@ import { View } from 'react-native'
 import type { ViewStyle } from 'react-native'
 import { useTheme } from '../theme/ThemeContext'
 import type { GlyphName } from '../../types/components'
-import { lookupNativeGlyph } from '../../glyphs/svg-components-native/lookup'
+import { lookupNativeGlyph } from '../../glyphs/nativeLookup'
 
 const toComponentName = (name: GlyphName): string =>
   name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('')
@@ -12,25 +12,28 @@ export interface NativeGlyphProps {
   name: GlyphName
   /** Size in dp — applied to both width and height. @default 24 */
   size?: number
-  /** Stroke/fill color. Defaults to the theme fg token. */
+  /**
+   * Stroke/fill color. Defaults to the theme fg token.
+   * Passed as the `color` prop to the SVG component, which react-native-svg-transformer
+   * maps from `currentColor` in the source SVG.
+   */
   color?: string
   accessibilityLabel?: string
   style?: ViewStyle
 }
 
 /**
- * Renders a single glyph from the Achery icon set using react-native-svg.
- * Inherits color from the theme fg token by default; pass `color` to override.
+ * Renders a single glyph from the Achery icon set on native.
+ * Requires `react-native-svg` and `react-native-svg-transformer` configured
+ * in the consumer's metro.config.js.
  *
- * Note: the `wordmark` glyph is not available on native (uses unsupported SVG features).
- * Each glyph module is loaded on first use via a static switch — Metro bundles only
- * what is required, not all 396 at startup.
+ * Color defaults to the theme fg token. Each glyph is loaded via a static
+ * switch so Metro can resolve the paths at bundle time.
  */
 export const Glyph = ({ name, size = 24, color, accessibilityLabel, style }: NativeGlyphProps) => {
   const { tokens } = useTheme()
   const resolvedColor = color ?? tokens.fg
-  const compName = toComponentName(name)
-  const SvgComponent = lookupNativeGlyph(compName)
+  const SvgComponent = lookupNativeGlyph(toComponentName(name))
 
   if (!SvgComponent) {
     return <View style={[{ width: size, height: size }, style]} accessibilityLabel={accessibilityLabel} />
@@ -38,7 +41,8 @@ export const Glyph = ({ name, size = 24, color, accessibilityLabel, style }: Nat
 
   return (
     <SvgComponent
-      size={size}
+      width={size}
+      height={size}
       color={resolvedColor}
       style={style}
     />

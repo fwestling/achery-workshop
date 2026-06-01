@@ -11,6 +11,18 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.9.0] - 2026-06-01
+
+### Changed
+- **Native glyph system rearchitected**: replaced the generated `svg-components-native/` directory (hand-converted react-native-svg TSX files) with `react-native-svg-transformer`. The native `Glyph` component now loads raw `.svg` files directly via a static switch in `src/glyphs/nativeLookup.ts`. Consumers must configure `react-native-svg-transformer` in their `metro.config.js` and add a `.svgrrc` that maps `currentColor` → `{props.color}`.
+- `generate-glyphs.mjs` no longer generates native TSX components — it only generates web components and the native lookup switch.
+- `src/glyphs/svg` (raw SVG files) added to the npm `files` array; `src/glyphs/svg-components-native` removed.
+
+### Fixed
+- Native `Glyph`: eliminates all `RNSVGCircle is undefined` / `View config getter must be a function` crashes that occurred with react-native-svg 15.x + New Architecture, caused by the generated components not integrating with Fabric's view config registry correctly.
+
+---
+
 ## [0.8.4] - 2026-06-01
 
 ### Fixed
@@ -320,7 +332,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.8.4...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/fwestling/achery-workshop/compare/v0.8.4...v0.9.0
 [0.8.4]: https://github.com/fwestling/achery-workshop/compare/v0.8.3...v0.8.4
 [0.8.3]: https://github.com/fwestling/achery-workshop/compare/v0.8.2...v0.8.3
 [0.8.2]: https://github.com/fwestling/achery-workshop/compare/v0.8.1...v0.8.2
