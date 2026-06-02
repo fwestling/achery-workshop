@@ -145,4 +145,9 @@ export const searchIcon = style({
 
 export const searchInput = style([inputBase, {
   paddingLeft: '30px',
+  selectors: {
+    '&:focus': {
+      paddingLeft: '29px',
+    },
+  },
 }])

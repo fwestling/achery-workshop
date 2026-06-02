@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.9.2] - 2026-06-02
+
+### Fixed
+- **`SearchInput`**: icon overlapped text when input was focused — `:focus` padding shorthand was resetting `padding-left` to `9px`, losing the `30px` icon offset. Now explicitly preserves left padding on focus.
+
+---
+
 ## [0.9.1] - 2026-06-01
 
 ### Changed
@@ -339,7 +346,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.9.2...HEAD
+[0.9.2]: https://github.com/fwestling/achery-workshop/compare/v0.9.1...v0.9.2
 [0.9.0]: https://github.com/fwestling/achery-workshop/compare/v0.8.4...v0.9.0
 [0.8.4]: https://github.com/fwestling/achery-workshop/compare/v0.8.3...v0.8.4
 [0.8.3]: https://github.com/fwestling/achery-workshop/compare/v0.8.2...v0.8.3
