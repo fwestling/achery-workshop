@@ -688,6 +688,87 @@ import type { TransactionType } from 'achery-ui'
 
 ---
 
+## DetailRail
+
+Slide-in contextual detail panel. Appears from the right on desktop; slides up as a bottom sheet on mobile (≤640px). Useful for showing detail alongside a list or table without navigating away.
+
+```tsx
+import { DetailRail } from 'achery-ui'
+
+<DetailRail
+  open={!!selected}
+  onClose={() => setSelected(null)}
+  title="Transaction detail"
+  eyebrow="Transaction"
+  footer={<Button variant="primary" size="sm">Save</Button>}
+>
+  <Field label="Amount"><Input value={selected?.amount} /></Field>
+</DetailRail>
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `open` | `boolean` | — | required |
+| `onClose` | `() => void` | — | required |
+| `title` | `string` | — | required |
+| `eyebrow` | `string` | — | Small label above title |
+| `children` | `ReactNode` | — | Body content |
+| `footer` | `ReactNode` | — | Sticky footer, typically action buttons |
+| `width` | `number` | `360` | Desktop width in px |
+| `className` | `string` | — | |
+
+---
+
+## ColourInput
+
+Hex colour picker: a native `<input type="color">` swatch paired with a text field for direct hex entry. Normalises 3-digit shorthand (`#abc` → `#aabbcc`) on blur. Wrap in `Field` for a label.
+
+```tsx
+import { ColourInput, Field } from 'achery-ui'
+
+<Field label="Category colour">
+  <ColourInput value={colour} onChange={setColour} />
+</Field>
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `value` | `string` | `'#000000'` | Hex colour string |
+| `onChange` | `(value: string) => void` | — | |
+| `error` | `boolean` | `false` | Applies danger border |
+| `placeholder` | `string` | `'000000'` | Text field placeholder |
+| `disabled` | `boolean` | `false` | |
+| `className` | `string` | — | |
+
+---
+
+## SegmentedControl
+
+Inline button group where exactly one option is active. Use for mutually exclusive view modes, filter toggles, or quick status selection.
+
+```tsx
+import { SegmentedControl } from 'achery-ui'
+
+<SegmentedControl
+  options={[{ value: 'week', label: 'Week' }, { value: 'month', label: 'Month' }]}
+  value={period}
+  onChange={setPeriod}
+/>
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `options` | `SegmentOption[]` | — | `{ value: string; label: ReactNode }[]` |
+| `value` | `string` | — | required |
+| `onChange` | `(value: string) => void` | — | required |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | |
+| `disabled` | `boolean` | `false` | |
+| `className` | `string` | — | |
+
+Also available as a native component via `achery-ui/native`.
+
+---
+
 ## React Native (`achery-ui/native`)
 
 A subset of components available for React Native via `achery-ui/native`. Uses React Native's `StyleSheet` system and `SemanticTokens` directly — no vanilla-extract, no CSS.
@@ -765,6 +846,10 @@ module.exports = config
 | `Toggle` | Animated pill switch (`value`/`onChange` — note: differs from web's `pressed`/`onPressedChange`) |
 | `Tabs` | Horizontal scrollable tab bar with active underline |
 | `ToastProvider` / `useToast` | Absolute overlay toasts, auto-dismiss. Mount at nav root. |
+| `Textarea` | Multi-line text input. `rows` prop controls min height. Wrap in `Field` for label. |
+| `StatusDot` | Small filled dot for compact status indicators. Same `tone` palette as `Badge`. |
+| `SegmentedControl` | Inline exclusive button group. `options` / `value` / `onChange`. |
+| `ScreenNav` | Navigation bar for modal push screens: cancel/back + title + optional action. |
 
 ### `Glyph` (native)
 
@@ -787,7 +872,7 @@ The `wordmark` glyph is not available on native (uses unsupported SVG features).
 
 ---
 
-## Known gaps (as of v0.5.0)
+## Known gaps (as of v0.10.0)
 
 Components not yet in achery-ui that commonly appear in apps:
 

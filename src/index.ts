@@ -133,5 +133,17 @@ export type { AvatarProps, AvatarTone, AvatarSize } from './components/Avatar/Av
 export { MaterialCard } from './components/MaterialCard/MaterialCard'
 export type { MaterialCardProps } from './components/MaterialCard/MaterialCard'
 
+// DetailRail
+export { DetailRail } from './components/DetailRail/DetailRail'
+export type { DetailRailProps } from './components/DetailRail/DetailRail'
+
+// ColourInput
+export { ColourInput } from './components/ColourInput/ColourInput'
+export type { ColourInputProps } from './components/ColourInput/ColourInput'
+
+// SegmentedControl
+export { SegmentedControl } from './components/SegmentedControl/SegmentedControl'
+export type { SegmentedControlProps, SegmentOption } from './components/SegmentedControl/SegmentedControl'
+
 // Types
 export type { ThemeMode, AccentColor, AccentDial, MaterialSignature, MaterialIntensity, ComponentSize, ButtonVariant, BadgeTone, SortDirection } from './types/index'

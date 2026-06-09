@@ -11,6 +11,18 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.10.0] - 2026-06-10
+
+### Added
+- **`DetailRail`**: slide-in detail panel — desktop right-side drawer, mobile bottom sheet (70vh). Props: `open`, `onClose`, `title`, `eyebrow`, `children`, `footer`, `width`.
+- **`ColourInput`**: hex colour picker combining a native `<input type="color">` swatch with a text field for direct hex entry. Normalises 3-digit shorthand on blur. Compose with `Field` for label/error.
+- **`SegmentedControl`**: inline button group where exactly one option is active. `size` prop (`sm` / `md` / `lg`). Available on web and native.
+- **`StatusDot`** (native): small filled dot conveying semantic tone, same palette as `Badge`. Useful where a full badge label is too heavy.
+- **`ScreenNav`** (native): navigation bar for modal push screens — leading cancel/back, centred title, optional trailing action. Includes iOS safe-area top padding.
+- **`Textarea`** (native): multi-line `TextInput` with `Field`-compatible styling and a `rows` prop. Mirrors the web `Textarea` API.
+
+---
+
 ## [0.9.2] - 2026-06-02
 
 ### Fixed
@@ -346,7 +358,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.9.2...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.10.0...HEAD
+[0.10.0]: https://github.com/fwestling/achery-workshop/compare/v0.9.2...v0.10.0
 [0.9.2]: https://github.com/fwestling/achery-workshop/compare/v0.9.1...v0.9.2
 [0.9.0]: https://github.com/fwestling/achery-workshop/compare/v0.8.4...v0.9.0
 [0.8.4]: https://github.com/fwestling/achery-workshop/compare/v0.8.3...v0.8.4

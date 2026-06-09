@@ -1,4 +1,4 @@
-import { View, TextInput, Text, type TextInputProps, type ViewStyle } from 'react-native'
+import { View, TextInput, Text, type TextInputProps, type TextStyle, type ViewStyle } from 'react-native'
 import { spacing, fontWeights } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 
@@ -48,6 +48,49 @@ export function Input({ error, style, ...props }: InputProps) {
           paddingHorizontal: spacing.sp5,
           color: tokens.fg,
           fontSize: 14,
+        },
+        style,
+      ]}
+      placeholderTextColor={tokens.fgMute}
+      {...props}
+    />
+  )
+}
+
+export interface TextareaProps extends TextInputProps {
+  error?: boolean
+  /** Approximate number of visible lines. @default 4 */
+  rows?: number
+  style?: TextStyle
+}
+
+/**
+ * Multi-line text input. Passes `multiline` and `textAlignVertical="top"` to
+ * the underlying `TextInput`. Wrap in {@link Field} for a label.
+ *
+ * @example
+ * ```tsx
+ * <Field label="Notes">
+ *   <Textarea rows={5} placeholder="Notes, checklists, anything…" />
+ * </Field>
+ * ```
+ */
+export function Textarea({ error, rows = 4, style, ...props }: TextareaProps) {
+  const { tokens } = useTheme()
+  return (
+    <TextInput
+      multiline
+      textAlignVertical="top"
+      style={[
+        {
+          backgroundColor: tokens.bg,
+          borderWidth: 1.5,
+          borderColor: error ? tokens.danger : tokens.border,
+          paddingVertical: spacing.sp3,
+          paddingHorizontal: spacing.sp5,
+          color: tokens.fg,
+          fontSize: 14,
+          minHeight: rows * 24,
         },
         style,
       ]}
