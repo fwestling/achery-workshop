@@ -34,7 +34,20 @@
       "Bash(npx tsc *)",
       "Bash(git -C /Users/fred/Dev/achery-workshop ls-files .claude/settings.local.json)",
       "Bash(git -C /Users/fred/Dev/achery-workshop ls-files --others --exclude-standard .claude/)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(git -C /Users/fred/Dev/pinion log --oneline -30)",
+      "Bash(git -C /Users/fred/Dev/achery-exemplar log --oneline -30)",
+      "Bash(git -C /Users/fred/Dev/pinion diff HEAD~3..HEAD --name-only)",
+      "Bash(git -C /Users/fred/Dev/pinion show b5a547d --stat)",
+      "Bash(git -C /Users/fred/Dev/pinion log --oneline cc06a14..HEAD --name-status)",
+      "Bash(cat /Users/fred/Dev/pinion/apps/web/src/routes/_auth/projects/\\\\$projectId/tasks/\\\\$taskId/index.tsx)",
+      "Read(//Users/fred/Dev/pinion/apps/web/src/routes/_auth/projects/$projectId/tasks/$taskId/**)",
+      "Bash(git -C /Users/fred/Dev/pinion diff cc06a14..HEAD -- apps/web/src/routes/_auth/projects/)",
+      "Bash(git -C /Users/fred/Dev/achery-exemplar show 151f8dd --stat)",
+      "Bash(git -C /Users/fred/Dev/achery-exemplar show 0ca4580 --stat)",
+      "Bash(git -C /Users/fred/Dev/balans diff HEAD~5..HEAD --name-only)",
+      "Bash(git -C /Users/fred/Dev/balans log --oneline --all)",
+      "Bash(git -C /Users/fred/Dev/balans show c388fe5 --stat)"
     ]
   }
 }

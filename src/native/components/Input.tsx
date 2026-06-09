@@ -32,7 +32,7 @@ export function Field({ label, hint, error, children, style }: FieldProps) {
 
 export interface InputProps extends TextInputProps {
   error?: boolean
-  style?: ViewStyle
+  style?: TextStyle
 }
 
 export function Input({ error, style, ...props }: InputProps) {
