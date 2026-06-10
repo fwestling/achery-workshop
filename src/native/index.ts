@@ -2,17 +2,18 @@ export { NativeThemeProvider, useTheme } from './theme/ThemeContext'
 export type { NativeThemeProviderProps, NativeThemeContextValue } from './theme/ThemeContext'
 
 export {
-  Text, Button, Card, Badge, Field, Input, MaterialCard, MaterialEyebrow,
+  Text, Button, Card, Badge, Field, Input, Textarea, MaterialCard, MaterialEyebrow,
   Glyph, GlyphPicker,
   Skeleton, ProgressBar, Checkbox, Toggle, Tabs,
   ToastProvider, useToast,
+  StatusDot, SegmentedControl, ScreenNav,
 } from './components/index'
 export type {
   TextProps,
   ButtonProps, ButtonVariant, ButtonSize,
   CardProps, CardVariant, CardPadding,
   BadgeProps, BadgeTone, BadgeVariant,
-  FieldProps, InputProps,
+  FieldProps, InputProps, TextareaProps,
   NativeMaterialCardProps, MaterialIntensity,
   NativeGlyphProps,
   GlyphPickerProps,
@@ -22,6 +23,9 @@ export type {
   ToggleProps,
   TabsProps, TabItem,
   ToastProviderProps, ToastData, ToastOptions,
+  StatusDotProps,
+  SegmentedControlProps, NativeSegmentOption,
+  ScreenNavProps,
 } from './components/index'
 
 // Glyph utilities — pure TS, work on native

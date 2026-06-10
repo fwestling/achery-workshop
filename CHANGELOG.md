@@ -11,6 +11,22 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.10.2] - 2026-06-10
+
+### Added
+- **`ScreenNav`, `StatusDot`, `SegmentedControl`, `Textarea`** (native): re-exported from `achery-ui/native` entry — these were implemented in 0.10.0 but missing from the public exports.
+
+### Changed
+- **`Button`** (native): `children` now accepts `ReactNode` (was `string`). When multiple children are provided they render in a flex row, enabling icon+label patterns.
+- **`Badge`** (native): added `size` prop (`sm` / `md` / `lg`). `'md'` is the default and matches prior behaviour.
+
+### Fixed
+- **`Input`** / **`Textarea`** (native): removed redundant `style?: TextStyle` override on `InputProps`/`TextareaProps` — now correctly inherits `StyleProp<TextStyle>` from `TextInputProps`.
+- **`Skeleton`** (native): `width` style cast to `any` to satisfy RN's Animated style types for `string | number` width values.
+- **`Tabs`** (native): `ReactNode` imported from `react` instead of `react-native`.
+
+---
+
 ## [0.10.1] - 2026-06-10
 
 ### Fixed
@@ -365,7 +381,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.10.1...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.10.2...HEAD
+[0.10.2]: https://github.com/fwestling/achery-workshop/compare/v0.10.1...v0.10.2
 [0.10.1]: https://github.com/fwestling/achery-workshop/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/fwestling/achery-workshop/compare/v0.9.2...v0.10.0
 [0.9.2]: https://github.com/fwestling/achery-workshop/compare/v0.9.1...v0.9.2

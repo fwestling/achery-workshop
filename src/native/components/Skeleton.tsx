@@ -60,7 +60,7 @@ export const Skeleton = ({ lines = 3, width, block = false, height = 80, style }
       {Array.from({ length: lines }).map((_, i) => (
         <Animated.View
           key={i}
-          style={[baseStyle, { height: LINE_HEIGHT, width: lineWidths[i] ?? '100%' }, { opacity }]}
+          style={[baseStyle, { height: LINE_HEIGHT, width: (lineWidths[i] ?? '100%') as any }, { opacity }]}
         />
       ))}
     </View>

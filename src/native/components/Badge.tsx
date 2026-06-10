@@ -4,11 +4,13 @@ import { useTheme } from '../theme/ThemeContext'
 
 export type BadgeTone = 'neutral' | 'saved' | 'drafting' | 'stopped' | 'archived'
 export type BadgeVariant = 'outline' | 'solid'
+export type BadgeSize = 'sm' | 'md' | 'lg'
 
 export interface BadgeProps {
   tone?: BadgeTone
   variant?: BadgeVariant
   dot?: boolean
+  size?: BadgeSize
   children: string
   style?: ViewStyle
 }
@@ -24,7 +26,9 @@ function toneColors(tone: BadgeTone, variant: BadgeVariant, isDark: boolean) {
   return map[tone]
 }
 
-export function Badge({ tone = 'neutral', variant = 'outline', dot = false, children, style }: BadgeProps) {
+const badgeFontSize: Record<BadgeSize, number> = { sm: 10, md: 11, lg: 12 }
+
+export function Badge({ tone = 'neutral', variant = 'outline', dot = false, size = 'md', children, style }: BadgeProps) {
   const { tokens, dark } = useTheme()
   const colors = toneColors(tone, variant, dark)
 
@@ -51,7 +55,7 @@ export function Badge({ tone = 'neutral', variant = 'outline', dot = false, chil
       {dot && (
         <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: colors.fg }} />
       )}
-      <Text style={{ color: fg, fontSize: 11, fontWeight: fontWeights.semibold.toString() as any, letterSpacing: 0.5 }}>
+      <Text style={{ color: fg, fontSize: badgeFontSize[size], fontWeight: fontWeights.semibold.toString() as any, letterSpacing: 0.5 }}>
         {children}
       </Text>
     </View>

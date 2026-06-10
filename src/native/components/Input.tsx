@@ -1,4 +1,4 @@
-import { View, TextInput, Text, type TextInputProps, type TextStyle, type ViewStyle } from 'react-native'
+import { View, TextInput, Text, type TextInputProps, type ViewStyle } from 'react-native'
 import { spacing, fontWeights } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 
@@ -32,7 +32,6 @@ export function Field({ label, hint, error, children, style }: FieldProps) {
 
 export interface InputProps extends TextInputProps {
   error?: boolean
-  style?: TextStyle
 }
 
 export function Input({ error, style, ...props }: InputProps) {
@@ -61,7 +60,6 @@ export interface TextareaProps extends TextInputProps {
   error?: boolean
   /** Approximate number of visible lines. @default 4 */
   rows?: number
-  style?: TextStyle
 }
 
 /**

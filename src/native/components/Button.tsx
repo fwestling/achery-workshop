@@ -1,3 +1,4 @@
+import { type ReactNode } from 'react'
 import { TouchableOpacity, View, Text, StyleSheet, type ViewStyle } from 'react-native'
 import { spacing, fontWeights } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
@@ -9,7 +10,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg'
 export interface ButtonProps {
   variant?: ButtonVariant
   size?: ButtonSize
-  children: string
+  children: ReactNode
   onPress?: () => void
   disabled?: boolean
   style?: ViewStyle
@@ -37,6 +38,14 @@ function makeColors(variant: ButtonVariant, tokens: SemanticTokens) {
 export function Button({ variant = 'secondary', size = 'md', children, onPress, disabled, style }: ButtonProps) {
   const { tokens } = useTheme()
   const colors = makeColors(variant, tokens)
+  const textStyle = {
+    color: disabled ? tokens.fgMute : colors.label,
+    fontSize: fontSize[size],
+    fontWeight: fontWeights.semibold.toString() as any,
+    letterSpacing: 0.01 * fontSize[size],
+  }
+
+  const isString = typeof children === 'string'
 
   return (
     <TouchableOpacity
@@ -52,20 +61,18 @@ export function Button({ variant = 'secondary', size = 'md', children, onPress, 
           paddingHorizontal: paddingH[size],
           alignSelf: 'flex-start',
           opacity: disabled ? 0.5 : 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: spacing.sp2,
         },
         style,
       ]}
     >
-      <Text
-        style={{
-          color: disabled ? tokens.fgMute : colors.label,
-          fontSize: fontSize[size],
-          fontWeight: fontWeights.semibold.toString() as any,
-          letterSpacing: 0.01 * fontSize[size],
-        }}
-      >
-        {children}
-      </Text>
+      {isString ? (
+        <Text style={textStyle}>{children}</Text>
+      ) : (
+        children
+      )}
     </TouchableOpacity>
   )
 }

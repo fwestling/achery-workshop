@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { ScrollView, TouchableOpacity, View, Text } from 'react-native'
-import type { ViewStyle, ReactNode } from 'react-native'
+import type { ViewStyle } from 'react-native'
 import { spacing, fontWeights } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 
