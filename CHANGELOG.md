@@ -11,6 +11,15 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.10.3] - 2026-06-11
+
+### Fixed
+- `AccentColor` type now resolves correctly for consumers of `achery-ui/native` — it was inferred as `any` because the definition lived in `src/tokens/accents.ts` which is not published. Moved the definition to `src/types/theme.ts` (which is published) and updated `src/tokens/accents.ts` to import from there.
+- `Glyph` (native): fixed `exactOptionalPropertyTypes` error when `style` prop is `undefined`.
+- `tsconfig.json`: removed `src/native` exclusion so `pnpm typecheck` catches native type errors going forward.
+
+---
+
 ## [0.10.2] - 2026-06-10
 
 ### Added
@@ -381,7 +390,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.10.2...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.10.3...HEAD
+[0.10.3]: https://github.com/fwestling/achery-workshop/compare/v0.10.2...v0.10.3
 [0.10.2]: https://github.com/fwestling/achery-workshop/compare/v0.10.1...v0.10.2
 [0.10.1]: https://github.com/fwestling/achery-workshop/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/fwestling/achery-workshop/compare/v0.9.2...v0.10.0

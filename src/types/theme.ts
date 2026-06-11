@@ -1,5 +1,3 @@
-import type { AccentColor } from '../tokens/accents'
-
 /**
  * The user's colour-mode **preference**.
  * - `'light'` / `'dark'` — explicit override
@@ -18,6 +16,12 @@ export type ResolvedTheme = 'light' | 'dark'
  * - `'chrome'`    — accent threads the wiring: tabs, ticks, eyebrows, outline buttons (default)
  * - `'surface'`   — one signature panel floods with accent colour (`.signature-surface`)
  */
+/**
+ * The accent colour palette.
+ * Matches the keys of `accentColors` in `src/tokens/accents.ts` — keep them in sync.
+ */
+export type AccentColor = 'terracotta' | 'moss' | 'plum' | 'ochre' | 'rust' | 'copper'
+
 export type AccentDial = 'underline' | 'chrome' | 'surface'
 
 /**
@@ -66,5 +70,3 @@ export interface ThemeContextValue {
   /** Set the material signature. */
   setMaterial: (material: MaterialSignature) => void
 }
-
-export type { AccentColor }

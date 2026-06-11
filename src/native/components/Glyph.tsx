@@ -44,7 +44,7 @@ export const Glyph = ({ name, size = 24, color, accessibilityLabel, style }: Nat
       width={size}
       height={size}
       color={resolvedColor}
-      style={style}
+      {...(style !== undefined && { style })}
     />
   )
 }

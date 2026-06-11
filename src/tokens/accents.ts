@@ -1,6 +1,15 @@
 import { palette } from './palette'
+import type { AccentColor } from '../types/theme'
 
-export const accentColors = {
+export type { AccentColor }
+
+export const accentColors: Record<AccentColor, {
+  readonly main: string
+  readonly light: string
+  readonly deep: string
+  readonly fg: string
+  readonly fgDark: string
+}> = {
   terracotta: {
     main: palette.terracotta,
     light: palette.terracottaLight,
@@ -45,5 +54,4 @@ export const accentColors = {
   },
 } as const
 
-export type AccentColor = keyof typeof accentColors
 export const accentColorNames = Object.keys(accentColors) as AccentColor[]
