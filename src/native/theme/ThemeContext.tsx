@@ -1,6 +1,7 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from 'react'
 import { lightTokens, darkTokens } from 'achery-ui/tokens'
 import type { SemanticTokens } from 'achery-ui/tokens'
+import { accentColors } from '../../tokens/accents'
 import type { AccentColor, AccentDial, MaterialSignature } from '../../types/theme'
 
 export interface NativeThemeContextValue {
@@ -52,10 +53,20 @@ export function NativeThemeProvider({
   const setDial = useCallback((d: AccentDial) => setDialState(d), [])
   const setMaterial = useCallback((m: MaterialSignature) => setMaterialState(m), [])
 
+  const tokens = useMemo(() => {
+    const base = dark ? darkTokens : lightTokens
+    const a = accentColors[accent]
+    return {
+      ...base,
+      accent: dark ? a.light : a.main,
+      accentFg: dark ? a.fgDark : a.fg,
+    } as SemanticTokens
+  }, [dark, accent])
+
   return (
     <ThemeContext.Provider
       value={{
-        tokens: dark ? darkTokens : lightTokens,
+        tokens,
         dark,
         toggle,
         accent,
