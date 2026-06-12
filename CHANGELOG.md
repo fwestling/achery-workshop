@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.10.8] - 2026-06-12
+
+### Fixed
+- `achery-ui/native` exports map: added explicit `"react-native"` condition so TypeScript consumers using `customConditions: ["react-native"]` (e.g. Expo projects) correctly resolve to `dist/native/index.d.ts` instead of falling through to the source and losing type information.
+
+---
+
 ## [0.10.7] - 2026-06-12
 
 ### Fixed
@@ -412,7 +419,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.10.7...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.10.8...HEAD
+[0.10.8]: https://github.com/fwestling/achery-workshop/compare/v0.10.7...v0.10.8
 [0.10.7]: https://github.com/fwestling/achery-workshop/compare/v0.10.5...v0.10.7
 [0.10.5]: https://github.com/fwestling/achery-workshop/compare/v0.10.4...v0.10.5
 [0.10.4]: https://github.com/fwestling/achery-workshop/compare/v0.10.3...v0.10.4
