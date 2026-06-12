@@ -20,4 +20,19 @@ export default defineConfig([
       options.jsx = 'automatic'
     },
   },
+  {
+    entry: {
+      'native/index': 'src/native/index.ts',
+    },
+    format: ['esm', 'cjs'],
+    dts: true,
+    splitting: true,
+    treeshake: true,
+    sourcemap: true,
+    outDir: 'dist',
+    external: ['react', 'react-native', 'react-native-svg', 'expo-router', 'achery-ui'],
+    esbuildOptions(options) {
+      options.jsx = 'automatic'
+    },
+  },
 ])
