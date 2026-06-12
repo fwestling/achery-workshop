@@ -16,7 +16,12 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "achery-ui": ["./src/index.ts"],
+      "achery-ui/tokens": ["./src/tokens/index.ts"],
+      "achery-ui/native": ["./src/native/index.ts"]
+    }
   },
   "include": ["src", "stories", ".storybook"],
   "exclude": ["node_modules", "dist"]
