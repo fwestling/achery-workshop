@@ -11,10 +11,17 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.10.5] - 2026-06-12
+
+### Fixed
+- `achery-ui/native` runtime now resolves to source so Metro's SVG transformer handles glyphs correctly — 0.10.4's bundled `dist/native/index.js` broke glyph rendering.
+
+---
+
 ## [0.10.4] - 2026-06-12
 
 ### Fixed
-- `achery-ui/native` now builds to `dist/native/` and exports types correctly — previously the exports map pointed at the TypeScript source, causing `Cannot find module 'achery-ui/native'` errors in consumers.
+- `achery-ui/native` now exports type declarations from `dist/native/index.d.ts`, fixing `Cannot find module 'achery-ui/native'` errors in TypeScript consumers.
 
 ---
 
@@ -397,7 +404,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.10.4...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.10.5...HEAD
+[0.10.5]: https://github.com/fwestling/achery-workshop/compare/v0.10.4...v0.10.5
 [0.10.4]: https://github.com/fwestling/achery-workshop/compare/v0.10.3...v0.10.4
 [0.10.3]: https://github.com/fwestling/achery-workshop/compare/v0.10.2...v0.10.3
 [0.10.2]: https://github.com/fwestling/achery-workshop/compare/v0.10.1...v0.10.2
