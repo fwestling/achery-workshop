@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from 'react'
 import { lightTokens, darkTokens } from 'achery-ui/tokens'
 import type { SemanticTokens } from 'achery-ui/tokens'
-import { accentColors } from '../../tokens/accents'
+import { accentColors } from 'achery-ui/tokens'
 import type { AccentColor, AccentDial, MaterialSignature } from '../../types/theme'
 
 export interface NativeThemeContextValue {

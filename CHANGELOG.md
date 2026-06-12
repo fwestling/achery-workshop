@@ -11,10 +11,11 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [0.10.6] - 2026-06-12
+## [0.10.7] - 2026-06-12
 
 ### Fixed
 - `NativeThemeProvider`: `defaultAccent` (and `setAccent`) now correctly applies the selected accent's colours to `tokens.accent` and `tokens.accentFg` — previously these were hardcoded to terracotta regardless of the accent prop.
+- `ThemeContext`: import `accentColors` via `achery-ui/tokens` instead of a relative path — the relative path resolved during build but broke Metro bundling in consumers.
 
 ---
 
@@ -411,8 +412,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.10.6...HEAD
-[0.10.6]: https://github.com/fwestling/achery-workshop/compare/v0.10.5...v0.10.6
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.10.7...HEAD
+[0.10.7]: https://github.com/fwestling/achery-workshop/compare/v0.10.5...v0.10.7
 [0.10.5]: https://github.com/fwestling/achery-workshop/compare/v0.10.4...v0.10.5
 [0.10.4]: https://github.com/fwestling/achery-workshop/compare/v0.10.3...v0.10.4
 [0.10.3]: https://github.com/fwestling/achery-workshop/compare/v0.10.2...v0.10.3
