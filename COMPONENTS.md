@@ -18,8 +18,11 @@ import { AcheryProvider, useTheme } from 'achery-ui'
 const { theme, toggleTheme, accent, setAccent } = useTheme()
 ```
 
-`defaultTheme`: `'light' | 'dark'`  
-`defaultAccent`: `'terracotta' | 'moss' | 'plum' | 'ochre' | 'rust' | 'copper'`
+`defaultTheme`: `'light' | 'dark' | 'system'`  
+`defaultAccent`: `'terracotta' | 'moss' | 'plum' | 'ochre' | 'rust' | 'copper' | 'slate' | 'verdigris' | 'mauve' | 'amber' | 'fern' | 'blush'`  
+`defaultDial`: `'underline' | 'chrome' | 'surface'` — how loudly the accent runs (default `'chrome'`)  
+`defaultMaterial`: `'none' | 'leather' | 'wood' | 'copper'` — hero material signature for contained objects  
+`defaultSurfaceOrigin`: `'web-first' | 'native-first' | 'parity' | 'native-only'` — adaptation ladder direction (default `'web-first'`)
 
 ---
 
@@ -850,6 +853,9 @@ module.exports = config
 | `StatusDot` | Small filled dot for compact status indicators. Same `tone` palette as `Badge`. |
 | `SegmentedControl` | Inline exclusive button group. `options` / `value` / `onChange`. |
 | `ScreenNav` | Navigation bar for modal push screens: cancel/back + title + optional action. |
+| `Disclosure` | Collapsible section (rung 3 — disclosure ladder). Labelled toggle, 44px hit area, height animation. |
+| `BottomSheet` + `SheetRow` | Slide-up overlay (rung 5). 2px ink top-rule, tracing-paper scrim, square corners. `SheetRow` = 44px touch row with optional danger tint. |
+| `BottomTabBar` | Root navigation bar (promotion ladder). ≤4 primary tabs; overflow into a "More" `BottomSheet`. 2px accent top stripe on active tab. |
 
 ### `Glyph` (native)
 
@@ -870,14 +876,112 @@ import { Glyph } from 'achery-ui/native'
 
 The `wordmark` glyph is not available on native (uses unsupported SVG features).
 
+### `Disclosure` (native)
+
+Rung 3 of the disclosure ladder — secondary content folds behind a labelled toggle.
+
+```tsx
+import { Disclosure } from 'achery-ui/native'
+
+<Disclosure label="Scratchpad">
+  <Textarea placeholder="Half-baked thoughts…" />
+</Disclosure>
+```
+
+| Prop | Type | Default |
+|---|---|---|
+| `label` | `string` | required |
+| `children` | `ReactNode` | required |
+| `defaultOpen` | `boolean` | `false` |
+| `open` | `boolean` | — (uncontrolled) |
+| `onOpenChange` | `(open: boolean) => void` | — |
+| `contentPaddingHorizontal` | `number` | `16` |
+| `style` | `ViewStyle` | — |
+
+### `BottomSheet` + `SheetRow` (native)
+
+Rung 5 — action clusters and short edits slide up from the bottom.
+
+```tsx
+import { BottomSheet, SheetRow } from 'achery-ui/native'
+
+<BottomSheet open={open} onClose={() => setOpen(false)} title="Row actions">
+  <SheetRow label="Edit" onPress={handleEdit} />
+  <SheetRow label="Delete" onPress={handleDelete} danger />
+</BottomSheet>
+```
+
+**`BottomSheet` props:**
+
+| Prop | Type | Default |
+|---|---|---|
+| `open` | `boolean` | required |
+| `onClose` | `() => void` | required |
+| `title` | `string` | — |
+| `showClose` | `boolean` | `false` |
+| `children` | `ReactNode` | required |
+| `maxContentHeight` | `number` | — (grows with content) |
+| `style` | `ViewStyle` | — |
+
+**`SheetRow` props:**
+
+| Prop | Type | Default |
+|---|---|---|
+| `label` | `string` | required |
+| `onPress` | `() => void` | required |
+| `danger` | `boolean` | `false` |
+| `accessory` | `ReactNode` | — |
+| `disabled` | `boolean` | `false` |
+
+### `BottomTabBar` (native)
+
+Promotion-ladder replacement for the desk sidebar. ≤4 primary tabs visible; extras go into a "More" sheet.
+
+```tsx
+import { BottomTabBar } from 'achery-ui/native'
+import type { BottomTabItem } from 'achery-ui/native'
+
+const tabs: BottomTabItem[] = [
+  { value: 'today',    label: 'Today',    glyph: 'calendar' },
+  { value: 'projects', label: 'Projects', glyph: 'folder' },
+  { value: 'metrics',  label: 'Metrics',  glyph: 'chart-bar' },
+  { value: 'inbox',    label: 'Inbox',    glyph: 'inbox' },
+  { value: 'settings', label: 'Settings', glyph: 'settings' }, // overflows to More
+]
+
+<BottomTabBar
+  items={tabs}
+  value={activeTab}
+  onValueChange={setActiveTab}
+  safeAreaBottom={34}  // useSafeAreaInsets().bottom
+/>
+```
+
+| Prop | Type | Default |
+|---|---|---|
+| `items` | `BottomTabItem[]` | required |
+| `value` | `string` | required |
+| `onValueChange` | `(value: string) => void` | required |
+| `safeAreaBottom` | `number` | `0` |
+| `style` | `ViewStyle` | — |
+
+**`BottomTabItem`:**
+
+| Field | Type | Notes |
+|---|---|---|
+| `value` | `string` | Unique key |
+| `label` | `string` | Shown beneath icon |
+| `glyph` | `GlyphName` | From the Achery icon set |
+| `hidden` | `boolean` | Exclude from bar entirely |
+
 ---
 
-## Known gaps (as of v0.10.0)
+## Known gaps (as of v0.11.0)
 
 Components not yet in achery-ui that commonly appear in apps:
 
 - **Radio** — no radio group primitives
 - **Breadcrumb** — no wayfinding
-- **Progress / Spinner** — no loading states (ProgressBar exists, but no indeterminate spinner)
-- **Accordion** — no collapsible sections
+- **Spinner** — no indeterminate loading indicator (ProgressBar exists for determinate values)
 - **NumberInput / Stepper** — no numeric input with increment/decrement
+- **FAB** — no floating action button for quick capture on native

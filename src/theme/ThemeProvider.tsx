@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
-import type { ThemeContextValue, ThemeMode, ResolvedTheme, AccentColor, AccentDial, MaterialSignature } from '../types/theme'
+import type { ThemeContextValue, ThemeMode, ResolvedTheme, AccentColor, AccentDial, MaterialSignature, SurfaceOrigin } from '../types/theme'
 import { AppBarSearchProvider } from '../context/AppBarSearchContext'
 
 import './light.css'
@@ -62,6 +62,22 @@ export interface AcheryProviderProps {
    * @default 'none'
    */
   defaultMaterial?: MaterialSignature
+  /**
+   * Declares the design direction of this app — determines which adaptation
+   * ladder governs component behaviour across surfaces.
+   *
+   * - `'web-first'`    — dense desk layout descended to phone via the disclosure ladder
+   * - `'native-first'` — phone layout promoted to desk via the promotion ladder
+   * - `'parity'`       — feature set agreed up front; neither ladder dominates
+   * - `'native-only'`  — no web twin; Achery touch rules apply in full
+   *
+   * This prop does not drive CSS directly — `@media (pointer: coarse/fine)` and
+   * component variants handle that. It is available via `useTheme().surfaceOrigin`
+   * for components and app code that need to know the declared direction.
+   *
+   * @default 'web-first'
+   */
+  defaultSurfaceOrigin?: SurfaceOrigin
   /** className applied to the root `[data-achery-root]` div. */
   className?: string
   /** Inline styles applied to the root `[data-achery-root]` div. */
@@ -102,6 +118,7 @@ export function AcheryProvider({
   defaultAccent = 'terracotta',
   defaultDial = 'chrome',
   defaultMaterial = 'none',
+  defaultSurfaceOrigin = 'web-first',
   className,
   style,
 }: AcheryProviderProps) {
@@ -109,6 +126,7 @@ export function AcheryProvider({
   const [accent, setAccentState] = useState<AccentColor>(defaultAccent)
   const [dial, setDialState] = useState<AccentDial>(defaultDial)
   const [material, setMaterialState] = useState<MaterialSignature>(defaultMaterial)
+  const [surfaceOrigin] = useState<SurfaceOrigin>(defaultSurfaceOrigin)
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => resolveTheme(readStoredMode(defaultTheme)))
 
   // Sync explicit light/dark prop changes (e.g. Storybook toolbar) into state.
@@ -169,7 +187,7 @@ export function AcheryProvider({
   }, [resolvedTheme, accent, dial, material])
 
   return (
-    <ThemeContext.Provider value={{ mode, theme: resolvedTheme, setTheme, toggleTheme, accent, setAccent, dial, setDial, material, setMaterial }}>
+    <ThemeContext.Provider value={{ mode, theme: resolvedTheme, setTheme, toggleTheme, accent, setAccent, dial, setDial, material, setMaterial, surfaceOrigin }}>
       <AppBarSearchProvider>
         <div
           data-achery-root=""

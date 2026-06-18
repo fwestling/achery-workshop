@@ -62,8 +62,9 @@ function RecipeCard({ recipe }) {
 | `achery-ui` | All components + theme | No (DOM + CSS) |
 | `achery-ui/style.css` | Component styles | No |
 | `achery-ui/tokens` | Design tokens as TypeScript values | **Yes** |
+| `achery-ui/native` | React Native components + `NativeThemeProvider` | **Yes** |
 
-The `/tokens` entry is zero-DOM, zero-React — safe to import from React Native or any non-browser context.
+The `/tokens` entry is zero-DOM, zero-React — safe to import from React Native or any non-browser context. The `/native` entry ships a full component set built on React Native primitives with no CSS dependency.
 
 ---
 
@@ -106,8 +107,10 @@ import { useTheme } from 'achery-ui'
 const { theme, toggleTheme, accent, setAccent } = useTheme()
 ```
 
-**Themes:** `light` · `dark`  
-**Accents:** `terracotta` · `moss` · `plum` · `ochre` · `rust` · `copper`
+**Themes:** `light` · `dark` · `system`  
+**Accents:** `terracotta` · `moss` · `plum` · `ochre` · `rust` · `copper` · `slate` · `verdigris` · `mauve` · `amber` · `fern` · `blush`  
+**Dial:** `underline` · `chrome` · `surface` — controls how loudly the accent runs  
+**Surface origin:** `web-first` · `native-first` · `parity` · `native-only` — declares the adaptation ladder
 
 Full theming guide: [src/theme/README.md](src/theme/README.md)
 
@@ -116,6 +119,8 @@ Full theming guide: [src/theme/README.md](src/theme/README.md)
 ## Design language
 
 See [docs/styleguide.md](docs/styleguide.md) for the full visual language reference — palette rationale, typography roles, spacing scale, glyphs, motion, and copy voice.
+
+For cross-surface adaptation (web ↔ mobile ↔ native) — the disclosure ladder, promotion ladder, and Achery-on-touch rules — see [src/native/README.md](src/native/README.md).
 
 ---
 

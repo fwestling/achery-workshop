@@ -25,6 +25,30 @@ export const palette = {
   rust: '#8a3a22',
   ochre: '#b8924a',
 
+  slate: '#195a73',
+  slateDeep: '#004157',
+  slateLight: '#5189a1',
+
+  verdigris: '#00685f',
+  verdigrisDeep: '#004d46',
+  verdigrisLight: '#3f9086',
+
+  mauve: '#76425b',
+  mauveDeep: '#5a2b43',
+  mauveLight: '#a56c87',
+
+  amber: '#9a6839',
+  amberDeep: '#76491d',
+  amberLight: '#be8c61',
+
+  fern: '#36643e',
+  fernDeep: '#1d4825',
+  fernLight: '#618d67',
+
+  blush: '#955c63',
+  blushDeep: '#713f45',
+  blushLight: '#bc848a',
+
   leather: '#6b3a26',
   leatherMid: '#8a4e34',
   leatherLight: '#a86a48',

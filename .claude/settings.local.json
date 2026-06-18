@@ -49,7 +49,12 @@
       "Bash(git -C /Users/fred/Dev/balans log --oneline --all)",
       "Bash(git -C /Users/fred/Dev/balans show c388fe5 --stat)",
       "Bash(APP_VARIANT=development node --no-warnings --eval \"require\\('expo/bin/autolinking'\\)\" expo-modules-autolinking react-native-config --json --platform ios)",
-      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); deps=data.get\\('dependencies',{}\\); print\\('found:', [k for k in deps.keys\\(\\) if 'background' in k.lower\\(\\) or 'task' in k.lower\\(\\)]\\); print\\('total deps:', len\\(deps\\)\\)\")"
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); deps=data.get\\('dependencies',{}\\); print\\('found:', [k for k in deps.keys\\(\\) if 'background' in k.lower\\(\\) or 'task' in k.lower\\(\\)]\\); print\\('total deps:', len\\(deps\\)\\)\")",
+      "Bash(find /Users/fred/.claude/projects -name \"*.md\" | xargs grep -l -i detent 2>/dev/null)",
+      "Read(//Users/fred/.claude/projects/**)",
+      "Bash(pnpm drizzle-kit *)",
+      "Bash(ls ~/Downloads/achery-design-v2/)",
+      "Read(//Users/fred/Downloads/achery-design-v2/**)"
     ]
   }
 }

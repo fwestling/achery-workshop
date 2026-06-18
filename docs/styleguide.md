@@ -48,7 +48,9 @@ The dark theme inverts to a deep warm black — candlelight and shadow, not blue
 
 ### Accent system
 
-Six accent colours are available, each with light and dark variants. All are warm-spectrum — no cool blues or cyans. The accent is used sparingly: primary CTAs, active navigation states, selected rows, focus rings.
+Twelve accent colours are available, each with `-deep` and `-light` variants. All values are hex throughout — including in the token files — so React Native consumers work without conversion. The accent is used sparingly: primary CTAs, active navigation states, selected rows, focus rings.
+
+**Original palette** — warm spectrum earths:
 
 | Name | Character |
 |---|---|
@@ -58,6 +60,17 @@ Six accent colours are available, each with light and dark variants. All are war
 | Ochre | Golden yellow, warm and generous |
 | Rust | Deep red-brown, dramatic |
 | Copper | Metallic amber, refined |
+
+**Extended palette** — wider hue territory, same muted earthy chroma:
+
+| Name | Character |
+|---|---|
+| Slate | Dusty steel blue — utility tools, calm data surfaces |
+| Verdigris | Aged-copper teal — apothecary, patina, scientific |
+| Mauve | Dusty rose — editorial, considered, slightly formal |
+| Amber | Warm amber-gold — workshop warmth, craft, food |
+| Fern | Cool conservatory green — botanical, grounded |
+| Blush | Dusty warm rose — personal, gentle, creative |
 
 **Accent usage rules:**
 - One accent colour per application instance
@@ -271,3 +284,51 @@ The Achery voice is spare, precise, and slightly bookish. It avoids conversation
 **Button labels:**
 - Imperative verbs: "Save", "Delete", "Open" — not "OK", "Submit", "Confirm"
 - Ghost buttons: "Cancel" (not "Go back" or "Never mind")
+
+---
+
+## Surface adaptation (web ↔ mobile ↔ native)
+
+Achery apps span surfaces. The guiding principle is **parity of access, not parity of layout**: every datum reachable on one surface is reachable on the other. Layout changes to fit the canvas; data never disappears in either direction. Some capabilities are platform-bound (camera, haptics, drawn edges) but the data they produce is always reachable everywhere.
+
+### Declaring a source of truth
+
+Each app sets a direction once via `defaultSurfaceOrigin` on `AcheryProvider` / `NativeThemeProvider`. This picks which ladder applies:
+
+| Value | Direction | Ladder |
+|---|---|---|
+| `'web-first'` | Dense desk view → phone | Disclosure ladder (descend) |
+| `'native-first'` | Phone view → desk | Promotion ladder (ascend) |
+| `'parity'` | Agreed feature set, neither dominates | Design the data model first |
+| `'native-only'` | No web twin | Achery touch rules apply in full |
+
+### The disclosure ladder (web-first)
+
+When a web view is too dense for a phone, climb this ladder in order and **stop at the first rung that resolves the density**:
+
+| Rung | Pattern | When |
+|---|---|---|
+| 1 | **Reflow** — multi-column → single stack (CSS only) | Always try first |
+| 2 | **Scale step** — `@media (pointer: coarse)`: 14→16px base, 44px hit areas | Always on for any touch surface |
+| 3 | **Collapse** — supporting content folds to a `Disclosure` (scratchpad, activity, links) | Content is secondary, read occasionally |
+| 4 | **Tab** — peer sections → `Tabs` segmented strip | Sections don't need co-visibility |
+| 5 | **Sheet** — action clusters + short edits → `BottomSheet` (row overflow, filters, quick-add) | A cluster of actions crowds a row or header |
+| 6 | **Drill** — sub-entity gets its own pushed screen (`ScreenNav`) | Content is too heavy for a sheet |
+| 7 | **Defer authoring** — last resort; the gesture goes read-only, artifact stays viewable | Nothing above resolves it |
+
+### The promotion ladder (native-first)
+
+The inverse of disclosure. A phone view promoted to desk gains pointer-only power progressively:
+
+- Hover states, right-click context menus, keyboard shortcuts
+- Multi-select (checkboxes materialise on hover)
+- `BottomTabBar` → sidebar nav
+- Drawn edges and spatial gestures (desk-only)
+
+### House rules on touch surfaces
+
+- **44px minimum hit area** on every interactive element — achieved by padding/min-size, never by rounding into bubbles
+- **Sheets are stamped** — 2px ink top-rule + tracing-paper scrim; never soft iOS corner cards
+- **Hairlines, square corners, and stamp shadows survive** at every breakpoint
+- **Marginalia glyph survives** — it scales down in size but never disappears
+- **`BottomTabBar`** replaces the desk sidebar for root nav: ≤4 primaries, overflow into a "More" sheet

@@ -1,4 +1,4 @@
-export type { ThemeMode, ResolvedTheme, ThemeContextValue, AccentColor, AccentDial, MaterialSignature, MaterialIntensity } from './theme'
+export type { ThemeMode, ResolvedTheme, ThemeContextValue, AccentColor, AccentDial, MaterialSignature, MaterialIntensity, SurfaceOrigin } from './theme'
 export type {
   ComponentSize,
   ButtonVariant,

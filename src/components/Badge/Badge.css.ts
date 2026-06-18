@@ -1,17 +1,18 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { style } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
+import { palette } from '../../tokens/palette'
 
 const toneColors = {
-  saved: '#4a5a32',
-  drafting: '#b8924a',
-  stopped: '#8a3a22',
-  archived: '#5d4a6a',
-  neutral: vars.color.fg2,
-  success: '#6ba03d',
-  warn: '#b8924a',
-  danger: '#8a3a22',
-  info: '#7a5e8a',
+  saved:    palette.moss,
+  drafting: palette.ochre,
+  stopped:  palette.rust,
+  archived: palette.plum,
+  neutral:  vars.color.fg2,
+  success:  palette.success,
+  warn:     palette.ochre,
+  danger:   palette.rust,
+  info:     palette.plumMid,
 }
 
 export const badge = recipe({

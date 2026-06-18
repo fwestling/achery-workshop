@@ -20,7 +20,9 @@ export type ResolvedTheme = 'light' | 'dark'
  * The accent colour palette.
  * Matches the keys of `accentColors` in `src/tokens/accents.ts` — keep them in sync.
  */
-export type AccentColor = 'terracotta' | 'moss' | 'plum' | 'ochre' | 'rust' | 'copper'
+export type AccentColor =
+  | 'terracotta' | 'moss' | 'plum' | 'ochre' | 'rust' | 'copper'
+  | 'slate' | 'verdigris' | 'mauve' | 'amber' | 'fern' | 'blush'
 
 export type AccentDial = 'underline' | 'chrome' | 'surface'
 
@@ -43,6 +45,24 @@ export type MaterialSignature = 'none' | 'leather' | 'wood' | 'copper'
  * - `'full'`    — the whole object in material; reserve for rare, celebratory moments
  */
 export type MaterialIntensity = 'chrome' | 'surface' | 'full'
+
+/**
+ * Declares the design direction of a consuming app, determining which
+ * adaptation ladder governs its components.
+ *
+ * - `'web-first'`    — dense desk layout descended to phone via the disclosure ladder
+ *                      (reflow → scale-step → collapse → tab → sheet → drill → defer)
+ * - `'native-first'` — phone layout promoted to desk via the promotion ladder
+ *                      (inverse moves + pointer-only power: hover, right-click, multi-select)
+ * - `'parity'`       — feature set agreed up front; design the data model first
+ * - `'native-only'`  — no web twin; Achery touch rules apply in full, no ladder needed
+ *
+ * Set once on `<AcheryProvider defaultSurfaceOrigin="...">`. Components and
+ * docs use this to know which pattern map applies; it does not drive CSS
+ * directly (that is handled by `@media (pointer: coarse/fine)` and component
+ * variants).
+ */
+export type SurfaceOrigin = 'web-first' | 'native-first' | 'parity' | 'native-only'
 
 /**
  * Value provided by {@link ThemeContext} and returned by {@link useTheme}.
@@ -69,4 +89,9 @@ export interface ThemeContextValue {
   material: MaterialSignature
   /** Set the material signature. */
   setMaterial: (material: MaterialSignature) => void
+  /**
+   * The design direction of this app — determines which adaptation ladder
+   * governs component behaviour on different surfaces.
+   */
+  surfaceOrigin: SurfaceOrigin
 }

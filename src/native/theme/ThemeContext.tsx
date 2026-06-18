@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useCallback, useMemo, type ReactNo
 import { lightTokens, darkTokens } from 'achery-ui/tokens'
 import type { SemanticTokens } from 'achery-ui/tokens'
 import { accentColors } from 'achery-ui/tokens'
-import type { AccentColor, AccentDial, MaterialSignature } from '../../types/theme'
+import type { AccentColor, AccentDial, MaterialSignature, SurfaceOrigin } from '../../types/theme'
 
 export interface NativeThemeContextValue {
   tokens: SemanticTokens
@@ -14,6 +14,7 @@ export interface NativeThemeContextValue {
   setDial: (dial: AccentDial) => void
   material: MaterialSignature
   setMaterial: (material: MaterialSignature) => void
+  surfaceOrigin: SurfaceOrigin
 }
 
 export interface NativeThemeProviderProps {
@@ -22,6 +23,12 @@ export interface NativeThemeProviderProps {
   defaultAccent?: AccentColor
   defaultDial?: AccentDial
   defaultMaterial?: MaterialSignature
+  /**
+   * Declares the design direction of this app — determines which adaptation
+   * ladder governs component behaviour across surfaces.
+   * @default 'native-only'
+   */
+  defaultSurfaceOrigin?: SurfaceOrigin
 }
 
 const ThemeContext = createContext<NativeThemeContextValue>({
@@ -34,6 +41,7 @@ const ThemeContext = createContext<NativeThemeContextValue>({
   setDial: () => {},
   material: 'none',
   setMaterial: () => {},
+  surfaceOrigin: 'native-only',
 })
 
 export function NativeThemeProvider({
@@ -42,11 +50,13 @@ export function NativeThemeProvider({
   defaultAccent = 'terracotta',
   defaultDial = 'chrome',
   defaultMaterial = 'none',
+  defaultSurfaceOrigin = 'native-only',
 }: NativeThemeProviderProps) {
   const [dark, setDark] = useState(defaultDark)
   const [accent, setAccentState] = useState<AccentColor>(defaultAccent)
   const [dial, setDialState] = useState<AccentDial>(defaultDial)
   const [material, setMaterialState] = useState<MaterialSignature>(defaultMaterial)
+  const [surfaceOrigin] = useState<SurfaceOrigin>(defaultSurfaceOrigin)
 
   const toggle = useCallback(() => setDark(d => !d), [])
   const setAccent = useCallback((a: AccentColor) => setAccentState(a), [])
@@ -75,6 +85,7 @@ export function NativeThemeProvider({
         setDial,
         material,
         setMaterial,
+        surfaceOrigin,
       }}
     >
       {children}

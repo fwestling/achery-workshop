@@ -43,3 +43,27 @@ export const Headings: Story = {
     </div>
   ),
 }
+
+export const InlineElements: Story = {
+  name: 'Inline elements — links, code, selection',
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '480px' }}>
+      <Body>
+        Bare links inherit the page fg with an accent underline:{' '}
+        <a href="#">iron-gall ink</a> and <a href="#">oak gall tannin</a>.
+        On hover the fg flips to accent and the underline to fg.
+      </Body>
+      <Body>
+        Inline <code>code</code> sits on a sunken background with a muted border.
+        Keyboard shortcut: <kbd>⌘K</kbd>.
+      </Body>
+      <Body>
+        Select this text to check the{' '}
+        <span style={{ background: 'var(--achery-color-selectionBg)', color: 'var(--achery-color-selectionFg)', padding: '0 2px' }}>
+          selection colour
+        </span>{' '}
+        — ochre bg, ink fg in light mode.
+      </Body>
+    </div>
+  ),
+}

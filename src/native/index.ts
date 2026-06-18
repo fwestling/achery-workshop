@@ -7,6 +7,7 @@ export {
   Skeleton, ProgressBar, Checkbox, Toggle, Tabs,
   ToastProvider, useToast,
   StatusDot, SegmentedControl, ScreenNav,
+  Disclosure, BottomSheet, SheetRow, BottomTabBar,
 } from './components/index'
 export type {
   TextProps,
@@ -26,6 +27,9 @@ export type {
   StatusDotProps,
   SegmentedControlProps, NativeSegmentOption,
   ScreenNavProps,
+  DisclosureProps,
+  BottomSheetProps, SheetRowProps,
+  BottomTabBarProps, BottomTabItem,
 } from './components/index'
 
 // Glyph utilities — pure TS, work on native

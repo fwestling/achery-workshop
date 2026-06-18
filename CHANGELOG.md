@@ -11,6 +11,24 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.11.0] - 2026-06-19
+
+### Added
+- Accents: six new hues — `slate`, `verdigris`, `mauve`, `amber`, `fern`, `blush` — each with `-deep` and `-light` variants. All are hex throughout (palette, tokens, CSS) so React Native consumers work without conversion.
+- `AcheryProvider`: `defaultSurfaceOrigin` prop (`'web-first' | 'native-first' | 'parity' | 'native-only'`); exposed via `useTheme().surfaceOrigin`. Declares which adaptation ladder governs the app; defaults to `'web-first'`.
+- `NativeThemeProvider`: matching `defaultSurfaceOrigin` prop; defaults to `'native-only'`.
+- `SurfaceOrigin` type exported from `achery-ui` and `achery-ui/tokens`.
+- Global theme: `@media (pointer: coarse)` layer — base font-size steps up to 16px and all interactive elements get a 44px minimum hit area via padding/min-size. Hairlines, square corners, and stamp shadows are unchanged.
+- Native `Disclosure` — rung 3 of the disclosure ladder. Labelled toggle (small-caps eyebrow, 44px hit target) with height + opacity animation. Square rotated indicator, hairline top border. Controlled and uncontrolled modes.
+- Native `BottomSheet` + `SheetRow` — rung 5. Slides up from bottom (≤320ms), 2px ink top-rule, tracing-paper scrim, square corners. `SheetRow` provides 44px touch rows with optional danger tint and right accessory.
+- Native `BottomTabBar` — promotion-ladder equivalent of the desk sidebar. Up to 4 primary tabs with glyph + label; overflow items beyond 4 move into a "More" `BottomSheet`. Active tab: 2px accent top stripe, accent glyph + label.
+
+### Fixed
+- `Badge`: tone colors (`saved`, `drafting`, `stopped`, `archived`, `success`, `warn`, `danger`, `info`) now reference `palette.*` instead of inline hex literals.
+- `EntityPill`: tone border colors reference `palette.*` instead of inline hex literals.
+
+---
+
 ## [0.10.8] - 2026-06-12
 
 ### Fixed
@@ -419,7 +437,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.10.8...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/fwestling/achery-workshop/compare/v0.10.8...v0.11.0
 [0.10.8]: https://github.com/fwestling/achery-workshop/compare/v0.10.7...v0.10.8
 [0.10.7]: https://github.com/fwestling/achery-workshop/compare/v0.10.5...v0.10.7
 [0.10.5]: https://github.com/fwestling/achery-workshop/compare/v0.10.4...v0.10.5

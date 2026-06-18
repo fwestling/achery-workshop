@@ -76,7 +76,9 @@ The `AppBar` component wraps this pattern into a pre-built UI — pass `onToggle
 
 ## Accent colours
 
-Six accent colours ship with the system:
+Twelve accent colours ship with the system. All values are hex throughout (palette, tokens, CSS) so React Native consumers work without conversion. Each accent automatically adjusts between light and dark themes — the light value is a richer, darker tone; the dark value is brighter for legibility.
+
+**Original palette:**
 
 | Name | Light | Dark | Character |
 |---|---|---|---|
@@ -87,7 +89,16 @@ Six accent colours ship with the system:
 | `rust` | `#8a3a22` | `#c46a3a` | Deep red-brown; dramatic |
 | `copper` | `#b8742a` | `#d68f48` | Metallic amber; refined |
 
-Each accent automatically adjusts between light and dark themes — the light value is a richer, darker tone; the dark value is brighter for legibility against dark backgrounds.
+**Extended palette** — wider hue territory, same muted earthy chroma:
+
+| Name | Light | Dark | Character |
+|---|---|---|---|
+| `slate` | `#195a73` | `#5189a1` | Dusty steel blue |
+| `verdigris` | `#00685f` | `#3f9086` | Aged-copper teal |
+| `mauve` | `#76425b` | `#a56c87` | Dusty rose |
+| `amber` | `#9a6839` | `#be8c61` | Warm amber-gold |
+| `fern` | `#36643e` | `#618d67` | Cool conservatory green |
+| `blush` | `#955c63` | `#bc848a` | Dusty warm rose |
 
 ---
 
@@ -126,6 +137,25 @@ The full set of CSS vars available within `[data-achery-root]`:
 | `--shadow-press` | Inset pressed-state shadow |
 | `--duration-fast` … `--duration-slow` | Animation durations |
 | `--ease-out` · `--ease-snap` | Easing curves |
+
+---
+
+## Surface origin
+
+`defaultSurfaceOrigin` declares the design direction of the app — it determines which adaptation ladder governs components across surfaces. It does not drive CSS directly; `@media (pointer: coarse)` and component variants handle that. The value is available via `useTheme().surfaceOrigin` for any code that needs to know the declared direction.
+
+```tsx
+<AcheryProvider defaultSurfaceOrigin="web-first">
+```
+
+| Value | Direction | Ladder |
+|---|---|---|
+| `'web-first'` | Dense desk view descends to phone | Disclosure ladder |
+| `'native-first'` | Phone view promoted to desk | Promotion ladder |
+| `'parity'` | Agreed feature set; neither ladder dominates | Design data model first |
+| `'native-only'` | No web twin | Achery touch rules apply in full |
+
+Default is `'web-first'`. See [docs/styleguide.md](../../docs/styleguide.md#surface-adaptation-web--mobile--native) for the full ladder reference.
 
 ---
 

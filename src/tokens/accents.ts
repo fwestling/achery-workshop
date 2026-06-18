@@ -52,6 +52,48 @@ export const accentColors: Record<AccentColor, {
     fg: palette.ink,
     fgDark: palette.ink,
   },
+  slate: {
+    main: palette.slate,
+    light: palette.slateLight,
+    deep: palette.slateDeep,
+    fg: palette.paper,
+    fgDark: palette.inkDeep,
+  },
+  verdigris: {
+    main: palette.verdigris,
+    light: palette.verdigrisLight,
+    deep: palette.verdigrisDeep,
+    fg: palette.paper,
+    fgDark: palette.inkDeep,
+  },
+  mauve: {
+    main: palette.mauve,
+    light: palette.mauveLight,
+    deep: palette.mauveDeep,
+    fg: palette.paper,
+    fgDark: palette.inkDeep,
+  },
+  amber: {
+    main: palette.amber,
+    light: palette.amberLight,
+    deep: palette.amberDeep,
+    fg: palette.ink,
+    fgDark: palette.ink,
+  },
+  fern: {
+    main: palette.fern,
+    light: palette.fernLight,
+    deep: palette.fernDeep,
+    fg: palette.paper,
+    fgDark: palette.inkDeep,
+  },
+  blush: {
+    main: palette.blush,
+    light: palette.blushLight,
+    deep: palette.blushDeep,
+    fg: palette.paper,
+    fgDark: palette.inkDeep,
+  },
 } as const
 
 export const accentColorNames = Object.keys(accentColors) as AccentColor[]

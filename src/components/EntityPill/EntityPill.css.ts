@@ -1,13 +1,14 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { style } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
+import { palette } from '../../tokens/palette'
 
 const toneBorders: Record<string, string> = {
-  moss:    '#4a5a32',
-  rust:    '#8a3a22',
-  ochre:   '#b8924a',
-  plum:    '#5d4a6a',
-  copper:  '#b8742a',
+  moss:    palette.moss,
+  rust:    palette.rust,
+  ochre:   palette.ochre,
+  plum:    palette.plum,
+  copper:  palette.copper,
   neutral: vars.color.border,
 }
 

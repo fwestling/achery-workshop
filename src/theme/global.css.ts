@@ -96,3 +96,46 @@ globalStyle('[data-achery-root] hr', {
   borderTop: `1px solid ${vars.color.rule}`,
   margin: `${vars.space.sp8} 0`,
 })
+
+// ---------------------------------------------------------------------------
+// Coarse-pointer (touch) layer — always on for touch/mobile surfaces.
+//
+// Spec: base type 14 → 16px; every interactive element gets a 44px minimum
+// hit area via padding/min-size only. Visual marks stay compact; the *target*
+// grows. Hairlines, square corners, and stamp shadows are unchanged.
+// ---------------------------------------------------------------------------
+
+globalStyle('[data-achery-root]', {
+  '@media': {
+    '(pointer: coarse)': {
+      fontSize: '16px',
+    },
+  },
+})
+
+// Buttons, links, inputs, selects, and any element with a role that implies
+// interactivity all get the 44px floor on coarse pointers.
+globalStyle(
+  [
+    '[data-achery-root] button',
+    '[data-achery-root] a',
+    '[data-achery-root] input',
+    '[data-achery-root] select',
+    '[data-achery-root] textarea',
+    '[data-achery-root] [role="button"]',
+    '[data-achery-root] [role="checkbox"]',
+    '[data-achery-root] [role="radio"]',
+    '[data-achery-root] [role="tab"]',
+    '[data-achery-root] [role="menuitem"]',
+    '[data-achery-root] [role="option"]',
+    '[data-achery-root] [role="switch"]',
+  ].join(', '),
+  {
+    '@media': {
+      '(pointer: coarse)': {
+        minHeight: '44px',
+        minWidth: '44px',
+      },
+    },
+  },
+)

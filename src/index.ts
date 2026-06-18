@@ -146,4 +146,4 @@ export { SegmentedControl } from './components/SegmentedControl/SegmentedControl
 export type { SegmentedControlProps, SegmentOption } from './components/SegmentedControl/SegmentedControl'
 
 // Types
-export type { ThemeMode, AccentColor, AccentDial, MaterialSignature, MaterialIntensity, ComponentSize, ButtonVariant, BadgeTone, SortDirection } from './types/index'
+export type { ThemeMode, AccentColor, AccentDial, MaterialSignature, MaterialIntensity, SurfaceOrigin, ComponentSize, ButtonVariant, BadgeTone, SortDirection } from './types/index'
