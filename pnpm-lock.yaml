@@ -78,6 +78,9 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.2.6(react@19.2.6)
+      react-native-safe-area-context:
+        specifier: ^5.8.0
+        version: 5.8.0(react-native@0.85.3(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.6))(react@19.2.6)
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
@@ -2907,6 +2910,12 @@ packages:
 
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
+
+  react-native-safe-area-context@5.8.0:
+    resolution: {integrity: sha512-t+ZsAVzY/wWzzx34vqGbo3/as9EEESJdbyZNL7Yg5EYX+toYMtMqFoDDCvqZUi35eeGVsXc6pAaEk4edMwbuCQ==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
 
   react-native-svg@15.15.5:
     resolution: {integrity: sha512-L4go5jA+GWutdJ/JucuN20cjAbMg1HmMtAP+wZ+3JLCf6Jd0bhXQHxciRP/AQm/FlrIEZwkMcHNZP+FXAiic0w==}
@@ -6356,6 +6365,11 @@ snapshots:
   react-is@17.0.2: {}
 
   react-is@18.3.1: {}
+
+  react-native-safe-area-context@5.8.0(react-native@0.85.3(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.6))(react@19.2.6):
+    dependencies:
+      react: 19.2.6
+      react-native: 0.85.3(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.6)
 
   react-native-svg@15.15.5(react-native@0.85.3(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.6))(react@19.2.6):
     dependencies:

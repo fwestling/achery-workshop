@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.11.1] - 2026-06-19
+
+### Fixed
+- GlyphPicker: replaced deprecated `SafeAreaView` from `react-native` with `react-native-safe-area-context`
+
+---
+
 ## [0.11.0] - 2026-06-19
 
 ### Added

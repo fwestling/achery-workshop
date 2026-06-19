@@ -1,8 +1,9 @@
 import { useState, useCallback, useMemo } from 'react'
 import {
   FlatList, Modal, Text, TextInput, TouchableOpacity,
-  TouchableWithoutFeedback, View, SafeAreaView,
+  TouchableWithoutFeedback, View,
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import type { ViewStyle } from 'react-native'
 import { spacing, fontWeights } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
