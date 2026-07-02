@@ -13,7 +13,7 @@ type Story = StoryObj<typeof SegmentedControl>
 
 export const Default: Story = {
   render: () => {
-    const [v, setV] = useState('month')
+    const [v, setV] = useState<string | null>('month')
     return (
       <SegmentedControl
         options={[
@@ -30,7 +30,7 @@ export const Default: Story = {
 
 export const Small: Story = {
   render: () => {
-    const [v, setV] = useState('hard')
+    const [v, setV] = useState<string | null>('hard')
     return (
       <SegmentedControl
         size="sm"
@@ -44,7 +44,7 @@ export const Small: Story = {
 
 export const Large: Story = {
   render: () => {
-    const [v, setV] = useState('list')
+    const [v, setV] = useState<string | null>('list')
     return (
       <SegmentedControl
         size="lg"

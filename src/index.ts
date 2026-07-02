@@ -147,3 +147,6 @@ export type { SegmentedControlProps, SegmentOption } from './components/Segmente
 
 // Types
 export type { ThemeMode, AccentColor, AccentDial, MaterialSignature, MaterialIntensity, SurfaceOrigin, ComponentSize, ButtonVariant, BadgeTone, SortDirection } from './types/index'
+
+// Hooks
+export { useMediaQuery, useIsDesktop } from './hooks/useMediaQuery'

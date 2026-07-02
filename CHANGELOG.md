@@ -11,6 +11,17 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.11.2] - 2026-07-02
+
+### Added
+- `useMediaQuery(query)` hook — reactive wrapper around `window.matchMedia`
+- `useIsDesktop(breakpoint?)` hook — returns true when viewport ≥ breakpoint px (default 768); designed for toggling `Sidebar` between permanent and mobile-overlay modes
+
+### Changed
+- SegmentedControl: `value` now accepts `null | undefined` for no selection; clicking an active segment deselects it (calls `onChange(null)`)
+
+---
+
 ## [0.11.1] - 2026-06-19
 
 ### Fixed
@@ -444,7 +455,9 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.11.2...HEAD
+[0.11.2]: https://github.com/fwestling/achery-workshop/compare/v0.11.1...v0.11.2
+[0.11.1]: https://github.com/fwestling/achery-workshop/compare/v0.11.0...v0.11.1
 [0.11.0]: https://github.com/fwestling/achery-workshop/compare/v0.10.8...v0.11.0
 [0.10.8]: https://github.com/fwestling/achery-workshop/compare/v0.10.7...v0.10.8
 [0.10.7]: https://github.com/fwestling/achery-workshop/compare/v0.10.5...v0.10.7

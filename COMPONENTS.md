@@ -976,6 +976,36 @@ const tabs: BottomTabItem[] = [
 
 ---
 
+## Hooks
+
+### `useMediaQuery(query: string): boolean`
+
+Reactive wrapper around `window.matchMedia`. Returns `false` during SSR. Updates on viewport resize.
+
+```tsx
+const isWide = useMediaQuery('(min-width: 1024px)')
+```
+
+### `useIsDesktop(breakpoint?: number): boolean`
+
+Returns true when the viewport is at least `breakpoint` px wide (default: **768** — matches `Sidebar`'s mobile overlay breakpoint).
+
+Designed for the AppBar + Sidebar responsive shell pattern:
+
+```tsx
+const isDesktop = useIsDesktop()
+const [mobileOpen, setMobileOpen] = useState(false)
+
+<AppBar onMenuClick={isDesktop ? undefined : () => setMobileOpen(o => !o)} />
+<Sidebar
+  {...(isDesktop ? {} : { mobileOpen, onMobileOpenChange: setMobileOpen })}
+/>
+```
+
+On desktop: `Sidebar` renders permanently in-flow. On mobile: hamburger button appears in `AppBar`, `Sidebar` slides in as a fixed overlay with a backdrop.
+
+---
+
 ## Known gaps (as of v0.11.0)
 
 Components not yet in achery-ui that commonly appear in apps:

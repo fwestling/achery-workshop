@@ -54,7 +54,10 @@
       "Read(//Users/fred/.claude/projects/**)",
       "Bash(pnpm drizzle-kit *)",
       "Bash(ls ~/Downloads/achery-design-v2/)",
-      "Read(//Users/fred/Downloads/achery-design-v2/**)"
+      "Read(//Users/fred/Downloads/achery-design-v2/**)",
+      "Bash(npx expo-modules-autolinking *)",
+      "Bash(python3 -c ' *)",
+      "Bash(pnpm add *)"
     ]
   }
 }

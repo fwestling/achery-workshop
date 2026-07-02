@@ -11,10 +11,10 @@ export interface SegmentOption<T extends string = string> {
 export interface SegmentedControlProps<T extends string = string> {
   /** Available options. */
   options: SegmentOption<T>[]
-  /** Currently selected value. */
-  value: T
-  /** Called when the user selects a segment. */
-  onChange: (value: T) => void
+  /** Currently selected value. Pass `null` or `undefined` for no selection. */
+  value: T | null | undefined
+  /** Called when the user selects or deselects a segment. Receives `null` when the active segment is clicked again. */
+  onChange: (value: T | null) => void
   /**
    * Size preset.
    * @default 'md'
@@ -58,7 +58,7 @@ export const SegmentedControl = <T extends string>({
           role="radio"
           aria-checked={opt.value === value}
           disabled={disabled}
-          onClick={() => onChange(opt.value)}
+          onClick={() => onChange(opt.value === value ? null : opt.value)}
           className={[
             styles.segment,
             sizeClass,
