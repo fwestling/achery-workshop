@@ -22,6 +22,17 @@ export interface NavItemDef {
   label: string
   /** Optional {@link Glyph} shown to the left of the label. */
   glyph?: GlyphName
+  /**
+   * Custom leading node, rendered in place of `glyph`. Use for monograms,
+   * avatars, or any bespoke mark. Takes precedence over `glyph`. Sized/aligned
+   * by the item; keep it roughly 14–18px square so it matches glyph items.
+   */
+  icon?: ReactNode
+  /**
+   * Colour applied to the leading `glyph` (via `currentColor`). Ignored when a
+   * custom `icon` node is supplied — colour that yourself. Any CSS colour.
+   */
+  iconColor?: string
   /** Numeric badge shown at the trailing edge — useful for unread counts. */
   count?: number
   /** Colour tone for the count badge. @default 'neutral' */
@@ -250,11 +261,22 @@ interface NavItemProps {
 }
 
 function NavItem({ item, active, onClick, renderLink, collapsed }: NavItemProps) {
+  const leading = item.icon ? (
+    <span aria-hidden="true" style={{ display: 'inline-flex' }}>{item.icon}</span>
+  ) : item.glyph ? (
+    <Glyph
+      name={item.glyph}
+      size={14}
+      aria-hidden="true"
+      {...(item.iconColor ? { style: { color: item.iconColor } } : {})}
+    />
+  ) : (
+    <span />
+  )
+
   const content = (
     <>
-      {item.glyph
-        ? <Glyph name={item.glyph} size={14} aria-hidden="true" />
-        : <span />}
+      {leading}
       {!collapsed && <span>{item.label}</span>}
       {!collapsed && item.count !== undefined && (
         <span className={item.countTone === 'accent' ? styles.countAccent : styles.navItemCount}>

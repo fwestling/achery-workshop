@@ -215,8 +215,10 @@ const groups: NavGroupDef[] = [
 
 Items render as `<a>` when `href` is set, otherwise `<button>`.
 
-`NavItemDef` props: `id`, `label`, `glyph?`, `href?`, `count?`, `countTone?: 'accent' | 'neutral'`  
-`countTone='accent'` renders the count badge in the current accent colour.
+`NavItemDef` props: `id`, `label`, `glyph?`, `icon?`, `iconColor?`, `href?`, `count?`, `countTone?: 'accent' | 'neutral'`  
+`countTone='accent'` renders the count badge in the current accent colour.  
+`icon` — a custom leading `ReactNode` (monogram, avatar, bespoke mark) rendered in place of `glyph`; takes precedence over it. Keep it ~14–18px square.  
+`iconColor` — tints the leading `glyph` via `currentColor` (any CSS colour). Ignored when a custom `icon` is supplied — colour that yourself.
 
 ---
 

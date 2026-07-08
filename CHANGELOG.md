@@ -11,6 +11,14 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.12.0] - 2026-07-08
+
+### Added
+- Sidebar: `NavItemDef.icon` — custom leading node (monogram, avatar, bespoke mark) rendered in place of `glyph`; takes precedence over it
+- Sidebar: `NavItemDef.iconColor` — tint applied to the leading `glyph` via `currentColor`
+
+---
+
 ## [0.11.2] - 2026-07-02
 
 ### Added
@@ -455,7 +463,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.11.2...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.12.0...HEAD
+[0.12.0]: https://github.com/fwestling/achery-workshop/compare/v0.11.2...v0.12.0
 [0.11.2]: https://github.com/fwestling/achery-workshop/compare/v0.11.1...v0.11.2
 [0.11.1]: https://github.com/fwestling/achery-workshop/compare/v0.11.0...v0.11.1
 [0.11.0]: https://github.com/fwestling/achery-workshop/compare/v0.10.8...v0.11.0
