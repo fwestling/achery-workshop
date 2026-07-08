@@ -858,6 +858,8 @@ module.exports = config
 | `Disclosure` | Collapsible section (rung 3 — disclosure ladder). Labelled toggle, 44px hit area, height animation. |
 | `BottomSheet` + `SheetRow` | Slide-up overlay (rung 5). 2px ink top-rule, tracing-paper scrim, square corners. `SheetRow` = 44px touch row with optional danger tint. |
 | `BottomTabBar` | Root navigation bar (promotion ladder). ≤4 primary tabs; overflow into a "More" `BottomSheet`. 2px accent top stripe on active tab. |
+| `Marginalia` | Decorative corner glyph (RN counterpart to web `Marginalia`). `corner`/`inset`/`opacity`/`accent`. Non-interactive. |
+| `TagInput` | Chips-in-input tag field with autocomplete. Comma/space/return confirm, Backspace removes last. `onLeather` variant for ghost-on-leather. |
 
 ### `Glyph` (native)
 
@@ -975,6 +977,53 @@ const tabs: BottomTabItem[] = [
 | `label` | `string` | Shown beneath icon |
 | `glyph` | `GlyphName` | From the Achery icon set |
 | `hidden` | `boolean` | Exclude from bar entirely |
+
+### `Marginalia` (native)
+
+Decorative corner glyph — the RN counterpart to the web `Marginalia`. Non-interactive (hidden from accessibility).
+
+```tsx
+import { Marginalia } from 'achery-ui/native'
+
+// Anchored bottom-right of a full-screen view
+<Marginalia glyph="fern" size={100} opacity={0.12} />
+```
+
+| Prop | Type | Default |
+|---|---|---|
+| `glyph` | `GlyphName` | `'fern'` |
+| `size` | `number` | `120` |
+| `opacity` | `number` | `0.4` |
+| `accent` | `boolean` | `false` (uses muted fg) |
+| `corner` | `'bottom-right' \| 'bottom-left' \| 'top-right' \| 'top-left' \| 'none'` | `'bottom-right'` |
+| `inset` | `number` | `16` |
+
+Anchors absolutely — the parent should be `position: 'relative'` (a full-screen `View` usually is). `corner="none"` renders inline.
+
+### `TagInput` (native)
+
+Chips-in-input tag field. Type to add; comma or trailing space confirms a chip; return also confirms; Backspace on an empty input removes the last chip. Autocompletes from `suggestions`.
+
+```tsx
+import { TagInput, Field } from 'achery-ui/native'
+
+<Field label="Tags">
+  <TagInput value={tags} onChange={setTags} suggestions={known} placeholder="Add tags…" />
+</Field>
+
+// Ghost-on-leather, e.g. over a shoot-mode HUD
+<TagInput value={tags} onChange={setTags} onLeather />
+```
+
+| Prop | Type | Default |
+|---|---|---|
+| `value` | `string[]` | required |
+| `onChange` | `(tags: string[]) => void` | required |
+| `suggestions` | `string[]` | `[]` |
+| `placeholder` | `string` | — |
+| `onLeather` | `boolean` | `false` (gold-deep chips + cream text) |
+| `normalize` | `(raw: string) => string` | lowercase + trim + collapse whitespace |
+| `disabled` | `boolean` | `false` |
 
 ---
 

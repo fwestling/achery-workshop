@@ -57,3 +57,9 @@ export type { BottomSheetProps, SheetRowProps } from './BottomSheet'
 
 export { BottomTabBar } from './BottomTabBar'
 export type { BottomTabBarProps, BottomTabItem } from './BottomTabBar'
+
+export { Marginalia } from './Marginalia'
+export type { MarginaliaProps } from './Marginalia'
+
+export { TagInput } from './TagInput'
+export type { TagInputProps } from './TagInput'

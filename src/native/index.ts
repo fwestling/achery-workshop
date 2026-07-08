@@ -8,6 +8,7 @@ export {
   ToastProvider, useToast,
   StatusDot, SegmentedControl, ScreenNav,
   Disclosure, BottomSheet, SheetRow, BottomTabBar,
+  Marginalia, TagInput,
 } from './components/index'
 export type {
   TextProps,
@@ -30,6 +31,7 @@ export type {
   DisclosureProps,
   BottomSheetProps, SheetRowProps,
   BottomTabBarProps, BottomTabItem,
+  MarginaliaProps, TagInputProps,
 } from './components/index'
 
 // Glyph utilities — pure TS, work on native
