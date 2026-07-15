@@ -4,6 +4,7 @@ import {
   View, Text, ScrollView,
   type ViewStyle,
 } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { spacing, fontWeights } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 
@@ -64,6 +65,7 @@ export const BottomSheet = ({
   style,
 }: BottomSheetProps) => {
   const { tokens } = useTheme()
+  const insets = useSafeAreaInsets()
 
   const slideAnim = useRef(new Animated.Value(0)).current  // 0 = hidden (translated down), 1 = visible
   const scrimAnim = useRef(new Animated.Value(0)).current
@@ -144,6 +146,9 @@ export const BottomSheet = ({
             borderTopColor: tokens.border,
             // Square corners — spec is explicit about this
             borderRadius: 0,
+            // Clear the home indicator so the last row is never cut off / hard
+            // to tap on devices with a bottom safe area.
+            paddingBottom: Math.max(insets.bottom, spacing.sp4),
             transform: [{ translateY }],
           },
           style,

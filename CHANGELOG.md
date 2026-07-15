@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.13.1] - 2026-07-14
+
+### Fixed
+- BottomSheet (native): sheet content now clears the bottom safe area (home indicator) — the last row was previously cut off / hard to tap on devices with a bottom inset
+
+---
+
 ## [0.13.0] - 2026-07-08
 
 ### Added
@@ -471,7 +478,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.13.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.13.1...HEAD
+[0.13.1]: https://github.com/fwestling/achery-workshop/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/fwestling/achery-workshop/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/fwestling/achery-workshop/compare/v0.11.2...v0.12.0
 [0.11.2]: https://github.com/fwestling/achery-workshop/compare/v0.11.1...v0.11.2

@@ -57,7 +57,9 @@
       "Read(//Users/fred/Downloads/achery-design-v2/**)",
       "Bash(npx expo-modules-autolinking *)",
       "Bash(python3 -c ' *)",
-      "Bash(pnpm add *)"
+      "Bash(pnpm add *)",
+      "Bash(cd /Users/fred/Dev/aperture *)",
+      "Read(//Users/fred/Dev/aperture/**)"
     ]
   }
 }
