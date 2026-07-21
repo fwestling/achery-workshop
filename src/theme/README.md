@@ -99,6 +99,7 @@ Twelve accent colours ship with the system. All values are hex throughout (palet
 | `amber` | `#9a6839` | `#be8c61` | Warm amber-gold |
 | `fern` | `#36643e` | `#618d67` | Cool conservatory green |
 | `blush` | `#955c63` | `#bc848a` | Dusty warm rose |
+| `olive` | `#5a5a2a` | `#8a8a52` | Muted drab yellow-green |
 
 ---
 

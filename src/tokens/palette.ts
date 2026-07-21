@@ -45,6 +45,12 @@ export const palette = {
   fernDeep: '#1d4825',
   fernLight: '#618d67',
 
+  // Olive — muted yellow-green, drab and earthy. Distinct from moss (blue-green),
+  // fern (pure green), and ochre (gold).
+  olive: '#5a5a2a',
+  oliveDeep: '#3f3f1c',
+  oliveLight: '#8a8a52',
+
   blush: '#955c63',
   blushDeep: '#713f45',
   blushLight: '#bc848a',

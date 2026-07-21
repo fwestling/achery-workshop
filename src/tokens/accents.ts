@@ -94,6 +94,13 @@ export const accentColors: Record<AccentColor, {
     fg: palette.paper,
     fgDark: palette.inkDeep,
   },
+  olive: {
+    main: palette.olive,
+    light: palette.oliveLight,
+    deep: palette.oliveDeep,
+    fg: palette.paper,
+    fgDark: palette.inkDeep,
+  },
 } as const
 
 export const accentColorNames = Object.keys(accentColors) as AccentColor[]

@@ -19,7 +19,7 @@ const { theme, toggleTheme, accent, setAccent } = useTheme()
 ```
 
 `defaultTheme`: `'light' | 'dark' | 'system'`  
-`defaultAccent`: `'terracotta' | 'moss' | 'plum' | 'ochre' | 'rust' | 'copper' | 'slate' | 'verdigris' | 'mauve' | 'amber' | 'fern' | 'blush'`  
+`defaultAccent`: `'terracotta' | 'moss' | 'plum' | 'ochre' | 'rust' | 'copper' | 'slate' | 'verdigris' | 'mauve' | 'amber' | 'fern' | 'blush' | 'olive'`  
 `defaultDial`: `'underline' | 'chrome' | 'surface'` — how loudly the accent runs (default `'chrome'`)  
 `defaultMaterial`: `'none' | 'leather' | 'wood' | 'copper'` — hero material signature for contained objects  
 `defaultSurfaceOrigin`: `'web-first' | 'native-first' | 'parity' | 'native-only'` — adaptation ladder direction (default `'web-first'`)
@@ -133,6 +133,35 @@ import { Field, Input, Textarea, Select, SearchInput } from 'achery-ui'
 
 <SearchInput placeholder="Search…" value={…} onChange={…} />
 ```
+
+---
+
+### TagInput
+Chips-in-input for a list of short string tags. Web counterpart of the native `TagInput`.
+Enter to add, Backspace or × to remove; autocompletes from `suggestions`. Chips use the
+active accent.
+
+```tsx
+import { TagInput } from 'achery-ui'
+
+const [tags, setTags] = useState<string[]>(['fiction', 'draft'])
+
+<TagInput
+  value={tags}
+  onChange={setTags}
+  suggestions={['fiction', 'fantasy', 'draft']}
+  placeholder="Add a tag…"
+/>
+```
+
+| Prop | Type | Notes |
+|---|---|---|
+| `value` | `string[]` | Selected tags (controlled) |
+| `onChange` | `(tags: string[]) => void` | |
+| `suggestions` | `string[]` | Optional autocomplete list |
+| `normalize` | `(raw: string) => string` | Default: lowercase + trim + collapse whitespace |
+| `placeholder` | `string` | Shown when empty |
+| `disabled` | `boolean` | |
 
 ---
 

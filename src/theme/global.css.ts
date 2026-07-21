@@ -26,6 +26,12 @@ globalStyle('[data-achery-root], :root[data-achery-root]', {
     '--achery-color-accentFg': vars.color.accentFg,
     '--achery-color-accent2': vars.color.accent2,
     '--achery-color-accent3': vars.color.accent3,
+    // Accent-tinted surfaces. Unlike accent2/accent3 (which are a fixed
+    // secondary/tertiary palette), these are derived from the *selected* accent
+    // via color-mix, so they track `data-accent` automatically. Use for subtle
+    // accent backgrounds: active rows, selected chips, highlighted menu items.
+    '--achery-color-accentSoft': `color-mix(in srgb, ${vars.color.accent} 18%, transparent)`,
+    '--achery-color-accentSoftStrong': `color-mix(in srgb, ${vars.color.accent} 28%, transparent)`,
     '--achery-color-success': vars.color.success,
     '--achery-color-warn': vars.color.warn,
     '--achery-color-danger': vars.color.danger,

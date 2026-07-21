@@ -52,6 +52,10 @@ const accents: Record<string, AccentEntry> = {
     light: { main: '#955c63', fg: '#fbf8f0' },
     dark: { main: '#bc848a', fg: '#14130f' },
   },
+  olive: {
+    light: { main: '#5a5a2a', fg: '#fbf8f0' },
+    dark: { main: '#8a8a52', fg: '#14130f' },
+  },
 }
 
 for (const [name, entry] of Object.entries(accents)) {

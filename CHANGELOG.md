@@ -11,6 +11,15 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.14.0] - 2026-07-21
+
+### Added
+- `TagInput` (web) — chips-in-input tag field, the web counterpart of the native `TagInput`. `value`/`onChange` controlled, `suggestions` autocomplete, `normalize` (default: lowercase + trim + collapse whitespace), Enter to add, Backspace/× to remove. Chips use the active accent.
+- `olive` accent — muted yellow-green, drab and earthy; distinct from `moss` (blue-green), `fern` (pure green), and `ochre` (gold). Available as an `AccentColor` and in `accentColors`.
+- `--achery-color-accentSoft` / `--achery-color-accentSoftStrong` — accent-tinted surface tokens derived from the selected accent via `color-mix` (18% / 28%). Unlike `accent2`/`accent3` (a fixed secondary/tertiary palette), these track `data-accent`. Use for subtle accent backgrounds: active rows, selected chips, highlighted menu items.
+
+---
+
 ## [0.13.1] - 2026-07-14
 
 ### Fixed
@@ -478,7 +487,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.13.1...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.14.0...HEAD
+[0.14.0]: https://github.com/fwestling/achery-workshop/compare/v0.14.0...v0.13.1
 [0.13.1]: https://github.com/fwestling/achery-workshop/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/fwestling/achery-workshop/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/fwestling/achery-workshop/compare/v0.11.2...v0.12.0

@@ -59,7 +59,11 @@
       "Bash(python3 -c ' *)",
       "Bash(pnpm add *)",
       "Bash(cd /Users/fred/Dev/aperture *)",
-      "Read(//Users/fred/Dev/aperture/**)"
+      "Read(//Users/fred/Dev/aperture/**)",
+      "Bash(npm view *)",
+      "Bash(pnpm --filter @mandrel/web build)",
+      "Bash(npx vite *)",
+      "Bash(pnpm test *)"
     ]
   }
 }
