@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, useRef, type ReactNode } from 'react'
 import type { ThemeContextValue, ThemeMode, ResolvedTheme, AccentColor, AccentDial, MaterialSignature, SurfaceOrigin } from '../types/theme'
 import { AppBarSearchProvider } from '../context/AppBarSearchContext'
 
@@ -10,6 +10,7 @@ import './material.css'
 import './global.css'
 
 const STORAGE_KEY = 'achery-theme-mode'
+const ACCENT_STORAGE_KEY = 'achery-accent'
 
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
@@ -27,6 +28,14 @@ function readStoredMode(fallback: ThemeMode): ThemeMode {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored === 'light' || stored === 'dark' || stored === 'system') return stored
+  } catch {}
+  return fallback
+}
+
+function readStoredAccent(fallback: AccentColor): AccentColor {
+  try {
+    const stored = localStorage.getItem(ACCENT_STORAGE_KEY)
+    if (stored) return stored as AccentColor
   } catch {}
   return fallback
 }
@@ -123,22 +132,29 @@ export function AcheryProvider({
   style,
 }: AcheryProviderProps) {
   const [mode, setModeState] = useState<ThemeMode>(() => readStoredMode(defaultTheme))
-  const [accent, setAccentState] = useState<AccentColor>(defaultAccent)
+  const [accent, setAccentState] = useState<AccentColor>(() => readStoredAccent(defaultAccent))
   const [dial, setDialState] = useState<AccentDial>(defaultDial)
   const [material, setMaterialState] = useState<MaterialSignature>(defaultMaterial)
   const [surfaceOrigin] = useState<SurfaceOrigin>(defaultSurfaceOrigin)
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => resolveTheme(readStoredMode(defaultTheme)))
 
-  // Sync explicit light/dark prop changes (e.g. Storybook toolbar) into state.
-  // 'system' is intentionally excluded — it should not override a user's stored preference.
+  // The `default*` props are INITIAL values only — the persisted / user-set value
+  // wins. These effects sync genuine *prop changes* (e.g. Storybook toolbar) but
+  // must NOT clobber the stored preference on mount, so they skip the first run.
+  const mounted = useRef(false)
   useEffect(() => {
-    setModeState(defaultTheme)
-    setResolvedTheme(resolveTheme(defaultTheme))
-  }, [defaultTheme])
-
-  useEffect(() => { setAccentState(defaultAccent) }, [defaultAccent])
-  useEffect(() => { setDialState(defaultDial) }, [defaultDial])
-  useEffect(() => { setMaterialState(defaultMaterial) }, [defaultMaterial])
+    if (!mounted.current) { mounted.current = true; return }
+    // 'system' is excluded — an explicit system default shouldn't override a
+    // user's stored light/dark choice.
+    if (defaultTheme === 'light' || defaultTheme === 'dark') {
+      setModeState(defaultTheme)
+      setResolvedTheme(resolveTheme(defaultTheme))
+    }
+    setAccentState(defaultAccent)
+    setDialState(defaultDial)
+    setMaterialState(defaultMaterial)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultTheme, defaultAccent, defaultDial, defaultMaterial])
 
   const setTheme = useCallback((next: ThemeMode) => {
     setModeState(next)
@@ -150,7 +166,10 @@ export function AcheryProvider({
     setTheme(resolvedTheme === 'light' ? 'dark' : 'light')
   }, [resolvedTheme, setTheme])
 
-  const setAccent = useCallback((next: AccentColor) => setAccentState(next), [])
+  const setAccent = useCallback((next: AccentColor) => {
+    setAccentState(next)
+    try { localStorage.setItem(ACCENT_STORAGE_KEY, next) } catch {}
+  }, [])
   const setDial = useCallback((next: AccentDial) => setDialState(next), [])
   const setMaterial = useCallback((next: MaterialSignature) => setMaterialState(next), [])
 

@@ -11,6 +11,14 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.14.1] - 2026-07-21
+
+### Fixed
+- `AcheryProvider`: the `default*` props (`defaultTheme`/`defaultAccent`/`defaultDial`/`defaultMaterial`) are now **initial values only** — they no longer clobber a persisted or user-set value on mount. Previously a mount-time effect reset mode + accent back to the props on every load, discarding `setTheme`/`setAccent` and the stored theme preference on navigation.
+- `AcheryProvider`: `setAccent` now **persists** to `localStorage` (key `achery-accent`) and is restored on load, matching the existing theme-mode persistence. Accent selections now survive reload/navigation.
+
+---
+
 ## [0.14.0] - 2026-07-21
 
 ### Added
@@ -487,7 +495,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.14.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.14.1...HEAD
+[0.14.1]: https://github.com/fwestling/achery-workshop/compare/v0.14.1...v0.14.0
 [0.14.0]: https://github.com/fwestling/achery-workshop/compare/v0.14.0...v0.13.1
 [0.13.1]: https://github.com/fwestling/achery-workshop/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/fwestling/achery-workshop/compare/v0.12.0...v0.13.0
