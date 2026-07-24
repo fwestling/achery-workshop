@@ -17,6 +17,12 @@ export interface AppBarProps {
   /** Secondary brand descriptor shown after a divider — e.g. a workspace or project name. */
   brandSub?: string
   /**
+   * Custom brand mark rendered in place of the default hex glyph — e.g. a
+   * product logo. Keep it roughly 20×20 to match the default. When omitted, the
+   * built-in hex mark is shown.
+   */
+  brandLogo?: ReactNode
+  /**
    * Show the central search field.
    * @default true
    */
@@ -85,6 +91,7 @@ export interface AppBarProps {
  * <AppBar
  *   brandName="Achery"
  *   brandSub="Field Guide"
+ *   brandLogo={<img src="/logo.svg" width={20} height={20} alt="" />}
  *   isDark={theme === 'dark'}
  *   onToggleTheme={toggleTheme}
  *   accent={accent}
@@ -97,6 +104,7 @@ export interface AppBarProps {
 export function AppBar({
   brandName = 'Achery',
   brandSub,
+  brandLogo,
   showSearch = true,
   searchPlaceholder = 'Search…',
   searchKbd,
@@ -139,7 +147,7 @@ export function AppBar({
         />
       )}
       <div className={styles.brand}>
-        <Glyph name="hex" size={20} aria-hidden="true" />
+        {brandLogo ?? <Glyph name="hex" size={20} aria-hidden="true" />}
         <span className={styles.brandName}>{brandName}</span>
         {brandSub && (
           <>

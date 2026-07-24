@@ -63,7 +63,12 @@
       "Bash(npm view *)",
       "Bash(pnpm --filter @mandrel/web build)",
       "Bash(npx vite *)",
-      "Bash(pnpm test *)"
+      "Bash(pnpm test *)",
+      "Bash(pnpm exec *)",
+      "Bash(pnpm --filter server typecheck)",
+      "Bash(pnpm --filter web typecheck)",
+      "Bash(pnpm --filter mobile typecheck)",
+      "Bash(pnpm --filter mobile lint)"
     ]
   }
 }

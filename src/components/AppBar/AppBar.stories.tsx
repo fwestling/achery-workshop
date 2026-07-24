@@ -57,6 +57,33 @@ export const Minimal: Story = {
   },
 }
 
+export const WithBrandLogo: Story = {
+  args: {
+    brandName: 'Achery',
+    brandSub: 'Workshop',
+    showSearch: false,
+    avatarInitials: 'FW',
+    brandLogo: (
+      <span
+        aria-hidden="true"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 20,
+          height: 20,
+          background: 'var(--achery-color-accent)',
+          color: 'var(--achery-color-accentFg)',
+          fontWeight: 700,
+          fontSize: 12,
+        }}
+      >
+        ◆
+      </span>
+    ),
+  },
+}
+
 export const WithMenuButton: Story = {
   args: {
     brandName: 'Achery',

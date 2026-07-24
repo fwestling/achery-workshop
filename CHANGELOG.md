@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.15.0] - 2026-07-24
+
+### Added
+- `AppBar`: `brandLogo` prop — a custom brand mark (`ReactNode`) rendered in place of the default hex glyph. When omitted, the hex mark is shown, so existing usage is unchanged.
+
+---
+
 ## [0.14.1] - 2026-07-21
 
 ### Fixed
@@ -495,7 +502,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.14.1...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.15.0...HEAD
+[0.15.0]: https://github.com/fwestling/achery-workshop/compare/v0.14.1...v0.15.0
 [0.14.1]: https://github.com/fwestling/achery-workshop/compare/v0.14.1...v0.14.0
 [0.14.0]: https://github.com/fwestling/achery-workshop/compare/v0.14.0...v0.13.1
 [0.13.1]: https://github.com/fwestling/achery-workshop/compare/v0.13.0...v0.13.1

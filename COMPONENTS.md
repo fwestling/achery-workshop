@@ -35,6 +35,7 @@ Top-of-page bar with brand, search, theme/accent controls, avatar, custom action
 <AppBar
   brandName="My App"           // string
   brandSub="subtitle"          // string
+  brandLogo={<img … />}        // ReactNode — replaces the default hex mark (~20×20)
   showSearch                   // boolean (default true)
   searchPlaceholder="…"        // string
   isDark={theme === 'dark'}    // boolean
