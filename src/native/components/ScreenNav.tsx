@@ -15,12 +15,20 @@ export interface ScreenNavProps {
   actionLabel?: string
   /** Disables the trailing action button. */
   actionDisabled?: boolean
+  /**
+   * Drop the built-in status-bar clearance (top padding becomes symmetric with
+   * the bottom). Use when the screen already provides safe-area top inset — e.g.
+   * wrapping in `<SafeAreaView edges={['top']}>` — so the bar isn't double-padded.
+   * @default false
+   */
+  compact?: boolean
 }
 
 /**
  * Navigation bar for modal push screens (Expo Router `Stack`). Renders a
  * leading cancel/back button, a centred title, and an optional trailing action
- * button. Includes safe-area top padding for iOS.
+ * button. Includes built-in status-bar top padding; pass `compact` when the
+ * screen already supplies a safe-area top inset to avoid double-padding.
  *
  * @example
  * ```tsx
@@ -40,6 +48,7 @@ export const ScreenNav = ({
   onAction,
   actionLabel,
   actionDisabled = false,
+  compact = false,
 }: ScreenNavProps) => {
   const { tokens } = useTheme()
 
@@ -50,7 +59,7 @@ export const ScreenNav = ({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: spacing.sp4,
-        paddingTop: 56,
+        paddingTop: compact ? spacing.sp3 : 56,
         paddingBottom: spacing.sp3,
         backgroundColor: tokens.surface,
         borderBottomWidth: 1,

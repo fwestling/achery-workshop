@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.16.0] - 2026-07-27
+
+### Added
+- `ScreenNav` (native): `compact` prop — drops the built-in 56px status-bar clearance so the top padding is symmetric with the bottom. Use when the screen already provides a safe-area top inset (e.g. `SafeAreaView edges={['top']}`) to avoid a double-padded, oversized bar. Default `false` keeps existing behaviour.
+
+---
+
 ## [0.15.0] - 2026-07-24
 
 ### Added
@@ -502,7 +509,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.15.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.16.0...HEAD
+[0.16.0]: https://github.com/fwestling/achery-workshop/compare/v0.15.0...v0.16.0
 [0.15.0]: https://github.com/fwestling/achery-workshop/compare/v0.14.1...v0.15.0
 [0.14.1]: https://github.com/fwestling/achery-workshop/compare/v0.14.1...v0.14.0
 [0.14.0]: https://github.com/fwestling/achery-workshop/compare/v0.14.0...v0.13.1
