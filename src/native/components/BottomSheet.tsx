@@ -238,7 +238,15 @@ export const BottomSheet = ({
 
         {/* Content. While the keyboard is up, cap the scroll body so the lifted
             sheet + its header stay on-screen (leaving room for the header row and
-            top breathing space); otherwise honour the caller's maxContentHeight. */}
+            top breathing space); otherwise honour the caller's maxContentHeight.
+
+            The container is ALWAYS a ScrollView — never conditionally a plain
+            View — so that toggling `keyboardOffset` (e.g. an `autoFocus` field
+            raising the keyboard on open) only changes `maxHeight` and never
+            remounts the children. Swapping the container element used to remount
+            the subtree, which with an autoFocus input could re-fire the keyboard
+            and oscillate into a keyboardDidShow/Hide loop that froze the JS
+            thread. `maxHeight: undefined` simply means "no cap". */}
         {(() => {
           const keyboardCap =
             keyboardOffset > 0
@@ -249,7 +257,7 @@ export const BottomSheet = ({
               ? Math.min(maxContentHeight, keyboardCap)
               : (maxContentHeight ?? keyboardCap)
 
-          return effectiveMax != null ? (
+          return (
             <ScrollView
               style={{ maxHeight: effectiveMax }}
               showsVerticalScrollIndicator={false}
@@ -258,8 +266,6 @@ export const BottomSheet = ({
             >
               {children}
             </ScrollView>
-          ) : (
-            <View>{children}</View>
           )
         })()}
       </Animated.View>

@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.17.1] - 2026-07-29
+
+### Fixed
+- `BottomSheet` (native): opening a sheet containing an `autoFocus` input no longer freezes the app. The content container is now always a `ScrollView` (varying only its `maxHeight`) instead of swapping between `View` and `ScrollView` on keyboard state; the swap remounted the children, which with an `autoFocus` field could oscillate the keyboard show/hide events and peg the JS thread. Sheets without `maxContentHeight` were affected (those with it were always in the ScrollView path and unaffected).
+
+---
+
 ## [0.17.0] - 2026-07-29
 
 ### Added
@@ -522,7 +529,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.17.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.17.1...HEAD
+[0.17.1]: https://github.com/fwestling/achery-workshop/compare/v0.17.0...v0.17.1
 [0.17.0]: https://github.com/fwestling/achery-workshop/compare/v0.16.0...v0.17.0
 [0.16.0]: https://github.com/fwestling/achery-workshop/compare/v0.15.0...v0.16.0
 [0.15.0]: https://github.com/fwestling/achery-workshop/compare/v0.14.1...v0.15.0
