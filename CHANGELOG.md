@@ -11,6 +11,19 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.17.0] - 2026-07-29
+
+### Added
+- `BottomSheet` (native): `avoidKeyboard` prop (default `true`) — the sheet now lifts above the on-screen keyboard when a field inside it is focused, so inputs and their result rows are no longer hidden behind the keyboard. While the keyboard is up the scroll body is also shortened to keep the lifted sheet fully on-screen, and taps on content pass through (`keyboardShouldPersistTaps`). Set `avoidKeyboard={false}` to opt out.
+
+### Fixed
+- `ScreenNav` (native): a long `title` no longer pushes the trailing action button off-screen — the title now flexes and truncates to a single line.
+
+### Changed
+- `ScreenNav` (native): `backLabel` now defaults to `"Back"` (was `"cancel"`). "Back" reads correctly for the common pop-the-stack case; pass `backLabel="cancel"` explicitly for genuine modal-dismiss screens.
+
+---
+
 ## [0.16.0] - 2026-07-27
 
 ### Added
@@ -509,7 +522,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.16.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.17.0...HEAD
+[0.17.0]: https://github.com/fwestling/achery-workshop/compare/v0.16.0...v0.17.0
 [0.16.0]: https://github.com/fwestling/achery-workshop/compare/v0.15.0...v0.16.0
 [0.15.0]: https://github.com/fwestling/achery-workshop/compare/v0.14.1...v0.15.0
 [0.14.1]: https://github.com/fwestling/achery-workshop/compare/v0.14.1...v0.14.0

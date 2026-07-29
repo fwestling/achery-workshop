@@ -5,7 +5,7 @@ import { spacing, fontWeights } from 'achery-ui/tokens'
 export interface ScreenNavProps {
   /** Called when the leading cancel/back button is tapped. */
   onBack: () => void
-  /** Label text for the leading button. @default 'cancel' */
+  /** Label text for the leading button. @default 'Back' */
   backLabel?: string
   /** Screen title shown centred in the nav bar. */
   title: string
@@ -26,7 +26,8 @@ export interface ScreenNavProps {
 
 /**
  * Navigation bar for modal push screens (Expo Router `Stack`). Renders a
- * leading cancel/back button, a centred title, and an optional trailing action
+ * leading back button, a centred title (truncates to one line so it never
+ * pushes the trailing action off-screen), and an optional trailing action
  * button. Includes built-in status-bar top padding; pass `compact` when the
  * screen already supplies a safe-area top inset to avoid double-padding.
  *
@@ -43,7 +44,7 @@ export interface ScreenNavProps {
  */
 export const ScreenNav = ({
   onBack,
-  backLabel = 'cancel',
+  backLabel = 'Back',
   title,
   onAction,
   actionLabel,
@@ -84,7 +85,13 @@ export const ScreenNav = ({
       </TouchableOpacity>
 
       <Text
+        numberOfLines={1}
         style={{
+          // Flex + single line so a long title truncates instead of pushing the
+          // trailing action button off-screen.
+          flex: 1,
+          textAlign: 'center',
+          marginHorizontal: spacing.sp3,
           color: tokens.fgMute,
           fontSize: 11,
           fontWeight: fontWeights.semibold.toString() as any,

@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
-  Animated, Modal, Pressable, TouchableOpacity,
-  View, Text, ScrollView,
+  Animated, Keyboard, Modal, Platform, Pressable, TouchableOpacity,
+  useWindowDimensions, View, Text, ScrollView,
   type ViewStyle,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -31,6 +31,15 @@ export interface BottomSheetProps {
    * before the OS clips it).
    */
   maxContentHeight?: number
+  /**
+   * Lift the whole sheet above the on-screen keyboard so inputs and their
+   * results/rows stay visible (the sheet is bottom-anchored, so without this a
+   * focused field's lower content hides behind the keyboard). While the keyboard
+   * is up, the scrollable body is also shortened to keep the lifted sheet fully
+   * on-screen. Set `false` for sheets that manage their own keyboard avoidance.
+   * @default true
+   */
+  avoidKeyboard?: boolean
   style?: ViewStyle
 }
 
@@ -62,13 +71,32 @@ export const BottomSheet = ({
   showClose = false,
   children,
   maxContentHeight,
+  avoidKeyboard = true,
   style,
 }: BottomSheetProps) => {
   const { tokens } = useTheme()
   const insets = useSafeAreaInsets()
+  const { height: windowHeight } = useWindowDimensions()
 
   const slideAnim = useRef(new Animated.Value(0)).current  // 0 = hidden (translated down), 1 = visible
   const scrimAnim = useRef(new Animated.Value(0)).current
+
+  // Keyboard avoidance: lift the sheet by (keyboardHeight − bottom inset), since
+  // the sheet already pads `insets.bottom` and would otherwise double-count it.
+  const [keyboardOffset, setKeyboardOffset] = useState(0)
+  useEffect(() => {
+    if (!avoidKeyboard) return
+    const showEvt = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow'
+    const hideEvt = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide'
+    const show = Keyboard.addListener(showEvt, (e) =>
+      setKeyboardOffset(Math.max(0, e.endCoordinates.height - insets.bottom)),
+    )
+    const hide = Keyboard.addListener(hideEvt, () => setKeyboardOffset(0))
+    return () => {
+      show.remove()
+      hide.remove()
+    }
+  }, [avoidKeyboard, insets.bottom])
 
   useEffect(() => {
     if (open) {
@@ -149,6 +177,8 @@ export const BottomSheet = ({
             // Clear the home indicator so the last row is never cut off / hard
             // to tap on devices with a bottom safe area.
             paddingBottom: Math.max(insets.bottom, spacing.sp4),
+            // Lift above the keyboard when a field inside is focused.
+            marginBottom: keyboardOffset,
             transform: [{ translateY }],
           },
           style,
@@ -206,18 +236,32 @@ export const BottomSheet = ({
           </View>
         )}
 
-        {/* Content */}
-        {maxContentHeight != null ? (
-          <ScrollView
-            style={{ maxHeight: maxContentHeight }}
-            showsVerticalScrollIndicator={false}
-            bounces={false}
-          >
-            {children}
-          </ScrollView>
-        ) : (
-          <View>{children}</View>
-        )}
+        {/* Content. While the keyboard is up, cap the scroll body so the lifted
+            sheet + its header stay on-screen (leaving room for the header row and
+            top breathing space); otherwise honour the caller's maxContentHeight. */}
+        {(() => {
+          const keyboardCap =
+            keyboardOffset > 0
+              ? Math.max(160, windowHeight - keyboardOffset - insets.bottom - 140)
+              : undefined
+          const effectiveMax =
+            maxContentHeight != null && keyboardCap != null
+              ? Math.min(maxContentHeight, keyboardCap)
+              : (maxContentHeight ?? keyboardCap)
+
+          return effectiveMax != null ? (
+            <ScrollView
+              style={{ maxHeight: effectiveMax }}
+              showsVerticalScrollIndicator={false}
+              bounces={false}
+              keyboardShouldPersistTaps="handled"
+            >
+              {children}
+            </ScrollView>
+          ) : (
+            <View>{children}</View>
+          )
+        })()}
       </Animated.View>
     </Modal>
   )

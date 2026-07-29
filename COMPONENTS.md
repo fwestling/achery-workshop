@@ -884,7 +884,7 @@ module.exports = config
 | `Textarea` | Multi-line text input. `rows` prop controls min height. Wrap in `Field` for label. |
 | `StatusDot` | Small filled dot for compact status indicators. Same `tone` palette as `Badge`. |
 | `SegmentedControl` | Inline exclusive button group. `options` / `value` / `onChange`. |
-| `ScreenNav` | Navigation bar for modal push screens: cancel/back + title + optional action. |
+| `ScreenNav` | Navigation bar for modal push screens: back button (`backLabel` default `"Back"`) + centred title (truncates to one line) + optional action. |
 | `Disclosure` | Collapsible section (rung 3 — disclosure ladder). Labelled toggle, 44px hit area, height animation. |
 | `BottomSheet` + `SheetRow` | Slide-up overlay (rung 5). 2px ink top-rule, tracing-paper scrim, square corners. `SheetRow` = 44px touch row with optional danger tint. |
 | `BottomTabBar` | Root navigation bar (promotion ladder). ≤4 primary tabs; overflow into a "More" `BottomSheet`. 2px accent top stripe on active tab. |
@@ -955,6 +955,7 @@ import { BottomSheet, SheetRow } from 'achery-ui/native'
 | `showClose` | `boolean` | `false` |
 | `children` | `ReactNode` | required |
 | `maxContentHeight` | `number` | — (grows with content) |
+| `avoidKeyboard` | `boolean` | `true` — lifts the sheet above the keyboard when a field inside is focused (and shortens the scroll body to stay on-screen). Set `false` to manage avoidance yourself. |
 | `style` | `ViewStyle` | — |
 
 **`SheetRow` props:**
