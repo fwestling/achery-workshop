@@ -55,6 +55,9 @@ export type { DisclosureProps } from './Disclosure'
 export { BottomSheet, SheetRow } from './BottomSheet'
 export type { BottomSheetProps, SheetRowProps } from './BottomSheet'
 
+export { AdaptivePanel, useIsPanelDocked, ADAPTIVE_PANEL_BREAKPOINT } from './AdaptivePanel'
+export type { AdaptivePanelProps } from './AdaptivePanel'
+
 export { BottomTabBar } from './BottomTabBar'
 export type { BottomTabBarProps, BottomTabItem } from './BottomTabBar'
 

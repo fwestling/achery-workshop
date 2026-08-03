@@ -8,6 +8,7 @@ export {
   ToastProvider, useToast,
   StatusDot, SegmentedControl, ScreenNav,
   Disclosure, BottomSheet, SheetRow, BottomTabBar,
+  AdaptivePanel, useIsPanelDocked, ADAPTIVE_PANEL_BREAKPOINT,
   Marginalia, TagInput,
 } from './components/index'
 export type {
@@ -30,6 +31,7 @@ export type {
   ScreenNavProps,
   DisclosureProps,
   BottomSheetProps, SheetRowProps,
+  AdaptivePanelProps,
   BottomTabBarProps, BottomTabItem,
   MarginaliaProps, TagInputProps,
 } from './components/index'

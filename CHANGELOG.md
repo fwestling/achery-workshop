@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.18.0] - 2026-08-03
+
+### Added
+- `AdaptivePanel` (native): disclosure surface that switches container on window width — a `BottomSheet` below the breakpoint, a docked side column at or above it. Docked, it sits in normal layout flow so it displaces sibling content instead of covering it, letting a tablet or resized desktop window keep a reference/properties panel open while working. Ships with `useIsPanelDocked` for choosing the matching trigger affordance (overflow menu vs. toggle buttons) and `ADAPTIVE_PANEL_BREAKPOINT` (900).
+
+---
+
 ## [0.17.1] - 2026-07-29
 
 ### Fixed
@@ -529,7 +536,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.17.1...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.18.0...HEAD
+[0.18.0]: https://github.com/fwestling/achery-workshop/compare/v0.17.1...v0.18.0
 [0.17.1]: https://github.com/fwestling/achery-workshop/compare/v0.17.0...v0.17.1
 [0.17.0]: https://github.com/fwestling/achery-workshop/compare/v0.16.0...v0.17.0
 [0.16.0]: https://github.com/fwestling/achery-workshop/compare/v0.15.0...v0.16.0

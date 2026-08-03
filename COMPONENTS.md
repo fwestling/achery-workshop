@@ -887,6 +887,7 @@ module.exports = config
 | `ScreenNav` | Navigation bar for modal push screens: back button (`backLabel` default `"Back"`) + centred title (truncates to one line) + optional action. |
 | `Disclosure` | Collapsible section (rung 3 — disclosure ladder). Labelled toggle, 44px hit area, height animation. |
 | `BottomSheet` + `SheetRow` | Slide-up overlay (rung 5). 2px ink top-rule, tracing-paper scrim, square corners. `SheetRow` = 44px touch row with optional danger tint. |
+| `AdaptivePanel` | Width-adaptive disclosure surface. A `BottomSheet` when narrow; a docked side column at ≥900pt, displacing content rather than covering it. Ships `useIsPanelDocked`. |
 | `BottomTabBar` | Root navigation bar (promotion ladder). ≤4 primary tabs; overflow into a "More" `BottomSheet`. 2px accent top stripe on active tab. |
 | `Marginalia` | Decorative corner glyph (RN counterpart to web `Marginalia`). `corner`/`inset`/`opacity`/`accent`. Non-interactive. |
 | `TagInput` | Chips-in-input tag field with autocomplete. Comma/space/return confirm, Backspace removes last. `onLeather` variant for ghost-on-leather. |
@@ -967,6 +968,45 @@ import { BottomSheet, SheetRow } from 'achery-ui/native'
 | `danger` | `boolean` | `false` |
 | `accessory` | `ReactNode` | — |
 | `disabled` | `boolean` | `false` |
+
+### `AdaptivePanel` (native)
+
+A disclosure surface that changes container with window width. Below the breakpoint it *is* a `BottomSheet`. At or above it, the panel docks as a bordered side column in normal layout flow — so it **displaces** sibling content instead of covering it, and the user can keep working with it open. Use for reference/properties/outline surfaces that are welcome to stay open on a tablet or a resized desktop window.
+
+Because the docked form participates in layout, render it **inside a row-direction container**, next to the content it sits beside — not at the end of a screen the way a sheet can be. In sheet mode it renders into a `Modal`, so tree position is irrelevant.
+
+```tsx
+import { AdaptivePanel, useIsPanelDocked } from 'achery-ui/native'
+
+const docked = useIsPanelDocked()
+
+<View style={{ flex: 1, flexDirection: 'row' }}>
+  <View style={{ flex: 1 }}>{editor}</View>
+  <AdaptivePanel open={panel === 'reference'} onClose={close} title="Reference">
+    {references}
+  </AdaptivePanel>
+</View>
+```
+
+**Props:**
+
+| Prop | Type | Default |
+|---|---|---|
+| `open` | `boolean` | required |
+| `onClose` | `() => void` | required |
+| `title` | `string` | — |
+| `showClose` | `boolean` | `false` — docked mode always shows a close button regardless, since there is no scrim to tap |
+| `children` | `ReactNode` | required |
+| `width` | `number` | `340` — docked width in pt; ignored in sheet mode |
+| `side` | `'left' \| 'right'` | `'right'` |
+| `breakpoint` | `number` | `ADAPTIVE_PANEL_BREAKPOINT` (900) |
+| `maxContentHeight` | `number` | — sheet mode only |
+| `avoidKeyboard` | `boolean` | `true` — sheet mode only |
+| `style` | `ViewStyle` | — |
+
+**`useIsPanelDocked(breakpoint?)`** — returns whether the panel docks at the current width. Needed to pick the matching *trigger* affordance, which lives outside the panel: an overflow menu of rows when narrow, a row of toggle buttons when docked.
+
+**`ADAPTIVE_PANEL_BREAKPOINT`** — `900`. Puts iPad landscape in the docked layout while leaving iPad portrait (834pt on an 11") as sheets, where there isn't room for content plus a panel.
 
 ### `BottomTabBar` (native)
 
