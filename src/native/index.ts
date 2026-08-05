@@ -1,5 +1,9 @@
 export { NativeThemeProvider, useTheme } from './theme/ThemeContext'
-export type { NativeThemeProviderProps, NativeThemeContextValue } from './theme/ThemeContext'
+export type {
+  NativeThemeProviderProps,
+  NativeThemeContextValue,
+  ThemeStorage,
+} from './theme/ThemeContext'
 
 export {
   Text, Button, Card, Badge, Field, Input, Textarea, MaterialCard, MaterialEyebrow,

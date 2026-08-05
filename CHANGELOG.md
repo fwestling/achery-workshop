@@ -11,6 +11,19 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.19.0] - 2026-08-05
+
+### Added
+- `NativeThemeProvider`: three-way colour-mode preference — `defaultMode` and `setTheme('light' | 'dark' | 'system')`, with `'system'` following the OS appearance live via `useColorScheme()`. `useTheme()` now also returns `mode` (the preference) and `theme` (the resolved light/dark), matching the web provider's contract. Previously native had only a boolean `dark` with no way to express "follow the system".
+- `NativeThemeProvider`: opt-in persistence via a `storage` prop (`ThemeStorage` = `getItem`/`setItem`, sync or async). Colour mode, accent, dial and material survive app restarts. achery-ui takes no dependency on a native storage library — the consumer supplies the adapter (`expo-secure-store`, AsyncStorage, MMKV…). Storage keys match the web provider's. Without `storage` the provider is in-memory only, as before.
+- `NativeThemeProvider`: persisted values are validated before being applied — an unrecognised stored accent (older/newer build, renamed palette entry, corrupted storage) is ignored rather than crashing token derivation, and an unknown accent passed via props falls back to the default palette entry.
+- `NativeThemeProvider`: `hydrated` flag on the theme context — false until persisted preferences have been read back, so apps can hold a splash screen instead of flashing light→dark on launch.
+
+### Changed
+- `NativeThemeProvider`: `defaultDark` is deprecated in favour of `defaultMode` (`defaultDark` still maps to `defaultMode="dark"`). `dark` and `toggle` are unchanged and existing code keeps working; `toggle` now resolves `'system'` to its concrete value first so it always visibly flips.
+
+---
+
 ## [0.18.0] - 2026-08-03
 
 ### Added
@@ -536,7 +549,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.18.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.19.0...HEAD
+[0.19.0]: https://github.com/fwestling/achery-workshop/compare/v0.18.0...v0.19.0
 [0.18.0]: https://github.com/fwestling/achery-workshop/compare/v0.17.1...v0.18.0
 [0.17.1]: https://github.com/fwestling/achery-workshop/compare/v0.17.0...v0.17.1
 [0.17.0]: https://github.com/fwestling/achery-workshop/compare/v0.16.0...v0.17.0

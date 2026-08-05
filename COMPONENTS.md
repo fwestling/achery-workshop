@@ -866,7 +866,7 @@ module.exports = config
 
 | Component | Notes |
 |---|---|
-| `NativeThemeProvider` / `useTheme` | Theme + accent + dial + material context |
+| `NativeThemeProvider` / `useTheme` | Theme + accent + dial + material context. Three-way colour mode (`light`/`dark`/`system`) + opt-in persistence — see below. |
 | `Text` | Display/heading/body/mono/eyebrow/caption variants |
 | `Button` | primary/secondary/accent/ghost/danger variants |
 | `Card` | flat/stamp variants, optional header |
@@ -891,6 +891,66 @@ module.exports = config
 | `BottomTabBar` | Root navigation bar (promotion ladder). ≤4 primary tabs; overflow into a "More" `BottomSheet`. 2px accent top stripe on active tab. |
 | `Marginalia` | Decorative corner glyph (RN counterpart to web `Marginalia`). `corner`/`inset`/`opacity`/`accent`. Non-interactive. |
 | `TagInput` | Chips-in-input tag field with autocomplete. Comma/space/return confirm, Backspace removes last. `onLeather` variant for ghost-on-leather. |
+
+### `NativeThemeProvider` / `useTheme` (native)
+
+Mirrors the web `AcheryProvider` contract: a three-way colour-mode *preference*
+(`light` / `dark` / `system`), an accent colour, and the dial/material
+signatures. `'system'` follows the OS appearance live.
+
+```tsx
+import { NativeThemeProvider, useTheme } from 'achery-ui/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+<NativeThemeProvider defaultMode="system" defaultAccent="olive" storage={AsyncStorage}>
+  <App />
+</NativeThemeProvider>
+
+// anywhere below
+const { mode, setTheme, theme, dark, accent, setAccent } = useTheme()
+setTheme('system')        // preference — may be 'system'
+theme                     // resolved — always 'light' | 'dark'
+```
+
+**Persistence is opt-in.** React Native has no built-in synchronous key-value
+store and achery-ui will not depend on one — pass any adapter with
+`getItem`/`setItem` (`expo-secure-store`, AsyncStorage, MMKV…). Omit `storage`
+and the provider is in-memory only, as before. Keys match the web provider's
+(`achery-theme-mode`, `achery-accent`, `achery-dial`, `achery-material`).
+
+Because native storage is async, stored values load *after* first paint: the
+provider renders with the `default*` props, then swaps once loaded. A preference
+the user changes before hydration completes is never clobbered. Read `hydrated`
+to hold a splash screen and avoid a light→dark flash.
+
+| Prop | Type | Default |
+|---|---|---|
+| `defaultMode` | `'light' \| 'dark' \| 'system'` | `'system'` |
+| `defaultDark` | `boolean` | `false` — **deprecated**, use `defaultMode` |
+| `defaultAccent` | `AccentColor` | `'terracotta'` |
+| `defaultDial` | `AccentDial` | `'chrome'` |
+| `defaultMaterial` | `MaterialSignature` | `'none'` |
+| `defaultSurfaceOrigin` | `SurfaceOrigin` | `'native-only'` |
+| `storage` | `ThemeStorage` | — (no persistence) |
+
+**`useTheme()` returns:**
+
+| Key | Type | Notes |
+|---|---|---|
+| `tokens` | `SemanticTokens` | Resolved colour tokens for the active mode + accent |
+| `mode` | `ThemeMode` | The *preference* — may be `'system'` |
+| `theme` | `'light' \| 'dark'` | The *resolved* mode actually rendered |
+| `setTheme` | `(mode: ThemeMode) => void` | Persisted when `storage` is given |
+| `dark` | `boolean` | `theme === 'dark'` |
+| `toggle` | `() => void` | Flips to explicit light/dark (resolves `'system'` first) |
+| `accent` / `setAccent` | `AccentColor` | Persisted |
+| `dial` / `setDial` | `AccentDial` | Persisted |
+| `material` / `setMaterial` | `MaterialSignature` | Persisted |
+| `surfaceOrigin` | `SurfaceOrigin` | Set once on the provider |
+| `hydrated` | `boolean` | False until storage has been read; always true without `storage` |
+
+`dark` and `toggle` are unchanged from earlier versions — existing code keeps
+working.
 
 ### `Glyph` (native)
 
