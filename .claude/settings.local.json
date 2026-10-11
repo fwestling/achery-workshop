@@ -70,7 +70,17 @@
       "Bash(pnpm --filter mobile typecheck)",
       "Bash(pnpm --filter mobile lint)",
       "Bash(pnpm --filter @mandrel/server build)",
-      "Bash(pnpm --filter @mandrel/web typecheck)"
+      "Bash(pnpm --filter @mandrel/web typecheck)",
+      "Bash(pnpm vitest *)",
+      "Bash(pnpm -r typecheck)",
+      "Bash(sed -i.bak \"s/  migrateBucketNames,\\\\n/  migrateBucketNames,\\\\n/\" packages/conlang/src/namePool.test.ts)",
+      "Bash(perl -0pi -e \"s/  migrateBucketNames,\\\\n  NAME_POOL_KEY,/  migrateBucketNames,\\\\n  resolvePoolOwner,\\\\n  NAME_POOL_KEY,/\" packages/conlang/src/namePool.test.ts)",
+      "Bash(perl -0pi -e \"s/  resolvePoolOwner,\\\\n  NAME_POOL_KEY,\\\\n\\\\} from '.\\\\/namePool.js'\\\\nimport type \\\\{ NameRecord \\\\} from '.\\\\/nameBucket.js'/  resolvePoolOwner,\\\\n  resolvePickedPool,\\\\n  NAME_POOL_KEY,\\\\n} from '.\\\\/namePool.js'\\\\nimport { NAME_BUCKET_TYPE, type NameRecord } from '.\\\\/nameBucket.js'\\\\nimport { CONLANG_SPEC_TYPE } from '.\\\\/types.js'/\" packages/conlang/src/namePool.test.ts)",
+      "Bash(pnpm --filter @mandrel/conlang build)",
+      "Bash(pnpm --filter @mandrel/mobile typecheck)",
+      "Bash(pnpm --filter @mandrel/server typecheck)",
+      "Bash(node -p \"require\\('./apps/mobile/package.json'\\).name\")",
+      "Bash(pnpm lint *)"
     ]
   }
 }

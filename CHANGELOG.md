@@ -11,6 +11,18 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.20.0] - 2026-10-11
+
+### Added
+- Button: `href` renders an `<a>` styled as a button (`ButtonLinkProps`), for navigation such as calls to action on marketing pages. Previously consumers had to copy the styles onto their own anchor
+- Button: `buttonClassName({ variant, size })` exported, to style elements Button can't render itself (e.g. a router `<Link>`)
+
+### Fixed
+- Button: `size="lg"` was documented but had no styles and was rejected by the types; it now renders at 13px with generous padding
+- Button: `loading` now always disables the button; an explicit `disabled={false}` no longer overrides it
+
+---
+
 ## [0.19.0] - 2026-08-05
 
 ### Added
@@ -549,7 +561,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.19.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.20.0...HEAD
+[0.20.0]: https://github.com/fwestling/achery-workshop/compare/v0.19.0...v0.20.0
 [0.19.0]: https://github.com/fwestling/achery-workshop/compare/v0.18.0...v0.19.0
 [0.18.0]: https://github.com/fwestling/achery-workshop/compare/v0.17.1...v0.18.0
 [0.17.1]: https://github.com/fwestling/achery-workshop/compare/v0.17.0...v0.17.1

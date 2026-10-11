@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react'
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
 import type { RecipeVariants } from '@vanilla-extract/recipes'
 import { Glyph } from '../../glyphs/Glyph'
 import type { GlyphName } from '../../types/components'
@@ -6,8 +6,8 @@ import * as styles from './Button.css'
 
 type ButtonVariants = NonNullable<RecipeVariants<typeof styles.button>>
 
-/** Props for the {@link Button} component. */
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+/** Visual options shared by every element styled as a button. */
+export interface ButtonStyleOptions {
   /**
    * Visual style of the button.
    * - `primary` — high-emphasis, filled in foreground ink with stamp shadow
@@ -26,6 +26,21 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    * @default 'md'
    */
   size?: ButtonVariants['size']
+}
+
+/**
+ * Class names for an element styled as a {@link Button}. Use it for elements the Button can't render
+ * itself, such as a router's `<Link>`. Glyphs, `kbd` and `loading` are not applied.
+ *
+ * @example
+ * ```tsx
+ * <Link to="/lists" className={buttonClassName({ variant: 'accent' })}>My lists</Link>
+ * ```
+ */
+export const buttonClassName = ({ variant = 'secondary', size = 'md' }: ButtonStyleOptions = {}): string =>
+  styles.button({ variant, size })
+
+interface ButtonContentProps extends ButtonStyleOptions {
   /** Name of a {@link Glyph} to render alongside the label. */
   glyph?: GlyphName
   /**
@@ -54,15 +69,26 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
 }
 
+/** Props for the {@link Button} component rendering a `<button>`. */
+export interface ButtonProps extends ButtonContentProps, ButtonHTMLAttributes<HTMLButtonElement> {
+  href?: undefined
+}
+
+/** Props for the {@link Button} component rendering a link (`<a>`): pass `href`. */
+export interface ButtonLinkProps extends ButtonContentProps, AnchorHTMLAttributes<HTMLAnchorElement> {
+  href: string
+}
+
 /**
  * The primary interactive element. Supports five variants, three sizes, optional
- * glyphs, and keyboard shortcut hints.
+ * glyphs, and keyboard shortcut hints. Pass `href` to render a link that looks like a button.
  *
  * @example
  * ```tsx
  * <Button variant="accent" glyph="plus">New entry</Button>
  * <Button variant="ghost" size="sm" glyph="cross" aria-label="Close" />
  * <Button variant="primary" kbd="⌘S">Save</Button>
+ * <Button variant="accent" size="lg" href="/signup">Start a list</Button>
  * ```
  */
 export function Button({
@@ -75,36 +101,56 @@ export function Button({
   loadingLabel = 'Loading…',
   children,
   className,
-  ...props
-}: ButtonProps) {
+  ...elementProps
+}: ButtonProps | ButtonLinkProps) {
   const glyphSize = size === 'sm' ? 12 : 14
+  const classes = [buttonClassName({ variant, size }), className].filter(Boolean).join(' ')
+
+  const content = loading ? (
+    <>
+      <span className={styles.spinner} aria-hidden="true">
+        <Glyph name="spinner" size={glyphSize} />
+      </span>
+      {loadingLabel}
+    </>
+  ) : (
+    <>
+      {glyph && glyphPosition === 'start' && <Glyph name={glyph} size={glyphSize} aria-hidden="true" />}
+      {children}
+      {glyph && glyphPosition === 'end' && <Glyph name={glyph} size={glyphSize} aria-hidden="true" />}
+      {kbd && <span className={styles.kbdHint}>{kbd}</span>}
+    </>
+  )
+
+  if (isLinkProps(elementProps)) {
+    // Links can't be disabled; while loading, the styles' aria-disabled rule blocks pointer events
+    return (
+      <a
+        {...elementProps}
+        className={classes}
+        aria-busy={loading || undefined}
+        aria-disabled={loading || elementProps['aria-disabled'] || undefined}
+      >
+        {content}
+      </a>
+    )
+  }
 
   return (
     <button
-      className={[styles.button({ variant, size }), className].filter(Boolean).join(' ')}
-      disabled={loading || props.disabled}
+      {...elementProps}
+      className={classes}
+      disabled={loading || elementProps.disabled}
       aria-busy={loading || undefined}
-      {...props}
     >
-      {loading ? (
-        <>
-          <span className={styles.spinner} aria-hidden="true">
-            <Glyph name="spinner" size={glyphSize} />
-          </span>
-          {loadingLabel}
-        </>
-      ) : (
-        <>
-          {glyph && glyphPosition === 'start' && (
-            <Glyph name={glyph} size={glyphSize} aria-hidden="true" />
-          )}
-          {children}
-          {glyph && glyphPosition === 'end' && (
-            <Glyph name={glyph} size={glyphSize} aria-hidden="true" />
-          )}
-          {kbd && <span className={styles.kbdHint}>{kbd}</span>}
-        </>
-      )}
+      {content}
     </button>
   )
 }
+
+type ElementProps =
+  | Omit<ButtonProps, keyof ButtonContentProps>
+  | Omit<ButtonLinkProps, keyof ButtonContentProps>
+
+const isLinkProps = (props: ElementProps): props is Omit<ButtonLinkProps, keyof ButtonContentProps> =>
+  props.href !== undefined
