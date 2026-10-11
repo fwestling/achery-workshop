@@ -1,5 +1,6 @@
 import { globalStyle } from '@vanilla-extract/css'
 import { vars } from './vars.css'
+import { buttonMarker } from '../components/Button/buttonMarker.css'
 
 /**
  * Stable CSS custom property aliases under the `--achery-*` namespace.
@@ -84,7 +85,9 @@ globalStyle('[data-achery-root] ::selection', {
   color: vars.color.selectionFg,
 })
 
-globalStyle('[data-achery-root] a', {
+// Prose links. Links styled as buttons (Button href, buttonClassName) are excluded: these selectors
+// outrank the Button's single-class styles and would repaint its text and add an underline.
+globalStyle(`[data-achery-root] a:not(.${buttonMarker})`, {
   color: vars.color.fg,
   textDecoration: 'underline',
   textDecorationThickness: '1px',
@@ -92,7 +95,7 @@ globalStyle('[data-achery-root] a', {
   textDecorationColor: vars.color.accent,
 })
 
-globalStyle('[data-achery-root] a:hover', {
+globalStyle(`[data-achery-root] a:not(.${buttonMarker}):hover`, {
   color: vars.color.accent,
   textDecorationColor: vars.color.fg,
 })

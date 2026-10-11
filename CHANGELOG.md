@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.20.1] - 2026-10-11
+
+### Fixed
+- Button: links styled as buttons (`href`, or `buttonClassName` on a router link) picked up the theme's global link styles, which outrank the Button's classes — prose text colour and an underline at rest, and on hover text in the accent colour, invisible against the accent background. Button-styled elements now carry a stable marker class that the global link styles exclude
+
+---
+
 ## [0.20.0] - 2026-10-11
 
 ### Added
@@ -561,7 +568,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.20.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.20.1...HEAD
+[0.20.1]: https://github.com/fwestling/achery-workshop/compare/v0.20.0...v0.20.1
 [0.20.0]: https://github.com/fwestling/achery-workshop/compare/v0.19.0...v0.20.0
 [0.19.0]: https://github.com/fwestling/achery-workshop/compare/v0.18.0...v0.19.0
 [0.18.0]: https://github.com/fwestling/achery-workshop/compare/v0.17.1...v0.18.0

@@ -1,6 +1,7 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { style, keyframes } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
+import { buttonMarker } from './buttonMarker.css'
 
 const spin = keyframes({
   from: { transform: 'rotate(0deg)' },
@@ -13,7 +14,7 @@ export const spinner = style({
 })
 
 export const button = recipe({
-  base: {
+  base: [buttonMarker, {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -41,7 +42,7 @@ export const button = recipe({
         pointerEvents: 'none',
       },
     },
-  },
+  }],
   variants: {
     variant: {
       primary: {
