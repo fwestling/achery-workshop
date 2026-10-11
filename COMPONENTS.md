@@ -82,6 +82,12 @@ Primary interactive element.
 >
   Save
 </Button>
+
+// href renders an <a> styled as a button — use for navigation
+<Button variant="accent" size="lg" href="/signup">Start a list</Button>
+
+// Style another element (e.g. a router Link) as a button
+<Link to="/lists" className={buttonClassName({ variant: 'accent', size: 'md' })}>My lists</Link>
 ```
 
 ---

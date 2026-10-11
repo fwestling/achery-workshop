@@ -16,7 +16,7 @@ const meta = {
       control: 'select',
       options: ['primary', 'secondary', 'accent', 'ghost', 'danger'],
     },
-    size: { control: 'select', options: ['sm', 'md'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
     glyph: { control: 'select', options: [undefined, 'plus', 'arrow-right', 'compass', 'leaf', 'flask', 'key', 'moon', 'sun', 'spinner'] },
     glyphPosition: { control: 'select', options: ['start', 'end'] },
     kbd: { control: 'text' },
@@ -33,6 +33,29 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+
+export const AllSizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+      <Button size="sm">Small</Button>
+      <Button size="md">Medium</Button>
+      <Button size="lg" variant="accent">Large</Button>
+    </div>
+  ),
+}
+
+/** Pass `href` and the Button renders an `<a>` with the same styling — for navigation, not actions. */
+export const AsLink: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+      <Button variant="accent" size="lg" href="#start">Start a list</Button>
+      <Button href="#guide" glyph="book">Read the guide</Button>
+      <Button variant="ghost" href="https://example.com" target="_blank" rel="noreferrer" glyph="external-link" glyphPosition="end">
+        External
+      </Button>
+    </div>
+  ),
+}
 
 export const AllVariants: Story = {
   render: () => (

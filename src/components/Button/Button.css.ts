@@ -129,6 +129,10 @@ export const button = recipe({
         fontSize: '12px',
         padding: '7px 12px',
       },
+      lg: {
+        fontSize: '13px',
+        padding: '10px 18px',
+      },
     },
   },
   defaultVariants: {

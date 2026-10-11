@@ -26,8 +26,8 @@ export { Badge } from './components/Badge/Badge'
 export type { BadgeProps } from './components/Badge/Badge'
 
 // Button
-export { Button } from './components/Button/Button'
-export type { ButtonProps } from './components/Button/Button'
+export { Button, buttonClassName } from './components/Button/Button'
+export type { ButtonProps, ButtonLinkProps, ButtonStyleOptions } from './components/Button/Button'
 
 // ConfirmDialog
 export { ConfirmDialogProvider, useConfirm } from './components/ConfirmDialog/ConfirmDialog'
