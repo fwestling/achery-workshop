@@ -52,6 +52,12 @@ export type { ScreenNavProps } from './ScreenNav'
 export { Disclosure } from './Disclosure'
 export type { DisclosureProps } from './Disclosure'
 
+export { Modal } from './Modal'
+export type { ModalProps } from './Modal'
+
+export { ConfirmDialogProvider, useConfirm } from './ConfirmDialog'
+export type { ConfirmOptions, ConfirmFn } from './ConfirmDialog'
+
 export { BottomSheet, SheetRow } from './BottomSheet'
 export type { BottomSheetProps, SheetRowProps } from './BottomSheet'
 

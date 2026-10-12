@@ -12,6 +12,7 @@ export {
   ToastProvider, useToast,
   StatusDot, SegmentedControl, ScreenNav,
   Disclosure, BottomSheet, SheetRow, BottomTabBar,
+  Modal, ConfirmDialogProvider, useConfirm,
   AdaptivePanel, useIsPanelDocked, ADAPTIVE_PANEL_BREAKPOINT,
   Marginalia, TagInput,
 } from './components/index'
@@ -35,6 +36,7 @@ export type {
   ScreenNavProps,
   DisclosureProps,
   BottomSheetProps, SheetRowProps,
+  ModalProps, ConfirmOptions, ConfirmFn,
   AdaptivePanelProps,
   BottomTabBarProps, BottomTabItem,
   MarginaliaProps, TagInputProps,

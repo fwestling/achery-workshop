@@ -892,6 +892,8 @@ module.exports = config
 | `SegmentedControl` | Inline exclusive button group. `options` / `value` / `onChange`. |
 | `ScreenNav` | Navigation bar for modal push screens: back button (`backLabel` default `"Back"`) + centred title (truncates to one line) + optional action. |
 | `Disclosure` | Collapsible section (rung 3 — disclosure ladder). Labelled toggle, 44px hit area, height animation. |
+| `Modal` | Centred dialog — native counterpart of web `Modal`. Title/description/body/footer, scrollable body, `dismissible={false}` for questions that must be answered. |
+| `ConfirmDialogProvider` / `useConfirm` | Promise-based yes/no dialog — same options as web `useConfirm`. Mount once inside `NativeThemeProvider`. |
 | `BottomSheet` + `SheetRow` | Slide-up overlay (rung 5). 2px ink top-rule, tracing-paper scrim, square corners. `SheetRow` = 44px touch row with optional danger tint. |
 | `AdaptivePanel` | Width-adaptive disclosure surface. A `BottomSheet` when narrow; a docked side column at ≥900pt, displacing content rather than covering it. Ships `useIsPanelDocked`. |
 | `BottomTabBar` | Root navigation bar (promotion ladder). ≤4 primary tabs; overflow into a "More" `BottomSheet`. 2px accent top stripe on active tab. |
@@ -998,6 +1000,76 @@ import { Disclosure } from 'achery-ui/native'
 | `onOpenChange` | `(open: boolean) => void` | — |
 | `contentPaddingHorizontal` | `number` | `16` |
 | `style` | `ViewStyle` | — |
+
+### `Modal` (native)
+
+Centred dialog for questions and short forms. Square corners, 1.5px ink border, hard stamp shadow, tracing-paper scrim; fades and rises 8px in ≤220ms. The body scrolls when content outgrows the screen.
+
+```tsx
+import { Modal, Button } from 'achery-ui/native'
+
+<Modal
+  open={open}
+  onClose={() => setOpen(false)}
+  title="Rename list"
+  footer={
+    <>
+      <Button variant="ghost" size="sm" onPress={() => setOpen(false)}>Cancel</Button>
+      <Button variant="accent" size="sm" onPress={save}>Save</Button>
+    </>
+  }
+>
+  <Field label="Name"><Input value={name} onChangeText={setName} /></Field>
+</Modal>
+
+// A question that must be answered: no scrim/back/✕ dismissal
+<Modal open={!answered} dismissible={false} title="Share usage data?" footer={…}>
+  Usage and crash reports help find bugs.
+</Modal>
+```
+
+| Prop | Type | Default |
+|---|---|---|
+| `open` | `boolean` | required |
+| `onClose` | `() => void` | — (called on scrim tap, ✕, Android back) |
+| `title` | `ReactNode` | — (strings render in the display face) |
+| `description` | `ReactNode` | — |
+| `children` | `ReactNode` | — (strings render as body text) |
+| `footer` | `ReactNode` | — (right-aligned row with a top rule) |
+| `dismissible` | `boolean` | `true` — `false` disables scrim, back button and ✕ |
+| `showClose` | `boolean` | `true` (ignored when not dismissible) |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'sm'` (400 / 560 / 760, capped to the screen) |
+| `style` | `ViewStyle` | — |
+
+Differs from web `Modal`: controlled only (`open` + `onClose` rather than `onOpenChange` / `trigger`), matching native `BottomSheet`.
+
+### `ConfirmDialogProvider` / `useConfirm` (native)
+
+Same options and hook as the web `ConfirmDialog`. `confirm()` resolves `true` on confirm, `false` on cancel, scrim tap or back.
+
+```tsx
+import { ConfirmDialogProvider, useConfirm } from 'achery-ui/native'
+
+// Once, inside NativeThemeProvider
+<ConfirmDialogProvider><App /></ConfirmDialogProvider>
+
+const confirm = useConfirm()
+const ok = await confirm({
+  title: 'Delete task?',
+  message: "This can't be undone.",
+  confirmLabel: 'Delete',
+  destructive: true,
+})
+```
+
+| Option | Type | Default |
+|---|---|---|
+| `title` | `ReactNode` | — |
+| `message` | `ReactNode` | required |
+| `confirmLabel` | `string` | `'Confirm'` |
+| `confirmVariant` | `'accent' \| 'secondary' \| 'ghost'` | `'accent'` (ignored when `destructive`) |
+| `cancelLabel` | `string` | `'Cancel'` |
+| `destructive` | `boolean` | `false` — confirm button uses the `danger` variant |
 
 ### `BottomSheet` + `SheetRow` (native)
 
