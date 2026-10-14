@@ -7,6 +7,8 @@ import { spacing, fontWeights } from 'achery-ui/tokens'
 export interface NativeSegmentOption<T extends string = string> {
   value: T
   label: ReactNode
+  /** Name read by screen readers. Needed when `label` isn't a string. */
+  accessibilityLabel?: string
 }
 
 export interface SegmentedControlProps<T extends string = string> {
@@ -37,7 +39,7 @@ export const SegmentedControl = <T extends string>({
   const { tokens } = useTheme()
 
   return (
-    <View style={{ flexDirection: 'row', borderWidth: 1, borderColor: tokens.border }}>
+    <View accessibilityRole="tablist" style={{ flexDirection: 'row', borderWidth: 1, borderColor: tokens.border }}>
       {options.map((opt, i) => {
         const isActive = opt.value === value
         const isLast = i === options.length - 1
@@ -45,6 +47,9 @@ export const SegmentedControl = <T extends string>({
           <TouchableOpacity
             key={opt.value}
             onPress={() => !disabled && onChange(opt.value)}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: isActive, disabled }}
+            accessibilityLabel={opt.accessibilityLabel ?? (typeof opt.label === 'string' ? opt.label : undefined)}
             activeOpacity={0.7}
             style={{
               flex: 1,

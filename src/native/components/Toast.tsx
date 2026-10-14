@@ -101,7 +101,7 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
                 )}
                 {t.action}
               </View>
-              <TouchableOpacity onPress={() => dismiss(t.id)} hitSlop={8}>
+              <TouchableOpacity onPress={() => dismiss(t.id)} hitSlop={8} accessibilityRole="button" accessibilityLabel="Dismiss">
                 <Glyph name="cross" size={12} color={tokens.bg} />
               </TouchableOpacity>
             </View>

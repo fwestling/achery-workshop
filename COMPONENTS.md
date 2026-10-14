@@ -868,13 +868,37 @@ module.exports = config
 { "replaceAttrValues": { "currentColor": "{props.color}" } }
 ```
 
+### Accessibility
+
+Interactive components announce a role and state to VoiceOver / TalkBack (buttons, tabs with `selected`, disabled states, a header for `ScreenNav`'s title), and icon-only controls inside the library carry their own names (Toast "Dismiss", TagInput "Remove <tag>" / "Add <tag>").
+
+An icon-only `Button` has no visible text to read, so name it:
+
+```tsx
+<Button variant="ghost" size="sm" onPress={skip} accessibilityLabel="Skip">
+  <Glyph name="close" size={12} />
+</Button>
+```
+
+Native `Button` accessibility props:
+
+| Prop | Type | Default |
+|---|---|---|
+| `accessibilityLabel` | `string` | — (read from text children) |
+| `accessibilityHint` | `string` | — |
+| `testID` | `string` | — |
+
+A `Glyph` with an `accessibilityLabel` is announced as an image with that name; without one it is decorative. Label a glyph only when it carries meaning on its own — inside a labelled `Button`, the button's label is enough.
+
+These also make components findable in tests by role and name (`getByRole('button', { name: 'Skip' })`).
+
 ### Available components
 
 | Component | Notes |
 |---|---|
 | `NativeThemeProvider` / `useTheme` | Theme + accent + dial + material context. Three-way colour mode (`light`/`dark`/`system`) + opt-in persistence — see below. |
 | `Text` | Display/heading/body/mono/eyebrow/caption variants |
-| `Button` | primary/secondary/accent/ghost/danger variants |
+| `Button` | primary/secondary/accent/ghost/danger variants. Announced as a button (with disabled state); `accessibilityLabel` is required when the content is only a glyph — see below. |
 | `Card` | flat/stamp variants, optional header |
 | `Badge` | tone-based (neutral/saved/drafting/stopped/archived), solid/outline |
 | `Field` / `Input` | Label + hint + error wrapper + text input |
@@ -885,11 +909,11 @@ module.exports = config
 | `ProgressBar` | 0–100 value, sm/md, neutral/accent tone |
 | `Checkbox` | Controlled/uncontrolled, indeterminate, optional label |
 | `Toggle` | Animated pill switch (`value`/`onChange` — note: differs from web's `pressed`/`onPressedChange`) |
-| `Tabs` | Horizontal scrollable tab bar with active underline |
+| `Tabs` | Horizontal scrollable tab bar with active underline. Announced as tabs with their selected state. |
 | `ToastProvider` / `useToast` | Absolute overlay toasts, auto-dismiss. Mount at nav root. |
 | `Textarea` | Multi-line text input. `rows` prop controls min height. Wrap in `Field` for label. |
 | `StatusDot` | Small filled dot for compact status indicators. Same `tone` palette as `Badge`. |
-| `SegmentedControl` | Inline exclusive button group. `options` / `value` / `onChange`. |
+| `SegmentedControl` | Inline exclusive button group. `options` / `value` / `onChange`. Options are announced as tabs with their selected state; give a non-string `label` an `accessibilityLabel`. |
 | `ScreenNav` | Navigation bar for modal push screens: back button (`backLabel` default `"Back"`) + centred title (truncates to one line) + optional action. |
 | `Disclosure` | Collapsible section (rung 3 — disclosure ladder). Labelled toggle, 44px hit area, height animation. |
 | `Modal` | Centred dialog — native counterpart of web `Modal`. Title/description/body/footer, scrollable body, `dismissible={false}` for questions that must be answered. |
@@ -974,8 +998,10 @@ import { Glyph } from 'achery-ui/native'
 | `name` | `GlyphName` | required |
 | `size` | `number` | `24` |
 | `color` | `string` | theme `fg` token |
-| `accessibilityLabel` | `string` | — |
+| `accessibilityLabel` | `string` | — (decorative) |
 | `style` | `ViewStyle` | — |
+
+With `accessibilityLabel`, the glyph is wrapped in a `View` that carries the label (and `style`), announced as an image. Without it, the SVG renders on its own as before.
 
 The `wordmark` glyph is not available on native (uses unsupported SVG features).
 

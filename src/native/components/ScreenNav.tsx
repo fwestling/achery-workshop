@@ -69,6 +69,7 @@ export const ScreenNav = ({
     >
       <TouchableOpacity
         onPress={onBack}
+        accessibilityRole="button"
         hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
         style={{ minWidth: 48 }}
       >
@@ -86,6 +87,7 @@ export const ScreenNav = ({
 
       <Text
         numberOfLines={1}
+        accessibilityRole="header"
         style={{
           // Flex + single line so a long title truncates instead of pushing the
           // trailing action button off-screen.
@@ -106,6 +108,8 @@ export const ScreenNav = ({
         <TouchableOpacity
           onPress={actionDisabled ? undefined : onAction}
           disabled={actionDisabled}
+          accessibilityRole="button"
+          accessibilityState={{ disabled: !!actionDisabled }}
           hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
           style={{ minWidth: 48, alignItems: 'flex-end' }}
         >

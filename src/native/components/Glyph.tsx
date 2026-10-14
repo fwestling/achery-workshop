@@ -18,6 +18,10 @@ export interface NativeGlyphProps {
    * maps from `currentColor` in the source SVG.
    */
   color?: string
+  /**
+   * Name read by screen readers, for a glyph that carries meaning on its own
+   * (an icon-only button's content, say). Without one the glyph is decorative.
+   */
   accessibilityLabel?: string
   style?: ViewStyle
 }
@@ -35,16 +39,25 @@ export const Glyph = ({ name, size = 24, color, accessibilityLabel, style }: Nat
   const resolvedColor = color ?? tokens.fg
   const SvgComponent = lookupNativeGlyph(toComponentName(name))
 
+  const label = accessibilityLabel
+    ? { accessible: true, accessibilityRole: 'image' as const, accessibilityLabel }
+    : {}
+
   if (!SvgComponent) {
-    return <View style={[{ width: size, height: size }, style]} accessibilityLabel={accessibilityLabel} />
+    return <View style={[{ width: size, height: size }, style]} {...label} />
   }
 
-  return (
+  const svg = (
     <SvgComponent
       width={size}
       height={size}
       color={resolvedColor}
-      {...(style !== undefined && { style })}
+      {...(!accessibilityLabel && style !== undefined && { style })}
     />
   )
+  if (!accessibilityLabel) return svg
+
+  // SVG components don't reliably take accessibility props, so a labelled
+  // glyph is wrapped in a View that carries the label (and the style).
+  return <View style={style} {...label}>{svg}</View>
 }

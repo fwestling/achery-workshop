@@ -11,6 +11,18 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.21.1] - 2026-10-14
+
+### Fixed
+- Native Button: takes `accessibilityLabel`, `accessibilityHint` and `testID`, and is announced as a button with its disabled state. Icon-only buttons previously had no name for VoiceOver / TalkBack
+- Native Glyph: `accessibilityLabel` was dropped whenever the glyph's SVG existed (only the missing-glyph placeholder used it). A labelled glyph is now announced as an image with that name; unlabelled glyphs render as before
+- Native Toast: the dismiss ✕ is announced as a "Dismiss" button
+- Native TagInput: chips are announced as "Remove <tag>" buttons and suggestions as "Add <tag>", saying what a tap does
+- Native SegmentedControl, Tabs: options are announced as tabs with their selected (and disabled) state; SegmentedControl options take an `accessibilityLabel` for non-string labels
+- Native ScreenNav: back and action are announced as buttons (action with its disabled state), and the title as a header
+
+---
+
 ## [0.21.0] - 2026-10-13
 
 ### Added
@@ -576,7 +588,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.21.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.21.1...HEAD
+[0.21.1]: https://github.com/fwestling/achery-workshop/compare/v0.21.0...v0.21.1
 [0.21.0]: https://github.com/fwestling/achery-workshop/compare/v0.20.1...v0.21.0
 [0.20.1]: https://github.com/fwestling/achery-workshop/compare/v0.20.0...v0.20.1
 [0.20.0]: https://github.com/fwestling/achery-workshop/compare/v0.19.0...v0.20.0

@@ -84,6 +84,9 @@ export const TagInput = ({
           <Pressable
             key={tag}
             onPress={() => !disabled && remove(tag)}
+            accessibilityRole="button"
+            accessibilityLabel={`Remove ${tag}`}
+            accessibilityState={{ disabled: !!disabled }}
             style={[styles.chip, { borderColor: chipBorder }]}
           >
             <Text variant="caption" style={{ color: chipText }}>
@@ -117,6 +120,8 @@ export const TagInput = ({
             <Pressable
               key={s}
               onPress={() => add(s)}
+              accessibilityRole="button"
+              accessibilityLabel={`Add ${s}`}
               style={[styles.suggestion, { borderColor: tokens.borderMute }]}
             >
               <Text variant="caption" style={{ color: tokens.fg2 }}>

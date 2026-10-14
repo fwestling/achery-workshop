@@ -36,6 +36,7 @@ export const Tabs = ({ items, value, defaultValue, onValueChange, style }: TabsP
     <View style={style}>
       <ScrollView
         horizontal
+        accessibilityRole="tablist"
         showsHorizontalScrollIndicator={false}
         style={{ borderBottomWidth: 1, borderBottomColor: tokens.border }}
         contentContainerStyle={{ flexDirection: 'row' }}
@@ -47,6 +48,8 @@ export const Tabs = ({ items, value, defaultValue, onValueChange, style }: TabsP
               key={item.value}
               onPress={() => !item.disabled && select(item.value)}
               disabled={item.disabled}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: isActive, disabled: !!item.disabled }}
               style={{
                 paddingVertical: spacing.sp3,
                 paddingHorizontal: spacing.sp4,

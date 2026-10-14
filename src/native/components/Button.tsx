@@ -14,6 +14,11 @@ export interface ButtonProps {
   onPress?: () => void
   disabled?: boolean
   style?: ViewStyle
+  /** Name read by screen readers. Required when `children` is only an icon. */
+  accessibilityLabel?: string
+  /** What happens on press, when the label alone doesn't say. */
+  accessibilityHint?: string
+  testID?: string
 }
 
 const fontSize: Record<ButtonSize, number> = { sm: 11, md: 12, lg: 13 }
@@ -35,7 +40,7 @@ function makeColors(variant: ButtonVariant, tokens: SemanticTokens) {
   }
 }
 
-export function Button({ variant = 'secondary', size = 'md', children, onPress, disabled, style }: ButtonProps) {
+export function Button({ variant = 'secondary', size = 'md', children, onPress, disabled, style, accessibilityLabel, accessibilityHint, testID }: ButtonProps) {
   const { tokens } = useTheme()
   const colors = makeColors(variant, tokens)
   const textStyle = {
@@ -51,6 +56,11 @@ export function Button({ variant = 'secondary', size = 'md', children, onPress, 
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: !!disabled }}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      testID={testID}
       activeOpacity={0.75}
       style={[
         {
