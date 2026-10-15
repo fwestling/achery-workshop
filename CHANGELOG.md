@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.21.2] - 2026-10-15
+
+### Fixed
+- Toggle: a visible `label` now names the switch (`aria-labelledby`). It was rendered beside the button without being associated, so screen readers announced an unnamed toggle button. An explicit `aria-label` still takes precedence
+
+---
+
 ## [0.21.1] - 2026-10-14
 
 ### Fixed
@@ -588,7 +595,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.21.1...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.21.2...HEAD
+[0.21.2]: https://github.com/fwestling/achery-workshop/compare/v0.21.1...v0.21.2
 [0.21.1]: https://github.com/fwestling/achery-workshop/compare/v0.21.0...v0.21.1
 [0.21.0]: https://github.com/fwestling/achery-workshop/compare/v0.20.1...v0.21.0
 [0.20.1]: https://github.com/fwestling/achery-workshop/compare/v0.20.0...v0.20.1

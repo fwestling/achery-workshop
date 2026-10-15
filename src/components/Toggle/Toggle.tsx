@@ -1,5 +1,5 @@
 import * as RadixToggle from '@radix-ui/react-toggle'
-import type { ReactNode } from 'react'
+import { useId, type ReactNode } from 'react'
 import { Glyph } from '../../glyphs/Glyph'
 import type { InputStatus } from '../Input/Input'
 import * as styles from './Toggle.css'
@@ -54,6 +54,9 @@ export function Toggle({
   className,
   'aria-label': ariaLabel,
 }: ToggleProps) {
+  // A visible label names the switch for assistive tech; an explicit aria-label wins
+  const labelId = useId()
+  const labelledBy = label && ariaLabel === undefined ? labelId : undefined
   return (
     <span className={[styles.wrapper, className].filter(Boolean).join(' ')}>
       <RadixToggle.Root
@@ -62,11 +65,12 @@ export function Toggle({
         {...(onPressedChange !== undefined ? { onPressedChange } : {})}
         {...(disabled !== undefined ? { disabled } : {})}
         {...(ariaLabel !== undefined ? { 'aria-label': ariaLabel } : {})}
+        {...(labelledBy !== undefined ? { 'aria-labelledby': labelledBy } : {})}
         className={styles.track}
       >
         <span className={styles.thumb} />
       </RadixToggle.Root>
-      {label && <span className={styles.label}>{label}</span>}
+      {label && <span id={labelId} className={styles.label}>{label}</span>}
       {status && status !== 'idle' && (
         <span className={[styles.statusIndicator, styles.statusIndicatorVariants[status]].join(' ')} aria-hidden="true">
           <Glyph name={status === 'saving' ? 'spinner' : status === 'saved' ? 'tick' : 'cross'} size={12} />

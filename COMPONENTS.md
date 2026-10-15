@@ -339,8 +339,8 @@ Binary on/off switch.
 <Toggle
   pressed={isDark}              // boolean — controlled
   onPressedChange={toggleTheme} // (boolean) => void
-  label="Dark mode"             // ReactNode — visible label
-  aria-label="Toggle dark mode" // required if no visible label
+  label="Dark mode"             // ReactNode — visible label; also names the switch (aria-labelledby)
+  aria-label="Toggle dark mode" // required if no visible label; overrides `label` as the name
   disabled={false}
 />
 ```
