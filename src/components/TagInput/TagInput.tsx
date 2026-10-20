@@ -1,6 +1,7 @@
 import { useState, type KeyboardEvent } from 'react'
 import { Glyph } from '../../glyphs/Glyph'
 import * as styles from './TagInput.css'
+import { useFieldControl } from '../Input/Input'
 
 /** Default tag normalisation: trim, lowercase, collapse internal whitespace.
  *  Matches typical server-side tag normalisation (and the native TagInput). */
@@ -49,6 +50,8 @@ export function TagInput({
   className,
   'aria-label': ariaLabel,
 }: TagInputProps) {
+  // Named by a surrounding Field's label (unless given an aria-label)
+  const field = useFieldControl()
   const [draft, setDraft] = useState('')
 
   const add = (raw: string) => {
@@ -102,6 +105,7 @@ export function TagInput({
           onBlur={() => add(draft)}
           placeholder={value.length ? '' : placeholder}
           aria-label={ariaLabel}
+          {...field}
         />
       </div>
 

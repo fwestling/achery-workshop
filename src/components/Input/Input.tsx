@@ -1,8 +1,11 @@
-import type {
-  InputHTMLAttributes,
-  TextareaHTMLAttributes,
-  SelectHTMLAttributes,
-  ReactNode,
+import {
+  createContext,
+  useContext,
+  useId,
+  type InputHTMLAttributes,
+  type TextareaHTMLAttributes,
+  type SelectHTMLAttributes,
+  type ReactNode,
 } from 'react'
 import { Glyph } from '../../glyphs/Glyph'
 import * as styles from './Input.css'
@@ -38,14 +41,44 @@ export interface FieldProps {
  * </Field>
  * ```
  */
+/**
+ * What a {@link Field} tells the control inside it: the id its label points at, and the id of its
+ * hint or error text. Achery's own controls read it; read it with {@link useFieldControl} in your own.
+ */
+export interface FieldControl {
+  id: string
+  describedBy: string | undefined
+  invalid: boolean
+}
+
+const FieldContext = createContext<FieldControl | null>(null)
+
+/**
+ * For custom controls inside a {@link Field}: the props that name it after the field's label and
+ * describe it with its hint or error. An explicit `id` or `aria-describedby` on the control wins.
+ */
+export function useFieldControl(own: { id?: string | undefined; 'aria-describedby'?: string | undefined } = {}) {
+  const field = useContext(FieldContext)
+  return {
+    id: own.id ?? field?.id,
+    'aria-describedby': own['aria-describedby'] ?? field?.describedBy,
+    ...(field?.invalid ? { 'aria-invalid': true as const } : {}),
+  }
+}
+
 export function Field({ label, hint, error, children, className }: FieldProps) {
+  const id = useId()
+  const noteId = `${id}-note`
+  const note = error ?? hint
   return (
-    <div className={[styles.fieldRoot, className].filter(Boolean).join(' ')}>
-      {label && <label className={styles.label}>{label}</label>}
-      {children}
-      {error && <span className={styles.errorText}>{error}</span>}
-      {!error && hint && <span className={styles.hint}>{hint}</span>}
-    </div>
+    <FieldContext.Provider value={{ id, describedBy: note ? noteId : undefined, invalid: !!error }}>
+      <div className={[styles.fieldRoot, className].filter(Boolean).join(' ')}>
+        {label && <label className={styles.label} htmlFor={id}>{label}</label>}
+        {children}
+        {error && <span id={noteId} className={styles.errorText}>{error}</span>}
+        {!error && hint && <span id={noteId} className={styles.hint}>{hint}</span>}
+      </div>
+    </FieldContext.Provider>
   )
 }
 
@@ -80,7 +113,8 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
  * <Input status="saving" value={value} onChange={handleChange} />
  * ```
  */
-export function Input({ error, status, className, ...props }: InputProps) {
+export function Input({ error, status, className, ...rest }: InputProps) {
+  const props = { ...rest, ...useFieldControl(rest) }
   const hasStatus = status && status !== 'idle'
   if (!hasStatus) {
     return (
@@ -123,7 +157,8 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
  * </Field>
  * ```
  */
-export function Textarea({ error, status, className, ...props }: TextareaProps) {
+export function Textarea({ error, status, className, ...rest }: TextareaProps) {
+  const props = { ...rest, ...useFieldControl(rest) }
   const hasStatus = status && status !== 'idle'
   if (!hasStatus) {
     return (
@@ -173,7 +208,8 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
  * </Field>
  * ```
  */
-export function Select({ error, status, children, className, ...props }: SelectProps) {
+export function Select({ error, status, children, className, ...rest }: SelectProps) {
+  const props = { ...rest, ...useFieldControl(rest) }
   const hasStatus = status && status !== 'idle'
   if (!hasStatus) {
     return (

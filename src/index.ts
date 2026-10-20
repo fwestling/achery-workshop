@@ -42,8 +42,8 @@ export { Marginalia } from './components/Marginalia/Marginalia'
 export type { MarginaliaProps } from './components/Marginalia/Marginalia'
 
 // Input
-export { Field, Input, Textarea, Select, SearchInput } from './components/Input/Input'
-export type { FieldProps, InputProps, TextareaProps, SelectProps, SearchInputProps, InputStatus } from './components/Input/Input'
+export { Field, Input, Textarea, Select, SearchInput, useFieldControl } from './components/Input/Input'
+export type { FieldProps, FieldControl, InputProps, TextareaProps, SelectProps, SearchInputProps, InputStatus } from './components/Input/Input'
 // TagInput (web counterpart of the native TagInput)
 export { TagInput } from './components/TagInput/TagInput'
 export type { TagInputProps } from './components/TagInput/TagInput'

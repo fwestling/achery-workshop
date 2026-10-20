@@ -11,6 +11,16 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.21.3] - 2026-10-16
+
+### Fixed
+- Field: its label now names the control inside it (`<label for>`), and its hint or error describes it (`aria-describedby`; `aria-invalid` with an error). Input, Textarea, Select and TagInput pick this up automatically; an explicit `id`, `aria-describedby` or `aria-label` still wins. Previously every Field-wrapped control was unnamed for screen readers
+
+### Added
+- `useFieldControl()`: the id / aria props a custom control inside a Field spreads to be named by its label
+
+---
+
 ## [0.21.2] - 2026-10-15
 
 ### Fixed
@@ -595,7 +605,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.21.2...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.21.3...HEAD
+[0.21.3]: https://github.com/fwestling/achery-workshop/compare/v0.21.2...v0.21.3
 [0.21.2]: https://github.com/fwestling/achery-workshop/compare/v0.21.1...v0.21.2
 [0.21.1]: https://github.com/fwestling/achery-workshop/compare/v0.21.0...v0.21.1
 [0.21.0]: https://github.com/fwestling/achery-workshop/compare/v0.20.1...v0.21.0

@@ -141,6 +141,14 @@ import { Field, Input, Textarea, Select, SearchInput } from 'achery-ui'
 <SearchInput placeholder="Search…" value={…} onChange={…} />
 ```
 
+A `Field`'s label names the control inside it and its hint/error describes it — automatic for
+`Input`, `Textarea`, `Select` and `TagInput`. A custom control spreads `useFieldControl()`:
+
+```tsx
+const MyControl = () => <input {...useFieldControl()} />
+<Field label="Colour" hint="Hex"><MyControl /></Field>
+```
+
 ---
 
 ### TagInput
