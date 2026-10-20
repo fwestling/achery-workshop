@@ -11,6 +11,23 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.22.0] - 2026-10-20
+
+### Added
+- BarChart (web and native): bars and stacked bars, vertical or horizontal, from a fixed-order categorical palette or an ordinal ramp
+  - Bars can be links or buttons, and hovering, focusing or tapping one shows every value
+  - A legend appears for two or more series; on the web, a hidden table carries the numbers for screen readers
+- Sparkline for native, with the same props as on the web plus `accessibilityLabel`
+- Chart colour tokens (`chartColors`, light and dark; on the web theme as `vars.chart.*`): achery's hues stepped up to chart chroma, validated for colour-blind separation and surface contrast
+- `formatCompact` (1,284 · 12.9K · 4.2M)
+
+### Fixed
+- The theme's stylesheets were declared side-effect free, so a production bundle of the source could drop them
+  - The static Storybook build rendered every story but Sidebar's unthemed
+  - The published `style.css` was unaffected
+
+---
+
 ## [0.21.3] - 2026-10-16
 
 ### Fixed
@@ -605,7 +622,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.21.3...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.22.0...HEAD
+[0.22.0]: https://github.com/fwestling/achery-workshop/compare/v0.21.3...v0.22.0
 [0.21.3]: https://github.com/fwestling/achery-workshop/compare/v0.21.2...v0.21.3
 [0.21.2]: https://github.com/fwestling/achery-workshop/compare/v0.21.1...v0.21.2
 [0.21.1]: https://github.com/fwestling/achery-workshop/compare/v0.21.0...v0.21.1

@@ -72,3 +72,9 @@ export type { MarginaliaProps } from './Marginalia'
 
 export { TagInput } from './TagInput'
 export type { TagInputProps } from './TagInput'
+
+export { BarChart } from './BarChart'
+export type { BarChartProps, BarChartDatum } from './BarChart'
+
+export { Sparkline } from './Sparkline'
+export type { SparklineProps, SparklineTone } from './Sparkline'

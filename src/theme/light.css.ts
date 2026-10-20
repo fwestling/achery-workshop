@@ -1,6 +1,9 @@
 import { createGlobalTheme } from '@vanilla-extract/css'
 import { vars } from './vars.css'
 import { fontFamilies } from '../tokens/typography'
+import { chartColors } from '../tokens/chart'
+
+const chart = chartColors.light
 
 createGlobalTheme('[data-achery-root][data-theme="light"]', vars, {
   color: {
@@ -33,6 +36,10 @@ createGlobalTheme('[data-achery-root][data-theme="light"]', vars, {
     materialBtnFg: '#1f1d18',
     metal: '#c69a4a',
     metalDeep: '#9a7430',
+  },
+  chart: {
+    series1: chart.series[0], series2: chart.series[1], series3: chart.series[2], series4: chart.series[3], series5: chart.series[4], series6: chart.series[5],
+    ordinal1: chart.ordinal[0], ordinal2: chart.ordinal[1], ordinal3: chart.ordinal[2], ordinal4: chart.ordinal[3], ordinal5: chart.ordinal[4],
   },
   font: {
     display: fontFamilies.display,

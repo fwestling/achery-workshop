@@ -116,6 +116,11 @@ export type { EntityPillProps } from './components/EntityPill/EntityPill'
 export { Sparkline } from './components/Sparkline/Sparkline'
 export type { SparklineProps, SparklineTone } from './components/Sparkline/Sparkline'
 
+// BarChart
+export { BarChart } from './components/BarChart/BarChart'
+export type { BarChartProps, BarChartDatum } from './components/BarChart/BarChart'
+export { formatCompact } from './charts/bars'
+
 // KpiTile
 export { KpiTile } from './components/KpiTile/KpiTile'
 export type { KpiTileProps } from './components/KpiTile/KpiTile'

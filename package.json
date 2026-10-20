@@ -1,6 +1,6 @@
 {
   "name": "achery-ui",
-  "version": "0.21.3",
+  "version": "0.22.0",
   "description": "Achery Workshop design system — autumn alchemy, hard edges, botanical marginalia.",
   "repository": {
     "type": "git",
@@ -32,13 +32,15 @@
   "files": [
     "dist",
     "src/native",
+    "src/charts",
     "src/glyphs/svg",
     "src/glyphs/nativeLookup.ts",
     "src/glyphs/glyphMeta.ts",
     "src/types"
   ],
   "sideEffects": [
-    "**/*.css"
+    "**/*.css",
+    "**/*.css.ts"
   ],
   "scripts": {
     "build": "tsup",

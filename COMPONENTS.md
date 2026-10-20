@@ -391,10 +391,17 @@ import { Display, Heading, Body, Mono } from 'achery-ui'
 
 ```tsx
 import { palette, spacing, fontFamilies, fontSizes, shadows, radius,
-         duration, easing, accentColors, lightTokens, darkTokens } from 'achery-ui/tokens'
+         duration, easing, accentColors, lightTokens, darkTokens, chartColors } from 'achery-ui/tokens'
 ```
 
 Zero DOM, zero React — safe for React Native or any non-browser context.
+
+`chartColors.light` / `chartColors.dark` hold the chart palette (also on the web theme as `vars.chart.series1…6` and `vars.chart.ordinal1…5`):
+
+- `series` — six categorical colours: achery's hues stepped up to chart chroma, in a fixed order. They're validated for colour-blind separation of adjacent slots and for 3:1 contrast against each mode's surface.
+- `ordinal` — a five-step slate ramp. It runs light→dark in light mode and dark→light in dark mode, so "more" always stands out.
+
+Text never wears these colours.
 
 ---
 
@@ -652,6 +659,51 @@ import { Sparkline } from 'achery-ui'
 | `height` | `number` | `28` | SVG height in px |
 | `tone` | `'positive' \| 'negative' \| 'neutral'` | `'neutral'` | Line colour: success / danger / accent |
 | `className` | `string` | — | |
+
+---
+
+## BarChart
+
+Bar and stacked-bar chart. HTML/CSS (no chart dependency), themed by the chart tokens, light and dark.
+
+```tsx
+import { BarChart } from 'achery-ui'
+
+// Rows, an ordered series, each bar linking to the list it counts
+<BarChart
+  label="Entities by status"
+  orientation="horizontal"
+  scale="ordinal"
+  series={['Stub', 'Draft', 'Complete']}
+  data={[
+    { label: 'NPCs', values: [12, 9, 4], href: '/w/npc?status=stub' },
+    { label: 'Locations', values: [3, 8, 14], href: '/w/location' },
+  ]}
+/>
+
+// Columns over time, one series
+<BarChart label="Hours per day" series={['Hours']} data={days} formatValue={(v) => `${v}h`} />
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — | Required. Names the chart for assistive technology and captions its table |
+| `data` | `BarChartDatum[]` | — | `{ label, values: number[], href?, onSelect? }` — one value per series (missing, negative or not a number count as 0, everywhere); `href` makes the bar a link, `onSelect` a button |
+| `series` | `string[]` | — | In a fixed order — colours follow it, so keep it stable as filters change. ≥ 2 stack, with a legend |
+| `scale` | `'categorical' \| 'ordinal'` | `'categorical'` | Categorical for identity (≤ 6 series); ordinal for ordered series, one hue light→dark (≤ 5) |
+| `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Columns with a value axis, or rows with labels at the left |
+| `height` | `number` | `180` | Plot height (vertical) |
+| `showValues` | `boolean` | horizontal: `true`, vertical: `false` | Each bar's total at its tip |
+| `formatValue` | `(v: number) => string` | `formatCompact` | 1,284 · 12.9K · 4.2M |
+
+- Bars are at most 24px thick, from one baseline, with a 4px rounded end; stacked segments are separated by a 2px gap.
+- The axis tops out at a clean number. Ticks are whole when every value is, and fractional ticks show their own precision (0.25, not 0.3).
+- Column labels are thinned to fit the measured width, never cropped.
+- Hovering or focusing a bar shows every series' value.
+- A visually hidden table carries the same numbers.
+- More series than the palette holds throws: fold the rest into "Other".
+
+`formatCompact(n, decimals = 1)` is exported too: 1,284 · 12.9K · 4.2M, rounding before it picks a unit (999,999 → 1M).
 
 ---
 
@@ -931,6 +983,8 @@ These also make components findable in tests by role and name (`getByRole('butto
 | `BottomTabBar` | Root navigation bar (promotion ladder). ≤4 primary tabs; overflow into a "More" `BottomSheet`. 2px accent top stripe on active tab. |
 | `Marginalia` | Decorative corner glyph (RN counterpart to web `Marginalia`). `corner`/`inset`/`opacity`/`accent`. Non-interactive. |
 | `TagInput` | Chips-in-input tag field with autocomplete. Comma/space/return confirm, Backspace removes last. `onLeather` variant for ghost-on-leather. |
+| `BarChart` | Native counterpart of web `BarChart` — same props, but `onPress` per bar instead of `href`/`onSelect`. Tapping a bar shows its values beneath the chart; with `onPress`, long-press does. |
+| `Sparkline` | Native counterpart of web `Sparkline` — same props, plus `accessibilityLabel` (without one it's decorative). Requires `react-native-svg`. |
 
 ### `NativeThemeProvider` / `useTheme` (native)
 
@@ -1267,6 +1321,34 @@ import { TagInput, Field } from 'achery-ui/native'
 | `onLeather` | `boolean` | `false` (gold-deep chips + cream text) |
 | `normalize` | `(raw: string) => string` | lowercase + trim + collapse whitespace |
 | `disabled` | `boolean` | `false` |
+
+### `BarChart` (native)
+
+The same layout as the web `BarChart`, with Views — no SVG needed.
+
+```tsx
+import { BarChart } from 'achery-ui/native'
+
+<BarChart
+  label="Entities by status"
+  orientation="horizontal"
+  scale="ordinal"
+  series={['Stub', 'Draft', 'Complete']}
+  data={[{ label: 'NPCs', values: [12, 9, 4], onPress: () => router.push('/npcs') }]}
+/>
+```
+
+- Props are as on the web, except `onPress?: () => void` per datum and `style?: ViewStyle`.
+- Each bar announces its label, total and every series' value.
+- Legend, axis and labels are hidden from screen readers, since the bars already say it all.
+
+### `Sparkline` (native)
+
+```tsx
+import { Sparkline } from 'achery-ui/native'
+
+<Sparkline data={[3, 5, 4, 8]} tone="positive" accessibilityLabel="Up from 3 to 8" />
+```
 
 ---
 

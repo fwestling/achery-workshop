@@ -32,6 +32,11 @@ export const vars = createThemeContract({
     metal: null,
     metalDeep: null,
   },
+  // Chart marks (tokens/chart.ts): categorical series in fixed order, and the ordinal ramp
+  chart: {
+    series1: null, series2: null, series3: null, series4: null, series5: null, series6: null,
+    ordinal1: null, ordinal2: null, ordinal3: null, ordinal4: null, ordinal5: null,
+  },
   font: {
     display: null,
     body: null,

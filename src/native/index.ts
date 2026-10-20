@@ -15,9 +15,12 @@ export {
   Modal, ConfirmDialogProvider, useConfirm,
   AdaptivePanel, useIsPanelDocked, ADAPTIVE_PANEL_BREAKPOINT,
   Marginalia, TagInput,
+  BarChart, Sparkline,
 } from './components/index'
 export type {
   TextProps,
+  BarChartProps, BarChartDatum,
+  SparklineProps, SparklineTone,
   ButtonProps, ButtonVariant, ButtonSize,
   CardProps, CardVariant, CardPadding,
   BadgeProps, BadgeTone, BadgeVariant,
