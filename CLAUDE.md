@@ -159,6 +159,10 @@ published to npm and isn't in the package's `files`.
 
 - **Renders the library from source.** `site/vite.config.ts` aliases `achery-ui` → `../src` and runs the
   vanilla-extract plugin, so a docs change ships with the code it describes.
+- **Routing:** TanStack Router, code-based (`site/src/router.tsx`): the shell is the root route and pages
+  render in its `Outlet`. A new fixed page goes in `PAGES` (`site/src/pages.ts`) and `PAGE_COMPONENTS`
+  (`router.tsx`); component pages come from the story registry through `/components/$slug` and
+  `/native/$slug`. Every route is still prerendered to static HTML.
 - **Component pages are the stories.** Each web component's page renders its `*.stories.tsx`; each React
   Native component's page renders `src/native/components/<Name>.stories.tsx` through react-native-web.
   Native stories stay out of this repo's Storybook (web only; see `.storybook/main.ts`) and out of the npm

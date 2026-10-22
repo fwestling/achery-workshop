@@ -1,4 +1,5 @@
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
+import { Link } from '@tanstack/react-router'
 import {
   AppBar,
   Field,
@@ -9,6 +10,7 @@ import {
   useTheme,
   type AccentColor,
   type NavGroupDef,
+  type SidebarLinkProps,
   type ThemeMode,
 } from 'achery-ui'
 import { accentColorNames } from 'achery-ui/tokens'
@@ -20,6 +22,17 @@ const NAV: NavGroupDef[] = NAV_GROUPS.map(({ label, pages }) => ({
   label,
   items: pages.map((p) => ({ id: p.path, label: p.label, href: p.path, ...(p.glyph ? { glyph: p.glyph } : {}) })),
 }))
+
+/**
+ * Sidebar items as router links, so moving between pages swaps only the content. Exact matching: by
+ * default a Link counts as active under any deeper path (/components under /components/button), and its
+ * aria-current would then disagree with the Sidebar's own.
+ */
+const SidebarLink = ({ href, children, ...rest }: SidebarLinkProps) => (
+  <Link to={href} activeOptions={{ exact: true }} {...rest}>
+    {children}
+  </Link>
+)
 
 const MODES: { value: ThemeMode; label: string }[] = [
   { value: 'light', label: 'Light' },
@@ -64,6 +77,9 @@ export const Layout = ({ path, children }: { path: string; children: ReactNode }
   const [menuOpen, setMenuOpen] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
 
+  // The phone menu closes once its link has taken you somewhere
+  useEffect(() => setMenuOpen(false), [path])
+
   const footer = (
     <div className="sidebar-footer">
       {!isDesktop && <MobileThemeControls />}
@@ -94,6 +110,7 @@ export const Layout = ({ path, children }: { path: string; children: ReactNode }
         <Sidebar
           className="site-sidebar"
           groups={NAV}
+          renderLink={SidebarLink}
           activeId={path}
           // The collapsed rail is 52px wide: no room for the footer
           {...(isDesktop && collapsed ? {} : { footer })}

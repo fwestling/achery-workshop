@@ -1,7 +1,13 @@
 import { renderToString } from 'react-dom/server'
-import { App } from './App'
+import { createMemoryHistory, RouterProvider } from '@tanstack/react-router'
+import { createAppRouter } from './router'
 
 export { PAGES } from './pages'
 export { SITE_URL } from './config'
 
-export const render = (path: string): string => renderToString(<App path={path} />)
+/** One page's HTML: the router at that path, loaded, rendered once. */
+export const render = async (path: string): Promise<string> => {
+  const router = createAppRouter(createMemoryHistory({ initialEntries: [path] }))
+  await router.load()
+  return renderToString(<RouterProvider router={router} />)
+}

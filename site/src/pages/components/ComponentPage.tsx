@@ -130,6 +130,14 @@ const Stories = ({ entry }: { entry: ComponentEntry }) => {
     }
   }, [entry])
 
+  // The examples arrive after the page renders and push everything below them down, so a #fragment the
+  // router already scrolled to (#api, a story) is now somewhere else: go to it again once they're in
+  useEffect(() => {
+    if (!loaded) return
+    const id = decodeURIComponent(window.location.hash.slice(1))
+    if (id) document.getElementById(id)?.scrollIntoView({ behavior: 'instant' })
+  }, [loaded])
+
   if (failed) return <p role="alert">The examples failed to load: {failed}</p>
   if (!loaded) return <p className="stories__loading">Loading examples…</p>
 

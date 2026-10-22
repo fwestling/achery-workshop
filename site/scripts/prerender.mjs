@@ -35,7 +35,7 @@ const write = (path, html) => {
 const drafts = []
 
 for (const page of PAGES) {
-  const html = template.replace('<!--page-head-->', head(page)).replace('<!--page-html-->', render(page.path))
+  const html = template.replace('<!--page-head-->', head(page)).replace('<!--page-html-->', await render(page.path))
   const count = html.match(/\[PLACEHOLDER/g)?.length ?? 0
   if (count) drafts.push(`${page.path}: ${count} placeholder(s)`)
   const out = page.path === '/' ? join(dist, 'index.html') : join(dist, page.path.slice(1), 'index.html')
@@ -44,7 +44,7 @@ for (const page of PAGES) {
 }
 
 const notFound = { path: '/404', title: 'Page not found — Achery Workshop', description: "That page doesn't exist." }
-write(join(dist, '404.html'), template.replace('<!--page-head-->', head(notFound)).replace('<!--page-html-->', render('/404')))
+write(join(dist, '404.html'), template.replace('<!--page-head-->', head(notFound)).replace('<!--page-html-->', await render('/404')))
 
 rmSync(ssrDir, { recursive: true, force: true })
 

@@ -1,7 +1,7 @@
 {
   "name": "achery-workshop-site",
   "private": true,
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "workshop.achery.dev \u2014 the public documentation site for achery-ui",
   "type": "module",
   "scripts": {
@@ -15,6 +15,7 @@
     "@fontsource/jetbrains-mono": "5.3.0",
     "@fontsource/roboto-slab": "5.3.0",
     "@fontsource/space-grotesk": "5.3.0",
+    "@tanstack/react-router": "1.170.41",
     "achery-ui": "workspace:*",
     "marked": "18.0.14",
     "react": "^19.1.0",
