@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
 import { TouchableOpacity, View, Text } from 'react-native'
-import { spacing, fontWeights } from 'achery-ui/tokens'
+import { spacing } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 import { Glyph } from './Glyph'
 
@@ -34,7 +34,7 @@ export interface ToastProviderProps {
  * height (`flex: 1`) for positioning to work correctly.
  */
 export const ToastProvider = ({ children }: ToastProviderProps) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   const [toasts, setToasts] = useState<ToastData[]>([])
   const timers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map())
 
@@ -89,13 +89,13 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
                   style={{
                     color: tokens.bg,
                     fontSize: 13,
-                    fontWeight: fontWeights.semibold.toString() as any,
+                    ...font('body', 'semibold'),
                   }}
                 >
                   {t.title}
                 </Text>
                 {t.description && (
-                  <Text style={{ color: tokens.bg, fontSize: 12, opacity: 0.75 }}>
+                  <Text style={{ color: tokens.bg, fontSize: 12, opacity: 0.75, ...font('body') }}>
                     {t.description}
                   </Text>
                 )}

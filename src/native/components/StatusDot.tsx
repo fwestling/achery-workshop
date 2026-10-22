@@ -1,7 +1,7 @@
 import { View } from 'react-native'
 import type { BadgeTone } from './Badge'
 import { useTheme } from '../theme/ThemeContext'
-import { palette } from 'achery-ui/tokens'
+import { badgeTones } from 'achery-ui/tokens'
 
 export interface StatusDotProps {
   /** Semantic tone — maps to the same colours as {@link Badge}. */
@@ -11,14 +11,6 @@ export interface StatusDotProps {
    * @default 8
    */
   size?: number
-}
-
-const TONE_COLOR: Record<BadgeTone, (isDark: boolean) => string> = {
-  neutral:  (isDark) => isDark ? palette.cream : palette.ink,
-  saved:    () => palette.success,
-  drafting: () => palette.ochre,
-  stopped:  () => palette.rust,
-  archived: (isDark) => isDark ? palette.silver : palette.silverDeep,
 }
 
 /**
@@ -35,7 +27,8 @@ const TONE_COLOR: Record<BadgeTone, (isDark: boolean) => string> = {
  */
 export const StatusDot = ({ tone = 'neutral', size = 8 }: StatusDotProps) => {
   const { dark } = useTheme()
-  const color = TONE_COLOR[tone](dark)
+  // Badge's tone colours (achery-ui/tokens badgeTones), so a dot and a badge of one tone always match
+  const color = badgeTones[dark ? 'dark' : 'light'][tone].edge
   const isNeutral = tone === 'neutral'
 
   return (

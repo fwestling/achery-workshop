@@ -12,7 +12,7 @@ const meta = {
       },
     },
   },
-  args: { value: 62 },
+  args: { value: 62, accessibilityLabel: 'Upload' },
 } satisfies Meta<typeof ProgressBar>
 
 export default meta
@@ -23,9 +23,9 @@ export const Default: Story = {}
 export const Tones: Story = {
   render: () => (
     <View style={{ gap: 16, maxWidth: 360 }}>
-      <ProgressBar value={40} tone="neutral" />
-      <ProgressBar value={70} tone="accent" />
-      <ProgressBar value={70} tone="accent" size="sm" />
+      <ProgressBar value={40} tone="neutral" accessibilityLabel="Neutral" />
+      <ProgressBar value={70} tone="accent" accessibilityLabel="Accent" />
+      <ProgressBar value={70} tone="accent" size="sm" accessibilityLabel="Accent, small" />
     </View>
   ),
 }

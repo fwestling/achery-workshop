@@ -19,6 +19,11 @@ export interface ModalProps {
   title?: ReactNode
   /** Secondary description line rendered below the title. */
   description?: ReactNode
+  /**
+   * The id of an element in the body that describes the dialog, when the description isn't the
+   * `description` line (ConfirmDialog points it at its message). Ignored when `description` is set.
+   */
+  'aria-describedby'?: string
   /** Main body content of the dialog — typically a form or informational layout. */
   children?: ReactNode
   /**
@@ -85,6 +90,7 @@ export function Modal({
   trigger,
   size = 'sm',
   scrollable = false,
+  'aria-describedby': describedBy,
   className,
 }: ModalProps) {
   return (
@@ -98,9 +104,10 @@ export function Modal({
         <RadixDialog.Overlay className={styles.overlay} />
         <RadixDialog.Content
           className={[styles.contentSized({ size }), className].filter(Boolean).join(' ')}
-          // Radix links Description to the content with its own generated id; without a description,
-          // passing undefined is Radix's documented way to say "no description" (no console warning)
-          {...(description ? {} : { 'aria-describedby': undefined })}
+          // Radix links Description to the content with its own generated id. Without one, the caller's
+          // describedBy (an element in the body) or, failing that, undefined: Radix's documented way to
+          // say "no description" (no console warning)
+          {...(description ? {} : { 'aria-describedby': describedBy })}
         >
           <div className={styles.header}>
             <div>

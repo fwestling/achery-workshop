@@ -5,7 +5,7 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import type { ViewStyle } from 'react-native'
-import { spacing, fontWeights } from 'achery-ui/tokens'
+import { spacing } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 import { GlyphCategories, searchGlyphs, glyphLabel } from '../../glyphs/glyphMeta'
 import type { GlyphName } from '../../types/components'
@@ -32,7 +32,7 @@ export const GlyphPicker = ({
   clearable = true,
   style,
 }: GlyphPickerProps) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
 
@@ -82,7 +82,7 @@ export const GlyphPicker = ({
         {value ? (
           <Glyph name={value} size={20} color={tokens.fg} />
         ) : (
-          <Text style={{ color: tokens.fgMute, fontSize: 12 }}>{placeholder}</Text>
+          <Text style={{ color: tokens.fgMute, fontSize: 12, ...font('body') }}>{placeholder}</Text>
         )}
       </TouchableOpacity>
 
@@ -131,6 +131,7 @@ export const GlyphPicker = ({
                       paddingVertical: spacing.sp2,
                       paddingHorizontal: spacing.sp3,
                       fontSize: 13,
+                      ...font('body'),
                       color: tokens.fg,
                     }}
                   />

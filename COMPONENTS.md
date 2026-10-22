@@ -59,12 +59,15 @@ Inline label for status, category, or metadata.
 ```tsx
 <Badge
   tone="saved"      // 'saved' | 'drafting' | 'stopped' | 'archived' | 'neutral' (default)
-  variant="outline" // 'outline' (default) | 'solid'
+                    // | 'success' | 'warn' | 'danger' | 'info'
+  variant="outline" // 'outline' (default) | 'solid' | 'pill'
   dot               // boolean — status dot
 >
   Published
 </Badge>
 ```
+
+The tone is carried by the border and dot; the label is `fg2`, so it reads at 4.5:1 or better on any ground in either theme (no tone colour does as 10px text everywhere). A solid badge fills with the tone and sets its label in a colour chosen per theme to pass on it. The colours come from `badgeTones` in `achery-ui/tokens`, shared with the native Badge and StatusDot.
 
 ---
 
@@ -83,6 +86,7 @@ Primary interactive element.
   Save
 </Button>
 
+// secondary is the outline button: its border takes the accent under the chrome and surface dials
 // href renders an <a> styled as a button — use for navigation
 <Button variant="accent" size="lg" href="/signup">Start a list</Button>
 
@@ -115,6 +119,8 @@ Uppercase section label with optional count.
 ```tsx
 <Eyebrow count={12} after={<Node />}>Recipes</Eyebrow>
 ```
+
+Under the `chrome` and `surface` dials, a short accent rule sits before the label; under `underline`, it doesn't. The label itself is always `fg2`.
 
 ---
 
@@ -226,6 +232,7 @@ Accessible dialog, portaled to `document.body`.
   trigger={<Button>Open</Button>}// ReactNode — alternative to controlled open
   size="md"                      // 'sm' (400px, default) | 'md' (560px) | 'lg' (760px)
   scrollable                     // boolean — body overflow-y: auto, max-height: 70vh
+  aria-describedby={messageId}   // string — id of body text that describes it, when there's no `description`
 >
   {/* body content */}
 </Modal>
@@ -294,6 +301,7 @@ const columns: ColumnDef<Row>[] = [
   selectedKeys={selected}          // string[] — controlled selection
   onRowClick={(key, row) => {}}    // row click handler
   defaultSortKey="name"            // uncontrolled initial sort
+  defaultSortDir="asc"             // 'asc' | 'desc' | null — uncontrolled initial direction
   sortKey={sortKey}                // controlled sort column
   sortDir={sortDir}                // 'asc' | 'desc' | null
   onSortChange={(key, dir) => {}}
@@ -391,7 +399,7 @@ import { Display, Heading, Body, Mono } from 'achery-ui'
 
 <Body variant="lead">Intro paragraph</Body>      // 'base'(14px) | 'lead'(16px) | 'small'(12px)
 
-<Mono variant="small" as="code">0x1F4A9</Mono>  // 'base'(13px) | 'small'(11px), polymorphic
+<Mono variant="small" as="code">0x1F4A9</Mono>  // 'base'(12px) | 'small'(11px), polymorphic
 ```
 
 ---
@@ -400,7 +408,7 @@ import { Display, Heading, Body, Mono } from 'achery-ui'
 
 ```tsx
 import { palette, spacing, fontFamilies, fontSizes, shadows, radius,
-         duration, easing, accentColors, lightTokens, darkTokens, chartColors } from 'achery-ui/tokens'
+         duration, easing, accentColors, lightTokens, darkTokens, chartColors, badgeTones } from 'achery-ui/tokens'
 ```
 
 Zero DOM, zero React — safe for React Native or any non-browser context.
@@ -411,6 +419,8 @@ Zero DOM, zero React — safe for React Native or any non-browser context.
 - `ordinal` — a five-step slate ramp. It runs light→dark in light mode and dark→light in dark mode, so "more" always stands out.
 
 Text never wears these colours.
+
+`badgeTones.light` / `badgeTones.dark` hold each Badge tone's `edge` (border and dot), `fill` and `onFill` (a solid badge's background and label).
 
 ---
 
@@ -435,6 +445,8 @@ import { Checkbox } from 'achery-ui'
 | `aria-label` | `string` | — | Use when no visible label |
 | `id` | `string` | auto | Auto-generated when `label` is set |
 | `className` | `string` | — | |
+
+A ticked box fills with the accent under the `chrome` and `surface` dials, and with ink under `underline`.
 
 ---
 
@@ -905,7 +917,7 @@ if (await confirm({ title: 'Delete task?', message: "This can't be undone.", con
 | `confirmVariant` | `'accent' \| 'secondary' \| 'ghost'` | `'accent'` | Ignored when `destructive` |
 | `destructive` | `boolean` | `false` | Confirm uses Button's `danger` variant |
 
-`useConfirm()` throws outside a `ConfirmDialogProvider`.
+The message describes the dialog (`aria-describedby`), so a screen reader announces it with the title when it opens. `useConfirm()` throws outside a `ConfirmDialogProvider`.
 
 ---
 
@@ -970,9 +982,9 @@ import { ProgressBar } from 'achery-ui'
 | `size` | `'sm' \| 'md'` | `'md'` | Track height |
 | `tone` | `'neutral' \| 'accent'` | `'neutral'` | Fill colour |
 | `loading` | `boolean` | `false` | Renders a `Skeleton` the height of the track instead |
+| `aria-label` | `string` | — | What is progressing ("Upload"). A progress bar needs a name: give it this… |
+| `aria-labelledby` | `string` | — | …or the id of visible text that names it |
 | `className` | `string` | — | |
-
-It takes no accessible name: there's no `aria-label` prop. Label it with visible text nearby.
 
 ---
 
@@ -1091,13 +1103,13 @@ These also make components findable in tests by role and name (`getByRole('butto
 | `Text` | Display/heading/body/mono/eyebrow/caption variants |
 | `Button` | primary/secondary/accent/ghost/danger variants. Announced as a button (with disabled state); `accessibilityLabel` is required when the content is only a glyph — see below. |
 | `Card` | flat/stamp variants, optional header |
-| `Badge` | tone-based (neutral/saved/drafting/stopped/archived), solid/outline |
+| `Badge` | tone-based (neutral/saved/drafting/stopped/archived), solid/outline. Same colours as the web Badge (`badgeTones`): the label is `fg2`, the tone on the border and dot |
 | `Field` / `Input` | Label + hint + error wrapper + text input |
 | `MaterialCard` / `MaterialEyebrow` | Leather/wood/copper material cards |
 | `Glyph` | All 397 glyphs via react-native-svg-transformer. Requires setup above. |
 | `GlyphPicker` | Modal sheet with search + 8-column grid |
 | `Skeleton` | Animated opacity-pulse placeholder (lines or block) |
-| `ProgressBar` | 0–100 value, sm/md, neutral/accent tone |
+| `ProgressBar` | 0–100 value, sm/md, neutral/accent tone. Announced as a progress bar with its value; name it with `accessibilityLabel` |
 | `Checkbox` | Controlled/uncontrolled, indeterminate, optional label |
 | `Toggle` | Animated pill switch (`value`/`onChange` — note: differs from web's `pressed`/`onPressedChange`) |
 | `Tabs` | Horizontal scrollable tab bar with active underline. Announced as tabs with their selected state. |
@@ -1157,6 +1169,25 @@ to hold a splash screen and avoid a light→dark flash.
 | `defaultMaterial` | `MaterialSignature` | `'none'` |
 | `defaultSurfaceOrigin` | `SurfaceOrigin` | `'native-only'` |
 | `storage` | `ThemeStorage` | — (no persistence) |
+| `fonts` | `NativeFonts` | — (platform font) |
+
+**Brand fonts (opt-in).** Native text uses the platform font unless the app loads the fonts and maps them. React Native picks weights by family name, so map each weight you load:
+
+```tsx
+import { useFonts, RobotoSlab_700Bold, RobotoSlab_900Black } from '@expo-google-fonts/roboto-slab'
+// …SpaceGrotesk_400Regular, _500Medium, _600SemiBold, _700Bold; JetBrainsMono_400Regular
+
+<NativeThemeProvider
+  fonts={{
+    display: { bold: 'RobotoSlab_700Bold', black: 'RobotoSlab_900Black' },
+    body: { regular: 'SpaceGrotesk_400Regular', medium: 'SpaceGrotesk_500Medium',
+            semibold: 'SpaceGrotesk_600SemiBold', bold: 'SpaceGrotesk_700Bold' },
+    mono: { regular: 'JetBrainsMono_400Regular' },
+  }}
+>
+```
+
+A role and weight left out falls back to the platform font at that weight. Every native component sets its text through `useTheme().font(role, weight)`, which custom components can use too.
 
 **`useTheme()` returns:**
 
@@ -1173,6 +1204,9 @@ to hold a splash screen and avoid a light→dark flash.
 | `material` / `setMaterial` | `MaterialSignature` | Persisted |
 | `surfaceOrigin` | `SurfaceOrigin` | Set once on the provider |
 | `hydrated` | `boolean` | False until storage has been read; always true without `storage` |
+| `font` | `(role, weight?) => FontStyle` | `{ fontFamily }` from `fonts`, or `{ fontWeight }` for the platform font |
+
+The dial is stored and exposed here, but native components don't change with it yet.
 
 `dark` and `toggle` are unchanged from earlier versions — existing code keeps
 working.
@@ -1513,7 +1547,7 @@ On desktop: `Sidebar` renders permanently in-flow. On mobile: hamburger button a
 
 ---
 
-## Known gaps (as of v0.11.0)
+## Known gaps (as of v0.25.0)
 
 Components not yet in achery-ui that commonly appear in apps:
 

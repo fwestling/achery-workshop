@@ -9,16 +9,24 @@ export interface ProgressBarProps {
   size?: 'sm' | 'md'
   /** @default 'neutral' */
   tone?: 'neutral' | 'accent'
+  /** What is progressing, read by screen readers with the value ("Upload, 40%"). */
+  accessibilityLabel?: string
   style?: ViewStyle
 }
 
-export const ProgressBar = ({ value, size = 'md', tone = 'neutral', style }: ProgressBarProps) => {
+export const ProgressBar = ({ value, size = 'md', tone = 'neutral', accessibilityLabel, style }: ProgressBarProps) => {
   const { tokens } = useTheme()
   const height = size === 'sm' ? 4 : 8
   const pct = Math.max(0, Math.min(100, value))
 
   return (
     <View
+      accessibilityRole="progressbar"
+      // aria-value* rather than accessibilityValue: React Native reads both, react-native-web only these
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={pct}
+      {...(accessibilityLabel !== undefined ? { accessibilityLabel } : {})}
       style={[
         {
           width: '100%',

@@ -11,6 +11,32 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.25.0] - 2026-10-23
+
+Contrast and accessibility fixes, the accent dial wired on the web, opt-in brand fonts on native, and the
+docs brought up to date.
+
+### Added
+- Tokens: `badgeTones`, the Badge colours shared by the web and native Badge and the native StatusDot
+- ProgressBar (web): `aria-label` and `aria-labelledby`, to name what's progressing
+- ProgressBar (native): announced as a progress bar with its value, with an `accessibilityLabel`
+- Modal: `aria-describedby`, for a description in the body rather than the `description` line
+- NativeThemeProvider: `fonts`, an opt-in map of loaded brand fonts by role and weight; `useTheme().font(role, weight)` applies it, and every native component sets its text through it
+
+### Changed
+- Badge (web and native): labels are `fg2` and the tone moves to the border and dot, because no tone colour reads at 4.5:1 as 10px text on every ground (ochre on paper, moss and plum on dark cards). Solid badges pick a label colour that passes on each fill, per theme
+- Badge (native): tones now match the web and the design system (`saved` is moss, `archived` plum; they were green and silver)
+- Accent dial (web): wired as documented. Under `chrome` (the default) and `surface`, eyebrows get an accent rule before the label, checked boxes fill with the accent, and secondary buttons get an accent border; under `underline`, ticks and those borders are ink. The accent goes on marks, never text
+- Typography: `h5` tracking 0.04em (was 0.08em) and `<Mono>` 12px (was 13px), matching the design system
+- Theme: the spacing, radius, shadow and motion values in the web theme are built from the token modules instead of repeated (no change to the values)
+
+### Fixed
+- ConfirmDialog (web): the message now describes the dialog, so screen readers announce it with the title
+- Native: the `as any` casts on `fontWeight` (and on Skeleton line widths) are gone; a Skeleton width React Native can't read falls back to full width
+- Docs: `Tokens.mdx`, `Theming.mdx`, `Styleguide.mdx`, `docs/styleguide.md`, the theme and tokens READMEs and the README corrected (fonts, glyph counts, accents, CSS variable names, z-indexes, shadows); `src/components/README.md`, a stale copy of COMPONENTS.md, now points to it; COMPONENTS.md documents the above and Table's `defaultSortDir`
+
+---
+
 ## [0.24.1] - 2026-10-22
 
 ### Fixed
@@ -702,7 +728,8 @@ Colours now follow the Achery design system's `tokens.json`. Error colours (`dan
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.24.1...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.25.0...HEAD
+[0.25.0]: https://github.com/fwestling/achery-workshop/compare/v0.24.1...v0.25.0
 [0.24.1]: https://github.com/fwestling/achery-workshop/compare/v0.24.0...v0.24.1
 [0.24.0]: https://github.com/fwestling/achery-workshop/compare/v0.23.2...v0.24.0
 [0.23.2]: https://github.com/fwestling/achery-workshop/compare/v0.23.1...v0.23.2

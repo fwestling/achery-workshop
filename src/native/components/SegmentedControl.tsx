@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, Text } from 'react-native'
 import type { ReactNode } from 'react'
 import { useTheme } from '../theme/ThemeContext'
-import { spacing, fontWeights } from 'achery-ui/tokens'
+import { spacing } from 'achery-ui/tokens'
 
 /** A single option within a native {@link SegmentedControl}. */
 export interface NativeSegmentOption<T extends string = string> {
@@ -36,7 +36,7 @@ export const SegmentedControl = <T extends string>({
   onChange,
   disabled = false,
 }: SegmentedControlProps<T>) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
 
   return (
     <View accessibilityRole="tablist" style={{ flexDirection: 'row', borderWidth: 1, borderColor: tokens.border }}>
@@ -68,7 +68,7 @@ export const SegmentedControl = <T extends string>({
                 style={{
                   color: isActive ? tokens.bg : tokens.fg3,
                   fontSize: 10,
-                  fontWeight: fontWeights.semibold.toString() as any,
+                  ...font('body', 'semibold'),
                   letterSpacing: 0.8,
                   textTransform: 'uppercase',
                 }}

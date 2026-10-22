@@ -24,7 +24,7 @@ export const Checkbox = ({
   accessibilityLabel,
   style,
 }: CheckboxProps) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   const [internal, setInternal] = useState(defaultChecked)
   const isControlled = checked !== undefined
   const isChecked = isControlled ? checked === true : internal
@@ -63,7 +63,7 @@ export const Checkbox = ({
         {isChecked && !isIndeterminate && <Glyph name="tick" size={10} color={tokens.bg} />}
       </View>
       {label && (
-        <Text style={{ color: tokens.fg, fontSize: 13 }}>{label}</Text>
+        <Text style={{ color: tokens.fg, fontSize: 13, ...font('body') }}>{label}</Text>
       )}
     </TouchableOpacity>
   )

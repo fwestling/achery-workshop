@@ -1,4 +1,6 @@
 export { NativeThemeProvider, useTheme } from './theme/ThemeContext'
+export { resolveFont } from './theme/fonts'
+export type { FontRole, FontWeightName, NativeFonts, FontStyle } from './theme/fonts'
 export type {
   NativeThemeProviderProps,
   NativeThemeContextValue,

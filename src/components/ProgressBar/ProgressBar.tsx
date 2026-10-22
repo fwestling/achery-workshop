@@ -8,12 +8,27 @@ export interface ProgressBarProps {
   tone?: 'neutral' | 'accent'
   /** When true, renders a skeleton placeholder at the same height as the track. */
   loading?: boolean
+  /**
+   * What is progressing, for screen readers ("Upload", "Chapter 3"). A progress bar needs a name: give it
+   * this or `aria-labelledby`.
+   */
+  'aria-label'?: string
+  /** The id of visible text naming what is progressing. */
+  'aria-labelledby'?: string
   className?: string
 }
 
 const trackHeightPx: Record<'sm' | 'md', string> = { sm: '4px', md: '8px' }
 
-export function ProgressBar({ value, size = 'md', tone = 'neutral', loading = false, className }: ProgressBarProps) {
+export function ProgressBar({
+  value,
+  size = 'md',
+  tone = 'neutral',
+  loading = false,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  className,
+}: ProgressBarProps) {
   if (loading) {
     return (
       <Skeleton
@@ -32,6 +47,8 @@ export function ProgressBar({ value, size = 'md', tone = 'neutral', loading = fa
       aria-valuenow={pct}
       aria-valuemin={0}
       aria-valuemax={100}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
     >
       <div
         className={[styles.fill, styles.fillTone[tone]].join(' ')}

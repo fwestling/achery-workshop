@@ -1,5 +1,5 @@
 import { View, TextInput, Text, type TextInputProps, type ViewStyle } from 'react-native'
-import { spacing, fontWeights } from 'achery-ui/tokens'
+import { spacing } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 
 export interface FieldProps {
@@ -11,20 +11,20 @@ export interface FieldProps {
 }
 
 export function Field({ label, hint, error, children, style }: FieldProps) {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   return (
     <View style={[{ gap: spacing.sp2 }, style]}>
       {label && (
-        <Text style={{ color: tokens.fg, fontSize: 11, fontWeight: fontWeights.semibold.toString() as any, letterSpacing: 0.5, textTransform: 'uppercase' }}>
+        <Text style={{ color: tokens.fg, fontSize: 11, ...font('body', 'semibold'), letterSpacing: 0.5, textTransform: 'uppercase' }}>
           {label}
         </Text>
       )}
       {children}
       {error && (
-        <Text style={{ color: tokens.danger, fontSize: 11 }}>{error}</Text>
+        <Text style={{ color: tokens.danger, fontSize: 11, ...font('body') }}>{error}</Text>
       )}
       {!error && hint && (
-        <Text style={{ color: tokens.fgMute, fontSize: 11 }}>{hint}</Text>
+        <Text style={{ color: tokens.fgMute, fontSize: 11, ...font('body') }}>{hint}</Text>
       )}
     </View>
   )
@@ -35,7 +35,7 @@ export interface InputProps extends TextInputProps {
 }
 
 export function Input({ error, style, ...props }: InputProps) {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   return (
     <TextInput
       style={[
@@ -47,6 +47,7 @@ export function Input({ error, style, ...props }: InputProps) {
           paddingHorizontal: spacing.sp5,
           color: tokens.fg,
           fontSize: 14,
+          ...font('body'),
         },
         style,
       ]}
@@ -74,7 +75,7 @@ export interface TextareaProps extends TextInputProps {
  * ```
  */
 export function Textarea({ error, rows = 4, style, ...props }: TextareaProps) {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   return (
     <TextInput
       multiline
@@ -88,6 +89,7 @@ export function Textarea({ error, rows = 4, style, ...props }: TextareaProps) {
           paddingHorizontal: spacing.sp5,
           color: tokens.fg,
           fontSize: 14,
+          ...font('body'),
           minHeight: rows * 24,
         },
         style,

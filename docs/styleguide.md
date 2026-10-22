@@ -48,7 +48,7 @@ The dark theme inverts to a deep warm black — candlelight and shadow, not blue
 
 ### Accent system
 
-Twelve accent colours are available, each with `-deep` and `-light` variants. All values are hex throughout — including in the token files — so React Native consumers work without conversion. The accent is used sparingly: primary CTAs, active navigation states, selected rows, focus rings.
+Thirteen accent hues are available (plus `olive`, a legacy alias of `moss`), each with `Deep` and `Light` steps. All values are hex throughout — including in the token files — so React Native consumers work without conversion. The accent is used sparingly: primary CTAs, active navigation states, selected rows, focus rings.
 
 **Original palette** — warm spectrum earths:
 
@@ -66,6 +66,7 @@ Twelve accent colours are available, each with `-deep` and `-light` variants. Al
 | Name | Character |
 |---|---|
 | Slate | Dusty steel blue — utility tools, calm data surfaces |
+| Woad | Indigo — fills the blue-violet gap between slate and plum |
 | Verdigris | Aged-copper teal — apothecary, patina, scientific |
 | Mauve | Dusty rose — editorial, considered, slightly formal |
 | Amber | Warm amber-gold — workshop warmth, craft, food |
@@ -77,6 +78,7 @@ Twelve accent colours are available, each with `-deep` and `-light` variants. Al
 - One `variant="accent"` button per view — the primary CTA
 - Active nav items, focus rings, selected table rows — via CSS vars automatically
 - Never use the accent for informational or neutral states
+- The accent dial (`underline` · `chrome` · `surface`) sets how many of these jobs it does; it goes on marks, never text, because accent-coloured small text misses 4.5:1 for several hues
 
 ### Semantic colours
 
@@ -95,38 +97,45 @@ Semantic colours are intentionally muted — they signal meaning without alarmin
 
 Three typefaces, each with a clear role.
 
-### Display — IM Fell English (serif)
+### Display — Roboto Slab (slab serif)
 
-A historic digital revival of the Fell Types — an irregular, humanist serif with genuine letterpress texture. Use for editorial headings, pull quotes, and the Display component. Its slight irregularity gives pages a handmade quality.
+A heavy slab: the shop-sign treatment. Use for `Display` and headings H1–H4.
 
-**Use for:** `Display`, hero headings, pull quotes, modal titles.
+**Use for:** `Display`, `Heading` levels 1–4, modal and material titles.
 **Do not use for:** body text, UI labels, code.
 
 ### Body — Space Grotesk (sans-serif)
 
 A contemporary geometric grotesque with slightly quirky details — especially notable in the `a`, `g`, and `&`. Legible at small sizes, distinctive at large ones. Used for all UI chrome.
 
-**Use for:** `Heading`, `Body`, labels, buttons, nav items, table cells, all UI text.
+**Use for:** `Body`, `Heading` level 5, eyebrows, labels, buttons, nav items, table cells, all UI text.
 
-### Mono — Space Mono (monospace)
+### Mono — JetBrains Mono (monospace)
 
-The companion to Space Grotesk — shares its geometric personality in a fixed-width form. Used for code, IDs, measurements, and numeric data.
+Used for code, IDs, measurements, and numeric data, with tabular figures.
 
 **Use for:** `Mono`, code blocks, identifiers, measurements, formula notation.
 
 ### Type scale
 
+`fontSizes` in `achery-ui/tokens`; the base is a compact 14px.
+
 | Token | Size | Use |
 |---|---|---|
-| `sm` | 11px | Captions, kbd hints, secondary meta |
-| `base` | 13px | Default mono, dense UI |
-| `md` | 14px | Body text, labels, button labels |
+| `xs` | 11px | Labels and eyebrows |
+| `sm` | 12px | Small print, buttons, mono |
+| `md` | 14px | Body default |
 | `lg` | 16px | Lead paragraphs |
-| `xl` | 20px | h3, sub-headings |
-| `xxl` | 26px | h1, modal titles |
-| `disp` | 36px | Display text |
+| `xl` | 20px | H4 |
+| `2xl` | 26px | H3 |
+| `3xl` | 34px | H2 |
+| `4xl` | 46px | H1 |
+| `5xl` | 64px | Between H1 and display |
+| `6xl` | 88px | Display |
 
-Letter-spacing is **negative** on display sizes (`-0.015em` to `-0.03em`) — pulling the wide display serif tighter for visual cohesion. Body text uses either neutral or very slightly positive tracking.
+Letter-spacing is **negative** on display sizes (−0.02em on display and H1, −0.01em on H2), pulling the heavy slab tighter, and **wide** on small caps (0.04em on H5, 0.18em on eyebrows).
+
+Every style, measured from the components: [workshop.achery.dev/typography](https://workshop.achery.dev/typography).
 
 ---
 
@@ -157,9 +166,9 @@ A **4px base scale**. Every spacing value is a multiple of 4.
 
 Achery has a single elevation model: the **stamp shadow**.
 
-```
-box-shadow: 2px 2px 0 0 var(--color-border);  /* standard */
-box-shadow: 4px 4px 0 0 var(--color-border);  /* large */
+```ts
+boxShadow: vars.shadow.stamp     // 2px 2px 0 0, in the border colour (standard)
+boxShadow: vars.shadow.stampLg   // 4px 4px 0 0 (large)
 ```
 
 No blur. No spread. A hard 2px or 4px offset — as if the element were pressed into a surface with a rubber stamp. This is the visual signature of the system.
@@ -181,16 +190,16 @@ No blur. No spread. A hard 2px or 4px offset — as if the element were pressed 
 **All corners are square by default.** `border-radius: 0` unless there is a specific reason for rounding.
 
 Exceptions:
-- `radius.pill` (`999px`) — toggle track, avatar circle, pill badges
-- `radius.sm` (`2px`) — used nowhere by default; available for consumers
+- `radius.pill` (`999px`) — toggle track, avatar circle, pill badges, counts. Never buttons
+- `radius.sm` (`2px`) and `radius.hairline` (`1px`) — slight softenings on a few small surfaces (menus, pickers, skeletons, checkboxes)
 
-Borders use `var(--color-border)` at full ink weight for primary interactive elements (inputs, focused buttons) and `var(--color-border-mute)` for structural containers (cards, dividers).
+Borders use `border` (`--achery-color-border`) at full ink weight for primary interactive elements (inputs, focused buttons) and `borderMute` (`--achery-color-borderMute`) for inner dividers. `borderMute` reads at about 2:1, so it is never the only edge of a control.
 
 ---
 
 ## Glyphs
 
-33 SVG icons drawn in the vocabulary of alchemical and botanical illustration. All use `stroke="currentColor"` — they inherit colour from their context.
+397 SVG glyphs drawn in the vocabulary of alchemical and botanical illustration, plus an everyday UI set. All use `stroke="currentColor"` — they inherit colour from their context. Browse and search them at [workshop.achery.dev/glyphs](https://workshop.achery.dev/glyphs). The original core:
 
 ### Categories
 
@@ -221,11 +230,11 @@ Borders use `var(--color-border)` at full ink weight for primary interactive ele
 | State | Treatment |
 |---|---|
 | `:hover` | Border colour shift from `borderMute` → `border` |
-| `:focus-visible` | `2px solid var(--color-accent)` outline, `2px` offset — keyboard-only |
+| `:focus-visible` | `2px solid` accent outline, `2px` offset — keyboard-only |
 | `:active` | Stamp shadow collapses; slight brightness shift |
-| `disabled` | 50% opacity; `cursor: not-allowed` |
-| `selected` (table rows) | Left accent-colour rule (`4px solid var(--color-accent)`) |
-| `active` (nav items) | Filled accent background, accent-fg text |
+| `disabled` | 40% opacity; `cursor: not-allowed` |
+| `selected` (table rows) | `bg2` fill with a 3px accent rule at the left edge |
+| `active` (nav items) | Filled ink (`fg`) background, `bg` text |
 
 Focus rings are always visible on `:focus-visible` (keyboard/programmatic) and suppressed on `:focus:not(:focus-visible)` (mouse click). Never remove focus styles — only suppress them for pointer interactions.
 

@@ -5,7 +5,7 @@ import {
   type ViewStyle,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { spacing, fontWeights } from 'achery-ui/tokens'
+import { spacing } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 
 export interface BottomSheetProps {
@@ -74,7 +74,7 @@ export const BottomSheet = ({
   avoidKeyboard = true,
   style,
 }: BottomSheetProps) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   const insets = useSafeAreaInsets()
   const { height: windowHeight } = useWindowDimensions()
 
@@ -202,7 +202,7 @@ export const BottomSheet = ({
               <Text
                 style={{
                   fontSize: 10,
-                  fontWeight: fontWeights.semibold.toString() as any,
+                  ...font('body', 'semibold'),
                   letterSpacing: 1.6,
                   textTransform: 'uppercase',
                   color: tokens.fg3,
@@ -223,7 +223,7 @@ export const BottomSheet = ({
                 <Text
                   style={{
                     fontSize: 11,
-                    fontWeight: fontWeights.semibold.toString() as any,
+                    ...font('body', 'semibold'),
                     letterSpacing: 0.5,
                     color: tokens.fg3,
                     textTransform: 'uppercase',
@@ -294,7 +294,7 @@ export interface SheetRowProps {
 }
 
 export const SheetRow = ({ label, onPress, danger = false, accessory, disabled = false }: SheetRowProps) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -316,7 +316,7 @@ export const SheetRow = ({ label, onPress, danger = false, accessory, disabled =
         style={{
           fontSize: 14,
           color: danger ? tokens.danger : tokens.fg,
-          fontWeight: danger ? fontWeights.semibold.toString() as any : 'normal',
+          ...font('body', danger ? 'semibold' : 'regular'),
         }}
       >
         {label}

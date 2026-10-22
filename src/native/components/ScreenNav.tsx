@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import { useTheme } from '../theme/ThemeContext'
-import { spacing, fontWeights } from 'achery-ui/tokens'
+import { spacing } from 'achery-ui/tokens'
 
 export interface ScreenNavProps {
   /** Called when the leading cancel/back button is tapped. */
@@ -51,7 +51,7 @@ export const ScreenNav = ({
   actionDisabled = false,
   compact = false,
 }: ScreenNavProps) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
 
   return (
     <View
@@ -77,7 +77,7 @@ export const ScreenNav = ({
           style={{
             color: tokens.fg3,
             fontSize: 12,
-            fontWeight: fontWeights.semibold.toString() as any,
+            ...font('body', 'semibold'),
             letterSpacing: 0.3,
           }}
         >
@@ -96,7 +96,7 @@ export const ScreenNav = ({
           marginHorizontal: spacing.sp3,
           color: tokens.fgMute,
           fontSize: 11,
-          fontWeight: fontWeights.semibold.toString() as any,
+          ...font('body', 'semibold'),
           letterSpacing: 1.5,
           textTransform: 'uppercase',
         }}
@@ -117,7 +117,7 @@ export const ScreenNav = ({
             style={{
               color: actionDisabled ? tokens.fgMute : tokens.accent,
               fontSize: 12,
-              fontWeight: fontWeights.bold.toString() as any,
+              ...font('body', 'bold'),
             }}
           >
             {actionLabel}

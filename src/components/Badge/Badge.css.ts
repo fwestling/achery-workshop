@@ -1,20 +1,41 @@
 import { recipe } from '@vanilla-extract/recipes'
-import { style } from '@vanilla-extract/css'
+import { createVar, globalStyle, style } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
-import { palette } from '../../tokens/palette'
+import { badgeTones, badgeToneNames, type BadgeToneName } from '../../tokens/badge'
 
-const toneColors = {
-  saved:    palette.moss,
-  drafting: palette.ochre,
-  // Error tones follow the theme's danger (rust in light, rust-light in dark), so their text stays readable
-  stopped:  vars.color.danger,
-  archived: palette.plum,
-  neutral:  vars.color.fg2,
-  success:  palette.success,
-  warn:     palette.ochre,
-  danger:   vars.color.danger,
-  info:     palette.plumMid,
+// Tone colours live on each theme root as custom properties (from the shared badgeTones table), so a
+// badge takes the colours of its nearest [data-achery-root][data-theme], nested previews included.
+// The label is always fg2 (outline, pill) or the tone's onFill (solid); the tone itself is the edge.
+const prop = (tone: BadgeToneName, part: 'edge' | 'fill' | 'onFill') => `--achery-badge-${tone}-${part}`
+
+for (const theme of ['light', 'dark'] as const) {
+  globalStyle(`[data-achery-root][data-theme="${theme}"]`, {
+    vars: Object.fromEntries(
+      badgeToneNames.flatMap((tone) => {
+        const c = badgeTones[theme][tone]
+        return [
+          [prop(tone, 'edge'), c.edge],
+          [prop(tone, 'fill'), c.fill],
+          [prop(tone, 'onFill'), c.onFill],
+        ]
+      }),
+    ),
+  })
 }
+
+const edge = createVar()
+const fill = createVar()
+const onFill = createVar()
+/** The dot: the tone on outline and pill badges, the label colour on a solid fill */
+const dotColour = createVar()
+
+const toneVars = (tone: BadgeToneName) => ({
+  vars: {
+    [edge]: `var(${prop(tone, 'edge')})`,
+    [fill]: `var(${prop(tone, 'fill')})`,
+    [onFill]: `var(${prop(tone, 'onFill')})`,
+  },
+})
 
 export const badge = recipe({
   base: {
@@ -30,69 +51,40 @@ export const badge = recipe({
     borderRadius: vars.radius.none,
     lineHeight: 1,
     whiteSpace: 'nowrap',
+    border: `1px solid ${edge}`,
   },
   variants: {
     tone: {
-      saved: {},
-      drafting: {},
-      stopped: {},
-      archived: {},
-      neutral: {},
-      success: {},
-      warn: {},
-      danger: {},
-      info: {},
+      saved: toneVars('saved'),
+      drafting: toneVars('drafting'),
+      stopped: toneVars('stopped'),
+      archived: toneVars('archived'),
+      neutral: toneVars('neutral'),
+      success: toneVars('success'),
+      warn: toneVars('warn'),
+      danger: toneVars('danger'),
+      info: toneVars('info'),
     },
     variant: {
       outline: {
         background: 'transparent',
+        color: vars.color.fg2,
+        vars: { [dotColour]: edge },
       },
       solid: {
-        color: vars.color.bg,
+        background: fill,
+        borderColor: fill,
+        color: onFill,
+        vars: { [dotColour]: onFill },
       },
       pill: {
         borderRadius: vars.radius.pill,
         background: 'transparent',
+        color: vars.color.fg2,
+        vars: { [dotColour]: edge },
       },
     },
   },
-  compoundVariants: [
-    { variants: { tone: 'saved', variant: 'outline' }, style: { color: toneColors.saved, border: `1px solid ${toneColors.saved}` } },
-    { variants: { tone: 'saved', variant: 'solid' }, style: { background: toneColors.saved, border: `1px solid ${toneColors.saved}` } },
-    { variants: { tone: 'saved', variant: 'pill' }, style: { color: toneColors.saved, border: `1px solid ${toneColors.saved}` } },
-
-    { variants: { tone: 'drafting', variant: 'outline' }, style: { color: toneColors.drafting, border: `1px solid ${toneColors.drafting}` } },
-    { variants: { tone: 'drafting', variant: 'solid' }, style: { background: toneColors.drafting, border: `1px solid ${toneColors.drafting}` } },
-    { variants: { tone: 'drafting', variant: 'pill' }, style: { color: toneColors.drafting, border: `1px solid ${toneColors.drafting}` } },
-
-    { variants: { tone: 'stopped', variant: 'outline' }, style: { color: toneColors.stopped, border: `1px solid ${toneColors.stopped}` } },
-    { variants: { tone: 'stopped', variant: 'solid' }, style: { background: toneColors.stopped, border: `1px solid ${toneColors.stopped}` } },
-    { variants: { tone: 'stopped', variant: 'pill' }, style: { color: toneColors.stopped, border: `1px solid ${toneColors.stopped}` } },
-
-    { variants: { tone: 'archived', variant: 'outline' }, style: { color: toneColors.archived, border: `1px solid ${toneColors.archived}` } },
-    { variants: { tone: 'archived', variant: 'solid' }, style: { background: toneColors.archived, border: `1px solid ${toneColors.archived}` } },
-    { variants: { tone: 'archived', variant: 'pill' }, style: { color: toneColors.archived, border: `1px solid ${toneColors.archived}` } },
-
-    { variants: { tone: 'neutral', variant: 'outline' }, style: { color: vars.color.fg2, border: `1px solid ${vars.color.border2}` } },
-    { variants: { tone: 'neutral', variant: 'solid' }, style: { background: vars.color.fg2, border: `1px solid ${vars.color.fg2}` } },
-    { variants: { tone: 'neutral', variant: 'pill' }, style: { color: vars.color.fg2, border: `1px solid ${vars.color.border2}` } },
-
-    { variants: { tone: 'success', variant: 'outline' }, style: { color: toneColors.success, border: `1px solid ${toneColors.success}` } },
-    { variants: { tone: 'success', variant: 'solid' }, style: { background: toneColors.success, border: `1px solid ${toneColors.success}` } },
-    { variants: { tone: 'success', variant: 'pill' }, style: { color: toneColors.success, border: `1px solid ${toneColors.success}` } },
-
-    { variants: { tone: 'warn', variant: 'outline' }, style: { color: toneColors.warn, border: `1px solid ${toneColors.warn}` } },
-    { variants: { tone: 'warn', variant: 'solid' }, style: { background: toneColors.warn, border: `1px solid ${toneColors.warn}` } },
-    { variants: { tone: 'warn', variant: 'pill' }, style: { color: toneColors.warn, border: `1px solid ${toneColors.warn}` } },
-
-    { variants: { tone: 'danger', variant: 'outline' }, style: { color: toneColors.danger, border: `1px solid ${toneColors.danger}` } },
-    { variants: { tone: 'danger', variant: 'solid' }, style: { background: toneColors.danger, border: `1px solid ${toneColors.danger}` } },
-    { variants: { tone: 'danger', variant: 'pill' }, style: { color: toneColors.danger, border: `1px solid ${toneColors.danger}` } },
-
-    { variants: { tone: 'info', variant: 'outline' }, style: { color: toneColors.info, border: `1px solid ${toneColors.info}` } },
-    { variants: { tone: 'info', variant: 'solid' }, style: { background: toneColors.info, border: `1px solid ${toneColors.info}` } },
-    { variants: { tone: 'info', variant: 'pill' }, style: { color: toneColors.info, border: `1px solid ${toneColors.info}` } },
-  ],
   defaultVariants: {
     tone: 'neutral',
     variant: 'outline',
@@ -103,6 +95,6 @@ export const dot = style({
   width: '6px',
   height: '6px',
   borderRadius: '50%',
-  background: 'currentColor',
+  background: dotColour,
   flexShrink: 0,
 })

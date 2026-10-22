@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, Text, ScrollView, useWindowDimensions, type ViewStyle } from 'react-native'
-import { spacing, fontWeights } from 'achery-ui/tokens'
+import { spacing } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 import { BottomSheet } from './BottomSheet'
 
@@ -73,7 +73,7 @@ export const AdaptivePanel = ({
   avoidKeyboard = true,
   style,
 }: AdaptivePanelProps) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   // useWindowDimensions (not a Dimensions snapshot) so the panel re-evaluates on
   // rotation and on live window resizing, which is continuous on macOS.
   const { width: windowWidth } = useWindowDimensions()
@@ -135,7 +135,7 @@ export const AdaptivePanel = ({
           <Text
             style={{
               fontSize: 10,
-              fontWeight: fontWeights.semibold.toString() as any,
+              ...font('body', 'semibold'),
               letterSpacing: 1.6,
               textTransform: 'uppercase',
               color: tokens.fg3,
@@ -155,7 +155,7 @@ export const AdaptivePanel = ({
           <Text
             style={{
               fontSize: 11,
-              fontWeight: fontWeights.semibold.toString() as any,
+              ...font('body', 'semibold'),
               letterSpacing: 0.5,
               color: tokens.fg3,
               textTransform: 'uppercase',

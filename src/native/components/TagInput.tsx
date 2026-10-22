@@ -49,7 +49,7 @@ export const TagInput = ({
   disabled = false,
   style,
 }: TagInputProps) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   const [text, setText] = useState('')
 
   const chipBorder = onLeather ? tokens.goldDeep : tokens.border
@@ -110,7 +110,7 @@ export const TagInput = ({
           placeholderTextColor={placeholderColor}
           autoCapitalize="none"
           autoCorrect={false}
-          style={[styles.input, { color: chipText }]}
+          style={[styles.input, { color: chipText, ...font('body') }]}
         />
       </View>
 

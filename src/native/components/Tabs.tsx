@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { ScrollView, TouchableOpacity, View, Text } from 'react-native'
 import type { ViewStyle } from 'react-native'
-import { spacing, fontWeights } from 'achery-ui/tokens'
+import { spacing } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 
 export interface TabItem {
@@ -20,7 +20,7 @@ export interface TabsProps {
 }
 
 export const Tabs = ({ items, value, defaultValue, onValueChange, style }: TabsProps) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   const isControlled = value !== undefined
   const [internal, setInternal] = useState(defaultValue ?? items[0]?.value ?? '')
   const active = isControlled ? value! : internal
@@ -62,7 +62,7 @@ export const Tabs = ({ items, value, defaultValue, onValueChange, style }: TabsP
                 style={{
                   fontSize: 13,
                   color: isActive ? tokens.fg : tokens.fgMute,
-                  fontWeight: isActive ? fontWeights.semibold.toString() as any : 'normal',
+                  ...font('body', isActive ? 'semibold' : 'regular'),
                 }}
               >
                 {item.label}

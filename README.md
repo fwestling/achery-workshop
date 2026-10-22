@@ -70,32 +70,7 @@ The `/tokens` entry is zero-DOM, zero-React — safe to import from React Native
 
 ## Components
 
-| Component | Description |
-|---|---|
-| `AcheryProvider` | Theme root — wraps your app |
-| `useTheme` | Hook: read/set theme and accent |
-| `Button` | Five variants, three sizes, glyphs, kbd hints |
-| `Badge` | Status/category label with five tones |
-| `Eyebrow` | Uppercase section label with optional count |
-| `Toggle` | Binary on/off switch |
-| `Glyph` | 33-icon SVG glyph set |
-| `Marginalia` | Decorative corner glyph (aria-hidden) |
-| `Typography` | `Display`, `Heading`, `Body`, `Mono` |
-| `Field` | Form field wrapper: label + hint/error |
-| `Input` | Single-line text input |
-| `Textarea` | Multi-line text input |
-| `Select` | Native select dropdown |
-| `SearchInput` | Search input with compass icon |
-| `Card` | Surface container: flat or stamp variant |
-| `Tabs` | Accessible tab navigation |
-| `Tooltip` | Hover/focus contextual label |
-| `Sidebar` | Vertical nav with groups and active state |
-| `AppBar` | Top bar: brand, search, accent picker, theme toggle |
-| `Table` | Sortable data table, row selection, hybrid state |
-| `Modal` | Accessible dialog with focus trap |
-| `ToastProvider` + `useToast` | Imperative toast notifications |
-
-Full props reference: [COMPONENTS.md](COMPONENTS.md) · Detailed docs: [src/components/README.md](src/components/README.md)
+Around forty web components (buttons, form fields, tables, dialogs, menus, charts and more) and a React Native set. Every one, with live examples in any theme and accent: [workshop.achery.dev/components](https://workshop.achery.dev/components). Props and usage: [COMPONENTS.md](COMPONENTS.md).
 
 ---
 
@@ -108,8 +83,9 @@ const { theme, toggleTheme, accent, setAccent } = useTheme()
 ```
 
 **Themes:** `light` · `dark` · `system`  
-**Accents:** `terracotta` · `moss` · `plum` · `ochre` · `rust` · `copper` · `slate` · `verdigris` · `mauve` · `amber` · `fern` · `blush`  
-**Dial:** `underline` · `chrome` · `surface` — controls how loudly the accent runs  
+**Accents:** `terracotta` · `moss` · `plum` · `ochre` · `rust` · `copper` · `slate` · `woad` · `verdigris` · `mauve` · `amber` · `fern` · `blush` (and `olive`, a legacy alias of `moss`)  
+**Dial:** `underline` · `chrome` · `surface` — how loudly the accent runs  
+**Material:** `none` · `leather` · `wood` · `copper` — for contained, occasional objects  
 **Surface origin:** `web-first` · `native-first` · `parity` · `native-only` — declares the adaptation ladder
 
 Full theming guide: [src/theme/README.md](src/theme/README.md)
@@ -141,6 +117,7 @@ pnpm build              # build library → dist/
 pnpm build:watch        # rebuild on file changes
 pnpm typecheck          # tsc --noEmit
 pnpm build-storybook    # static storybook → storybook-static/
+pnpm --filter achery-workshop-site dev   # the documentation site, at localhost:5190
 ```
 
 ### Working on a branch
@@ -156,9 +133,11 @@ src/
   tokens/       # /tokens entry point — React Native safe
   types/        # Shared TypeScript types
   theme/        # ThemeProvider, useTheme, CSS contracts
-  glyphs/       # Glyph component + 33 inlined SVG components
+  glyphs/       # Glyph component + 397 generated SVG components
   components/   # All UI components (stories colocated)
-  docs/         # Storybook MDX documentation pages
+  native/       # /native entry point — React Native components (+ their stories, for the site)
+  docs/         # MDX documentation pages (Storybook, and rendered by the site)
+site/           # workshop.achery.dev — the documentation site (private workspace package)
 dist/           # Built output (gitignored)
 .github/
   workflows/

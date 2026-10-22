@@ -4,20 +4,25 @@ import { Meta } from '@storybook/addon-docs/blocks'
 
 # Design Tokens
 
-All tokens are available from `achery-ui/tokens` — a zero-DOM, zero-React entry point safe for React Native and non-browser contexts.
+All tokens are available from `achery-ui/tokens`: a zero-DOM, zero-React entry point, safe for React Native and non-browser contexts. Every value, with usage notes and contrast, is on [workshop.achery.dev](https://workshop.achery.dev/colour); this page shows how to use them.
 
 ```ts
 import { palette, spacing, fontFamilies, shadows } from 'achery-ui/tokens'
 ```
 
-## Colour palette
+## Colour
 
-Raw colour values as hex strings, from the Achery design system. Grouped into families: `ink`, `paper`, `cream`, each accent family, and the materials.
+`palette` holds the raw colours as hex strings: `ink`, `paper`, `cream`, each accent family with its `Deep` and `Light` steps, the materials and `success`. Components use the semantic maps instead, which change with the theme.
 
 ```ts
-palette.paper       // '#fbf8f0'  — primary background (light)
-palette.ink         // '#1f1d18'  — primary foreground (light)
-palette.terracotta  // '#c46a3a'  — default accent
+import { palette, lightTokens, darkTokens } from 'achery-ui/tokens'
+
+palette.paper       // '#fbf8f0'
+palette.terracotta  // '#c46a3a'
+
+lightTokens.bg      // '#fbf8f0'  page background
+darkTokens.bg       // '#14130f'
+lightTokens.fg2     // '#4a463c'  secondary text
 ```
 
 ## Accent colours
@@ -32,43 +37,44 @@ accentColors.terracotta
 // { main: '#c46a3a', light: '#e6895a', deep: '#a05526', fg: '#fbf8f0', fgDark: '#14130f' }
 ```
 
+`main` fills in light, `light` in dark, `deep` is the pressed step; `fg` and `fgDark` are the text on each fill. `olive` is a legacy alias of `moss`.
+
 ## Spacing
 
 ```ts
-import { spacing, px } from 'achery-ui/tokens'
+import { spacing, spacingScale, px } from 'achery-ui/tokens'
 
-spacing.sp4  // '8px'
-spacing.sp6  // '16px'
-spacing.sp9  // '32px'
-
-px(4)        // '4px'
+spacing.sp4   // 8   (numbers, in px / dp)
+spacing.sp6   // 16
+px(spacing.sp4)  // '8px'
 ```
 
-12-step 4px-base scale: 2 · 4 · 6 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 56 · 80
+A 4px-base scale: 2 · 4 · 6 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 56 · 80 (`sp1`–`sp12`, plus `sp0`).
 
 ## Typography
 
 ```ts
-import { fontFamilies, fontSizes, fontWeights } from 'achery-ui/tokens'
+import { fontFamilies, fontSizes, fontWeights, lineHeights, letterSpacings, googleFontsUrl } from 'achery-ui/tokens'
 
-fontFamilies.display  // '"IM Fell English", Georgia, serif'
-fontFamilies.body     // '"Space Grotesk", system-ui, sans-serif'
-fontFamilies.mono     // '"Space Mono", "Fira Mono", monospace'
+fontFamilies.display  // "'Roboto Slab', 'Rockwell', 'Courier New', serif"
+fontFamilies.body     // "'Space Grotesk', 'Helvetica Neue', 'Inter', system-ui, sans-serif"
+fontFamilies.mono     // "'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace"
 
-fontSizes.md   // '14px'   — body text
-fontSizes.lg   // '16px'   — lead paragraphs
-fontSizes.disp // '36px'   — display headings
+fontSizes.md          // '14px'  body
+fontWeights.semibold  // 600
 ```
+
+`googleFontsUrl` loads all three families from Google Fonts.
 
 ## Radius
 
 ```ts
 import { radius } from 'achery-ui/tokens'
 
-radius.none      // '0'       — square corners (default)
+radius.none      // '0'      square: the default for everything
 radius.hairline  // '1px'
 radius.sm        // '2px'
-radius.pill      // '999px'   — toggle track, avatar
+radius.pill      // '999px'  badges, dots, toggle tracks and avatars only
 ```
 
 ## Shadows
@@ -76,37 +82,38 @@ radius.pill      // '999px'   — toggle track, avatar
 ```ts
 import { shadows } from 'achery-ui/tokens'
 
-shadows.stamp    // hard 2px offset — standard elevation
-shadows.stampLg  // hard 4px offset — modal, hero card
-shadows.press    // inset — pressed / active state
+shadows.stamp       // '2px 2px 0 0'  hard offset, in the border colour
+shadows.stampLg     // '4px 4px 0 0'
+shadows.pressLight  // inset press, light theme (pressDark for dark)
+shadows.softLight   // faint lift, light theme (softDark for dark)
 ```
 
-## Motion
+In vanilla-extract styles, `vars.shadow.stamp` and friends include the colour for the current theme.
+
+## Motion and layers
 
 ```ts
 import { duration, easing, zIndex } from 'achery-ui/tokens'
 
-duration.fast   // '120ms'
-duration.base   // '180ms'
-duration.slow   // '320ms'
+duration.fast  // '120ms'
+duration.base  // '180ms'
+duration.slow  // '320ms'
 
-easing.out      // 'cubic-bezier(.2,.7,.2,1)'   — decelerate
-easing.snap     // 'cubic-bezier(.5,1.6,.4,1)'  — spring
+easing.out     // 'cubic-bezier(.2,.7,.2,1)'   decelerate: the default
+easing.snap    // 'cubic-bezier(.5,1.6,.4,1)'  slight overshoot
 
-zIndex.overlay  // 100
-zIndex.modal    // 101
-zIndex.toast    // 200
+zIndex.overlay // 50
+zIndex.modal   // 100
+zIndex.toast   // 200
 ```
 
-## Semantic tokens
-
-Light and dark colour maps — useful in non-browser contexts where CSS vars aren't available.
+## Charts and badges
 
 ```ts
-import { lightTokens, darkTokens } from 'achery-ui/tokens'
+import { chartColors, badgeTones } from 'achery-ui/tokens'
 
-lightTokens.bg      // '#fbf8f0'
-lightTokens.accent  // '#c46a3a'
-darkTokens.bg       // '#14130f'
-darkTokens.accent   // '#e6895a'
+chartColors.light.series   // six categorical colours, in fixed order
+chartColors.dark.ordinal   // five steps of slate for ordered series
+
+badgeTones.light.saved     // { edge, fill, onFill }: shared by the web and native Badge
 ```

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { Animated, TouchableOpacity, View, Text, type ViewStyle, type LayoutChangeEvent } from 'react-native'
-import { spacing, fontWeights } from 'achery-ui/tokens'
+import { spacing } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 
 export interface DisclosureProps {
@@ -45,7 +45,7 @@ export const Disclosure = ({
   contentPaddingHorizontal,
   style,
 }: DisclosureProps) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   const isControlled = open !== undefined
   const [internal, setInternal] = useState(defaultOpen)
   const isOpen = isControlled ? open! : internal
@@ -110,7 +110,7 @@ export const Disclosure = ({
         <Text
           style={{
             fontSize: 10,
-            fontWeight: fontWeights.semibold.toString() as any,
+            ...font('body', 'semibold'),
             letterSpacing: 1.6,
             textTransform: 'uppercase',
             color: tokens.fg3,

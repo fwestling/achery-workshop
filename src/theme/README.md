@@ -6,10 +6,10 @@ Achery UI uses [vanilla-extract](https://vanilla-extract.style/) for all styles.
 
 ## How it works
 
-`AcheryProvider` renders a root div with three data attributes:
+`AcheryProvider` renders a root div with its theme, accent and dial as data attributes (and `data-material` when one is set):
 
 ```html
-<div data-achery-root data-theme="light" data-accent="terracotta">
+<div data-achery-root data-theme="light" data-accent="terracotta" data-dial="chrome">
   …
 </div>
 ```
@@ -104,41 +104,37 @@ Fourteen accent colours ship with the system (thirteen hues, plus `olive` as a l
 
 ---
 
+## Accent dial
+
+`defaultDial` sets how loudly the accent runs across the interaction layer; `useTheme().setDial` changes it. The paper, ink hairlines and square corners never change.
+
+| Dial | The accent appears on |
+|---|---|
+| `underline` | Links, focus rings and the active-tab underline. Ticks are ink. |
+| `chrome` (default) | The above, plus checkbox ticks, an accent rule before each eyebrow, and outline (secondary) button borders |
+| `surface` | As chrome, and the one `.signature-surface` panel per view floods with the accent |
+
+The accent goes on marks, never text: as small text it would miss 4.5:1 for several accents (terracotta, copper, ochre and amber on paper; most hues on dark cards). Components read the dial through `--achery-dial-*` custom properties set on the root (`src/theme/dial.ts`).
+
+---
+
 ## CSS custom properties
 
-The full set of CSS vars available within `[data-achery-root]`:
+Inside `[data-achery-root]`, these stable aliases point at the theme's values. Use them in plain CSS or inline styles:
 
-| Variable | Description |
+| Variables | |
 |---|---|
-| `--color-bg` | Page background |
-| `--color-bg2` | Secondary background, alternating rows |
-| `--color-bg-sunken` | Recessed areas, input backgrounds |
-| `--color-surface` | Card/panel surfaces |
-| `--color-surface2` | Secondary surface |
-| `--color-fg` | Primary text and icons |
-| `--color-fg2` | Secondary text |
-| `--color-fg3` | Tertiary text |
-| `--color-fg-mute` | Disabled/placeholder text |
-| `--color-border` | Primary borders |
-| `--color-border2` | Secondary borders |
-| `--color-border-mute` | Subtle/muted borders |
-| `--color-rule` | Horizontal rules |
-| `--color-accent` | Active accent colour |
-| `--color-accent-fg` | Foreground on accent background |
-| `--color-success` | Positive semantic colour |
-| `--color-warn` | Warning semantic colour |
-| `--color-danger` | Error/destructive semantic colour |
-| `--color-info` | Informational semantic colour |
-| `--font-display` | Display (serif) typeface stack |
-| `--font-body` | Body (sans-serif) typeface stack |
-| `--font-mono` | Monospace typeface stack |
-| `--space-sp1` … `--space-sp12` | Spacing scale (2px–80px) |
-| `--radius-none` … `--radius-pill` | Border radius values |
-| `--shadow-stamp` | Standard hard-offset shadow |
-| `--shadow-stamp-lg` | Large hard-offset shadow |
-| `--shadow-press` | Inset pressed-state shadow |
-| `--duration-fast` … `--duration-slow` | Animation durations |
-| `--ease-out` · `--ease-snap` | Easing curves |
+| `--achery-color-bg`, `-bg2`, `-bgSunken`, `-surface`, `-surface2` | Grounds |
+| `--achery-color-fg`, `-fg2`, `-fg3`, `-fgMute` | Text |
+| `--achery-color-border`, `-border2`, `-borderMute`, `-rule` | Lines |
+| `--achery-color-accent`, `-accentFg`, `-accent2`, `-accent3` | The project's accent, and text on it |
+| `--achery-color-accentSoft`, `-accentSoftStrong` | Accent tints (18% and 28%) for selected rows and chips |
+| `--achery-color-success`, `-warn`, `-danger`, `-info` | Status |
+| `--achery-color-selectionBg`, `-selectionFg` | Text selection |
+| `--achery-font-display`, `-body`, `-mono` | Font stacks |
+| `--achery-space-sp1` … `--achery-space-sp9` | Spacing, 2px–32px |
+
+Radius, shadows, motion and the larger spacing steps have no alias: use `vars` (below) in vanilla-extract, or the values in `achery-ui/tokens`. Every colour, with usage and contrast: [workshop.achery.dev/colour](https://workshop.achery.dev/colour).
 
 ---
 
@@ -194,7 +190,7 @@ The theme data attributes are set by `AcheryProvider` in React — on first pain
 
 ## Portaled content
 
-`Modal`, `Tooltip`, and `Toast` render into `document.body` via React portals. They inherit theme CSS vars because `AcheryProvider` mirrors `data-achery-root`, `data-theme`, and `data-accent` onto `document.documentElement` via a `useEffect`. This means:
+`Modal`, `Tooltip`, and `Toast` render into `document.body` via React portals. They inherit theme CSS vars because `AcheryProvider` mirrors `data-achery-root`, `data-theme`, `data-accent`, `data-dial` and `data-material` onto `document.documentElement` via a `useEffect`. This means:
 
 1. Portal content is always styled correctly
 2. No extra wrapper is needed around portals
@@ -202,6 +198,12 @@ The theme data attributes are set by `AcheryProvider` in React — on first pain
 
 ---
 
-## Multiple providers
+## Multiple providers and nested scopes
 
-Nesting multiple `AcheryProvider` instances (e.g. for a component that must always use a specific accent) works, but each provider writes to `document.documentElement` — the innermost provider wins. For isolated theming within a subtree without affecting portals, use the `data-*` attributes directly on a container div with your own CSS vars.
+Nesting `AcheryProvider`s works, but each writes its attributes to `document.documentElement`, so the innermost wins there, and portals follow it. To give a subtree a different theme, accent or dial without touching portals, put the attributes on a plain element instead: a nested `[data-achery-root]` re-scopes every variable for its subtree.
+
+```html
+<div data-achery-root data-theme="dark" data-accent="moss" data-dial="underline">…</div>
+```
+
+It also picks up the root's base font size, line height and background, which you may want to reset.

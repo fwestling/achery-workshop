@@ -52,13 +52,11 @@ Three typefaces, each with a clear role.
 
 | Typeface | Role |
 |:---|:---|
-| **IM Fell English** (serif) | Display headings, pull quotes, editorial |
-| **Space Grotesk** (sans) | All UI text — labels, buttons, body |
-| **Space Mono** (mono) | Code, IDs, measurements, numeric data |
+| **Roboto Slab** (slab serif) | Display and headings H1–H4: the heavy shop-sign slab |
+| **Space Grotesk** (sans) | All UI text: body, labels, buttons, H5 and eyebrows |
+| **JetBrains Mono** (mono) | Code, IDs, measurements, numeric data |
 
-The display face has genuine letterpress texture from its digital revival of the historic Fell Types. Its slight irregularity gives pages a handmade quality.
-
-Letter-spacing is **negative on display sizes** (−0.015em to −0.03em) — pulling the wide serif tighter for visual cohesion.
+Letter-spacing is **negative on display sizes** (−0.02em on display and H1, −0.01em on H2), pulling the heavy slab tighter, and **wide on small caps** (0.18em on eyebrows).
 
 ## Spacing
 
@@ -79,9 +77,9 @@ Letter-spacing is **negative on display sizes** (−0.015em to −0.03em) — pu
 
 One elevation model. No blur, no spread. A hard offset — as if pressed with a rubber stamp.
 
-```
-box-shadow: 2px 2px 0 0 var(--color-border);   /* stamp */
-box-shadow: 4px 4px 0 0 var(--color-border);   /* stamp-lg */
+```ts
+boxShadow: vars.shadow.stamp     // 2px 2px 0 0, in the border colour
+boxShadow: vars.shadow.stampLg   // 4px 4px 0 0
 ```
 
 The offset colour is ink-dark in light mode and parchment-light in dark mode. The hard-edge character is maintained in both.
@@ -90,11 +88,13 @@ The offset colour is ink-dark in light mode and parchment-light in dark mode. Th
 
 **All corners are square by default.** `border-radius: 0`.
 
-Exceptions: toggle track and avatar (`border-radius: 999px`).
+Exceptions: pills (`border-radius: 999px`) for badges, counts, the toggle track and avatars. Never buttons.
 
 ## Glyphs
 
-33 SVG icons in the vocabulary of alchemical and botanical illustration. All stroke-based, all inherit `currentColor`.
+397 glyphs in the vocabulary of alchemical and botanical illustration, plus an everyday UI set. All stroke-based, all inherit `currentColor`. Browse and search them at [workshop.achery.dev/glyphs](https://workshop.achery.dev/glyphs); in code, `GlyphCategories` groups them and `searchGlyphs` finds them.
+
+The original set, still the heart of it:
 
 **Botanical & alchemical:** `fern` · `sprig` · `leaf` · `flourish` · `asterism` · `sigil` · `salt` · `sulfur` · `mercury`
 

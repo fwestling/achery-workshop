@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
+import { dialVar } from '../../theme/dial'
 
 export const tabList = style({
   display: 'flex',
@@ -24,7 +25,7 @@ export const tab = style({
   selectors: {
     '&[data-state="active"]': {
       color: vars.color.fg,
-      borderBottomColor: vars.color.accent,
+      borderBottomColor: dialVar('tabIndicator', vars.color.accent),
     },
     '&:hover:not([data-state="active"])': {
       color: vars.color.fg,

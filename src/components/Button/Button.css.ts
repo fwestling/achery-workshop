@@ -2,6 +2,7 @@ import { recipe } from '@vanilla-extract/recipes'
 import { style, keyframes } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
 import { buttonMarker } from './buttonMarker.css'
+import { dialVar } from '../../theme/dial'
 
 const spin = keyframes({
   from: { transform: 'rotate(0deg)' },
@@ -63,6 +64,8 @@ export const button = recipe({
       secondary: {
         background: vars.color.surface,
         color: vars.color.fg,
+        // The outline button: an accent border under the chrome and surface dials, ink under underline
+        borderColor: dialVar('outlineBorder', vars.color.accent),
         selectors: {
           '&:hover:not(:disabled)': {
             background: vars.color.bg2,

@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
+import { fontSizes, letterSpacings } from '../../tokens/typography'
 
 export const display = style({
   fontFamily: vars.font.display,
@@ -53,7 +54,7 @@ export const h5 = style({
   fontFamily: vars.font.body,
   fontWeight: 600,
   fontSize: '14px',
-  letterSpacing: '0.08em',
+  letterSpacing: letterSpacings.wide, // the design system's h5 (0.04em)
   textTransform: 'uppercase',
   color: vars.color.fg,
   margin: 0,
@@ -85,7 +86,7 @@ export const bodySmall = style({
 
 export const mono = style({
   fontFamily: vars.font.mono,
-  fontSize: '13px',
+  fontSize: fontSizes.sm, // the design system's mono (12px)
   lineHeight: 1.45,
   color: vars.color.fg,
   fontVariantNumeric: 'tabular-nums',

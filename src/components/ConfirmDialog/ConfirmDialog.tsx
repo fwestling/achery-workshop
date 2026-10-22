@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useId, useRef, useState, type ReactNode } from 'react'
 import { Modal } from '../Modal/Modal'
 import { Button } from '../Button/Button'
 import { Body } from '../Typography/Typography'
@@ -60,6 +60,8 @@ export const ConfirmDialogProvider = ({ children }: { children: ReactNode }) => 
     setState((s) => ({ ...s, open: false }))
   }
 
+  // The message describes the dialog, so a screen reader announces it with the title on open
+  const messageId = useId()
   const { open, opts } = state
   const confirmLabel = opts.confirmLabel ?? 'Confirm'
   const cancelLabel = opts.cancelLabel ?? 'Cancel'
@@ -71,6 +73,7 @@ export const ConfirmDialogProvider = ({ children }: { children: ReactNode }) => 
         open={open}
         onOpenChange={(o) => { if (!o) settle(false) }}
         title={opts.title}
+        aria-describedby={messageId}
         size="sm"
         footer={
           <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', width: '100%' }}>
@@ -87,9 +90,11 @@ export const ConfirmDialogProvider = ({ children }: { children: ReactNode }) => 
           </div>
         }
       >
-        {typeof opts.message === 'string'
-          ? <Body variant="small">{opts.message}</Body>
-          : opts.message}
+        <div id={messageId}>
+          {typeof opts.message === 'string'
+            ? <Body variant="small">{opts.message}</Body>
+            : opts.message}
+        </div>
       </Modal>
     </ConfirmContext.Provider>
   )

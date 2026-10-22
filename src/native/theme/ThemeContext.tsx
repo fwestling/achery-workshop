@@ -20,6 +20,7 @@ import type {
   ThemeMode,
   ResolvedTheme,
 } from '../../types/theme'
+import { resolveFont, type FontRole, type FontStyle, type FontWeightName, type NativeFonts } from './fonts'
 
 /**
  * Storage keys — deliberately identical to the web provider's `localStorage`
@@ -86,6 +87,11 @@ export interface NativeThemeContextValue {
    * Always true immediately when no `storage` adapter is supplied.
    */
   hydrated: boolean
+  /**
+   * The text style for a role at a weight: the app's loaded family if `fonts` maps it, otherwise the
+   * platform font at that weight. Every native component sets its text through this.
+   */
+  font: (role: FontRole, weight?: FontWeightName) => FontStyle
 }
 
 export interface NativeThemeProviderProps {
@@ -115,6 +121,11 @@ export interface NativeThemeProviderProps {
    * See {@link ThemeStorage}.
    */
   storage?: ThemeStorage
+  /**
+   * The brand fonts the app has loaded (with expo-font, say), by role and weight. Opt-in: without it,
+   * text uses the platform font, as before. See {@link NativeFonts}.
+   */
+  fonts?: NativeFonts
 }
 
 const ThemeContext = createContext<NativeThemeContextValue>({
@@ -132,6 +143,7 @@ const ThemeContext = createContext<NativeThemeContextValue>({
   setMaterial: () => {},
   surfaceOrigin: 'native-only',
   hydrated: true,
+  font: (role, weight) => resolveFont(undefined, role, weight),
 })
 
 const isThemeMode = (v: unknown): v is ThemeMode =>
@@ -174,6 +186,7 @@ export function NativeThemeProvider({
   defaultMaterial = 'none',
   defaultSurfaceOrigin = 'native-only',
   storage,
+  fonts,
 }: NativeThemeProviderProps) {
   const initialMode: ThemeMode = defaultMode ?? (defaultDark ? 'dark' : 'system')
 
@@ -297,6 +310,11 @@ export function NativeThemeProvider({
     } as SemanticTokens
   }, [dark, accent])
 
+  const font = useCallback(
+    (role: FontRole, weight?: FontWeightName) => resolveFont(fonts, role, weight),
+    [fonts],
+  )
+
   const value = useMemo(
     () => ({
       tokens,
@@ -313,6 +331,7 @@ export function NativeThemeProvider({
       setMaterial,
       surfaceOrigin,
       hydrated,
+      font,
     }),
     [
       tokens,
@@ -329,6 +348,7 @@ export function NativeThemeProvider({
       setMaterial,
       surfaceOrigin,
       hydrated,
+      font,
     ],
   )
 

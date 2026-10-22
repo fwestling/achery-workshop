@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { View, TouchableOpacity, Text, type ViewStyle } from 'react-native'
-import { spacing, fontWeights } from 'achery-ui/tokens'
+import { spacing } from 'achery-ui/tokens'
 import type { GlyphName } from '../../types/components'
 import { useTheme } from '../theme/ThemeContext'
 import { Glyph } from './Glyph'
@@ -73,7 +73,7 @@ export const BottomTabBar = ({
   safeAreaBottom = 0,
   style,
 }: BottomTabBarProps) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   const [moreOpen, setMoreOpen] = useState(false)
 
   const visibleItems = items.slice(0, MAX_VISIBLE)
@@ -111,6 +111,7 @@ export const BottomTabBar = ({
             active={item.value === value}
             onPress={() => onValueChange(item.value)}
             tokens={tokens}
+            font={font}
           />
         ))}
 
@@ -119,6 +120,7 @@ export const BottomTabBar = ({
             active={overflowActive}
             onPress={() => setMoreOpen(true)}
             tokens={tokens}
+            font={font}
           />
         )}
       </View>
@@ -163,9 +165,10 @@ interface TabButtonProps {
   active: boolean
   onPress: () => void
   tokens: ReturnType<typeof useTheme>['tokens']
+  font: ReturnType<typeof useTheme>['font']
 }
 
-const TabButton = ({ item, active, onPress, tokens }: TabButtonProps) => (
+const TabButton = ({ item, active, onPress, tokens, font }: TabButtonProps) => (
   <TouchableOpacity
     onPress={onPress}
     activeOpacity={0.75}
@@ -191,7 +194,7 @@ const TabButton = ({ item, active, onPress, tokens }: TabButtonProps) => (
     <Text
       style={{
         fontSize: 10,
-        fontWeight: (active ? fontWeights.semibold : fontWeights.regular).toString() as any,
+        ...font('body', active ? 'semibold' : 'regular'),
         color: active ? tokens.accent : tokens.fgMute,
         letterSpacing: 0.3,
       }}
@@ -205,9 +208,10 @@ interface MoreButtonProps {
   active: boolean
   onPress: () => void
   tokens: ReturnType<typeof useTheme>['tokens']
+  font: ReturnType<typeof useTheme>['font']
 }
 
-const MoreButton = ({ active, onPress, tokens }: MoreButtonProps) => (
+const MoreButton = ({ active, onPress, tokens, font }: MoreButtonProps) => (
   <TouchableOpacity
     onPress={onPress}
     activeOpacity={0.75}
@@ -227,7 +231,7 @@ const MoreButton = ({ active, onPress, tokens }: MoreButtonProps) => (
     <Text
       style={{
         fontSize: 10,
-        fontWeight: fontWeights.regular.toString() as any,
+        ...font('body', 'regular'),
         color: active ? tokens.accent : tokens.fgMute,
         letterSpacing: 0.3,
       }}

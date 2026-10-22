@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 import { TouchableOpacity, View, Text, StyleSheet, type ViewStyle } from 'react-native'
-import { spacing, fontWeights } from 'achery-ui/tokens'
+import { spacing } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 import type { SemanticTokens } from 'achery-ui/tokens'
 
@@ -41,12 +41,12 @@ function makeColors(variant: ButtonVariant, tokens: SemanticTokens) {
 }
 
 export function Button({ variant = 'secondary', size = 'md', children, onPress, disabled, style, accessibilityLabel, accessibilityHint, testID }: ButtonProps) {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   const colors = makeColors(variant, tokens)
   const textStyle = {
     color: disabled ? tokens.fgMute : colors.label,
     fontSize: fontSize[size],
-    fontWeight: fontWeights.semibold.toString() as any,
+    ...font('body', 'semibold'),
     letterSpacing: 0.01 * fontSize[size],
   }
 

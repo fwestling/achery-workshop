@@ -4,7 +4,7 @@ import { ProgressBar } from './ProgressBar'
 const meta: Meta<typeof ProgressBar> = {
   title: 'Components/ProgressBar',
   component: ProgressBar,
-  args: { value: 60 },
+  args: { value: 60, 'aria-label': 'Upload' },
 }
 export default meta
 type Story = StoryObj<typeof ProgressBar>

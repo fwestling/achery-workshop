@@ -1,7 +1,16 @@
 import { useEffect, useRef } from 'react'
 import { Animated, View } from 'react-native'
-import type { ViewStyle } from 'react-native'
+import type { DimensionValue, ViewStyle } from 'react-native'
 import { useTheme } from '../theme/ThemeContext'
+
+const isPercent = (value: string): value is `${number}%` => /^-?\d*\.?\d+%$/.test(value)
+
+/**
+ * A line width as React Native takes it: a number of dp or a percentage. Anything else (`'120px'`, which
+ * React Native can't read) falls back to the full width rather than reaching the style as an invalid value.
+ */
+const toDimension = (width: number | string | undefined): DimensionValue =>
+  typeof width === 'number' ? width : width !== undefined && isPercent(width) ? width : '100%'
 
 export interface SkeletonProps {
   /** Number of stacked text-line placeholders. */
@@ -60,7 +69,7 @@ export const Skeleton = ({ lines = 3, width, block = false, height = 80, style }
       {Array.from({ length: lines }).map((_, i) => (
         <Animated.View
           key={i}
-          style={[baseStyle, { height: LINE_HEIGHT, width: (lineWidths[i] ?? '100%') as any }, { opacity }]}
+          style={[baseStyle, { height: LINE_HEIGHT, width: toDimension(lineWidths[i]) }, { opacity }]}
         />
       ))}
     </View>

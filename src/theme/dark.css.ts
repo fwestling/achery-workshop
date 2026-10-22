@@ -1,5 +1,6 @@
 import { createGlobalTheme } from '@vanilla-extract/css'
 import { vars } from './vars.css'
+import { darkScales } from './scales'
 import { fontFamilies } from '../tokens/typography'
 import { chartColors } from '../tokens/chart'
 import { palette } from '../tokens/palette'
@@ -50,39 +51,6 @@ createGlobalTheme('[data-achery-root][data-theme="dark"]', vars, {
     body: fontFamilies.body,
     mono: fontFamilies.mono,
   },
-  space: {
-    sp1: '2px',
-    sp2: '4px',
-    sp3: '6px',
-    sp4: '8px',
-    sp5: '12px',
-    sp6: '16px',
-    sp7: '20px',
-    sp8: '24px',
-    sp9: '32px',
-    sp10: '40px',
-    sp11: '56px',
-    sp12: '80px',
-  },
-  radius: {
-    none: '0',
-    hairline: '1px',
-    sm: '2px',
-    pill: '999px',
-  },
-  shadow: {
-    stamp: '2px 2px 0 0 #e8dfc8',
-    stampLg: '4px 4px 0 0 #e8dfc8',
-    press: 'inset 0 1px 0 rgba(232,223,200,0.10)',
-    soft: '0 1px 0 rgba(0,0,0,0.6), 0 0 0 1px rgba(232,223,200,0.05)',
-  },
-  duration: {
-    fast: '120ms',
-    base: '180ms',
-    slow: '320ms',
-  },
-  ease: {
-    out: 'cubic-bezier(.2,.7,.2,1)',
-    snap: 'cubic-bezier(.5,1.6,.4,1)',
-  },
+  // Spacing, radius, shadow and motion, from the token modules (scales.ts)
+  ...darkScales,
 })

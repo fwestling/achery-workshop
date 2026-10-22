@@ -1,5 +1,5 @@
 import { View, Text, type ViewStyle } from 'react-native'
-import { palette, fontWeights, spacing } from 'achery-ui/tokens'
+import { badgeTones, spacing } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 
 export type BadgeTone = 'neutral' | 'saved' | 'drafting' | 'stopped' | 'archived'
@@ -15,26 +15,18 @@ export interface BadgeProps {
   style?: ViewStyle
 }
 
-function toneColors(tone: BadgeTone, variant: BadgeVariant, isDark: boolean) {
-  const map: Record<BadgeTone, { fg: string; bg: string; border: string }> = {
-    neutral: { fg: isDark ? palette.cream : palette.ink, bg: isDark ? '#26241e' : palette.paperWarm, border: isDark ? palette.cream : palette.ink },
-    saved: { fg: palette.success, bg: isDark ? '#1a2e10' : '#edf5e0', border: palette.success },
-    drafting: { fg: palette.ochre, bg: isDark ? '#2a200a' : '#fdf3dc', border: palette.ochre },
-    // Follows the theme's danger: rust in light, rust-light in dark (readable as text on dark grounds)
-    stopped: { fg: isDark ? palette.rustLight : palette.rust, bg: isDark ? '#2a0e06' : '#faeae4', border: isDark ? palette.rustLight : palette.rust },
-    archived: { fg: isDark ? palette.silver : palette.silverDeep, bg: isDark ? '#1a1916' : '#f0ede6', border: isDark ? palette.silver : palette.silverDeep },
-  }
-  return map[tone]
-}
-
 const badgeFontSize: Record<BadgeSize, number> = { sm: 10, md: 11, lg: 12 }
 
 export function Badge({ tone = 'neutral', variant = 'outline', dot = false, size = 'md', children, style }: BadgeProps) {
-  const { tokens, dark } = useTheme()
-  const colors = toneColors(tone, variant, dark)
-
-  const bg = variant === 'solid' ? colors.fg : colors.bg
-  const fg = variant === 'solid' ? tokens.bg : colors.fg
+  const { tokens, dark, font } = useTheme()
+  // The same tones as the web Badge (achery-ui/tokens badgeTones): the label is fg2, or onFill on a solid
+  // fill, so it reads at 4.5:1 or better; the tone is carried by the border and dot
+  const colors = badgeTones[dark ? 'dark' : 'light'][tone]
+  const solid = variant === 'solid'
+  const bg = solid ? colors.fill : 'transparent'
+  const fg = solid ? colors.onFill : tokens.fg2
+  const border = solid ? colors.fill : colors.edge
+  const dotColor = solid ? colors.onFill : colors.edge
 
   return (
     <View
@@ -45,7 +37,7 @@ export function Badge({ tone = 'neutral', variant = 'outline', dot = false, size
           alignSelf: 'flex-start',
           backgroundColor: bg,
           borderWidth: 1,
-          borderColor: colors.border,
+          borderColor: border,
           paddingVertical: spacing.sp1,
           paddingHorizontal: spacing.sp3,
           gap: spacing.sp2,
@@ -54,9 +46,9 @@ export function Badge({ tone = 'neutral', variant = 'outline', dot = false, size
       ]}
     >
       {dot && (
-        <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: colors.fg }} />
+        <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: dotColor }} />
       )}
-      <Text style={{ color: fg, fontSize: badgeFontSize[size], fontWeight: fontWeights.semibold.toString() as any, letterSpacing: 0.5 }}>
+      <Text style={{ color: fg, fontSize: badgeFontSize[size], ...font('body', 'semibold'), letterSpacing: 0.5 }}>
         {children}
       </Text>
     </View>

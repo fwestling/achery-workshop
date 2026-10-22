@@ -4,26 +4,44 @@ import { Meta } from '@storybook/addon-docs/blocks'
 
 # Theming
 
-Achery UI uses [vanilla-extract](https://vanilla-extract.style/) for styles. Theme switching is pure CSS — `data-*` attributes on the root element swap the entire token set with no runtime overhead.
+Achery UI uses [vanilla-extract](https://vanilla-extract.style/) for styles. Theme switching is pure CSS: `data-*` attributes on the root element swap the entire token set with no runtime overhead.
 
 ## How it works
 
 `AcheryProvider` renders a root div:
 
 ```html
-<div data-achery-root data-theme="light" data-accent="terracotta">
+<div data-achery-root data-theme="light" data-accent="terracotta" data-dial="chrome">
   …
 </div>
 ```
 
-All CSS custom properties are scoped to that selector combination. Changing `data-theme` instantly swaps every colour. The same attributes are mirrored to `<html>` so portaled content (Modal, Tooltip, Toast) inherits the same vars.
+All CSS custom properties are scoped to that element. Changing `data-theme` swaps every colour at once. The same attributes are mirrored to `<html>` so portalled content (Modal, Tooltip, Toast) inherits the same variables.
+
+## Four axes
+
+```tsx
+<AcheryProvider
+  defaultTheme="system"       // 'light' | 'dark' | 'system'
+  defaultAccent="terracotta"  // one of 14 accents (accentColorNames)
+  defaultDial="chrome"        // 'underline' | 'chrome' | 'surface'
+  defaultMaterial="none"      // 'none' | 'leather' | 'wood' | 'copper'
+>
+```
+
+- **Theme:** light, dark, or following the system. The visitor's choice is stored.
+- **Accent:** each project flies one of thirteen hues (`olive` is a legacy alias of `moss`). The visitor's choice is stored.
+- **Dial:** how loudly the accent runs. `underline` puts it on links, focus rings and the active-tab underline only; `chrome` (the default) adds ticks, a rule before each eyebrow and outline-button borders; `surface` also floods the one `.signature-surface` panel per view. The accent goes on marks, never text, so text contrast never depends on the accent.
+- **Material:** a signature for contained, occasional objects such as `MaterialCard` and dialogs. The working page never wears it.
+
+See them all, live, at [workshop.achery.dev](https://workshop.achery.dev/accents).
 
 ## Reading and changing theme
 
 ```tsx
 import { useTheme } from 'achery-ui'
 
-function Controls() {
+const Controls = () => {
   const { theme, toggleTheme, accent, setAccent } = useTheme()
 
   return (
@@ -37,22 +55,7 @@ function Controls() {
 }
 ```
 
-`useTheme()` returns: `theme`, `setTheme`, `toggleTheme`, `accent`, `setAccent`.
-
-## Accent colours
-
-Six warm-spectrum accents — no cool blues. One per application instance.
-
-| Name | Character |
-|:---|:---|
-| `terracotta` | Fired clay, warm orange-red — the default |
-| `moss` | Deep forest green, earthy |
-| `plum` | Muted purple, considered |
-| `ochre` | Golden yellow, warm |
-| `rust` | Deep red-brown, dramatic |
-| `copper` | Metallic amber, refined |
-
-Switch accent live using the **Accent** toolbar above.
+`useTheme()` returns `mode` (the preference, possibly `'system'`) and `theme` (what's applied: `'light'` or `'dark'`), with `setTheme` and `toggleTheme`; `accent` and `setAccent`; `dial` and `setDial`; `material` and `setMaterial`; and `surfaceOrigin`.
 
 ## Type-safe token access in custom styles
 
@@ -69,6 +72,8 @@ export const myCard = style({
   fontFamily: vars.font.body,
 })
 ```
+
+Outside vanilla-extract, the colours, fonts and spacing are also available as stable custom properties: `var(--achery-color-fg)`, `var(--achery-font-body)`, `var(--achery-space-sp4)`.
 
 ## Server-side rendering
 

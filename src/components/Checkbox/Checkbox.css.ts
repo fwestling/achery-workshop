@@ -1,5 +1,8 @@
 import { style, styleVariants, keyframes } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
+import { dialVar } from '../../theme/dial'
+
+const tickFill = dialVar('tickFill', vars.color.accent)
 
 const spin = keyframes({
   from: { transform: 'rotate(0deg)' },
@@ -32,13 +35,14 @@ export const root = style({
   cursor: 'pointer',
   transition: `background ${vars.duration.fast} ${vars.ease.out}, border-color ${vars.duration.fast} ${vars.ease.out}`,
   selectors: {
+    // Accent under the chrome and surface dials, ink under underline
     '&[data-state="checked"]': {
-      background: vars.color.accent,
-      borderColor: vars.color.accent,
+      background: tickFill,
+      borderColor: tickFill,
     },
     '&[data-state="indeterminate"]': {
-      background: vars.color.accent,
-      borderColor: vars.color.accent,
+      background: tickFill,
+      borderColor: tickFill,
     },
     '&:focus-visible': {
       outline: `2px solid ${vars.color.accent}`,
@@ -52,7 +56,7 @@ export const root = style({
 })
 
 export const indicator = style({
-  color: vars.color.accentFg,
+  color: dialVar('tickMark', vars.color.accentFg),
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

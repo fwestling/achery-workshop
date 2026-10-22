@@ -33,7 +33,7 @@ export const Toggle = ({
   accessibilityLabel,
   style,
 }: ToggleProps) => {
-  const { tokens } = useTheme()
+  const { tokens, font } = useTheme()
   const isControlled = value !== undefined
   const [internal, setInternal] = useState(defaultValue)
   const isOn = isControlled ? value! : internal
@@ -86,7 +86,7 @@ export const Toggle = ({
         />
       </View>
       {label && (
-        <Text style={{ color: tokens.fg, fontSize: 13 }}>{label}</Text>
+        <Text style={{ color: tokens.fg, fontSize: 13, ...font('body') }}>{label}</Text>
       )}
     </TouchableOpacity>
   )

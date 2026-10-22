@@ -73,7 +73,7 @@ export function MaterialCard({
   style,
   ...props
 }: NativeMaterialCardProps) {
-  const { tokens, material: contextMaterial } = useTheme()
+  const { tokens, material: contextMaterial, font } = useTheme()
   const resolvedSignature: MaterialSignature = signature ?? (contextMaterial !== 'none' ? contextMaterial : 'leather')
   const mc = getMaterialColors(resolvedSignature, tokens)
 
@@ -137,7 +137,7 @@ export function MaterialCard({
           <Text
             style={{
               color: barTextColor,
-              fontWeight: '700',
+              ...font('display', 'bold'),
               fontSize: 15,
               letterSpacing: -0.3,
               flex: 1,
@@ -171,13 +171,13 @@ export function MaterialCard({
 
 /** Eyebrow label styled for use inside a MaterialCard. */
 export function MaterialEyebrow({ children, intensity = 'chrome', signature }: { children: string; intensity?: MaterialIntensity; signature?: MaterialSignature }) {
-  const { tokens, material: contextMaterial } = useTheme()
+  const { tokens, material: contextMaterial, font } = useTheme()
   const resolvedSignature: MaterialSignature = signature ?? (contextMaterial !== 'none' ? contextMaterial : 'leather')
   const mc = getMaterialColors(resolvedSignature, tokens)
   const color = intensity === 'full' ? mc.metal : mc.metalDeep
 
   return (
-    <Text style={{ fontSize: 10, fontWeight: '600', letterSpacing: 1.8, textTransform: 'uppercase', color }}>
+    <Text style={{ fontSize: 10, ...font('body', 'semibold'), letterSpacing: 1.8, textTransform: 'uppercase', color }}>
       {children}
     </Text>
   )
