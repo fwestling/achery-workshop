@@ -10,17 +10,17 @@ import { palette, spacing, fontFamilies, shadows } from 'achery-ui/tokens'
 
 ## Palette
 
-Raw colour values. All colours are specified as hex strings.
+Raw colour values, from the Achery design system's `tokens.json`. All colours are hex strings — the design system writes some hues in OKLCH, converted here because React Native can't parse `oklch()`.
 
 ```ts
 import { palette } from 'achery-ui/tokens'
 
-palette.parchment    // '#fbf8f0' — primary background (light)
+palette.paper        // '#fbf8f0' — primary background (light)
 palette.ink          // '#1f1d18' — primary foreground (light)
 palette.terracotta   // '#c46a3a' — default accent (light)
 ```
 
-The palette is grouped into families: `parchment`, `fog`, `stone`, `ink`, `terracotta`, `moss`, `plum`, `ochre`, `rust`, `copper`, plus semantic entries for `success`, `warn`, `danger`, `info`.
+The palette is grouped into families: `ink`, `paper`, `cream`, each accent family (`terracotta`, `moss`, `plum`, `ochre`, `rust`, `slate`, `woad`, `verdigris`, `mauve`, `amber`, `fern`, `blush`, each with `Deep` and `Light` steps), the materials (`leather`, `copper`, `silver`, `wood`, `gold`) and `success`. `olive*` is a legacy alias of `moss*`.
 
 Use `PaletteKey` for type-safe key access.
 
@@ -33,13 +33,13 @@ import { accentColors, accentColorNames } from 'achery-ui/tokens'
 import type { AccentColor } from 'achery-ui/tokens'
 
 accentColorNames
-// ['terracotta', 'moss', 'plum', 'ochre', 'rust', 'copper']
+// ['terracotta', 'moss', 'plum', 'ochre', 'rust', 'copper', 'slate', 'woad', 'verdigris', 'mauve', 'amber', 'fern', 'blush', 'olive']
 
 accentColors.terracotta
-// { main: '#c46a3a', fg: '#fbf8f0', light: '#c46a3a', dark: '#d97a4a' }
+// { main: '#c46a3a', light: '#e6895a', deep: '#a05526', fg: '#fbf8f0', fgDark: '#14130f' }
 ```
 
-Each accent has a `main` colour (light-mode) and per-theme variants with an appropriate `fg` (foreground on that background).
+Each accent has a `main` fill (light mode), a `light` fill (dark mode), a `deep` step for pressed states, and the text that sits on each fill: `fg` on `main`, `fgDark` on `light`.
 
 ---
 
@@ -169,10 +169,10 @@ Light and dark colour maps keyed to the same semantic names used in CSS vars.
 import { lightTokens, darkTokens } from 'achery-ui/tokens'
 import type { SemanticTokens } from 'achery-ui/tokens'
 
-lightTokens.color.bg       // '#fbf8f0'
-lightTokens.color.accent   // '#c46a3a'
-darkTokens.color.bg        // '#14130f'
-darkTokens.color.accent    // '#d97a4a'
+lightTokens.bg       // '#fbf8f0'
+lightTokens.accent   // '#c46a3a'
+darkTokens.bg        // '#14130f'
+darkTokens.accent    // '#e6895a'
 ```
 
-These are the same values bound to CSS custom properties by `AcheryProvider`. Use them in non-browser contexts (React Native StyleSheet, email templates, etc.) where CSS vars are not available.
+These are the same values bound to CSS custom properties by `AcheryProvider` (the theme stylesheets are built from them). Use them in non-browser contexts (React Native StyleSheet, email templates, etc.) where CSS vars are not available.

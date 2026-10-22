@@ -19,7 +19,7 @@ const { theme, toggleTheme, accent, setAccent } = useTheme()
 ```
 
 `defaultTheme`: `'light' | 'dark' | 'system'`  
-`defaultAccent`: `'terracotta' | 'moss' | 'plum' | 'ochre' | 'rust' | 'copper' | 'slate' | 'verdigris' | 'mauve' | 'amber' | 'fern' | 'blush' | 'olive'`  
+`defaultAccent`: `'terracotta' | 'moss' | 'plum' | 'ochre' | 'rust' | 'copper' | 'slate' | 'woad' | 'verdigris' | 'mauve' | 'amber' | 'fern' | 'blush' | 'olive'` (`olive` is a legacy alias of `moss`)  
 `defaultDial`: `'underline' | 'chrome' | 'surface'` — how loudly the accent runs (default `'chrome'`)  
 `defaultMaterial`: `'none' | 'leather' | 'wood' | 'copper'` — hero material signature for contained objects  
 `defaultSurfaceOrigin`: `'web-first' | 'native-first' | 'parity' | 'native-only'` — adaptation ladder direction (default `'web-first'`)
@@ -996,7 +996,7 @@ signatures. `'system'` follows the OS appearance live.
 import { NativeThemeProvider, useTheme } from 'achery-ui/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-<NativeThemeProvider defaultMode="system" defaultAccent="olive" storage={AsyncStorage}>
+<NativeThemeProvider defaultMode="system" defaultAccent="moss" storage={AsyncStorage}>
   <App />
 </NativeThemeProvider>
 

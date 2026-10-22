@@ -27,17 +27,18 @@ export const accentColors: Record<AccentColor, {
   plum: {
     main: palette.plum,
     light: palette.plumLight,
-    deep: palette.plum,
+    deep: palette.plumDeep,
     fg: palette.paper,
     fgDark: palette.inkDeep,
   },
   ochre: {
     main: palette.ochre,
-    light: palette.goldLight,
-    deep: palette.goldDeep,
+    light: palette.ochreLight,
+    deep: palette.ochreDeep,
     fg: palette.ink,
     fgDark: palette.ink,
   },
+  // Held at the previous values until the design system settles rust-light (see palette.ts)
   rust: {
     main: palette.rust,
     light: palette.terracotta,
@@ -56,6 +57,13 @@ export const accentColors: Record<AccentColor, {
     main: palette.slate,
     light: palette.slateLight,
     deep: palette.slateDeep,
+    fg: palette.paper,
+    fgDark: palette.inkDeep,
+  },
+  woad: {
+    main: palette.woad,
+    light: palette.woadLight,
+    deep: palette.woadDeep,
     fg: palette.paper,
     fgDark: palette.inkDeep,
   },
@@ -94,6 +102,7 @@ export const accentColors: Record<AccentColor, {
     fg: palette.paper,
     fgDark: palette.inkDeep,
   },
+  // Legacy alias of moss (palette.olive* are moss's values)
   olive: {
     main: palette.olive,
     light: palette.oliveLight,

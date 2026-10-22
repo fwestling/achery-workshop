@@ -1,13 +1,14 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { style } from '@vanilla-extract/css'
 import { vars } from '../../theme/vars.css'
+import { palette } from '../../tokens/palette'
 
 const toneColors = {
-  moss:    { bg: '#4a5a32', fg: vars.color.bg },
-  rust:    { bg: '#8a3a22', fg: vars.color.bg },
-  ochre:   { bg: '#b8924a', fg: vars.color.bg },
-  plum:    { bg: '#5d4a6a', fg: vars.color.bg },
-  copper:  { bg: '#b8742a', fg: vars.color.bg },
+  moss:    { bg: palette.moss, fg: vars.color.bg },
+  rust:    { bg: palette.rust, fg: vars.color.bg },
+  ochre:   { bg: palette.ochre, fg: vars.color.bg },
+  plum:    { bg: palette.plum, fg: vars.color.bg },
+  copper:  { bg: palette.copper, fg: vars.color.bg },
   neutral: { bg: vars.color.bg2, fg: vars.color.fg },
 } as const
 

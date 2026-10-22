@@ -2,40 +2,44 @@ import { createGlobalTheme } from '@vanilla-extract/css'
 import { vars } from './vars.css'
 import { fontFamilies } from '../tokens/typography'
 import { chartColors } from '../tokens/chart'
+import { palette } from '../tokens/palette'
+import { lightTokens } from '../tokens/semantic'
 
+// Colours come from the token modules (shared with achery-ui/native), so the two never drift
+const t = lightTokens
 const chart = chartColors.light
 
 createGlobalTheme('[data-achery-root][data-theme="light"]', vars, {
   color: {
-    bg: '#fbf8f0',
-    bg2: '#f0e9d6',
-    bgSunken: '#e6dec5',
-    surface: '#fdfaf3',
-    surface2: '#f0e9d6',
-    fg: '#1f1d18',
-    fg2: '#4a463c',
-    fg3: '#6e6a5e',
-    fgMute: '#8a8576',
-    border: '#1f1d18',
-    border2: '#6e6a5e',
-    borderMute: '#b8ad94',
-    rule: '#14130f',
-    accent: '#c46a3a',
-    accentFg: '#fbf8f0',
-    accent2: '#4a5a32',
-    accent3: '#5d4a6a',
-    success: '#6ba03d',
-    warn: '#b8924a',
-    danger: '#8a3a22',
-    info: '#7a5e8a',
-    selectionBg: '#b8924a',
-    selectionFg: '#1f1d18',
-    // Material fallbacks — leather is the default signature; overridden by data-material or explicit CSS vars
-    material: '#6b3a26',
-    materialFg: '#fbf8f0',
-    materialBtnFg: '#1f1d18',
-    metal: '#c69a4a',
-    metalDeep: '#9a7430',
+    bg: t.bg,
+    bg2: t.bg2,
+    bgSunken: t.bgSunken,
+    surface: t.surface,
+    surface2: t.surface2,
+    fg: t.fg,
+    fg2: t.fg2,
+    fg3: t.fg3,
+    fgMute: t.fgMute,
+    border: t.border,
+    border2: t.border2,
+    borderMute: t.borderMute,
+    rule: t.rule,
+    accent: t.accent,
+    accentFg: t.accentFg,
+    accent2: t.accent2,
+    accent3: t.accent3,
+    success: t.success,
+    warn: t.warn,
+    danger: t.danger,
+    info: t.info,
+    selectionBg: t.selectionBg,
+    selectionFg: t.selectionFg,
+    // Material fallbacks — leather is the default signature; overridden by data-material (material.css.ts)
+    material: t.materialLeather,
+    materialFg: t.materialLeatherFg,
+    materialBtnFg: palette.ink,
+    metal: t.gold,
+    metalDeep: t.goldDeep,
   },
   chart: {
     series1: chart.series[0], series2: chart.series[1], series3: chart.series[2], series4: chart.series[3], series5: chart.series[4], series6: chart.series[5],

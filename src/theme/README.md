@@ -76,16 +76,16 @@ The `AppBar` component wraps this pattern into a pre-built UI — pass `onToggle
 
 ## Accent colours
 
-Twelve accent colours ship with the system. All values are hex throughout (palette, tokens, CSS) so React Native consumers work without conversion. Each accent automatically adjusts between light and dark themes — the light value is a richer, darker tone; the dark value is brighter for legibility.
+Fourteen accent colours ship with the system (thirteen hues, plus `olive` as a legacy alias of `moss`). All values are hex throughout (palette, tokens, CSS) so React Native consumers work without conversion. Each accent automatically adjusts between light and dark themes — the light value is a richer, darker tone; the dark value is brighter for legibility.
 
 **Original palette:**
 
 | Name | Light | Dark | Character |
 |---|---|---|---|
-| `terracotta` | `#c46a3a` | `#d97a4a` | Warm orange-red; the default |
-| `moss` | `#4a5a32` | `#8da866` | Deep green; earthy |
-| `plum` | `#5d4a6a` | `#8b6fa8` | Muted purple; considered |
-| `ochre` | `#b8924a` | `#e0bc70` | Golden yellow; warm |
+| `terracotta` | `#c46a3a` | `#e6895a` | Warm orange-red; the default |
+| `moss` | `#4a5a32` | `#718654` | Deep green; earthy |
+| `plum` | `#5e486d` | `#8c769e` | Muted purple; considered |
+| `ochre` | `#b8924a` | `#d6b676` | Golden yellow; warm |
 | `rust` | `#8a3a22` | `#c46a3a` | Deep red-brown; dramatic |
 | `copper` | `#b8742a` | `#d68f48` | Metallic amber; refined |
 
@@ -94,12 +94,13 @@ Twelve accent colours ship with the system. All values are hex throughout (palet
 | Name | Light | Dark | Character |
 |---|---|---|---|
 | `slate` | `#195a73` | `#5189a1` | Dusty steel blue |
-| `verdigris` | `#00685f` | `#3f9086` | Aged-copper teal |
+| `woad` | `#445282` | `#6f7eae` | Indigo; fills the gap between slate and plum |
+| `verdigris` | `#04665e` | `#3f9086` | Aged-copper teal |
 | `mauve` | `#76425b` | `#a56c87` | Dusty rose |
 | `amber` | `#9a6839` | `#be8c61` | Warm amber-gold |
 | `fern` | `#36643e` | `#618d67` | Cool conservatory green |
 | `blush` | `#955c63` | `#bc848a` | Dusty warm rose |
-| `olive` | `#5a5a2a` | `#8a8a52` | Muted drab yellow-green |
+| `olive` | `#4a5a32` | `#718654` | Legacy alias of `moss`; prefer `moss` |
 
 ---
 

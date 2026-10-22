@@ -22,7 +22,7 @@ export type ResolvedTheme = 'light' | 'dark'
  */
 export type AccentColor =
   | 'terracotta' | 'moss' | 'plum' | 'ochre' | 'rust' | 'copper'
-  | 'slate' | 'verdigris' | 'mauve' | 'amber' | 'fern' | 'blush'
+  | 'slate' | 'woad' | 'verdigris' | 'mauve' | 'amber' | 'fern' | 'blush'
   | 'olive'
 
 export type AccentDial = 'underline' | 'chrome' | 'surface'

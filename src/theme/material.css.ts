@@ -23,6 +23,7 @@
 
 import { globalStyle } from '@vanilla-extract/css'
 import { vars } from './vars.css'
+import { palette } from '../tokens/palette'
 
 // ---------------------------------------------------------------------------
 // Signature presets — override the CSS vars when data-material is set
@@ -30,30 +31,30 @@ import { vars } from './vars.css'
 
 globalStyle('[data-achery-root][data-material="leather"]', {
   vars: {
-    [vars.color.material]: '#6b3a26',
-    [vars.color.materialFg]: '#fbf8f0',
-    [vars.color.materialBtnFg]: '#1f1d18',
-    [vars.color.metal]: '#c69a4a',
-    [vars.color.metalDeep]: '#9a7430',
+    [vars.color.material]: palette.leather,
+    [vars.color.materialFg]: palette.paper,
+    [vars.color.materialBtnFg]: palette.ink,
+    [vars.color.metal]: palette.gold,
+    [vars.color.metalDeep]: palette.goldDeep,
   },
 })
 
 globalStyle('[data-achery-root][data-material="wood"]', {
   vars: {
-    [vars.color.material]: '#7a5a3a',
-    [vars.color.materialFg]: '#fbf8f0',
-    [vars.color.materialBtnFg]: '#1f1d18',
-    [vars.color.metal]: '#c8c0b6',
-    [vars.color.metalDeep]: '#6e6a62',
+    [vars.color.material]: palette.wood,
+    [vars.color.materialFg]: palette.paper,
+    [vars.color.materialBtnFg]: palette.ink,
+    [vars.color.metal]: palette.silverLight,
+    [vars.color.metalDeep]: palette.silverDeep,
   },
 })
 
 globalStyle('[data-achery-root][data-material="copper"]', {
   vars: {
-    [vars.color.material]: '#b8742a',
-    [vars.color.materialFg]: '#1f1d18',
-    [vars.color.materialBtnFg]: '#fbf8f0',
-    [vars.color.metal]: '#5a7a6a',
+    [vars.color.material]: palette.copper,
+    [vars.color.materialFg]: palette.ink,
+    [vars.color.materialBtnFg]: palette.paper,
+    [vars.color.metal]: palette.copperPatina,
     [vars.color.metalDeep]: '#46604f',
   },
 })
@@ -61,19 +62,19 @@ globalStyle('[data-achery-root][data-material="copper"]', {
 // Dark-mode gilt adjustment — keep metals legible on dark paper bodies
 globalStyle(':root[data-theme="dark"] [data-material="leather"], [data-achery-root][data-theme="dark"] [data-material="leather"]', {
   vars: {
-    [vars.color.metalDeep]: '#e0bc70',
+    [vars.color.metalDeep]: palette.goldLight,
   },
 })
 
 globalStyle(':root[data-theme="dark"] [data-material="wood"], [data-achery-root][data-theme="dark"] [data-material="wood"]', {
   vars: {
-    [vars.color.metalDeep]: '#c8c0b6',
+    [vars.color.metalDeep]: palette.silverLight,
   },
 })
 
 globalStyle(':root[data-theme="dark"] [data-material="copper"], [data-achery-root][data-theme="dark"] [data-material="copper"]', {
   vars: {
-    [vars.color.metalDeep]: '#5a7a6a',
+    [vars.color.metalDeep]: palette.copperPatina,
   },
 })
 

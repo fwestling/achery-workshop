@@ -2,6 +2,7 @@ import type { Preview, Decorator } from '@storybook/react'
 import React from 'react'
 import { AcheryProvider } from '../src/theme/ThemeProvider'
 import type { AccentColor, ThemeMode, MaterialSignature } from '../src/types/theme'
+import { accentColorNames } from '../src/tokens/accents'
 
 const preview: Preview = {
   tags: ['autodocs'],
@@ -23,14 +24,8 @@ const preview: Preview = {
       defaultValue: 'terracotta',
       toolbar: {
         icon: 'paintbrush',
-        items: [
-          { value: 'terracotta', title: 'Terracotta' },
-          { value: 'moss', title: 'Moss' },
-          { value: 'plum', title: 'Plum' },
-          { value: 'ochre', title: 'Ochre' },
-          { value: 'rust', title: 'Rust' },
-          { value: 'copper', title: 'Copper' },
-        ],
+        // Every accent the tokens define, so new ones appear here without a second list to maintain
+        items: accentColorNames.map((name) => ({ value: name, title: name[0].toUpperCase() + name.slice(1) })),
         dynamicTitle: true,
       },
     },

@@ -12,10 +12,10 @@ import { palette, spacing, fontFamilies, shadows } from 'achery-ui/tokens'
 
 ## Colour palette
 
-Raw colour values as hex strings. Grouped into families: `parchment`, `fog`, `stone`, `ink`, plus each accent family.
+Raw colour values as hex strings, from the Achery design system. Grouped into families: `ink`, `paper`, `cream`, each accent family, and the materials.
 
 ```ts
-palette.parchment   // '#fbf8f0'  — primary background (light)
+palette.paper       // '#fbf8f0'  — primary background (light)
 palette.ink         // '#1f1d18'  — primary foreground (light)
 palette.terracotta  // '#c46a3a'  — default accent
 ```
@@ -26,10 +26,10 @@ palette.terracotta  // '#c46a3a'  — default accent
 import { accentColors, accentColorNames } from 'achery-ui/tokens'
 
 accentColorNames
-// ['terracotta', 'moss', 'plum', 'ochre', 'rust', 'copper']
+// ['terracotta', 'moss', 'plum', 'ochre', 'rust', 'copper', 'slate', 'woad', 'verdigris', 'mauve', 'amber', 'fern', 'blush', 'olive']
 
 accentColors.terracotta
-// { main: '#c46a3a', fg: '#fbf8f0' }
+// { main: '#c46a3a', light: '#e6895a', deep: '#a05526', fg: '#fbf8f0', fgDark: '#14130f' }
 ```
 
 ## Spacing
@@ -105,8 +105,8 @@ Light and dark colour maps — useful in non-browser contexts where CSS vars are
 ```ts
 import { lightTokens, darkTokens } from 'achery-ui/tokens'
 
-lightTokens.color.bg      // '#fbf8f0'
-lightTokens.color.accent  // '#c46a3a'
-darkTokens.color.bg       // '#14130f'
-darkTokens.color.accent   // '#d97a4a'
+lightTokens.bg      // '#fbf8f0'
+lightTokens.accent  // '#c46a3a'
+darkTokens.bg       // '#14130f'
+darkTokens.accent   // '#e6895a'
 ```

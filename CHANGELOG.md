@@ -11,6 +11,31 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.23.0] - 2026-10-22
+
+Colours now follow the Achery design system's `tokens.json`. Error colours (`danger`, and the `rust` palette and accent it comes from) are held at their previous values until the design system's dark `danger` (rust-light) lands.
+
+### Added
+- `woad` accent: indigo, between `slate` and `plum`
+- Palette steps from the design system: `plumDeep`, `ochreDeep`, `ochreLight`, `oliveMid`, `leatherDeep`, and `woad`, `woadDeep`, `woadLight`
+
+### Changed
+- Dark theme: `accent` (terracotta) is now `#e6895a`; `accent2` and dark selection (moss-light) `#718654`; `accent3` (plum-light) `#8c769e`; `success` is `#6ba03d` in both themes
+- `info` (plum-mid) is `#755e85`; `accent3` (plum) `#5e486d`
+- Moss: `mossDeep` `#31411b`, `mossMid` `#5f7043`, `mossLight` `#718654` (was `#8da866`), so the `moss` accent, `accent2` and selection are quieter in dark mode (4.6:1 on the dark background)
+- Gilt (the leather material's metal): `gold` `#dbb73f`, `goldDeep` `#9c7b22`, `goldLight` `#f1d680`
+- `ochre` accent: dark fill `#d6b676` and deep step from the new ochre steps (were borrowed from gold)
+- `plum` accent: its deep step is now `plumDeep` (was plum itself)
+- `slateDeep`, `verdigris` and `verdigrisDeep` move by a hair to the exact sRGB of the design system's OKLCH values
+- `olive` is now a legacy alias of `moss` (the yellow olive is retired); prefer `moss`
+- The web theme's colours (`light.css`, `dark.css`, the accents and the leather material) are built from the token modules native already uses, instead of separate copies of each value
+- Storybook's accent toolbar lists every accent
+
+### Fixed
+- Token docs: `palette.parchment` and `lightTokens.color.*` didn't exist (`palette.paper`, `lightTokens.bg`), and the accent lists and `accentColors` shape were out of date
+
+---
+
 ## [0.22.0] - 2026-10-20
 
 ### Added
@@ -622,7 +647,8 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.22.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.23.0...HEAD
+[0.23.0]: https://github.com/fwestling/achery-workshop/compare/v0.22.0...v0.23.0
 [0.22.0]: https://github.com/fwestling/achery-workshop/compare/v0.21.3...v0.22.0
 [0.21.3]: https://github.com/fwestling/achery-workshop/compare/v0.21.2...v0.21.3
 [0.21.2]: https://github.com/fwestling/achery-workshop/compare/v0.21.1...v0.21.2

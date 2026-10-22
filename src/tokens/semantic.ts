@@ -71,8 +71,9 @@ export const darkTokens = {
   accent2: palette.mossLight,
   accent3: palette.plumLight,
 
-  success: '#7fba4a',
+  success: palette.success,
   warn: palette.ochre,
+  // Held until the design system's dark `danger` (rust-light) lands — see palette.ts
   danger: palette.terracotta,
   info: palette.plumMid,
 
