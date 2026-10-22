@@ -12,7 +12,7 @@ const meta: Meta = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'Searchable reference for all 394 glyphs + 3 brand marks in the Achery icon set. Type to filter by name, label, or alias.',
+        component: 'Searchable reference for all 397 glyphs in the Achery icon set. Type to filter by name, label, or alias.',
       },
     },
   },

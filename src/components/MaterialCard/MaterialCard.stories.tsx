@@ -101,7 +101,7 @@ export const LeatherSignature: Story = {
     children: (
       <>
         <Eyebrow>Signature · leather</Eyebrow>
-        <Body>Warm brown, gold metal. Set via the Material toolbar picker or AcheryProvider.</Body>
+        <Body>Cordovan leather, gilt metal. Set via the Material toolbar picker or AcheryProvider.</Body>
       </>
     ),
   },
@@ -115,7 +115,7 @@ export const WoodSignature: Story = {
     children: (
       <>
         <Eyebrow>Signature · wood</Eyebrow>
-        <Body>Tan brown, copper metal. Set via the Material toolbar picker or AcheryProvider.</Body>
+        <Body>Walnut, silver (pewter) metal. Set via the Material toolbar picker or AcheryProvider.</Body>
       </>
     ),
   },
@@ -129,7 +129,7 @@ export const CopperSignature: Story = {
     children: (
       <>
         <Eyebrow>Signature · copper</Eyebrow>
-        <Body>Warm orange-brown, silver metal. Set via the Material toolbar picker or AcheryProvider.</Body>
+        <Body>Oxidised copper, patina metal. Set via the Material toolbar picker or AcheryProvider.</Body>
       </>
     ),
   },

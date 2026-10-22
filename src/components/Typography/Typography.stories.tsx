@@ -7,7 +7,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Four components covering the full type scale. `Display` uses IM Fell English (serif) for editorial headings. `Heading` renders the correct `<h1>`–`<h5>` element at the matching size. `Body` handles paragraph text in three sizes. `Mono` renders Space Mono for code, measurements, and IDs.',
+        component: 'Four components covering the full type scale. `Display` uses Roboto Slab, the heavy display slab, for the shop-sign moments. `Heading` renders the correct `<h1>`–`<h5>` element at the matching size. `Body` handles paragraph text in three sizes. `Mono` renders JetBrains Mono for code, measurements, and IDs.',
       },
     },
   },

@@ -11,7 +11,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '394 SVG icons + 3 brand marks drawn in the vocabulary of alchemical and botanical illustration. All use `stroke="currentColor"` — they inherit colour from context. Decorative by default (`aria-hidden`); pass `title` for semantic use in icon-only buttons. See the **GlyphGallery** story for a searchable reference.',
+        component: '397 SVG glyphs drawn in the vocabulary of alchemical and botanical illustration. All use `stroke="currentColor"` — they inherit colour from context. Decorative by default (`aria-hidden`); pass `title` for semantic use in icon-only buttons. See the **GlyphGallery** story for a searchable reference.',
       },
     },
   },

@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.24.1] - 2026-10-22
+
+### Fixed
+- Modal: the description was wired with a fixed `id="modal-description"`, overriding Radix's own. Two dialogs open at once (a ConfirmDialog over a Modal) shared the id, and Radix warned that the description was missing. Radix now links it; a Modal without a description opts out explicitly
+
+---
+
 ## [0.24.0] - 2026-10-22
 
 The glyph once called `mark` gets an honest name, and three link-styling fixes found while building workshop.achery.dev.
@@ -695,7 +702,8 @@ Colours now follow the Achery design system's `tokens.json`. Error colours (`dan
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.24.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.24.1...HEAD
+[0.24.1]: https://github.com/fwestling/achery-workshop/compare/v0.24.0...v0.24.1
 [0.24.0]: https://github.com/fwestling/achery-workshop/compare/v0.23.2...v0.24.0
 [0.23.2]: https://github.com/fwestling/achery-workshop/compare/v0.23.1...v0.23.2
 [0.23.1]: https://github.com/fwestling/achery-workshop/compare/v0.23.0...v0.23.1

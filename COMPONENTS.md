@@ -879,6 +879,126 @@ Also available as a native component via `achery-ui/native`.
 
 ---
 
+## ConfirmDialog
+
+Promise-based yes/no dialog. Mount `ConfirmDialogProvider` once, then `await confirm({...})` anywhere below it: `true` on confirm, `false` on cancel or dismiss. Built on `Modal`.
+
+```tsx
+import { ConfirmDialogProvider, useConfirm } from 'achery-ui'
+
+<ConfirmDialogProvider>
+  <App />
+</ConfirmDialogProvider>
+
+const confirm = useConfirm()
+if (await confirm({ title: 'Delete task?', message: "This can't be undone.", confirmLabel: 'Delete', destructive: true })) {
+  await deleteTask(id)
+}
+```
+
+| Option | Type | Default | Notes |
+|---|---|---|---|
+| `message` | `ReactNode` | — | Required. The body text |
+| `title` | `ReactNode` | — | |
+| `confirmLabel` | `string` | `'Confirm'` | |
+| `cancelLabel` | `string` | `'Cancel'` | |
+| `confirmVariant` | `'accent' \| 'secondary' \| 'ghost'` | `'accent'` | Ignored when `destructive` |
+| `destructive` | `boolean` | `false` | Confirm uses Button's `danger` variant |
+
+`useConfirm()` throws outside a `ConfirmDialogProvider`.
+
+---
+
+## GlyphPicker
+
+A trigger button that opens a searchable popover of every glyph in `GlyphCategories`, grouped by category. Search uses `searchGlyphs`.
+
+```tsx
+import { GlyphPicker } from 'achery-ui'
+
+<GlyphPicker value={glyph} onChange={setGlyph} />
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `value` | `GlyphName` | — | `undefined` for none |
+| `onChange` | `(name: GlyphName \| undefined) => void` | — | Picking the selected glyph again clears it |
+| `placeholder` | `string` | `'Pick a glyph…'` | Also the trigger's accessible name when empty |
+| `clearable` | `boolean` | `true` | Shows a clear button in the trigger when a value is set |
+| `disabled` | `boolean` | — | |
+| `className` | `string` | — | |
+
+---
+
+## MaterialCard
+
+A contained surface wearing the project's material signature, for objects that *arrive*: dialogs, a featured card, a receipt. The working page stays paper and ink. The signature comes from `<AcheryProvider defaultMaterial="leather | wood | copper">`; `intensity` sets how loudly this object wears it.
+
+```tsx
+import { MaterialCard } from 'achery-ui'
+
+<MaterialCard intensity="surface" header="Close the month" footer={<Button>Bind & archive</Button>}>
+  <Body>Seal the ledger and file it to the archive.</Body>
+</MaterialCard>
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `intensity` | `'chrome' \| 'surface' \| 'full'` | `'chrome'` | Spine and trim on paper · a material header band · the whole object (rare moments) |
+| `header` | `ReactNode` | — | The bar at the top; a string becomes its title |
+| `footer` | `ReactNode` | — | Below a rule; usually actions |
+| `children` | `ReactNode` | — | |
+
+Also accepts `div` attributes. Signatures and intensities side by side: [workshop.achery.dev/materials](https://workshop.achery.dev/materials).
+
+---
+
+## ProgressBar
+
+A determinate bar from 0 to 100, with `role="progressbar"` and its value exposed.
+
+```tsx
+import { ProgressBar } from 'achery-ui'
+
+<ProgressBar value={62} tone="accent" />
+<ProgressBar value={0} loading />
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `value` | `number` | — | Required. Clamped to 0–100 |
+| `size` | `'sm' \| 'md'` | `'md'` | Track height |
+| `tone` | `'neutral' \| 'accent'` | `'neutral'` | Fill colour |
+| `loading` | `boolean` | `false` | Renders a `Skeleton` the height of the track instead |
+| `className` | `string` | — | |
+
+It takes no accessible name: there's no `aria-label` prop. Label it with visible text nearby.
+
+---
+
+## Skeleton
+
+Placeholder for content that's loading: one or more lines, or a block. Hidden from assistive technology (`aria-hidden`), so announce loading some other way.
+
+```tsx
+import { Skeleton } from 'achery-ui'
+
+<Skeleton lines={3} width={['100%', '90%', '60%']} />
+<Skeleton block height="120px" />
+<Skeleton width="32px" style={{ height: '32px', borderRadius: '50%' }} />
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `lines` | `number` | `1` | Stacked with a small gap |
+| `width` | `string \| string[]` | `'100%'` | One width for every line, or one per line |
+| `block` | `boolean` | `false` | A tall rectangle instead of lines |
+| `height` | `string` | — | Block height; ignored without `block` |
+| `style` | `CSSProperties` | — | Shape overrides |
+| `className` | `string` | — | |
+
+---
+
 ## React Native (`achery-ui/native`)
 
 A subset of components available for React Native via `achery-ui/native`. Uses React Native's `StyleSheet` system and `SemanticTokens` directly — no vanilla-extract, no CSS.

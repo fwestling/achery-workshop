@@ -98,7 +98,9 @@ export function Modal({
         <RadixDialog.Overlay className={styles.overlay} />
         <RadixDialog.Content
           className={[styles.contentSized({ size }), className].filter(Boolean).join(' ')}
-          aria-describedby={description ? 'modal-description' : undefined}
+          // Radix links Description to the content with its own generated id; without a description,
+          // passing undefined is Radix's documented way to say "no description" (no console warning)
+          {...(description ? {} : { 'aria-describedby': undefined })}
         >
           <div className={styles.header}>
             <div>
@@ -106,7 +108,7 @@ export function Modal({
                 <RadixDialog.Title className={styles.title}>{title}</RadixDialog.Title>
               )}
               {description && (
-                <RadixDialog.Description id="modal-description" className={styles.description}>
+                <RadixDialog.Description className={styles.description}>
                   {description}
                 </RadixDialog.Description>
               )}

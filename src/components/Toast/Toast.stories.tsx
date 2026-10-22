@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { ToastProvider, useToast } from './Toast'
 import { Button } from '../Button/Button'
-import { AcheryProvider } from '../../theme/ThemeProvider'
 
 function ToastDemo() {
   const { toast } = useToast()
