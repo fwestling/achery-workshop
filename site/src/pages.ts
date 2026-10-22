@@ -1,6 +1,6 @@
 import type { GlyphName } from 'achery-ui'
-import { componentDocs } from './content'
-import { COMPONENTS } from './stories/registry'
+import { componentDocs, nativeComponentDocs } from './content'
+import { COMPONENTS, NATIVE_COMPONENTS } from './stories/registry'
 
 export type PageId =
   | 'home'
@@ -14,6 +14,7 @@ export type PageId =
   | 'charts'
   | 'glyphs'
   | 'components'
+  | 'native'
   | 'component'
 
 export interface PageDef {
@@ -27,8 +28,8 @@ export interface PageDef {
   /** Sidebar group */
   group: string
   glyph?: GlyphName
-  /** For a component page: which component (its registry slug) */
-  componentSlug?: string
+  /** For a component page: which component (web or native) */
+  componentPath?: string
 }
 
 const SUFFIX = ' — Achery Workshop'
@@ -143,11 +144,32 @@ PAGES.push(
   ...COMPONENTS.map((c) =>
     page({
       id: 'component',
-      path: `/components/${c.slug}`,
+      path: c.path,
       description: firstSentence(c.description ?? componentDocs(c.sections)) || `The ${c.name} component.`,
       label: c.name,
       group: 'Components',
-      componentSlug: c.slug,
+      componentPath: c.path,
+    }),
+  ),
+  page({
+    id: 'native',
+    path: '/native',
+    title: `React Native${SUFFIX}`,
+    description: `Setup, accessibility and theming for achery-ui/native, and its ${NATIVE_COMPONENTS.length} components.`,
+    label: 'Setup',
+    group: 'React Native',
+    glyph: 'smartphone',
+  }),
+  ...NATIVE_COMPONENTS.map((c) =>
+    page({
+      id: 'component',
+      path: c.path,
+      title: `${c.name} (native)${SUFFIX}`,
+      description:
+        firstSentence(c.description ?? nativeComponentDocs(c.docKey)) || `The native ${c.name} component.`,
+      label: c.name,
+      group: 'React Native',
+      componentPath: c.path,
     }),
   ),
 )

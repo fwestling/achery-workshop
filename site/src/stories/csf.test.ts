@@ -2,9 +2,9 @@ import { readFileSync } from 'node:fs'
 import { createElement, type ComponentType } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
-import { componentDocs, sectionByHeading } from '../content'
+import { componentDocs, nativeComponentDocs, sectionByHeading } from '../content'
 import { composeStory, parseStorySources, storyExports, storyNameFromExport, type StoryMeta } from './csf'
-import { COMPONENTS } from './registry'
+import { COMPONENTS, NATIVE_COMPONENTS } from './registry'
 
 const storyFiles = Object.keys(import.meta.glob('../../../src/**/*.stories.tsx')).map((rel) =>
   readFileSync(new URL(rel, import.meta.url), 'utf8'),
@@ -101,6 +101,15 @@ describe('achery-ui stories', () => {
 
   it('every component page has COMPONENTS.md documentation', () => {
     expect(COMPONENTS.filter((c) => !componentDocs(c.sections)).map((c) => c.name)).toEqual([])
+  })
+
+  it('every native page has a row in COMPONENTS.md\'s React Native table', () => {
+    expect(NATIVE_COMPONENTS.filter((c) => !nativeComponentDocs(c.docKey).startsWith('| Component')).map((c) => c.name)).toEqual([])
+  })
+
+  it('give every native page a unique path', () => {
+    const paths = NATIVE_COMPONENTS.map((c) => c.path)
+    expect(new Set(paths).size).toBe(paths.length)
   })
 })
 

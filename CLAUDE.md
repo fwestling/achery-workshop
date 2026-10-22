@@ -159,6 +159,11 @@ published to npm and isn't in the package's `files`.
 
 - **Renders the library from source.** `site/vite.config.ts` aliases `achery-ui` → `../src` and runs the
   vanilla-extract plugin, so a docs change ships with the code it describes.
+- **Component pages are the stories.** Each web component's page renders its `*.stories.tsx`; each React
+  Native component's page renders `src/native/components/<Name>.stories.tsx` through react-native-web.
+  Native stories stay out of this repo's Storybook (web only; see `.storybook/main.ts`) and out of the npm
+  package (`src/native/.npmignore`). A new component needs a story to get a page, and a `COMPONENTS.md`
+  section (web) or a row in its React Native table (native) for its API.
 - **No duplicated docs.** Pages render the repo's own docs (`src/docs/*.mdx`, stories, token modules,
   `COMPONENTS.md`). Fix content at its source, not in `site/`.
 - **Design-system copy:** `site/src/data/design-system-tokens.json` is a verbatim copy of the design system

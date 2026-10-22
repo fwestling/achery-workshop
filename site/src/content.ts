@@ -91,6 +91,32 @@ export const componentDocs = (titles: readonly string[]): string =>
     .filter(Boolean)
     .join('\n\n')
 
+const NATIVE_HEADING = 'React Native (`achery-ui/native`)'
+const nativeMd = () => sectionByHeading(componentsMd, NATIVE_HEADING)
+
+/**
+ * A native component's documentation: its row of the "Available components" table, then its own
+ * `### \`Name\` … (native)` section if it has one. `key` is the backticked name the row starts with.
+ */
+export const nativeComponentDocs = (key: string): string => {
+  const native = nativeMd()
+  const lines = native.split('\n')
+  const row = lines.find((l) => l.startsWith(`| \`${key}\``))
+  const heading = lines.find((l) => /^###\s/.test(l) && l.includes(`\`${key}\``) && /\(native\)\s*$/.test(l))
+  const section = heading ? sectionByHeading(native, heading.replace(/^###\s+/, '').trim()) : ''
+  return [row ? `| Component | Notes |\n|---|---|\n${row}` : '', section].filter(Boolean).join('\n\n')
+}
+
+/** The native overview: COMPONENTS.md's React Native intro, setup, accessibility and theme provider. */
+export const nativeOverviewDocs = (): string => {
+  const native = nativeMd()
+  const intro = native.slice(0, native.search(/^###\s/m)).trim()
+  const parts = ['Setup', 'Accessibility', '`NativeThemeProvider` / `useTheme` (native)'].map(
+    (title) => `## ${title.replace(' (native)', '')}\n\n${sectionByHeading(native, title)}`,
+  )
+  return [intro, ...parts].join('\n\n')
+}
+
 /** Drops a section's own `## <title>` line, for pages that set their own headings around it. */
 export const withoutHeading = (md: string): string => md.replace(/^##\s+.+\n+/, '')
 

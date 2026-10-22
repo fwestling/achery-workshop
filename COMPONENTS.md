@@ -1003,6 +1003,8 @@ import { Skeleton } from 'achery-ui'
 
 A subset of components available for React Native via `achery-ui/native`. Uses React Native's `StyleSheet` system and `SemanticTokens` directly — no vanilla-extract, no CSS.
 
+Live examples of each, rendered through react-native-web: [workshop.achery.dev/native](https://workshop.achery.dev/native).
+
 ### Setup
 
 ```sh

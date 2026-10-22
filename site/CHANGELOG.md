@@ -11,6 +11,16 @@ is the library's tag and triggers the npm release.
 
 ---
 
+## [0.4.0] - 2026-10-22
+
+### Added
+- React Native: a setup page (from COMPONENTS.md's React Native section) and one page per native component (27), rendering stories from `src/native/components/*.stories.tsx` through react-native-web, inside `NativeThemeProvider` with the preview settings applied
+- Native API sections from each component's row of COMPONENTS.md's React Native table, and its own section where it has one
+- `virtual:native-story-index`: native titles and descriptions read from the story files at build time (TypeScript AST), so react-native-web loads only on native pages; a test checks it against the real metas
+- Site-only stand-ins for the native glyph loader (it require()s .svg files for Metro) and for React Native's `codegenNativeComponent`
+
+---
+
 ## [0.3.0] - 2026-10-22
 
 ### Added
@@ -50,7 +60,8 @@ is the library's tag and triggers the npm release.
 - Home page: version, links to npm and GitHub, and `src/docs/GettingStarted.mdx` rendered as the page body
 - Docker image (nginx), `checks.yml` and `site-deploy.yml` workflows, compose block and `DEPLOY.md`
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.3.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.4.0...HEAD
+[0.4.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.3.0...site-v0.4.0
 [0.3.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.2.0...site-v0.3.0
 [0.2.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.1.0...site-v0.2.0
 [0.1.0]: https://github.com/fwestling/achery-workshop/releases/tag/site-v0.1.0

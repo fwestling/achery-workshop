@@ -13,6 +13,7 @@ import { Space } from './pages/foundations/Space'
 import { Typography } from './pages/foundations/Typography'
 import { ComponentIndex } from './pages/components/ComponentIndex'
 import { ComponentPage } from './pages/components/ComponentPage'
+import { NativeIndex } from './pages/components/NativeIndex'
 import { findPage, type PageDef, type PageId } from './pages'
 
 const PAGE_COMPONENTS: Record<Exclude<PageId, 'component'>, ComponentType> = {
@@ -27,11 +28,12 @@ const PAGE_COMPONENTS: Record<Exclude<PageId, 'component'>, ComponentType> = {
   charts: Charts,
   glyphs: Glyphs,
   components: ComponentIndex,
+  native: NativeIndex,
 }
 
 const PageBody = ({ page }: { page: PageDef | undefined }) => {
   if (!page) return <NotFound />
-  if (page.id === 'component') return <ComponentPage slug={page.componentSlug ?? ''} />
+  if (page.id === 'component') return <ComponentPage path={page.componentPath ?? page.path} />
   const Page = PAGE_COMPONENTS[page.id]
   return <Page />
 }

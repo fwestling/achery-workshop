@@ -1,8 +1,17 @@
-import { Component, useMemo, useState, type ErrorInfo, type ReactNode } from 'react'
-import { Button, type AccentColor, type AccentDial, type MaterialSignature } from 'achery-ui'
+import { Component, useMemo, useState, type ComponentType, type ErrorInfo, type ReactNode } from 'react'
+import { Button, useTheme, type AccentColor, type AccentDial, type MaterialSignature } from 'achery-ui'
 import { composeStory, type StoryAnnotations, type StoryMeta, type StorySource } from '../stories/csf'
 import { InlineMd } from './Prose'
 import { ThemeScope } from './ThemeScope'
+
+/** What wraps each native story: NativeFrame, loaded only on native pages so react-native-web stays off the rest */
+export type NativeFrameComponent = ComponentType<{
+  theme: 'light' | 'dark'
+  accent: AccentColor
+  dial: AccentDial
+  material: MaterialSignature
+  children: ReactNode
+}>
 
 export interface PreviewSettings {
   /** `page` follows the site's own theme */
@@ -46,9 +55,12 @@ interface StoryPreviewProps {
   story: StoryAnnotations
   source: StorySource | undefined
   settings: PreviewSettings
+  /** Native pages pass their frame; web stories render bare */
+  NativeFrame?: NativeFrameComponent
 }
 
-export const StoryPreview = ({ id, name, meta, story, source, settings }: StoryPreviewProps) => {
+export const StoryPreview = ({ id, name, meta, story, source, settings, NativeFrame }: StoryPreviewProps) => {
+  const page = useTheme()
   const Story = useMemo(() => composeStory(meta, story), [meta, story])
   const [shown, setShown] = useState(() => !opensOnMount(source?.code ?? ''))
   const parameters = { ...meta.parameters, ...story.parameters }
@@ -70,7 +82,18 @@ export const StoryPreview = ({ id, name, meta, story, source, settings }: StoryP
       >
         {shown ? (
           <StoryBoundary name={name}>
-            <Story />
+            {NativeFrame ? (
+              <NativeFrame
+                theme={settings.theme === 'page' ? page.theme : settings.theme}
+                accent={settings.accent === 'page' ? page.accent : settings.accent}
+                dial={settings.dial === 'page' ? page.dial : settings.dial}
+                material={scopeMaterial}
+              >
+                <Story />
+              </NativeFrame>
+            ) : (
+              <Story />
+            )}
           </StoryBoundary>
         ) : (
           <div className="story__deferred">

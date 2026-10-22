@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { Eyebrow, Field, SegmentedControl, Select, type AccentColor, type AccentDial, type MaterialSignature } from 'achery-ui'
 import { accentColorNames } from 'achery-ui/tokens'
 import { SOURCE_URL } from '../../config'
-import { componentDocs, renderMarkdown } from '../../content'
+import { componentDocs, nativeComponentDocs, renderMarkdown } from '../../content'
 import { InlineMd } from '../../components/Prose'
-import { StoryPreview, type PreviewSettings } from '../../components/StoryPreview'
+import { StoryPreview, type NativeFrameComponent, type PreviewSettings } from '../../components/StoryPreview'
 import { parseStorySources, storyExports, storyNameFromExport, type StoryModule } from '../../stories/csf'
-import { findComponent, type ComponentEntry } from '../../stories/registry'
+import { findComponent, type ComponentEntry, type Platform } from '../../stories/registry'
 
 const THEMES: { value: PreviewSettings['theme']; label: string }[] = [
   { value: 'page', label: 'Page' },
@@ -21,7 +21,21 @@ const isAccent = (v: string): v is AccentColor => (accentColorNames as readonly 
 const isDial = (v: string): v is AccentDial => (DIALS as readonly string[]).includes(v)
 const isMaterial = (v: string): v is MaterialSignature => (MATERIALS as readonly string[]).includes(v)
 
-const Toolbar = ({ settings, onChange }: { settings: PreviewSettings; onChange: (s: PreviewSettings) => void }) => (
+const TOOLBAR_NOTE: Record<Platform, string> = {
+  web: "Pop-ups, menus and dialogs open in the page's theme.",
+  native:
+    "Rendered with react-native-web. Native components set no font family, so text is in the system font, as on a device. Sheets and dialogs fill the browser window, as they fill the screen.",
+}
+
+const Toolbar = ({
+  settings,
+  onChange,
+  platform,
+}: {
+  settings: PreviewSettings
+  onChange: (s: PreviewSettings) => void
+  platform: Platform
+}) => (
   <div className="preview-toolbar" role="group" aria-label="Preview settings">
     <div className="preview-toolbar__field">
       <span className="preview-toolbar__label" id="preview-theme">
@@ -80,11 +94,15 @@ const Toolbar = ({ settings, onChange }: { settings: PreviewSettings; onChange: 
         ))}
       </Select>
     </Field>
-    <p className="preview-toolbar__note">Pop-ups, menus and dialogs open in the page's theme.</p>
+    <p className="preview-toolbar__note">{TOOLBAR_NOTE[platform]}</p>
   </div>
 )
 
-type Loaded = { module: StoryModule; raw: string }
+type Loaded = { module: StoryModule; raw: string; NativeFrame?: NativeFrameComponent }
+
+/** A component page's API reference: its COMPONENTS.md section(s), web or native */
+export const componentApi = (entry: ComponentEntry): string =>
+  entry.platform === 'native' ? nativeComponentDocs(entry.docKey) : componentDocs(entry.sections)
 
 const Stories = ({ entry }: { entry: ComponentEntry }) => {
   const [loaded, setLoaded] = useState<Loaded | null>(null)
@@ -99,8 +117,12 @@ const Stories = ({ entry }: { entry: ComponentEntry }) => {
   // Stories load in the browser only: they're interactive, and some open portals the prerender can't
   useEffect(() => {
     let live = true
-    entry.load().then(
-      (l) => live && setLoaded(l),
+    const frame =
+      entry.platform === 'native'
+        ? import('../../native/NativeFrame').then((m) => m.NativeFrame)
+        : Promise.resolve(undefined)
+    Promise.all([entry.load(), frame]).then(
+      ([l, NativeFrame]) => live && setLoaded(NativeFrame ? { ...l, NativeFrame } : l),
       (e: unknown) => live && setFailed(e instanceof Error ? e.message : String(e)),
     )
     return () => {
@@ -119,7 +141,7 @@ const Stories = ({ entry }: { entry: ComponentEntry }) => {
   const stories = storyExports(loaded.module).sort(([a], [b]) => position(a) - position(b))
   return (
     <>
-      <Toolbar settings={settings} onChange={setSettings} />
+      <Toolbar settings={settings} onChange={setSettings} platform={entry.platform} />
       {stories.map(([key, story]) => (
         <StoryPreview
           key={key}
@@ -129,16 +151,17 @@ const Stories = ({ entry }: { entry: ComponentEntry }) => {
           story={story}
           source={sources.get(key)}
           settings={settings}
+          {...(loaded.NativeFrame ? { NativeFrame: loaded.NativeFrame } : {})}
         />
       ))}
     </>
   )
 }
 
-export const ComponentPage = ({ slug }: { slug: string }) => {
-  const entry = findComponent(slug)
+export const ComponentPage = ({ path }: { path: string }) => {
+  const entry = findComponent(path)
   if (!entry) return null
-  const api = renderMarkdown(componentDocs(entry.sections))
+  const api = renderMarkdown(componentApi(entry))
   return (
     <>
       <header className="page-intro">
@@ -165,7 +188,13 @@ export const ComponentPage = ({ slug }: { slug: string }) => {
       <section aria-labelledby="api">
         <h2 id="api">API</h2>
         <p className="section-lead">
-          From <code>COMPONENTS.md</code>.
+          From <code>COMPONENTS.md</code>
+          {entry.platform === 'native' && (
+            <>
+              ; setup for every native component is on <a href="/native">React Native</a>
+            </>
+          )}
+          .
         </p>
         <div className="doc" dangerouslySetInnerHTML={{ __html: api }} />
       </section>

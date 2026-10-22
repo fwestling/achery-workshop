@@ -4,7 +4,14 @@ import remarkGfm from 'remark-gfm'
 import svgr from 'vite-plugin-svgr'
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
+  // Web stories only. src/native has stories too, for React Native components; the documentation site
+  // renders those through react-native-web, which this Storybook isn't set up for.
+  stories: [
+    '../src/**/*.mdx',
+    '../src/components/**/*.stories.@(ts|tsx)',
+    '../src/glyphs/**/*.stories.@(ts|tsx)',
+    '../src/tokens/**/*.stories.@(ts|tsx)',
+  ],
   addons: [
     {
       name: '@storybook/addon-docs',
