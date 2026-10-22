@@ -12,13 +12,13 @@ export interface ConfirmOptions {
   message: ReactNode
   /** Label for the confirm button. @default 'Confirm' */
   confirmLabel?: string
-  /** Variant for the confirm button. @default 'accent' */
+  /** Variant for the confirm button. Ignored when `destructive`. @default 'accent' */
   confirmVariant?: 'accent' | 'secondary' | 'ghost'
   /** Label for the cancel button. @default 'Cancel' */
   cancelLabel?: string
   /**
-   * When true, the confirm button is rendered in a destructive style
-   * (terracotta-deep background, matching the existing danger idiom).
+   * When true, the confirm button uses Button's `danger` variant (the theme's
+   * `danger` fill, with `bg`-coloured text).
    * @default false
    */
   destructive?: boolean
@@ -78,13 +78,9 @@ export const ConfirmDialogProvider = ({ children }: { children: ReactNode }) => 
               {cancelLabel}
             </Button>
             <Button
-              variant={opts.confirmVariant ?? 'accent'}
+              variant={opts.destructive ? 'danger' : (opts.confirmVariant ?? 'accent')}
               size="sm"
               onClick={() => settle(true)}
-              style={opts.destructive ? {
-                background: 'var(--achery-color-rust, #8a3a22)',
-                borderColor: 'var(--achery-color-rust, #8a3a22)',
-              } : undefined}
             >
               {confirmLabel}
             </Button>

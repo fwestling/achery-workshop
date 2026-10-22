@@ -86,7 +86,7 @@ Fourteen accent colours ship with the system (thirteen hues, plus `olive` as a l
 | `moss` | `#4a5a32` | `#718654` | Deep green; earthy |
 | `plum` | `#5e486d` | `#8c769e` | Muted purple; considered |
 | `ochre` | `#b8924a` | `#d6b676` | Golden yellow; warm |
-| `rust` | `#8a3a22` | `#c46a3a` | Deep red-brown; dramatic |
+| `rust` | `#912e29` | `#db786b` | Brick red; dramatic |
 | `copper` | `#b8742a` | `#d68f48` | Metallic amber; refined |
 
 **Extended palette** — wider hue territory, same muted earthy chroma:

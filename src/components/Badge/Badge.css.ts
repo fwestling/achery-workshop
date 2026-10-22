@@ -6,12 +6,13 @@ import { palette } from '../../tokens/palette'
 const toneColors = {
   saved:    palette.moss,
   drafting: palette.ochre,
-  stopped:  palette.rust,
+  // Error tones follow the theme's danger (rust in light, rust-light in dark), so their text stays readable
+  stopped:  vars.color.danger,
   archived: palette.plum,
   neutral:  vars.color.fg2,
   success:  palette.success,
   warn:     palette.ochre,
-  danger:   palette.rust,
+  danger:   vars.color.danger,
   info:     palette.plumMid,
 }
 

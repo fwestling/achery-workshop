@@ -20,7 +20,8 @@ function toneColors(tone: BadgeTone, variant: BadgeVariant, isDark: boolean) {
     neutral: { fg: isDark ? palette.cream : palette.ink, bg: isDark ? '#26241e' : palette.paperWarm, border: isDark ? palette.cream : palette.ink },
     saved: { fg: palette.success, bg: isDark ? '#1a2e10' : '#edf5e0', border: palette.success },
     drafting: { fg: palette.ochre, bg: isDark ? '#2a200a' : '#fdf3dc', border: palette.ochre },
-    stopped: { fg: palette.rust, bg: isDark ? '#2a0e06' : '#faeae4', border: palette.rust },
+    // Follows the theme's danger: rust in light, rust-light in dark (readable as text on dark grounds)
+    stopped: { fg: isDark ? palette.rustLight : palette.rust, bg: isDark ? '#2a0e06' : '#faeae4', border: isDark ? palette.rustLight : palette.rust },
     archived: { fg: isDark ? palette.silver : palette.silverDeep, bg: isDark ? '#1a1916' : '#f0ede6', border: isDark ? palette.silver : palette.silverDeep },
   }
   return map[tone]

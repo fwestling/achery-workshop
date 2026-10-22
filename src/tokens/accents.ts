@@ -38,11 +38,10 @@ export const accentColors: Record<AccentColor, {
     fg: palette.ink,
     fgDark: palette.ink,
   },
-  // Held at the previous values until the design system settles rust-light (see palette.ts)
   rust: {
     main: palette.rust,
-    light: palette.terracotta,
-    deep: palette.rust,
+    light: palette.rustLight,
+    deep: palette.rustDeep,
     fg: palette.paper,
     fgDark: palette.inkDeep,
   },

@@ -11,6 +11,21 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.23.1] - 2026-10-22
+
+Error colours from the Achery design system, completing 0.23.0.
+
+### Changed
+- `danger` is rust `#912e29` in light and rust-light `#db786b` in dark (was `#8a3a22` and terracotta). Error text reads at 4.7:1 or better on every dark ground, 6.6:1 or better on light ones
+- `rust` accent: `#912e29`, dark fill `#db786b` (was terracotta, so a rust project looked terracotta in dark mode); new palette steps `rustDeep` and `rustLight`
+
+### Fixed
+- Badge (web): the `stopped` and `danger` tones used the fixed light-mode rust, so their text was hard to read in dark mode; they now follow the theme's `danger`
+- Badge (native): the `stopped` tone likewise follows `danger` in dark mode
+- ConfirmDialog (web): `destructive` now uses Button's `danger` variant, as documented and as native does. It painted the button with an undefined `--achery-color-rust` (always the old hard-coded red) and kept the accent's text colour, which was unreadable on ochre, amber and copper projects
+
+---
+
 ## [0.23.0] - 2026-10-22
 
 Colours now follow the Achery design system's `tokens.json`. Error colours (`danger`, and the `rust` palette and accent it comes from) are held at their previous values until the design system's dark `danger` (rust-light) lands.
@@ -647,7 +662,8 @@ Colours now follow the Achery design system's `tokens.json`. Error colours (`dan
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.23.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.23.1...HEAD
+[0.23.1]: https://github.com/fwestling/achery-workshop/compare/v0.23.0...v0.23.1
 [0.23.0]: https://github.com/fwestling/achery-workshop/compare/v0.22.0...v0.23.0
 [0.22.0]: https://github.com/fwestling/achery-workshop/compare/v0.21.3...v0.22.0
 [0.21.3]: https://github.com/fwestling/achery-workshop/compare/v0.21.2...v0.21.3

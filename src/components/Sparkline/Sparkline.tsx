@@ -19,7 +19,7 @@ export interface SparklineProps {
 // Use hardcoded design-system colour references that match the token values.
 const TONE_COLORS: Record<SparklineTone, string> = {
   positive: 'var(--achery-color-success, #6ba03d)',
-  negative: 'var(--achery-color-danger, #8a3a22)',
+  negative: 'var(--achery-color-danger, #912e29)',
   neutral:  'var(--achery-color-accent, #c46a3a)',
 }
 

@@ -25,9 +25,11 @@ export const palette = {
   plumMid: '#755e85',
   plumLight: '#8c769e',
 
-  // Held at the previous values: the design system is still settling rust-light and dark `danger`.
-  // Pull rust, rustDeep and rustLight from it (and the rust accent and `danger`) together once it lands.
-  rust: '#8a3a22',
+  // Rust — brick red, the `danger` hue. rustLight is lifted further above rust than other families' light
+  // steps so dark-theme error text clears 4.5:1 on every dark ground.
+  rust: '#912e29',
+  rustDeep: '#6d1c1a',
+  rustLight: '#db786b',
 
   ochre: '#b8924a',
   ochreDeep: '#95712e',

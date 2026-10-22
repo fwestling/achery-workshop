@@ -73,8 +73,8 @@ export const darkTokens = {
 
   success: palette.success,
   warn: palette.ochre,
-  // Held until the design system's dark `danger` (rust-light) lands — see palette.ts
-  danger: palette.terracotta,
+  // Error text in dark: 6.1:1 on bg, 4.7:1 on surface2. Errors always carry a word or icon too.
+  danger: palette.rustLight,
   info: palette.plumMid,
 
   selectionBg: palette.mossLight,
