@@ -56,8 +56,11 @@ const AccentCard = ({ name }: { name: (typeof accentColorNames)[number] }) => {
 }
 
 const DIALS: { dial: AccentDial; summary: string }[] = [
-  { dial: 'underline', summary: 'Accent on links, focus rings and the active-tab underline only.' },
-  { dial: 'chrome', summary: 'Intended to thread the accent through tabs, ticks and eyebrows too (see note).' },
+  { dial: 'underline', summary: 'Accent on links, focus rings and the active-tab underline only. Ticks are ink.' },
+  {
+    dial: 'chrome',
+    summary: 'The default. The accent threads the wiring: ticks, a rule before each eyebrow, outline-button borders.',
+  },
   { dial: 'surface', summary: 'As chrome, and the one `.signature-surface` panel per view floods with the accent.' },
 ]
 
@@ -104,6 +107,7 @@ export const Accents = () => (
                 <InlineMd text={summary} />
               </p>
               <Checkbox defaultChecked label="Ticked" />
+              <Button size="sm">Outline button</Button>
               <div className="signature-surface dial-card__surface">
                 <code>.signature-surface</code>
               </div>
@@ -112,11 +116,10 @@ export const Accents = () => (
         ))}
       </ul>
       <p className="note">
-        <strong>On the web today</strong>, the dial changes one thing: under <code>surface</code>, a{' '}
-        <code>.signature-surface</code> panel fills with the accent. <code>chrome</code> sets{' '}
-        <code>--achery-dial-eyebrow-color</code>, <code>--achery-dial-tab-indicator</code> and{' '}
-        <code>--achery-dial-tick-color</code>, but no web component reads them yet, so it renders like{' '}
-        <code>underline</code>.
+        The dial puts the accent on <strong>marks, never text</strong>: eyebrow labels stay in{' '}
+        <code>fg2</code> with an accent rule beside them. As 11px text, the accent would miss 4.5:1 for
+        terracotta, copper, ochre and amber on paper, and for most hues on dark cards. React Native components
+        don't read the dial yet.
       </p>
     </section>
   </>

@@ -1118,3 +1118,7 @@ body {
   font-size: 12.5px;
   line-height: 1.5;
 }
+
+.dial-card > button {
+  align-self: flex-start;
+}

@@ -12,7 +12,8 @@ export const NativeIndex = () => (
       <p>
         <code>achery-ui/native</code> is the same design system for React Native: the same tokens and theme
         axes, with components built on React Native primitives. The examples on these pages render through
-        react-native-web, so they show layout, colour and behaviour; on a device, text uses the system font.
+        react-native-web in the platform font; an app opts into the brand fonts with the provider's{' '}
+        <code>fonts</code> prop (see below).
       </p>
     </PageIntro>
 

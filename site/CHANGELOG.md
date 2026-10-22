@@ -11,6 +11,17 @@ is the library's tag and triggers the npm release.
 
 ---
 
+## [0.5.0] - 2026-10-23
+
+### Added
+- Tests: every solid and outline Badge label reaches 4.5:1 in both themes; every component that renders a link overrides the prose-link rule
+
+### Changed
+- Accents & dial: describes the wired dial (marks, not text) and shows an outline button in each setting
+- React Native pages: say how an app opts into the brand fonts, instead of that native has none
+
+---
+
 ## [0.4.0] - 2026-10-22
 
 ### Added
@@ -60,7 +71,8 @@ is the library's tag and triggers the npm release.
 - Home page: version, links to npm and GitHub, and `src/docs/GettingStarted.mdx` rendered as the page body
 - Docker image (nginx), `checks.yml` and `site-deploy.yml` workflows, compose block and `DEPLOY.md`
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.4.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.5.0...HEAD
+[0.5.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.4.0...site-v0.5.0
 [0.4.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.3.0...site-v0.4.0
 [0.3.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.2.0...site-v0.3.0
 [0.2.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.1.0...site-v0.2.0

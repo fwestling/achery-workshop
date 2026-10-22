@@ -24,7 +24,7 @@ const isMaterial = (v: string): v is MaterialSignature => (MATERIALS as readonly
 const TOOLBAR_NOTE: Record<Platform, string> = {
   web: "Pop-ups, menus and dialogs open in the page's theme.",
   native:
-    "Rendered with react-native-web. Native components set no font family, so text is in the system font, as on a device. Sheets and dialogs fill the browser window, as they fill the screen.",
+    "Rendered with react-native-web, in the platform font: an app gets the brand fonts by passing `fonts` to NativeThemeProvider. Sheets and dialogs fill the browser window, as they fill the screen.",
 }
 
 const Toolbar = ({
