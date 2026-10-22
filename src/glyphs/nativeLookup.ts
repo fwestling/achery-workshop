@@ -176,6 +176,8 @@ export function lookupNativeGlyph(name: string): GlyphFC | null {
     case 'HeartPulse': return require('./svg/heart-pulse.svg').default
     case 'Heart': return require('./svg/heart.svg').default
     case 'Help': return require('./svg/help.svg').default
+    case 'HexArrowLockup': return require('./svg/hex-arrow-lockup.svg').default
+    case 'HexArrow': return require('./svg/hex-arrow.svg').default
     case 'Hex': return require('./svg/hex.svg').default
     case 'Hexagram': return require('./svg/hexagram.svg').default
     case 'History': return require('./svg/history.svg').default
@@ -204,7 +206,6 @@ export function lookupNativeGlyph(name: string): GlyphFC | null {
     case 'MailOpen': return require('./svg/mail-open.svg').default
     case 'Mail': return require('./svg/mail.svg').default
     case 'Map': return require('./svg/map.svg').default
-    case 'Mark': return require('./svg/mark.svg').default
     case 'Mars': return require('./svg/mars.svg').default
     case 'Mask': return require('./svg/mask.svg').default
     case 'Maximize': return require('./svg/maximize.svg').default
@@ -396,7 +397,6 @@ export function lookupNativeGlyph(name: string): GlyphFC | null {
     case 'Wifi': return require('./svg/wifi.svg').default
     case 'Wind': return require('./svg/wind.svg').default
     case 'Wine': return require('./svg/wine.svg').default
-    case 'Wordmark': return require('./svg/wordmark.svg').default
     case 'Wrench': return require('./svg/wrench.svg').default
     case 'XCircle': return require('./svg/x-circle.svg').default
     case 'Yen': return require('./svg/yen.svg').default

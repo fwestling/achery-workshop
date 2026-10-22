@@ -28,6 +28,14 @@ export const pill = recipe({
     cursor: 'default',
     transition: `background ${vars.duration.fast} ${vars.ease.out}`,
     outline: 'none',
+    selectors: {
+      // With `href` the pill is an <a>: beat the theme's prose-link rule (0,2,1; 0,3,1 on hover) with a
+      // doubled class, or it underlines the label and recolours it
+      '[data-achery-root] &&, [data-achery-root] &&:hover': {
+        color: vars.color.fg,
+        textDecoration: 'none',
+      },
+    },
   },
   variants: {
     tone: {

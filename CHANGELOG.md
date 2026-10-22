@@ -11,6 +11,25 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.24.0] - 2026-10-22
+
+The glyph once called `mark` gets an honest name, and three link-styling fixes found while building workshop.achery.dev.
+
+### Added
+- Glyph: `hex-arrow` and `hex-arrow-lockup`, the drawings formerly named `mark` and `wordmark`; `hex-arrow` joins the Geometric category, so `GlyphPicker` offers it
+- Glyph: `RenamedGlyphs` (old name → new) and `currentGlyphName()`, from both `achery-ui` and `achery-ui/native`
+
+### Changed
+- Glyph: `mark` and `wordmark` are deprecated. They still render, as `hex-arrow` and `hex-arrow-lockup`, but were named as if they were the Achery logo, which neither is
+
+### Fixed
+- Glyph (web): an unknown name renders an empty box of the requested size instead of throwing, which took down the tree up to the nearest error boundary (a glyph name stored in data that no longer exists, say)
+- Sidebar: link items (`href`, or `renderLink`) were underlined and recoloured by the theme's prose-link rule, which outranked the item styles
+- EntityPill: with `href`, the same prose-link rule underlined and recoloured the label
+- BarChart: a bar with `href` likewise had its value text underlined and recoloured
+
+---
+
 ## [0.23.2] - 2026-10-22
 
 Sidebar keyboard and screen-reader fixes, found while building the documentation site.
@@ -676,7 +695,8 @@ Colours now follow the Achery design system's `tokens.json`. Error colours (`dan
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.23.2...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.24.0...HEAD
+[0.24.0]: https://github.com/fwestling/achery-workshop/compare/v0.23.2...v0.24.0
 [0.23.2]: https://github.com/fwestling/achery-workshop/compare/v0.23.1...v0.23.2
 [0.23.1]: https://github.com/fwestling/achery-workshop/compare/v0.23.0...v0.23.1
 [0.23.0]: https://github.com/fwestling/achery-workshop/compare/v0.22.0...v0.23.0

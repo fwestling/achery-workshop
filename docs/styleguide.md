@@ -203,8 +203,8 @@ Borders use `var(--color-border)` at full ink weight for primary interactive ele
 **Editorial & instruments:**
 `book` · `scroll` · `key` · `flask` · `compass` · `eye` · `hand` · `star` · `moon` · `sun`
 
-**Brand:**
-`mark` (hex logomark) · `wordmark` (full word mark)
+**Hex arrow:**
+`hex-arrow` (an arrow in a hexagon) · `hex-arrow-lockup` (the same with lettering). Formerly `mark` and `wordmark`, which still work but are deprecated: neither is the Achery logo
 
 ### Usage conventions
 

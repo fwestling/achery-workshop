@@ -7,7 +7,7 @@ export const GlyphCategories: Record<string, readonly GlyphName[]> = {
     'asterism', 'flourish',
   ],
   'Geometric': [
-    'triangle', 'triangle-down', 'square', 'circle', 'hex', 'cross', 'tick', 'plus', 'minus',
+    'triangle', 'triangle-down', 'square', 'circle', 'hex', 'hex-arrow', 'cross', 'tick', 'plus', 'minus',
   ],
   'Navigation': [
     'arrow-up', 'arrow-right', 'arrow-left', 'arrow-down', 'arrow-up-right', 'arrow-down-right',
@@ -109,6 +109,20 @@ export const GlyphCategories: Record<string, readonly GlyphName[]> = {
 
 export type GlyphCategory = keyof typeof GlyphCategories
 
+/**
+ * Old glyph names that still render, mapped to their current names. `mark` and `wordmark` were named as
+ * if they were the Achery logo; they're an arrow in a hexagon, alone and with lettering. The real logo
+ * lives with the brand assets, not in the glyph set. Deprecated names will be removed in a later minor.
+ */
+export const RenamedGlyphs = {
+  mark: 'hex-arrow',
+  wordmark: 'hex-arrow-lockup',
+} as const satisfies Partial<Record<GlyphName, GlyphName>>
+
+/** The current name for a glyph, following {@link RenamedGlyphs}. */
+export const currentGlyphName = (name: GlyphName): GlyphName =>
+  (RenamedGlyphs as Partial<Record<GlyphName, GlyphName>>)[name] ?? name
+
 export const GlyphAliases: Partial<Record<GlyphName, readonly string[]>> = {
   'mercury': ['quicksilver', 'hydrargyrum', 'planet', 'metal', 'element'],
   'sulfur': ['brimstone', 'alchemy', 'element', 'sulphur'],
@@ -117,6 +131,7 @@ export const GlyphAliases: Partial<Record<GlyphName, readonly string[]>> = {
   'moon': ['lunar', 'night', 'crescent', 'silver', 'phase'],
   'star': ['favorite', 'favourite', 'rating', 'night', 'sparkle', 'asterisk'],
   'sigil': ['seal', 'rune', 'mark', 'symbol', 'glyph', 'occult'],
+  'hex-arrow': ['hexagon', 'arrow', 'up', 'crest', 'badge', 'emblem'],
   'flask': ['lab', 'laboratory', 'potion', 'chemistry', 'science', 'beaker', 'alchemy'],
   'key': ['unlock', 'password', 'access', 'login', 'secret'],
   'leaf': ['nature', 'plant', 'foliage', 'eco', 'autumn', 'herb'],

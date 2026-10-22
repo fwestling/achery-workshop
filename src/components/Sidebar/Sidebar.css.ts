@@ -99,15 +99,16 @@ export const navItem = style({
   outline: 'none',
   textDecoration: 'none',
   selectors: {
-    // Override [data-achery-root] a global rule which has higher specificity
-    '[data-achery-root] &': {
+    // Link items must beat the theme's prose-link rule, `[data-achery-root] a:not(.<buttonMarker>)` at
+    // (0,2,1). The class is doubled (`&&`) to reach (0,3,0); `[data-achery-root] &` alone is (0,2,0) and lost.
+    '[data-achery-root] &&': {
       textDecoration: 'none',
       color: vars.color.fg,
     },
     '&:hover': {
       background: vars.color.bg,
     },
-    '[data-achery-root] &:hover': {
+    '[data-achery-root] &&:hover': {
       color: vars.color.fg,
       textDecoration: 'none',
     },
@@ -115,7 +116,7 @@ export const navItem = style({
       background: vars.color.fg,
       color: vars.color.bg,
     },
-    '[data-achery-root] &[data-active="true"]': {
+    '[data-achery-root] &&[data-active="true"]': {
       color: vars.color.bg,
       textDecoration: 'none',
     },

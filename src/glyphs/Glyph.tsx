@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import type { SVGProps } from 'react'
 import type { GlyphName } from '../types/components'
+import { currentGlyphName } from './glyphMeta'
 import * as styles from './Glyph.css'
 
 const toComponentName = (name: GlyphName): string =>
@@ -9,13 +10,20 @@ const toComponentName = (name: GlyphName): string =>
 // Cache lazy components so re-renders don't create new lazy() calls
 const lazyCache = new Map<string, React.LazyExoticComponent<React.FC<SVGProps<SVGSVGElement>>>>()
 
+// An unknown name (a glyph stored in data that no longer exists, say) renders an empty box of the same size
+// instead of throwing: a failed lazy import would otherwise take down the tree up to the nearest error boundary.
+const MissingGlyph = (props: SVGProps<SVGSVGElement>) => <svg viewBox="0 0 24 24" {...props} />
+
 const getLazy = (name: GlyphName) => {
-  const compName = toComponentName(name)
+  const compName = toComponentName(currentGlyphName(name))
   if (!lazyCache.has(compName)) {
     lazyCache.set(
       compName,
       lazy(() =>
-        import(`./svg-components/${compName}.tsx`).then(m => ({ default: m.default }))
+        import(`./svg-components/${compName}.tsx`).then(
+          m => ({ default: m.default }),
+          () => ({ default: MissingGlyph }),
+        )
       ),
     )
   }
@@ -25,10 +33,10 @@ const getLazy = (name: GlyphName) => {
 /** Props for the {@link Glyph} component. */
 export interface GlyphProps extends SVGProps<SVGSVGElement> {
   /**
-   * Name of the glyph to render. One of the 394 icons + 3 brand marks in the Achery glyph set.
+   * Name of the glyph to render. One of the 397 glyphs in the Achery set.
    * Use `searchGlyphs()` to find glyphs by keyword, or browse categories via `GlyphCategories`.
    *
-   * **Brand:** `mark`, `wordmark`, `sigil`
+   * `mark` and `wordmark` are deprecated names for `hex-arrow` and `hex-arrow-lockup`.
    */
   name: GlyphName
   /**

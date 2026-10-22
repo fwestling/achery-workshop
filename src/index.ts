@@ -6,7 +6,7 @@ export { vars } from './theme/vars.css'
 // Glyphs
 export { Glyph } from './glyphs/Glyph'
 export type { GlyphProps, GlyphName } from './glyphs/index'
-export { searchGlyphs, glyphLabel, glyphCategory, GlyphCategories, GlyphAliases } from './glyphs/glyphMeta'
+export { searchGlyphs, glyphLabel, glyphCategory, GlyphCategories, GlyphAliases, RenamedGlyphs, currentGlyphName } from './glyphs/glyphMeta'
 export type { GlyphCategory, GlyphSearchResult } from './glyphs/glyphMeta'
 
 // GlyphPicker

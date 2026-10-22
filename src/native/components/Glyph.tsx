@@ -3,6 +3,7 @@ import type { ViewStyle } from 'react-native'
 import { useTheme } from '../theme/ThemeContext'
 import type { GlyphName } from '../../types/components'
 import { lookupNativeGlyph } from '../../glyphs/nativeLookup'
+import { currentGlyphName } from '../../glyphs/glyphMeta'
 
 const toComponentName = (name: GlyphName): string =>
   name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('')
@@ -37,7 +38,7 @@ export interface NativeGlyphProps {
 export const Glyph = ({ name, size = 24, color, accessibilityLabel, style }: NativeGlyphProps) => {
   const { tokens } = useTheme()
   const resolvedColor = color ?? tokens.fg
-  const SvgComponent = lookupNativeGlyph(toComponentName(name))
+  const SvgComponent = lookupNativeGlyph(toComponentName(currentGlyphName(name)))
 
   const label = accessibilityLabel
     ? { accessible: true, accessibilityRole: 'image' as const, accessibilityLabel }

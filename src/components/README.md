@@ -140,7 +140,7 @@ Renders one of 33 SVG icons. Decorative by default (`aria-hidden`). Pass `title`
 | `size` | `number` | `16` | Width and height in px |
 | `title` | `string` | — | Accessible label; removes `aria-hidden` |
 
-**Available glyphs:** `arrow-right` · `arrow-up` · `asterism` · `book` · `circle` · `compass` · `cross` · `eye` · `feather` · `fern` · `flask` · `flourish` · `hand` · `hex` · `key` · `leaf` · `mark` · `mercury` · `minus` · `moon` · `plus` · `salt` · `scroll` · `sigil` · `sprig` · `square` · `star` · `sulfur` · `sun` · `tick` · `triangle` · `triangle-down` · `wordmark`
+**Available glyphs:** `arrow-right` · `arrow-up` · `asterism` · `book` · `circle` · `compass` · `cross` · `eye` · `feather` · `fern` · `flask` · `flourish` · `hand` · `hex` · `hex-arrow` · `key` · `leaf` · `mercury` · `minus` · `moon` · `plus` · `salt` · `scroll` · `sigil` · `sprig` · `square` · `star` · `sulfur` · `sun` · `tick` · `triangle` · `triangle-down` · `hex-arrow-lockup`
 
 Extends all SVG element props.
 

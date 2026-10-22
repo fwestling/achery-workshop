@@ -29,7 +29,8 @@ export type BadgeTone = 'saved' | 'drafting' | 'stopped' | 'archived' | 'neutral
 export type BadgeVariant = 'outline' | 'solid'
 
 /**
- * Union of all valid glyph names in the Achery icon set (394 glyphs + 3 brand marks).
+ * Union of all valid glyph names in the Achery icon set (397 glyphs, plus the deprecated
+ * names `mark` and `wordmark` — see {@link RenamedGlyphs}).
  * Pass to the `name` prop of {@link Glyph}, or to any component that accepts
  * a `glyph?: GlyphName` prop (Button, Card, Sidebar items, etc.).
  */
@@ -208,6 +209,8 @@ export type GlyphName =
   | 'heart-pulse'
   | 'help'
   | 'hex'
+  | 'hex-arrow'
+  | 'hex-arrow-lockup'
   | 'hexagram'
   | 'history'
   | 'home'
@@ -235,6 +238,7 @@ export type GlyphName =
   | 'mail'
   | 'mail-open'
   | 'map'
+  /** @deprecated Renamed `hex-arrow` in 0.24.0. It was never the Achery logo. */
   | 'mark'
   | 'mars'
   | 'mask'
@@ -427,6 +431,7 @@ export type GlyphName =
   | 'wifi'
   | 'wind'
   | 'wine'
+  /** @deprecated Renamed `hex-arrow-lockup` in 0.24.0. It was never the Achery logo. */
   | 'wordmark'
   | 'wrench'
   | 'x-circle'

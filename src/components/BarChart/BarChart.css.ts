@@ -84,6 +84,9 @@ export const band = style({
   cursor: 'default',
   selectors: {
     '&:focus-visible': { outline: `2px solid ${vars.color.accent}`, outlineOffset: '1px' },
+    // A bar with `href` is an <a>: beat the theme's prose-link rule (0,2,1; 0,3,1 on hover) with a doubled
+    // class, or it underlines and recolours the value text
+    '[data-achery-root] &&, [data-achery-root] &&:hover': { color: 'inherit', textDecoration: 'none' },
   },
 })
 

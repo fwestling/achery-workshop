@@ -181,7 +181,7 @@ const [tags, setTags] = useState<string[]>(['fiction', 'draft'])
 ---
 
 ### Glyph
-Single SVG icon from the 33-icon set. Inherits `currentColor`.
+Single SVG icon from the 397-glyph set. Inherits `currentColor`.
 
 ```tsx
 <Glyph
@@ -191,7 +191,11 @@ Single SVG icon from the 33-icon set. Inherits `currentColor`.
 />
 ```
 
-**GlyphName values** — geometric: `circle` `square` `triangle` `triangle-down` `hex` `minus` `plus` `cross` `tick` `arrow-right` `arrow-up` · botanical/alchemical: `fern` `sprig` `leaf` `feather` `flourish` `asterism` `sigil` `salt` `sulfur` `mercury` · editorial: `book` `scroll` `key` `flask` `compass` `eye` `hand` `star` `moon` `sun` · brand: `mark` `wordmark`
+**GlyphName values** — browse and search them all at [workshop.achery.dev/glyphs](https://workshop.achery.dev/glyphs). In code: `GlyphCategories` (by category, the set `GlyphPicker` offers), `searchGlyphs(query, names)` and `glyphLabel(name)`.
+
+**Renamed glyphs** — `mark` and `wordmark` are deprecated names for `hex-arrow` and `hex-arrow-lockup`. They still render, but neither drawing is the Achery logo. `RenamedGlyphs` maps old names to new; `currentGlyphName(name)` follows it (use it to migrate stored glyph names).
+
+**Unknown names** render an empty box of the requested size rather than throwing.
 
 ---
 
@@ -1070,7 +1074,7 @@ import { Glyph } from 'achery-ui/native'
 
 With `accessibilityLabel`, the glyph is wrapped in a `View` that carries the label (and `style`), announced as an image. Without it, the SVG renders on its own as before.
 
-The `wordmark` glyph is not available on native (uses unsupported SVG features).
+The `hex-arrow-lockup` glyph (formerly `wordmark`) is not available on native (uses unsupported SVG features).
 
 ### `Disclosure` (native)
 

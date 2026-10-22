@@ -49,5 +49,5 @@ export type {
 export type { GlyphName } from '../types/components'
 export {
   searchGlyphs, glyphLabel, glyphCategory,
-  GlyphCategories, GlyphAliases,
+  GlyphCategories, GlyphAliases, RenamedGlyphs, currentGlyphName,
 } from '../glyphs/glyphMeta'
