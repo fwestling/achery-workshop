@@ -70,6 +70,26 @@ export const Desktop: Story = {
   },
 }
 
+export const Collapsible: Story = {
+  render: () => {
+    const [active, setActive] = useState('workbench')
+    const [collapsed, setCollapsed] = useState(false)
+    return (
+      <div style={{ height: '600px', display: 'flex' }}>
+        <Sidebar
+          groups={groups}
+          activeId={active}
+          onItemClick={setActive}
+          collapsed={collapsed}
+          onCollapsedChange={setCollapsed}
+          {...(collapsed ? {} : { footer: <Mono variant="small">achery-ui v0.23.2</Mono> })}
+        />
+        <p style={{ padding: 16 }}>The collapse toggle appears only when <code>onCollapsedChange</code> is passed</p>
+      </div>
+    )
+  },
+}
+
 export const MobileOverlayClosed: Story = {
   render: () => {
     const [active, setActive] = useState('workbench')
@@ -83,7 +103,7 @@ export const MobileOverlayClosed: Story = {
           onMobileOpenChange={() => {}}
           footer={<Mono variant="small">achery-ui v0.5.0</Mono>}
         />
-        <p style={{ padding: 16 }}>Sidebar is off-screen (closed)</p>
+        <p style={{ padding: 16 }}>Sidebar is off-screen (closed) and inert — its links can't be tabbed to</p>
       </div>
     )
   },
@@ -103,7 +123,7 @@ export const MobileOverlayOpen: Story = {
           onMobileOpenChange={setOpen}
           footer={<Mono variant="small">achery-ui v0.5.0</Mono>}
         />
-        <p style={{ padding: 16 }}>Click backdrop to close</p>
+        <p style={{ padding: 16 }}>Click the backdrop or press Escape to close; focus returns to the toggle</p>
         <button onClick={() => setOpen(o => !o)} style={{ margin: 16 }}>Toggle</button>
       </div>
     )

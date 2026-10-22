@@ -251,13 +251,18 @@ const groups: NavGroupDef[] = [
   onItemClick={id => navigate(id)}
   footer={<Node />}
   collapsed={isCollapsed}          // boolean — icon-only mode (52px)
-  onCollapsedChange={setCollapsed} // (boolean) => void
-  mobileOpen={menuOpen}            // boolean — fixed overlay mode
-  onMobileOpenChange={setMenuOpen} // (boolean) => void — backdrop click fires this
+  onCollapsedChange={setCollapsed} // (boolean) => void — shows the collapse toggle (desktop mode only)
+  mobileOpen={menuOpen}            // boolean — passing it (even false) switches to fixed overlay mode
+  onMobileOpenChange={setMenuOpen} // (boolean) => void — backdrop click and Escape fire this
 />
 ```
 
 Items render as `<a>` when `href` is set, otherwise `<button>`.
+
+**Overlay mode** (`mobileOpen` passed): pass it only on narrow viewports, with `useIsDesktop()` (see Hooks).
+While open, Escape closes it, focus moves to the active item, and focus returns where it was (usually the
+menu button) on close. While closed the panel is `inert`, so its links are out of the tab order.
+`mobileBreakpoint` is deprecated and has no effect.
 
 `NavItemDef` props: `id`, `label`, `glyph?`, `icon?`, `iconColor?`, `href?`, `count?`, `countTone?: 'accent' | 'neutral'`  
 `countTone='accent'` renders the count badge in the current accent colour.  

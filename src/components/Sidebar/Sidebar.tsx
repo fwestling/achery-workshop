@@ -1,4 +1,4 @@
-import type { ComponentType, ReactNode } from 'react'
+import { useEffect, useRef, type ComponentType, type ReactNode } from 'react'
 import { Glyph } from '../../glyphs/Glyph'
 import type { GlyphName } from '../../types/components'
 import { useAppBarSearch } from '../../context/AppBarSearchContext'
@@ -98,16 +98,27 @@ export interface SidebarProps {
    * Labels, counts, and group headings are hidden; glyphs remain.
    */
   collapsed?: boolean
-  /** Called when the user clicks the collapse toggle button. */
+  /**
+   * Called when the user clicks the collapse toggle button. The toggle is only
+   * shown when this is provided (and never in mobile overlay mode).
+   */
   onCollapsedChange?: (collapsed: boolean) => void
   /**
-   * Controlled mobile overlay open state. When true, sidebar slides in from
-   * the left as a fixed overlay below `mobileBreakpoint`.
+   * Controlled mobile overlay open state. Passing it (even `false`) switches the
+   * sidebar to overlay mode: a fixed panel that slides in from the left. Pass it
+   * only on narrow viewports — see `useIsDesktop`.
+   *
+   * While open, Escape closes it (via `onMobileOpenChange`), focus moves into the
+   * panel and returns where it was on close. While closed, the panel is `inert`:
+   * its links can't be tabbed to or read out.
    */
   mobileOpen?: boolean
-  /** Called when the backdrop is clicked or the sidebar should close on mobile. */
+  /** Called when the backdrop is clicked or Escape is pressed while the overlay is open. */
   onMobileOpenChange?: (open: boolean) => void
-  /** Viewport width (px) below which mobile overlay mode activates. @default 768 */
+  /**
+   * @deprecated Has no effect. Overlay mode is on whenever `mobileOpen` is passed;
+   * choose when with `useIsDesktop(breakpoint)`.
+   */
   mobileBreakpoint?: number
   className?: string
 }
@@ -155,6 +166,35 @@ export function Sidebar({
   const isMobileMode = mobileOpen !== undefined
   const searchCtx = useAppBarSearch()
   const searchConfig = searchCtx?.searchConfig ?? null
+  const navRef = useRef<HTMLElement>(null)
+  // Read through a ref so an inline callback doesn't re-run the effect below (and re-steal focus) every render
+  const onMobileOpenChangeRef = useRef(onMobileOpenChange)
+  useEffect(() => {
+    onMobileOpenChangeRef.current = onMobileOpenChange
+  })
+
+  // Open overlay: Escape closes it; focus moves in (the active item, else the first control) and goes back
+  // to wherever it was — usually the menu button — when the overlay closes.
+  useEffect(() => {
+    if (!isMobileMode || !mobileOpen) return
+    const returnTo = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    const nav = navRef.current
+    const target =
+      nav?.querySelector<HTMLElement>('[aria-current="page"]') ??
+      nav?.querySelector<HTMLElement>('a[href], button:not([disabled]), input, select')
+    target?.focus()
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onMobileOpenChangeRef.current?.(false)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      // By now the closed panel is inert, so focus that was inside it has already fallen back to <body>
+      const active = document.activeElement
+      if (!active || active === document.body || nav?.contains(active)) returnTo?.focus()
+    }
+  }, [isMobileMode, mobileOpen])
 
   const nav = (
     <nav
@@ -163,17 +203,22 @@ export function Sidebar({
         isMobileMode ? styles.sidebarMobile : undefined,
         className,
       ].filter(Boolean).join(' ')}
+      ref={navRef}
       data-collapsed={collapsed ?? false}
       data-mobile-open={isMobileMode ? String(mobileOpen) : undefined}
+      // A closed overlay is only moved offscreen; inert keeps its links out of the tab order and the a11y tree
+      inert={isMobileMode && !mobileOpen ? true : undefined}
     >
-      <button
-        className={styles.collapseToggle}
-        onClick={() => onCollapsedChange?.(!collapsed)}
-        aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        title={collapsed ? 'Expand' : 'Collapse'}
-      >
-        {collapsed ? '›' : '‹'}
-      </button>
+      {onCollapsedChange && !isMobileMode && (
+        <button
+          className={styles.collapseToggle}
+          onClick={() => onCollapsedChange(!collapsed)}
+          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          title={collapsed ? 'Expand' : 'Collapse'}
+        >
+          {collapsed ? '›' : '‹'}
+        </button>
+      )}
       {groups.map((group, i) => (
         <NavGroup
           key={i}

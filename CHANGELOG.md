@@ -11,6 +11,20 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.23.2] - 2026-10-22
+
+Sidebar keyboard and screen-reader fixes, found while building the documentation site.
+
+### Fixed
+- Sidebar: a closed mobile overlay was only moved offscreen, so keyboard users tabbed through invisible links; it is now `inert`
+- Sidebar: Escape closes the open mobile overlay (through `onMobileOpenChange`); opening it moves focus to the active item, and closing it returns focus where it was
+- Sidebar: the collapse toggle only renders when `onCollapsedChange` is passed, and never in overlay mode. Without a handler it was a button that did nothing
+
+### Changed
+- Sidebar: `mobileBreakpoint` is marked deprecated. It never had an effect; overlay mode is on whenever `mobileOpen` is passed
+
+---
+
 ## [0.23.1] - 2026-10-22
 
 Error colours from the Achery design system, completing 0.23.0.
@@ -662,7 +676,8 @@ Colours now follow the Achery design system's `tokens.json`. Error colours (`dan
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.23.1...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.23.2...HEAD
+[0.23.2]: https://github.com/fwestling/achery-workshop/compare/v0.23.1...v0.23.2
 [0.23.1]: https://github.com/fwestling/achery-workshop/compare/v0.23.0...v0.23.1
 [0.23.0]: https://github.com/fwestling/achery-workshop/compare/v0.22.0...v0.23.0
 [0.22.0]: https://github.com/fwestling/achery-workshop/compare/v0.21.3...v0.22.0
