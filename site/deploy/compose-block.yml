@@ -1,0 +1,23 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# workshop.achery.dev — paste under `services:` in /home/fredw/server/docker-compose.yml
+#
+# Image (built by .github/workflows/site-deploy.yml):
+#   ghcr.io/fwestling/achery-workshop-site:latest
+#
+# Port 7230 was picked to stay clear of the blocks seen in the repos (7202–7205, 7207, 7220, 7310–7314);
+# check it's free in the server compose before pasting.
+# ─────────────────────────────────────────────────────────────────────────────
+
+  # Design system documentation (workshop.achery.dev)
+  achery-workshop-site:
+    image: ghcr.io/fwestling/achery-workshop-site:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    ports:
+      - "7230:80"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"

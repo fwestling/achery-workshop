@@ -1,0 +1,9 @@
+# The site image builds from the repo root (site/Dockerfile); keep local installs and build output out of the context
+**/node_modules
+dist
+storybook-static
+site/dist
+site/dist-ssr
+.git
+.claude
+*.log

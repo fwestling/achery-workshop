@@ -128,7 +128,7 @@ For cross-surface adaptation (web ↔ mobile ↔ native) — the disclosure ladd
 
 Versions follow [Semantic Versioning](https://semver.org). Changes are documented in [CHANGELOG.md](CHANGELOG.md).
 
-On merge to `main`, a GitHub Action automatically creates a GitHub Release and publishes to npm if the version in `package.json` has changed since the last tag.
+Pushing a `v*` tag runs a GitHub Action that publishes that version to npm and creates a GitHub Release from its `CHANGELOG.md` section.
 
 ---
 
@@ -162,5 +162,5 @@ src/
 dist/           # Built output (gitignored)
 .github/
   workflows/
-    release.yml # Auto-release on version bump to main
+    release.yml # npm publish + GitHub Release on a pushed v* tag
 ```

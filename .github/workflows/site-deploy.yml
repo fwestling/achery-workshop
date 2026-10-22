@@ -1,0 +1,62 @@
+name: Site — build & push Docker image
+
+# Builds the workshop.achery.dev image and pushes it to the GitHub Container Registry.
+# Watchtower on the home server pulls new images automatically.
+#
+# This workflow never publishes to npm — that's release.yml, on a pushed v* tag.
+# The site renders the library from src/, so it deploys whenever main's source or docs change.
+#
+# Image published (tagged :latest and :<commit sha>, for rolling back):
+#   ghcr.io/<owner>/achery-workshop-site — the documentation site (nginx)
+#
+# Repository setting: Settings → Actions → General → Workflow permissions → "Read and write
+# permissions" (to push to ghcr.io).
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'src/**'
+      - 'COMPONENTS.md'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - 'tsconfig.json'
+      - '.dockerignore'
+      - '.github/workflows/site-deploy.yml'
+      - '.github/workflows/checks.yml'
+
+env:
+  IMAGE: ghcr.io/${{ github.repository_owner }}/achery-workshop-site
+
+jobs:
+  checks:
+    uses: ./.github/workflows/checks.yml
+
+  site:
+    name: Site image
+    needs: checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: site/Dockerfile
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ github.sha }}
+          cache-from: type=gha,scope=site
+          cache-to: type=gha,mode=max,scope=site

@@ -61,6 +61,14 @@ src/components/MyComponent/
 
 Then add exports to `src/index.ts` and document in `COMPONENTS.md`.
 
+### Previewing the documentation site
+
+```sh
+pnpm --filter achery-workshop-site dev     # workshop.achery.dev locally, at localhost:5190
+```
+
+It renders `src/` directly, so component and docs edits show up without `pnpm build`.
+
 ### Glyph system
 
 SVGs live in `src/glyphs/svg/`. They are compiled into `src/glyphs/GlyphComponents.tsx` (inlined React components, no Vite plugin required by consumers). If you add or modify SVGs:
@@ -76,6 +84,10 @@ Then rebuild. Do not edit `GlyphComponents.tsx` directly.
 ## Versioning & changelog
 
 **Always update `CHANGELOG.md` and `package.json` version when making changes on a branch.**
+
+These rules are for the **library** (the root package, published to npm). The documentation site in `site/`
+is versioned separately: see [The documentation site](#the-documentation-site-site) below. A site-only change
+doesn't bump the library; a change to both bumps both.
 
 ### On a feature/fix branch
 
@@ -129,15 +141,32 @@ Bottom of file — update links:
 [0.1.0]: https://github.com/fwestling/achery-workshop/releases/tag/v0.1.0
 ```
 
-### On merge to main
+### Releasing (on a pushed tag)
 
-The GitHub Action (`.github/workflows/release.yml`) runs automatically:
-- Detects whether `package.json` version has a new tag
-- Extracts the versioned section from `CHANGELOG.md` as release notes
-- Creates a GitHub Release tagged `v{version}`
-- Publishes to npm via OIDC Trusted Publisher (no token required)
+`.github/workflows/release.yml` runs when a `v*` tag is pushed (not on merge to main). After merging,
+Fred tags the merge commit `v{version}` and pushes the tag. The workflow then:
+- Extracts the `## [{version}]` section from `CHANGELOG.md` as release notes
+- Builds and publishes to npm (`pnpm publish`, authenticated with the `NPM_TOKEN` secret)
+- Creates a GitHub Release for the tag
 
-No manual steps needed after merge.
+---
+
+## The documentation site (`site/`)
+
+`site/` is a private pnpm workspace package that builds **workshop.achery.dev**: Vite + React, prerendered
+to static HTML, served by nginx in a Docker image (same pipeline as the product sites). It is never
+published to npm and isn't in the package's `files`.
+
+- **Renders the library from source.** `site/vite.config.ts` aliases `achery-ui` → `../src` and runs the
+  vanilla-extract plugin, so a docs change ships with the code it describes.
+- **No duplicated docs.** Pages render the repo's own docs (`src/docs/*.mdx`, stories, token modules,
+  `COMPONENTS.md`). Fix content at its source, not in `site/`.
+- **Versioning:** `site/package.json` `version` + `site/CHANGELOG.md`, same three-edit rule as the library.
+  Tag site milestones `site-v{version}`. **Never `v{version}`**: that's the library's tag and triggers the
+  npm release.
+- **Deploy:** `.github/workflows/site-deploy.yml` on push to `main` (checks → image to ghcr.io → Watchtower).
+  It never publishes to npm. Setup and tunnel route: `site/DEPLOY.md`.
+- **Checks:** `pnpm --filter achery-workshop-site typecheck`, `… test`, `… build`.
 
 ---
 

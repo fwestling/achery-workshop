@@ -24,3 +24,7 @@ storybook-static/
 *.log
 npm-debug.log*
 pnpm-debug.log*
+
+# Documentation site (site/)
+site/dist/
+site/dist-ssr/

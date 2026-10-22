@@ -1,0 +1,225 @@
+/* Site styles. Colours, fonts and spacing come from achery-ui's stable --achery-* aliases, so light/dark and
+   the accent follow the AcheryProvider. The shell is achery-ui's own AppBar and Sidebar; this file only
+   places them and styles the long-form content. */
+
+body {
+  background: var(--achery-color-bg);
+}
+
+.site {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--achery-color-bg);
+  color: var(--achery-color-fg);
+  font-family: var(--achery-font-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+  z-index: 300;
+  padding: 8px 12px;
+  background: var(--achery-color-surface);
+  border: 1px solid var(--achery-color-border);
+}
+
+/* ─── Shell ───────────────────────────────────────────────────────────────── */
+
+.site .site-appbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.site-body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* Desktop: the sidebar stays in view under the 56px app bar while the page scrolls.
+   Below 768px it's achery-ui's fixed overlay, which positions itself. */
+@media (min-width: 768px) {
+  .site .site-sidebar {
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    flex: none;
+  }
+}
+
+.site-main {
+  flex: 1;
+  min-width: 0;
+  max-width: 880px;
+  padding: 0 40px 64px;
+}
+
+@media (max-width: 767px) {
+  .site-main {
+    padding: 0 16px 48px;
+  }
+}
+
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--achery-color-fg2);
+}
+
+.sidebar-footer p {
+  margin: 0;
+}
+
+.sidebar-footer__version {
+  font-family: var(--achery-font-mono);
+}
+
+.theme-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ─── Brand ───────────────────────────────────────────────────────────────── */
+
+/* The Achery brand palette (../achery-site/assets/brand), light then dark — fixed, not the accent */
+.achery-mark {
+  display: block;
+  flex: none;
+  fill: #c46a3a;
+}
+
+[data-theme='dark'] .achery-mark {
+  fill: #d97a4a;
+}
+
+/* ─── Home ────────────────────────────────────────────────────────────────── */
+
+.hero {
+  max-width: 72ch;
+  padding: 48px 0 32px;
+  border-bottom: 1px solid var(--achery-color-rule);
+}
+
+.site .hero__title {
+  margin: 12px 0 16px;
+  font-size: clamp(40px, 7vw, 64px);
+  line-height: 1.02;
+}
+
+.lead {
+  margin: 0;
+  font-size: 18px;
+  color: var(--achery-color-fg2);
+  max-width: 60ch;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+/* ─── Long-form docs (rendered markdown) ──────────────────────────────────── */
+
+.doc {
+  padding-top: 8px;
+  max-width: 72ch;
+}
+
+.doc h1,
+.doc h2,
+.doc h3 {
+  font-family: var(--achery-font-display);
+  line-height: 1.2;
+  scroll-margin-top: 72px;
+}
+
+.doc h1 {
+  font-size: 34px;
+  margin: 32px 0 16px;
+}
+
+.doc h2 {
+  font-size: 24px;
+  margin: 40px 0 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--achery-color-rule);
+}
+
+.doc h3 {
+  font-size: 18px;
+  margin: 28px 0 8px;
+}
+
+.doc p,
+.doc ul,
+.doc ol {
+  margin: 0 0 14px;
+}
+
+.doc a:not([class]) {
+  color: inherit;
+  text-decoration-color: var(--achery-color-accent);
+  text-underline-offset: 3px;
+}
+
+.doc a:not([class]):hover {
+  color: var(--achery-color-accent);
+}
+
+.doc code {
+  font-family: var(--achery-font-mono);
+  font-size: 0.875em;
+}
+
+.doc :not(pre) > code {
+  padding: 1px 4px;
+  background: var(--achery-color-bgSunken);
+  border: 1px solid var(--achery-color-borderMute);
+}
+
+.doc pre {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  background: var(--achery-color-bgSunken);
+  border: 1px solid var(--achery-color-border);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Tables scroll inside themselves at phone width rather than widening the page */
+.doc table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 0 0 18px;
+  font-size: 14px;
+}
+
+.doc th,
+.doc td {
+  padding: 8px 12px;
+  border: 1px solid var(--achery-color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.doc th {
+  background: var(--achery-color-bg2);
+  font-weight: 600;
+}

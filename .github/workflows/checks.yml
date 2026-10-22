@@ -1,0 +1,29 @@
+name: Checks
+
+# Library typecheck, site typecheck and tests. Runs on pull requests and branch pushes, and is called by
+# site-deploy.yml before it builds anything.
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main] # main runs these through site-deploy
+  workflow_call:
+
+jobs:
+  checks:
+    name: Typecheck & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Library typecheck
+        run: pnpm typecheck
+      - name: Site typecheck
+        run: pnpm --filter achery-workshop-site typecheck
+      - name: Site tests
+        run: pnpm --filter achery-workshop-site test

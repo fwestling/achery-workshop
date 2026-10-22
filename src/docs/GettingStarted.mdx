@@ -59,9 +59,11 @@ function RecipeCard({ recipe }) {
 | Import | Contents | React Native safe? |
 |:---|:---|:---|
 | `achery-ui` | All components + theme | No (DOM + CSS) |
+| `achery-ui/style.css` | Component styles | No |
 | `achery-ui/tokens` | Design tokens as TypeScript values | **Yes** |
+| `achery-ui/native` | React Native components + `NativeThemeProvider` | **Yes** |
 
-The `/tokens` entry is zero-DOM, zero-React — safe from React Native or any non-browser context.
+The `/tokens` entry is zero-DOM, zero-React — safe from React Native or any non-browser context. The `/native` entry is a full component set built on React Native primitives, with no CSS dependency.
 
 ## Storybook
 

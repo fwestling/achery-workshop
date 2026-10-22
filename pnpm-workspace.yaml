@@ -1,0 +1,4 @@
+# The library is the root package. The documentation site (workshop.achery.dev) is a private workspace
+# package beside it; it is never published to npm.
+packages:
+  - site
