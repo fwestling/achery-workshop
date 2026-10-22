@@ -11,6 +11,16 @@ is the library's tag and triggers the npm release.
 
 ---
 
+## [0.5.1] - 2026-10-23
+
+### Fixed
+- Docker image: the build has failed since 0.3.0, because the site reads `COMPONENTS.md` and the Dockerfile copied only `src`, `site` and `tsconfig.json`. It now copies the whole build context (`.dockerignore` keeps out installs and build output), so a new input can't be left out
+
+### Changed
+- CI: `checks.yml` also runs the strict site build, so a build failure shows up before the image step
+
+---
+
 ## [0.5.0] - 2026-10-23
 
 ### Added
@@ -71,7 +81,8 @@ is the library's tag and triggers the npm release.
 - Home page: version, links to npm and GitHub, and `src/docs/GettingStarted.mdx` rendered as the page body
 - Docker image (nginx), `checks.yml` and `site-deploy.yml` workflows, compose block and `DEPLOY.md`
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.5.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.5.1...HEAD
+[0.5.1]: https://github.com/fwestling/achery-workshop/compare/site-v0.5.0...site-v0.5.1
 [0.5.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.4.0...site-v0.5.0
 [0.4.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.3.0...site-v0.4.0
 [0.3.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.2.0...site-v0.3.0

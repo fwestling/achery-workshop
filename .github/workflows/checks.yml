@@ -1,7 +1,7 @@
 name: Checks
 
-# Library typecheck, site typecheck and tests. Runs on pull requests and branch pushes, and is called by
-# site-deploy.yml before it builds anything.
+# Library typecheck, site typecheck, tests and a strict site build. Runs on pull requests and branch
+# pushes, and is called by site-deploy.yml before it builds the image.
 
 on:
   pull_request:
@@ -27,3 +27,7 @@ jobs:
         run: pnpm --filter achery-workshop-site typecheck
       - name: Site tests
         run: pnpm --filter achery-workshop-site test
+      - name: Site build
+        run: pnpm --filter achery-workshop-site build
+        env:
+          SITE_STRICT: '1'

@@ -13,10 +13,10 @@ COPY site/package.json ./site/package.json
 # The site and what it needs from the library (achery-ui is a workspace dependency, so its own deps come too)
 RUN pnpm install --frozen-lockfile --filter achery-workshop-site...
 
-# The library source and docs the site renders, and the tsconfig the site extends
-COPY tsconfig.json ./
-COPY src ./src
-COPY site ./site
+# Everything else the site reads: the library source, COMPONENTS.md, the root tsconfig it extends.
+# The whole context, so a new input can't be forgotten here (.dockerignore keeps out node_modules and
+# build output); the install above is cached on the package files alone.
+COPY . .
 
 WORKDIR /app/site
 # Refuse to publish copy that still contains [PLACEHOLDER] markers
