@@ -161,6 +161,11 @@ published to npm and isn't in the package's `files`.
   vanilla-extract plugin, so a docs change ships with the code it describes.
 - **No duplicated docs.** Pages render the repo's own docs (`src/docs/*.mdx`, stories, token modules,
   `COMPONENTS.md`). Fix content at its source, not in `site/`.
+- **Design-system copy:** `site/src/data/design-system-tokens.json` is a verbatim copy of the design system
+  artifact's `project/tokens.json` (https://claude.ai/artifact/Nnd1RKUWNmbcdJBkjjzmbF). The site reads only
+  its usage notes; values always come from `src/tokens`. Refresh it by re-reading the artifact (it's private,
+  so CI can't fetch it). `site/src/foundations/designSystem.test.ts` fails when the two disagree: tell Fred
+  which side moved rather than "fixing" either one.
 - **Versioning:** `site/package.json` `version` + `site/CHANGELOG.md`, same three-edit rule as the library.
   Tag site milestones `site-v{version}`. **Never `v{version}`**: that's the library's tag and triggers the
   npm release.

@@ -1,5 +1,6 @@
 import { Marked, type Tokens } from 'marked'
 import gettingStartedMdx from '../../src/docs/GettingStarted.mdx?raw'
+import styleguideMdx from '../../src/docs/Styleguide.mdx?raw'
 
 // Long-form pages render the library's own docs (src/docs/*.mdx), so the site never keeps a second copy.
 // Those files are MDX for Storybook; the site reads them as markdown and drops what only Storybook understands.
@@ -41,6 +42,27 @@ export const dropSections = (md: string, titles: readonly string[]): string => {
     .trimEnd()
 }
 
+/** Keeps only the named `## <title>` sections (each up to the next `##` or higher heading), in file order. */
+export const pickSections = (md: string, titles: readonly string[]): string => {
+  let keeping = false
+  let inFence = false
+  return md
+    .split('\n')
+    .filter((line) => {
+      if (FENCE.test(line)) inFence = !inFence
+      if (!inFence) {
+        const heading = line.match(/^(#{1,2})\s+(.+?)\s*$/)
+        if (heading) keeping = heading[1] === '##' && titles.includes(heading[2] ?? '')
+      }
+      return keeping
+    })
+    .join('\n')
+    .trim()
+}
+
+/** Drops a section's own `## <title>` line, for pages that set their own headings around it. */
+export const withoutHeading = (md: string): string => md.replace(/^##\s+.+\n+/, '')
+
 // GitHub-style heading anchors, so in-page links and #fragments keep working
 export const slugify = (text: string): string =>
   text
@@ -64,6 +86,8 @@ export const renderMarkdown = (md: string): string => marked.parse(md) as string
 
 export const docs = {
   gettingStarted: dropSections(mdxToMarkdown(gettingStartedMdx), ['Storybook']),
+  principles: pickSections(mdxToMarkdown(styleguideMdx), ['Philosophy', 'Corners', 'Marginalia', 'UI copy voice']),
+  motion: withoutHeading(pickSections(mdxToMarkdown(styleguideMdx), ['Motion'])),
 } as const
 
 export type DocId = keyof typeof docs

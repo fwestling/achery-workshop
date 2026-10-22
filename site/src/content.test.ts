@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { docs, dropSections, mdxToMarkdown, renderMarkdown, slugify } from './content'
+import { docs, dropSections, mdxToMarkdown, pickSections, renderMarkdown, slugify, withoutHeading } from './content'
 
 describe('mdxToMarkdown', () => {
   it('drops top-level imports and self-closing JSX blocks', () => {
@@ -40,5 +40,25 @@ describe('getting started', () => {
 
   it('renders headings with anchors', () => {
     expect(renderMarkdown(docs.gettingStarted)).toContain('<h2 id="install">Install</h2>')
+  })
+})
+
+describe('pickSections', () => {
+  it('keeps only the named level-2 sections, with their subsections', () => {
+    const md = '# Doc\n\nIntro\n\n## A\n\nA body\n\n### A.1\n\nMore\n\n## B\n\nB body\n\n## C\n\nC body'
+    expect(pickSections(md, ['A', 'C'])).toBe('## A\n\nA body\n\n### A.1\n\nMore\n\n## C\n\nC body')
+  })
+
+  it('drops a picked section heading on request', () => {
+    expect(withoutHeading('## Motion\n\nBody')).toBe('Body')
+  })
+})
+
+describe('styleguide sections', () => {
+  it('finds every section the site renders', () => {
+    for (const title of ['Philosophy', 'Corners', 'Marginalia', 'UI copy voice']) {
+      expect(docs.principles).toContain(`## ${title}`)
+    }
+    expect(docs.motion).toMatch(/^Minimal and purposeful/)
   })
 })

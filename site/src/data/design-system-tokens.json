@@ -1,0 +1,936 @@
+{
+  "name": "Achery Workshop Design System",
+  "version": 1,
+  "color": {
+    "themes": [
+      {
+        "id": "light",
+        "name": "Light"
+      },
+      {
+        "id": "dark",
+        "name": "Dark"
+      }
+    ],
+    "tokens": [
+      {
+        "name": "ink",
+        "value": "#1f1d18",
+        "usage": "Near-black, warm. Text and 1px borders on paper in light; the `fg`/`border` source. Also the dark theme's `bg-2`."
+      },
+      {
+        "name": "ink-deep",
+        "value": "#14130f",
+        "usage": "Even darker ink: the dark theme's page ground (`bg`) and `accent-fg` there; text on `accent` in dark."
+      },
+      {
+        "name": "paper",
+        "value": "#fbf8f0",
+        "usage": "Lightest near-white warm cream: the light page ground (`bg`) and `accent-fg` on terracotta."
+      },
+      {
+        "name": "paper-warm",
+        "value": "#f0e9d6",
+        "usage": "Darker paper for secondary light surfaces (`bg-2`, `surface-2`), table headers, hover rows."
+      },
+      {
+        "name": "paper-toasted",
+        "value": "#e6dec5",
+        "usage": "Warmest light paper: press-stoppers, hero strips, sunken wells (`bg-sunken`)."
+      },
+      {
+        "name": "cream",
+        "value": "#e8dfc8",
+        "usage": "Foreground on dark: text, borders and rules in the dark theme; secondary surface."
+      },
+      {
+        "name": "cream-soft",
+        "value": "#d8cdb0",
+        "usage": "Muted cream: one-tone-warmer hover fill on cream surfaces."
+      },
+      {
+        "name": "moss-deep",
+        "value": "#31411b",
+        "usage": "Darkest moss green; deep fills and pressed states."
+      },
+      {
+        "name": "moss",
+        "value": "#4a5a32",
+        "usage": "Anchor green. `accent-2` and `olive` resolve here; a per-project accent option (Atlas)."
+      },
+      {
+        "name": "moss-mid",
+        "value": "#5f7043",
+        "usage": "Mid moss for secondary green fills."
+      },
+      {
+        "name": "moss-light",
+        "value": "#718654",
+        "usage": "Light moss: `accent-2` and `selection-bg` in dark (4.6:1 on dark `bg`); dark-theme green fills. `sage` is the very-light tint step."
+      },
+      {
+        "name": "sage",
+        "value": "#b6c898",
+        "usage": "Very light green for tints and fills behind ink text."
+      },
+      {
+        "name": "olive",
+        "value": "{moss}",
+        "usage": "Legacy alias of `moss` (the old yellow olive #6b6b3a is retired). Prefer `moss` in new work."
+      },
+      {
+        "name": "olive-deep",
+        "value": "{moss-deep}",
+        "usage": "Legacy alias of `moss-deep`, completing the olive set."
+      },
+      {
+        "name": "olive-mid",
+        "value": "{moss-mid}",
+        "usage": "Legacy alias of `moss-mid`."
+      },
+      {
+        "name": "olive-light",
+        "value": "{moss-light}",
+        "usage": "Legacy alias of `moss-light`."
+      },
+      {
+        "name": "terracotta",
+        "value": "#c46a3a",
+        "usage": "Default accent (Workbench): links' underline, focus ring, primary interaction in light."
+      },
+      {
+        "name": "terracotta-deep",
+        "value": "#a05526",
+        "usage": "Pressed / deep terracotta."
+      },
+      {
+        "name": "terracotta-light",
+        "value": "#e6895a",
+        "usage": "The dark theme's `accent`; carries `ink-deep` text (7.2:1)."
+      },
+      {
+        "name": "plum",
+        "value": "#5e486d",
+        "usage": "Muted purple; `accent-3`; per-project accent (Almanac)."
+      },
+      {
+        "name": "plum-deep",
+        "value": "#453152",
+        "usage": "Deep plum for pressed states on a plum project."
+      },
+      {
+        "name": "plum-mid",
+        "value": "#755e85",
+        "usage": "The `info` status hue (5.4:1 on light `bg`)."
+      },
+      {
+        "name": "plum-light",
+        "value": "#8c769e",
+        "usage": "The dark theme's `accent-3` (4.6:1 on dark `bg`)."
+      },
+      {
+        "name": "rust",
+        "value": "#912e29",
+        "usage": "Brick red: the `danger` status hue; per-project accent (Foundry). Sits at hue ~27° in OKLCH, well clear of `terracotta` (~47°). 7.5:1 on `paper`."
+      },
+      {
+        "name": "rust-deep",
+        "value": "#6d1c1a",
+        "usage": "Deep rust for pressed states on a rust project."
+      },
+      {
+        "name": "rust-light",
+        "value": "#db786b",
+        "usage": "Light rust: the dark theme's `danger`, and a rust project's dark-theme accent. Readable as error text on every dark ground (6.1 on `bg`, 5.5 on `bg-2`, 5.1 on `surface`, 4.7 on `surface-2`). Lifted further above `rust` than other families' light steps so it clears 4.5:1; carries `ink-deep` text (6.1:1)."
+      },
+      {
+        "name": "ochre",
+        "value": "#b8924a",
+        "usage": "The `warn` status hue and light `selection-bg`; per-project accent (Ledger). Carries ink text."
+      },
+      {
+        "name": "ochre-deep",
+        "value": "#95712e",
+        "usage": "Deep ochre for pressed states and ochre as text on light paper (4.2:1: 24px+ or bold 19px+)."
+      },
+      {
+        "name": "ochre-light",
+        "value": "#d6b676",
+        "usage": "Light ochre: an ochre project's dark-theme accent; carries ink text."
+      },
+      {
+        "name": "slate",
+        "value": "oklch(44% 0.075 228)",
+        "usage": "Dusty steel blue, per-project accent (Draper). Not a default: the system is never blue-first."
+      },
+      {
+        "name": "slate-deep",
+        "value": "oklch(35% 0.067 228)",
+        "usage": "Deep slate for pressed states on a slate project."
+      },
+      {
+        "name": "slate-light",
+        "value": "oklch(60% 0.07 228)",
+        "usage": "Light slate: a slate project's dark-theme accent; carries ink text."
+      },
+      {
+        "name": "woad",
+        "value": "oklch(45% 0.08 270)",
+        "usage": "Indigo (after the dye plant), per-project accent; fills the blue-violet gap between `slate` and `plum`. 7.1:1 on `paper`, carries `paper` text."
+      },
+      {
+        "name": "woad-deep",
+        "value": "oklch(36% 0.075 270)",
+        "usage": "Deep woad for pressed states."
+      },
+      {
+        "name": "woad-light",
+        "value": "oklch(60% 0.075 270)",
+        "usage": "Light woad: a woad project's dark-theme accent (4.7:1 on dark `bg`); carries `ink-deep` text."
+      },
+      {
+        "name": "verdigris",
+        "value": "oklch(46% 0.08 185)",
+        "usage": "Aged-copper teal, per-project accent (Apothecary)."
+      },
+      {
+        "name": "verdigris-deep",
+        "value": "oklch(37% 0.064 185)",
+        "usage": "Deep verdigris for pressed states."
+      },
+      {
+        "name": "verdigris-light",
+        "value": "oklch(60% 0.08 185)",
+        "usage": "Light verdigris: dark-theme accent; carries ink text."
+      },
+      {
+        "name": "mauve",
+        "value": "oklch(45% 0.08 350)",
+        "usage": "Dusty rose, per-project accent (Bindery)."
+      },
+      {
+        "name": "mauve-deep",
+        "value": "oklch(36% 0.075 350)",
+        "usage": "Deep mauve for pressed states."
+      },
+      {
+        "name": "mauve-light",
+        "value": "oklch(60% 0.08 350)",
+        "usage": "Light mauve: dark-theme accent; carries ink text."
+      },
+      {
+        "name": "amber",
+        "value": "oklch(56% 0.09 62)",
+        "usage": "Warm amber-gold, per-project accent (Chandlery); carries ink text."
+      },
+      {
+        "name": "amber-deep",
+        "value": "oklch(45% 0.085 62)",
+        "usage": "Deep amber for pressed states."
+      },
+      {
+        "name": "amber-light",
+        "value": "oklch(68% 0.085 62)",
+        "usage": "Light amber: dark-theme accent; carries ink text."
+      },
+      {
+        "name": "fern",
+        "value": "oklch(46% 0.08 148)",
+        "usage": "Cool conservatory green, per-project accent (Glasshouse)."
+      },
+      {
+        "name": "fern-deep",
+        "value": "oklch(36% 0.075 148)",
+        "usage": "Deep fern for pressed states."
+      },
+      {
+        "name": "fern-light",
+        "value": "oklch(60% 0.075 148)",
+        "usage": "Light fern: dark-theme accent; carries ink text."
+      },
+      {
+        "name": "blush",
+        "value": "oklch(54% 0.075 12)",
+        "usage": "Dusty warm rose, per-project accent (Millinery)."
+      },
+      {
+        "name": "blush-deep",
+        "value": "oklch(43% 0.07 12)",
+        "usage": "Deep blush for pressed states."
+      },
+      {
+        "name": "blush-light",
+        "value": "oklch(67% 0.07 12)",
+        "usage": "Light blush: dark-theme accent; carries ink text."
+      },
+      {
+        "name": "leather",
+        "value": "#6b3a26",
+        "usage": "Deep cordovan. Material signature `leather` (with gold metal); only inside contained objects (modals, a featured card, receipts)."
+      },
+      {
+        "name": "leather-deep",
+        "value": "#4a2418",
+        "usage": "Deep leather, the darkest bookbinding brown (the value the source's materials card showed): material shadows and spines."
+      },
+      {
+        "name": "leather-mid",
+        "value": "#8a4e34",
+        "usage": "Mid leather for material gradients and panels."
+      },
+      {
+        "name": "leather-light",
+        "value": "#a86a48",
+        "usage": "Light leather highlight."
+      },
+      {
+        "name": "copper",
+        "value": "#b8742a",
+        "usage": "Warm orange-bronze. Material signature `copper` (with patina metal); inline code tint in the docs kit."
+      },
+      {
+        "name": "copper-deep",
+        "value": "#8a531a",
+        "usage": "Deep copper for inset frames and rivets."
+      },
+      {
+        "name": "copper-light",
+        "value": "#d68f48",
+        "usage": "Light copper highlight."
+      },
+      {
+        "name": "copper-patina",
+        "value": "#5a7a6a",
+        "usage": "Aged copper green: the copper signature's metal."
+      },
+      {
+        "name": "silver",
+        "value": "#a8a098",
+        "usage": "Warm pewter (not cool). Ghost and tertiary material buttons."
+      },
+      {
+        "name": "silver-deep",
+        "value": "#6e6a62",
+        "usage": "Gunmetal: the wood signature's deep metal."
+      },
+      {
+        "name": "silver-light",
+        "value": "#c8c0b6",
+        "usage": "Polished silver: the wood signature's metal."
+      },
+      {
+        "name": "wood",
+        "value": "#7a5a3a",
+        "usage": "Walnut. Material signature `wood` (with silver metal)."
+      },
+      {
+        "name": "wood-light",
+        "value": "#a88660",
+        "usage": "Oak / pine."
+      },
+      {
+        "name": "wood-deep",
+        "value": "#4a3422",
+        "usage": "Ebony / dark walnut."
+      },
+      {
+        "name": "gold",
+        "value": "#dbb73f",
+        "usage": "Bright gilt, the leather signature's metal: a hint, never a shout. Kept well clear of `ochre` (brighter and yellower). Ink text on it 8.7:1."
+      },
+      {
+        "name": "gold-deep",
+        "value": "#9c7b22",
+        "usage": "Deep gold: material eyebrows and values on light material bodies (3.8:1 on `surface`: bold labels and figures only)."
+      },
+      {
+        "name": "gold-light",
+        "value": "#f1d680",
+        "usage": "Pale gilt: metal text on dark material bodies (6.5:1 on `leather`)."
+      },
+      {
+        "name": "bg",
+        "value": {
+          "light": "{paper}",
+          "dark": "{ink-deep}"
+        },
+        "usage": "Page background. Body text is `fg` on it."
+      },
+      {
+        "name": "bg-2",
+        "value": {
+          "light": "{paper-warm}",
+          "dark": "#1f1d18"
+        },
+        "usage": "Secondary background (sidebars, table headers, code chips)."
+      },
+      {
+        "name": "bg-sunken",
+        "value": {
+          "light": "{paper-toasted}",
+          "dark": "#0c0b08"
+        },
+        "usage": "Sunken wells and `pre` blocks."
+      },
+      {
+        "name": "surface",
+        "value": {
+          "light": "#fdfaf3",
+          "dark": "#26241e"
+        },
+        "usage": "Card surface, just above `bg`."
+      },
+      {
+        "name": "surface-2",
+        "value": {
+          "light": "{paper-warm}",
+          "dark": "#2d2a23"
+        },
+        "usage": "Second card tier; dark hover fill."
+      },
+      {
+        "name": "fg",
+        "value": {
+          "light": "{ink}",
+          "dark": "{cream}"
+        },
+        "usage": "Body text on `bg`, `bg-2`, `bg-sunken`, `surface` (12.5:1 or more in both themes)."
+      },
+      {
+        "name": "fg-2",
+        "value": {
+          "light": "#4a463c",
+          "dark": "#b8ad94"
+        },
+        "usage": "Secondary text and labels on `bg`, `bg-2`, `surface` (6.4:1 or more in both themes)."
+      },
+      {
+        "name": "fg-3",
+        "value": {
+          "light": "#6e6a5e",
+          "dark": "#8a8576"
+        },
+        "usage": "Tertiary text (captions, mono metadata) on `bg` and `surface`: 5:1 there. Misses 4.5:1 on light `bg-2` (4.5) and `bg-sunken` (4.0), and on dark `surface` (4.2) and `surface-2` (3.9): kept as the source has it."
+      },
+      {
+        "name": "fg-mute",
+        "value": {
+          "light": "#8a8576",
+          "dark": "#6e6a5e"
+        },
+        "usage": "Muted text for 24px+ or decoration only: about 3.5:1 on `bg`/`surface` in both themes, under 4.5:1 for body text. Kept as the source has it."
+      },
+      {
+        "name": "border",
+        "value": {
+          "light": "{ink}",
+          "dark": "{cream}"
+        },
+        "usage": "The 1px hairline on every card, field and table: ink in light, cream in dark."
+      },
+      {
+        "name": "border-2",
+        "value": {
+          "light": "#6e6a5e",
+          "dark": "#8a8576"
+        },
+        "usage": "Secondary border (ghost buttons)."
+      },
+      {
+        "name": "border-mute",
+        "value": {
+          "light": "#b8ad94",
+          "dark": "#4a463c"
+        },
+        "usage": "Inner dividers and dashed row rules. About 2:1 on `bg`: decorative only, never the only edge of a control."
+      },
+      {
+        "name": "rule",
+        "value": {
+          "light": "#14130f",
+          "dark": "{cream}"
+        },
+        "usage": "Section rules and double-rule dividers."
+      },
+      {
+        "name": "accent",
+        "value": {
+          "light": "{terracotta}",
+          "dark": "{terracotta-light}"
+        },
+        "usage": "THE per-project override point. Links' underline, focus ring (2px, offset 2px), active tab, primary interaction. As text on `bg` it reaches only 3.6:1 in light: use for 24px+ text, rules and marks. Dark: `terracotta-light`, 7.2:1."
+      },
+      {
+        "name": "accent-fg",
+        "value": {
+          "light": "{paper}",
+          "dark": "{ink-deep}"
+        },
+        "usage": "Text on an `accent` fill. 3.6:1 on terracotta in light (meets 3:1 for bold labels 19px+ only; the source's buttons use 12px bold); 7.2:1 in dark."
+      },
+      {
+        "name": "accent-2",
+        "value": {
+          "light": "{olive}",
+          "dark": "{olive-light}"
+        },
+        "usage": "Secondary accent slot."
+      },
+      {
+        "name": "accent-3",
+        "value": {
+          "light": "{plum}",
+          "dark": "{plum-light}"
+        },
+        "usage": "Tertiary accent slot."
+      },
+      {
+        "name": "success",
+        "value": "#6ba03d",
+        "usage": "Success state, always with a word or tick. As text: 2.9:1 on light `bg` (marks and 24px+ only), 6:1 on dark `bg`. Kept as the source has it."
+      },
+      {
+        "name": "warn",
+        "value": "{ochre}",
+        "usage": "Warning state, always with a word. As text: 2.7:1 on light `bg` (rules, dots, fills with ink text), 6.4:1 on dark `bg`."
+      },
+      {
+        "name": "danger",
+        "value": {
+          "light": "{rust}",
+          "dark": "{rust-light}"
+        },
+        "usage": "Danger / stopped state and error text, always with a word or icon. Light: `rust`, 7.5:1 on `bg`. Dark: `rust-light`, 6.1:1 on `bg` and 4.7:1 on `surface-2`."
+      },
+      {
+        "name": "info",
+        "value": "{plum-mid}",
+        "usage": "Informational state. 5.2:1 on light `bg`; 3.4:1 on dark `bg` (24px+ text and marks)."
+      },
+      {
+        "name": "selection-bg",
+        "value": {
+          "light": "{ochre}",
+          "dark": "{olive-light}"
+        },
+        "usage": "Text selection background."
+      },
+      {
+        "name": "selection-fg",
+        "value": {
+          "light": "{ink}",
+          "dark": "{ink-deep}"
+        },
+        "usage": "Text selection foreground on `selection-bg`."
+      }
+    ]
+  },
+  "type": {
+    "fonts": [],
+    "families": {
+      "display": "'Roboto Slab', 'Rockwell', 'Courier New', serif",
+      "body": "'Space Grotesk', 'Helvetica Neue', 'Inter', system-ui, sans-serif",
+      "mono": "'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace"
+    },
+    "groups": [
+      {
+        "name": "Display",
+        "family": "display",
+        "styles": [
+          {
+            "name": "display",
+            "fontSize": "88px",
+            "lineHeight": 0.95,
+            "fontWeight": 900,
+            "letterSpacing": "-0.02em",
+            "sample": "A workbench, not a factory.",
+            "usage": "The big shop-sign treatment: one per view at most."
+          },
+          {
+            "name": "h1",
+            "fontSize": "46px",
+            "lineHeight": 1.08,
+            "fontWeight": 700,
+            "letterSpacing": "-0.02em",
+            "sample": "The slow apothecary",
+            "usage": "Page title."
+          },
+          {
+            "name": "h2",
+            "fontSize": "34px",
+            "lineHeight": 1.08,
+            "fontWeight": 700,
+            "letterSpacing": "-0.01em",
+            "sample": "Salt, sulfur, mercury",
+            "usage": "Section title."
+          },
+          {
+            "name": "h3",
+            "fontSize": "26px",
+            "lineHeight": 1.2,
+            "fontWeight": 500,
+            "sample": "Bound in cream linen",
+            "usage": "Sub-head."
+          },
+          {
+            "name": "h4",
+            "fontSize": "20px",
+            "lineHeight": 1.2,
+            "fontWeight": 500,
+            "sample": "Twelve loose pages",
+            "usage": "Card or panel title."
+          }
+        ]
+      },
+      {
+        "name": "Text",
+        "family": "body",
+        "styles": [
+          {
+            "name": "h5",
+            "fontSize": "14px",
+            "fontWeight": 600,
+            "letterSpacing": "0.04em",
+            "sample": "SECTION EYEBROW",
+            "usage": "Uppercase grotesk heading; set text-transform: uppercase."
+          },
+          {
+            "name": "eyebrow",
+            "fontSize": "11px",
+            "fontWeight": 600,
+            "letterSpacing": "0.18em",
+            "sample": "FIELD GUIDE",
+            "usage": "Small-caps label: eyebrows, table headers, status pills. Uppercase, in `fg-2`."
+          },
+          {
+            "name": "p-lead",
+            "fontSize": "16px",
+            "lineHeight": 1.45,
+            "fontWeight": 400,
+            "sample": "A workbench is what you make of it.",
+            "usage": "Lead paragraph, in `fg-2`."
+          },
+          {
+            "name": "p",
+            "fontSize": "14px",
+            "lineHeight": 1.45,
+            "fontWeight": 400,
+            "sample": "Body copy is short, plain, and a little dry.",
+            "usage": "Body copy: the 14px compact base."
+          },
+          {
+            "name": "p-small",
+            "fontSize": "12px",
+            "lineHeight": 1.45,
+            "fontWeight": 400,
+            "sample": "1. See Field Guide, p. 14.",
+            "usage": "Footnotes and small print, in `fg-2`."
+          }
+        ]
+      },
+      {
+        "name": "Mono",
+        "family": "mono",
+        "styles": [
+          {
+            "name": "mono",
+            "fontSize": "12px",
+            "lineHeight": 1.45,
+            "fontWeight": 400,
+            "sample": "const tincture = await steep()",
+            "usage": "Code blocks, kbd, HUD numerals, recipes in marginalia. Inline code runs at 0.92em."
+          }
+        ]
+      }
+    ]
+  },
+  "spacing": {
+    "note": "Compact, 4px base. Most UI gaps 6-12px; section breaks 24-40px.",
+    "tokens": [
+      {
+        "name": "sp-0",
+        "value": "0",
+        "usage": "No gap."
+      },
+      {
+        "name": "sp-1",
+        "value": "2px",
+        "usage": "Hairline nudges; the 2px press translate."
+      },
+      {
+        "name": "sp-2",
+        "value": "4px",
+        "usage": "Base unit: icon-to-label gaps, inline code padding."
+      },
+      {
+        "name": "sp-3",
+        "value": "6px",
+        "usage": "Tight sibling gap; material row padding."
+      },
+      {
+        "name": "sp-4",
+        "value": "8px",
+        "usage": "Default sibling gap; button vertical padding."
+      },
+      {
+        "name": "sp-5",
+        "value": "12px",
+        "usage": "Field and banner padding; material bar padding."
+      },
+      {
+        "name": "sp-6",
+        "value": "16px",
+        "usage": "Card padding (16-24px); `pre` padding."
+      },
+      {
+        "name": "sp-7",
+        "value": "20px",
+        "usage": "Roomy card padding."
+      },
+      {
+        "name": "sp-8",
+        "value": "24px",
+        "usage": "Group gap; `hr` margin."
+      },
+      {
+        "name": "sp-9",
+        "value": "32px",
+        "usage": "Section break."
+      },
+      {
+        "name": "sp-10",
+        "value": "40px",
+        "usage": "Large section break."
+      },
+      {
+        "name": "sp-11",
+        "value": "56px",
+        "usage": "Hero spacing."
+      },
+      {
+        "name": "sp-12",
+        "value": "80px",
+        "usage": "Page-level spacing."
+      }
+    ]
+  },
+  "radius": {
+    "note": "Square. Two softenings allowed; pills only for badges and dots.",
+    "tokens": [
+      {
+        "name": "r-0",
+        "value": "0",
+        "usage": "Default for everything: buttons, cards, fields, menus."
+      },
+      {
+        "name": "r-1",
+        "value": "1px",
+        "usage": "A hairline softening, rarely used."
+      },
+      {
+        "name": "r-2",
+        "value": "2px",
+        "usage": "Maximum softening, for inputs that absolutely need it."
+      },
+      {
+        "name": "r-full",
+        "value": "999px",
+        "usage": "Pills and dots only (badges, counts). Never buttons."
+      }
+    ]
+  },
+  "shadow": {
+    "note": "Letterpress, not glow. No blur.",
+    "tokens": [
+      {
+        "name": "shadow-press",
+        "value": {
+          "light": "inset 0 1px 0 rgba(20,19,15,0.18)",
+          "dark": "inset 0 1px 0 rgba(232,223,200,0.10)"
+        },
+        "usage": "Pressed buttons and sunken fields; the press state of controls without a stamp."
+      },
+      {
+        "name": "shadow-stamp",
+        "value": {
+          "light": "2px 2px 0 0 #1f1d18",
+          "dark": "2px 2px 0 0 #e8dfc8"
+        },
+        "usage": "The signature elevation: hard 2px ink offset on cards, menus and primary buttons. Collapses to 0 on press while the element translates 2px."
+      },
+      {
+        "name": "shadow-stamp-lg",
+        "value": {
+          "light": "4px 4px 0 0 #1f1d18",
+          "dark": "4px 4px 0 0 #e8dfc8"
+        },
+        "usage": "Large stamp for material objects and featured panels."
+      },
+      {
+        "name": "shadow-soft",
+        "value": {
+          "light": "0 1px 0 rgba(20,19,15,0.12), 0 0 0 1px rgba(20,19,15,0.04)",
+          "dark": "0 1px 0 rgba(0,0,0,0.6), 0 0 0 1px rgba(232,223,200,0.05)"
+        },
+        "usage": "Faint lift where a stamp is too loud."
+      }
+    ]
+  },
+  "borderWidth": {
+    "note": "1px ink hairlines everywhere; heavier for CTAs and selection.",
+    "tokens": [
+      {
+        "name": "bw",
+        "value": "1px",
+        "usage": "Default hairline on every card, field, table and rule."
+      },
+      {
+        "name": "bw-2",
+        "value": "2px",
+        "usage": "Primary CTAs, selected states, focused fields, stamped sheet top-rule."
+      },
+      {
+        "name": "bw-heavy",
+        "value": "3px",
+        "usage": "Section frames, hero, the material chrome spine."
+      }
+    ]
+  },
+  "fontSize": {
+    "note": "Compact, 14px base.",
+    "tokens": [
+      {
+        "name": "fs-xs",
+        "value": "11px",
+        "usage": "Labels and eyebrows."
+      },
+      {
+        "name": "fs-sm",
+        "value": "12px",
+        "usage": "Small print, buttons, `pre`."
+      },
+      {
+        "name": "fs-md",
+        "value": "14px",
+        "usage": "Body default (16px on coarse pointers)."
+      },
+      {
+        "name": "fs-lg",
+        "value": "16px",
+        "usage": "Lead paragraphs; material titles."
+      },
+      {
+        "name": "fs-xl",
+        "value": "20px",
+        "usage": "H4."
+      },
+      {
+        "name": "fs-2xl",
+        "value": "26px",
+        "usage": "H3."
+      },
+      {
+        "name": "fs-3xl",
+        "value": "34px",
+        "usage": "H2; material figures."
+      },
+      {
+        "name": "fs-4xl",
+        "value": "46px",
+        "usage": "H1."
+      },
+      {
+        "name": "fs-5xl",
+        "value": "64px",
+        "usage": "Headline step between H1 and display."
+      },
+      {
+        "name": "fs-6xl",
+        "value": "88px",
+        "usage": "Display."
+      }
+    ]
+  },
+  "lineHeight": {
+    "tokens": [
+      {
+        "name": "lh-tight",
+        "value": "1.08",
+        "usage": "H1, H2."
+      },
+      {
+        "name": "lh-snug",
+        "value": "1.2",
+        "usage": "H3, H4."
+      },
+      {
+        "name": "lh-base",
+        "value": "1.45",
+        "usage": "Body and `pre`: compact means tight, not cramped."
+      },
+      {
+        "name": "lh-loose",
+        "value": "1.65",
+        "usage": "Long-form docs prose."
+      }
+    ]
+  },
+  "letterSpacing": {
+    "tokens": [
+      {
+        "name": "ls-tight",
+        "value": "-0.02em",
+        "usage": "Display and H1."
+      },
+      {
+        "name": "ls-snug",
+        "value": "-0.01em",
+        "usage": "H2."
+      },
+      {
+        "name": "ls-base",
+        "value": "0",
+        "usage": "Body."
+      },
+      {
+        "name": "ls-wide",
+        "value": "0.04em",
+        "usage": "H5 uppercase heading."
+      },
+      {
+        "name": "ls-widest",
+        "value": "0.18em",
+        "usage": "Small caps labels and eyebrows."
+      }
+    ]
+  },
+  "zIndex": {
+    "tokens": [
+      {
+        "name": "z-base",
+        "value": "1",
+        "usage": "Raised in-flow content."
+      },
+      {
+        "name": "z-sticky",
+        "value": "10",
+        "usage": "Sticky headers and tab strips."
+      },
+      {
+        "name": "z-overlay",
+        "value": "50",
+        "usage": "Scrims and popovers."
+      },
+      {
+        "name": "z-modal",
+        "value": "100",
+        "usage": "Modals and sheets."
+      },
+      {
+        "name": "z-toast",
+        "value": "200",
+        "usage": "Toasts above everything."
+      }
+    ]
+  }
+}
