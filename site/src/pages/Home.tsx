@@ -13,10 +13,13 @@ export const Home = () => (
       <Display className="hero__title">Achery Workshop</Display>
       <p className="lead">{description}</p>
       <div className="cta-row">
-        <Button href={NPM_URL} variant="accent" glyph="box">
+        <Button href="/components" variant="accent" glyph="grid">
+          Browse components
+        </Button>
+        <Button href={NPM_URL} variant="secondary" glyph="box">
           npm package
         </Button>
-        <Button href={SOURCE_URL} variant="secondary" glyph="book">
+        <Button href={SOURCE_URL} variant="ghost" glyph="book">
           Source on GitHub
         </Button>
       </div>

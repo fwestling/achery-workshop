@@ -1,4 +1,6 @@
 import type { GlyphName } from 'achery-ui'
+import { componentDocs } from './content'
+import { COMPONENTS } from './stories/registry'
 
 export type PageId =
   | 'home'
@@ -11,6 +13,8 @@ export type PageId =
   | 'materials'
   | 'charts'
   | 'glyphs'
+  | 'components'
+  | 'component'
 
 export interface PageDef {
   id: PageId
@@ -22,7 +26,9 @@ export interface PageDef {
   label: string
   /** Sidebar group */
   group: string
-  glyph: GlyphName
+  glyph?: GlyphName
+  /** For a component page: which component (its registry slug) */
+  componentSlug?: string
 }
 
 const SUFFIX = ' — Achery Workshop'
@@ -117,6 +123,34 @@ export const PAGES: PageDef[] = [
     glyph: 'sigil',
   }),
 ]
+
+/** Plain first sentence of some markdown, for meta descriptions */
+export const firstSentence = (md: string): string => {
+  const para = md.split(/\n\s*\n/).find((p) => p.trim() && !/^(#|```|\||<|-{3})/.test(p.trim())) ?? ''
+  const plain = para.replace(/`([^`]+)`/g, '$1').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*_]/g, '').replace(/\s+/g, ' ').trim()
+  return plain.match(/^.+?[.!?](?=\s|$)/)?.[0] ?? plain
+}
+
+PAGES.push(
+  page({
+    id: 'components',
+    path: '/components',
+    description: `All ${COMPONENTS.length} achery-ui web components, with live previews in any theme and accent.`,
+    label: 'All components',
+    group: 'Components',
+    glyph: 'grid',
+  }),
+  ...COMPONENTS.map((c) =>
+    page({
+      id: 'component',
+      path: `/components/${c.slug}`,
+      description: firstSentence(c.description ?? componentDocs(c.sections)) || `The ${c.name} component.`,
+      label: c.name,
+      group: 'Components',
+      componentSlug: c.slug,
+    }),
+  ),
+)
 
 /** Sidebar groups in page order */
 export const NAV_GROUPS = [...new Set(PAGES.map((p) => p.group))].map((group) => ({

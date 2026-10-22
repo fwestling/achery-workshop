@@ -1,6 +1,7 @@
 import { Marked, type Tokens } from 'marked'
 import gettingStartedMdx from '../../src/docs/GettingStarted.mdx?raw'
 import styleguideMdx from '../../src/docs/Styleguide.mdx?raw'
+import componentsMd from '../../COMPONENTS.md?raw'
 
 // Long-form pages render the library's own docs (src/docs/*.mdx), so the site never keeps a second copy.
 // Those files are MDX for Storybook; the site reads them as markdown and drops what only Storybook understands.
@@ -59,6 +60,36 @@ export const pickSections = (md: string, titles: readonly string[]): string => {
     .join('\n')
     .trim()
 }
+
+/**
+ * A heading's section of a markdown file, at whatever level it sits (COMPONENTS.md mixes `##` and `###`):
+ * from the heading to the next heading at the same level or above. The heading line itself and trailing
+ * `---` rules are dropped. Empty when there's no such heading.
+ */
+export const sectionByHeading = (md: string, title: string): string => {
+  const lines = md.split('\n')
+  let inFence = false
+  let level = 0
+  const out: string[] = []
+  for (const line of lines) {
+    if (FENCE.test(line)) inFence = !inFence
+    const heading = inFence ? null : line.match(/^(#{1,6})\s+(.+?)\s*$/)
+    if (level === 0) {
+      if (heading && heading[2] === title) level = (heading[1] ?? '').length
+      continue
+    }
+    if (heading && (heading[1] ?? '').length <= level) break
+    out.push(line)
+  }
+  return out.join('\n').replace(/(\s*\n---\s*)+$/, '').trim()
+}
+
+/** The COMPONENTS.md documentation for a component page, its sections joined in order. */
+export const componentDocs = (titles: readonly string[]): string =>
+  titles
+    .map((t) => sectionByHeading(componentsMd, t))
+    .filter(Boolean)
+    .join('\n\n')
 
 /** Drops a section's own `## <title>` line, for pages that set their own headings around it. */
 export const withoutHeading = (md: string): string => md.replace(/^##\s+.+\n+/, '')

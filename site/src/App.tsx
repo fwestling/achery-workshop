@@ -11,9 +11,11 @@ import { Materials } from './pages/foundations/Materials'
 import { Motion } from './pages/foundations/Motion'
 import { Space } from './pages/foundations/Space'
 import { Typography } from './pages/foundations/Typography'
-import { findPage, type PageId } from './pages'
+import { ComponentIndex } from './pages/components/ComponentIndex'
+import { ComponentPage } from './pages/components/ComponentPage'
+import { findPage, type PageDef, type PageId } from './pages'
 
-const PAGE_COMPONENTS: Record<PageId, ComponentType> = {
+const PAGE_COMPONENTS: Record<Exclude<PageId, 'component'>, ComponentType> = {
   home: Home,
   principles: Principles,
   colour: Colour,
@@ -24,6 +26,14 @@ const PAGE_COMPONENTS: Record<PageId, ComponentType> = {
   materials: Materials,
   charts: Charts,
   glyphs: Glyphs,
+  components: ComponentIndex,
+}
+
+const PageBody = ({ page }: { page: PageDef | undefined }) => {
+  if (!page) return <NotFound />
+  if (page.id === 'component') return <ComponentPage slug={page.componentSlug ?? ''} />
+  const Page = PAGE_COMPONENTS[page.id]
+  return <Page />
 }
 
 const NotFound = () => (
@@ -46,12 +56,11 @@ const useJumpToHash = () =>
 export const App = ({ path }: { path: string }) => {
   useJumpToHash()
   const page = findPage(path)
-  const Page = page ? PAGE_COMPONENTS[page.id] : NotFound
   return (
     // The workshop wears Achery's own accent until the visitor picks another (stored by AcheryProvider)
     <AcheryProvider defaultAccent="terracotta">
       <Layout path={page?.path ?? path}>
-        <Page />
+        <PageBody page={page} />
       </Layout>
     </AcheryProvider>
   )

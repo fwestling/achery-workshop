@@ -18,7 +18,7 @@ import { AcheryMark } from './AcheryMark'
 
 const NAV: NavGroupDef[] = NAV_GROUPS.map(({ label, pages }) => ({
   label,
-  items: pages.map((p) => ({ id: p.path, label: p.label, glyph: p.glyph, href: p.path })),
+  items: pages.map((p) => ({ id: p.path, label: p.label, href: p.path, ...(p.glyph ? { glyph: p.glyph } : {}) })),
 }))
 
 const MODES: { value: ThemeMode; label: string }[] = [

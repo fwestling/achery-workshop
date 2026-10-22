@@ -11,6 +11,20 @@ is the library's tag and triggers the npm release.
 
 ---
 
+## [0.3.0] - 2026-10-22
+
+### Added
+- Components: an index and one page per web component (37), each rendering the component's own Storybook stories live, with their descriptions and code
+- Preview settings on each component page: theme, accent, dial and material, applied to every example
+- API reference on each component page, from its `COMPONENTS.md` section
+- A small CSF renderer for the stories (args, render, decorators, function stories, parameters), with a test that fails if a story uses a feature it doesn't support
+- Home: "Browse components" is the main call to action
+
+### Changed
+- Examples that open a dialog on mount (`defaultOpen`) wait for a click, so a page never opens with dialogs over it
+
+---
+
 ## [0.2.0] - 2026-10-22
 
 ### Added
@@ -36,6 +50,7 @@ is the library's tag and triggers the npm release.
 - Home page: version, links to npm and GitHub, and `src/docs/GettingStarted.mdx` rendered as the page body
 - Docker image (nginx), `checks.yml` and `site-deploy.yml` workflows, compose block and `DEPLOY.md`
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.2.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.3.0...HEAD
+[0.3.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.2.0...site-v0.3.0
 [0.2.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.1.0...site-v0.2.0
 [0.1.0]: https://github.com/fwestling/achery-workshop/releases/tag/site-v0.1.0
