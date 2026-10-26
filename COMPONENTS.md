@@ -148,7 +148,8 @@ import { Field, Input, Textarea, Select, SearchInput } from 'achery-ui'
 ```
 
 A `Field`'s label names the control inside it and its hint/error describes it — automatic for
-`Input`, `Textarea`, `Select` and `TagInput`. A custom control spreads `useFieldControl()`:
+`Input`, `Textarea`, `Select` and `TagInput`. A control given its own `id` keeps it, and the label
+points at that id. A custom control spreads `useFieldControl()`:
 
 ```tsx
 const MyControl = () => <input {...useFieldControl()} />

@@ -1,5 +1,6 @@
 import {
   createContext,
+  isValidElement,
   useContext,
   useId,
   type InputHTMLAttributes,
@@ -67,8 +68,12 @@ export function useFieldControl(own: { id?: string | undefined; 'aria-describedb
 }
 
 export function Field({ label, hint, error, children, className }: FieldProps) {
-  const id = useId()
-  const noteId = `${id}-note`
+  const generatedId = useId()
+  // A control that brings its own id keeps it (useFieldControl lets an explicit id win),
+  // so the label has to point at that id rather than the generated one
+  const ownId = isValidElement<{ id?: unknown }>(children) && typeof children.props.id === 'string' ? children.props.id : undefined
+  const id = ownId ?? generatedId
+  const noteId = `${generatedId}-note`
   const note = error ?? hint
   return (
     <FieldContext.Provider value={{ id, describedBy: note ? noteId : undefined, invalid: !!error }}>

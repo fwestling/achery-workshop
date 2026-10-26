@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.25.1] - 2026-10-26
+
+### Fixed
+- Field: a control given its own `id` (e.g. to focus it) is now named by the label. The control kept its id but the label pointed at the generated one, so it was unnamed for screen readers and clicking the label did nothing
+
+---
+
 ## [0.25.0] - 2026-10-23
 
 Contrast and accessibility fixes, the accent dial wired on the web, opt-in brand fonts on native, and the
@@ -728,7 +735,8 @@ Colours now follow the Achery design system's `tokens.json`. Error colours (`dan
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.25.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.25.1...HEAD
+[0.25.1]: https://github.com/fwestling/achery-workshop/compare/v0.25.0...v0.25.1
 [0.25.0]: https://github.com/fwestling/achery-workshop/compare/v0.24.1...v0.25.0
 [0.24.1]: https://github.com/fwestling/achery-workshop/compare/v0.24.0...v0.24.1
 [0.24.0]: https://github.com/fwestling/achery-workshop/compare/v0.23.2...v0.24.0

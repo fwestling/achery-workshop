@@ -11,6 +11,13 @@ is the library's tag and triggers the npm release.
 
 ---
 
+## [0.6.1] - 2026-10-26
+
+### Added
+- Tests: Field labels name their control, including one with its own `id` (renders achery-ui source)
+
+---
+
 ## [0.6.0] - 2026-10-23
 
 ### Changed
@@ -92,7 +99,8 @@ is the library's tag and triggers the npm release.
 - Home page: version, links to npm and GitHub, and `src/docs/GettingStarted.mdx` rendered as the page body
 - Docker image (nginx), `checks.yml` and `site-deploy.yml` workflows, compose block and `DEPLOY.md`
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.1...HEAD
+[0.6.1]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.0...site-v0.6.1
 [0.6.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.5.1...site-v0.6.0
 [0.5.1]: https://github.com/fwestling/achery-workshop/compare/site-v0.5.0...site-v0.5.1
 [0.5.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.4.0...site-v0.5.0
