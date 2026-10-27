@@ -21,15 +21,23 @@ export interface TagInputProps {
    * whitespace (matches typical server-side tag normalisation).
    */
   normalize?: (raw: string) => string
+  /**
+   * Characters that confirm the tag being typed. Return always confirms. Leave out the space
+   * for tags that are phrases ("the Captain"). @default [',', ' ']
+   */
+  separators?: string[]
   disabled?: boolean
+  /** Names the text field for screen readers. @default the placeholder */
+  accessibilityLabel?: string
   style?: ViewStyle
 }
 
 const defaultNormalize = (t: string) => t.trim().toLowerCase().replace(/\s+/g, ' ')
+const DEFAULT_SEPARATORS = [',', ' ']
 
 /**
- * Chips-in-input tag field. Type to add; comma or trailing space confirms a
- * chip; return also confirms; Backspace on an empty input removes the last chip.
+ * Chips-in-input tag field. Type to add; a separator (comma or space by default,
+ * see `separators`) confirms a chip; return also confirms; Backspace on an empty input removes the last chip.
  * Autocompletes from `suggestions`.
  *
  * @example
@@ -46,7 +54,9 @@ export const TagInput = ({
   placeholder,
   onLeather = false,
   normalize = defaultNormalize,
+  separators = DEFAULT_SEPARATORS,
   disabled = false,
+  accessibilityLabel,
   style,
 }: TagInputProps) => {
   const { tokens, font } = useTheme()
@@ -64,8 +74,9 @@ export const TagInput = ({
   const remove = (t: string) => onChange(value.filter((x) => x !== t))
 
   const handleChange = (t: string) => {
-    if (t.endsWith(',') || t.endsWith(' ')) {
-      const token = t.slice(0, -1)
+    const separator = separators.find((sep) => sep !== '' && t.endsWith(sep))
+    if (separator) {
+      const token = t.slice(0, -separator.length)
       if (token.trim()) add(token)
       else setText('')
       return
@@ -106,6 +117,7 @@ export const TagInput = ({
               if (last) remove(last)
             }
           }}
+          accessibilityLabel={accessibilityLabel ?? placeholder}
           placeholder={value.length === 0 ? placeholder : undefined}
           placeholderTextColor={placeholderColor}
           autoCapitalize="none"

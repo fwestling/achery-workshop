@@ -1126,7 +1126,7 @@ These also make components findable in tests by role and name (`getByRole('butto
 | `AdaptivePanel` | Width-adaptive disclosure surface. A `BottomSheet` when narrow; a docked side column at ≥900pt, displacing content rather than covering it. Ships `useIsPanelDocked`. |
 | `BottomTabBar` | Root navigation bar (promotion ladder). ≤4 primary tabs; overflow into a "More" `BottomSheet`. 2px accent top stripe on active tab. |
 | `Marginalia` | Decorative corner glyph (RN counterpart to web `Marginalia`). `corner`/`inset`/`opacity`/`accent`. Non-interactive. |
-| `TagInput` | Chips-in-input tag field with autocomplete. Comma/space/return confirm, Backspace removes last. `onLeather` variant for ghost-on-leather. |
+| `TagInput` | Chips-in-input tag field with autocomplete. Comma/space/return confirm (`separators` to change), Backspace removes last. `onLeather` variant for ghost-on-leather. |
 | `BarChart` | Native counterpart of web `BarChart` — same props, but `onPress` per bar instead of `href`/`onSelect`. Tapping a bar shows its values beneath the chart; with `onPress`, long-press does. |
 | `Sparkline` | Native counterpart of web `Sparkline` — same props, plus `accessibilityLabel` (without one it's decorative). Requires `react-native-svg`. |
 
@@ -1465,7 +1465,7 @@ Anchors absolutely — the parent should be `position: 'relative'` (a full-scree
 
 ### `TagInput` (native)
 
-Chips-in-input tag field. Type to add; comma or trailing space confirms a chip; return also confirms; Backspace on an empty input removes the last chip. Autocompletes from `suggestions`.
+Chips-in-input tag field. Type to add; a separator (comma or space by default) confirms a chip; return also confirms; Backspace on an empty input removes the last chip. Autocompletes from `suggestions`.
 
 ```tsx
 import { TagInput, Field } from 'achery-ui/native'
@@ -1476,6 +1476,9 @@ import { TagInput, Field } from 'achery-ui/native'
 
 // Ghost-on-leather, e.g. over a shoot-mode HUD
 <TagInput value={tags} onChange={setTags} onLeather />
+
+// Phrases ("the Captain"): only comma or return confirms, and case is kept
+<TagInput value={aliases} onChange={setAliases} separators={[',']} normalize={(raw) => raw.trim()} />
 ```
 
 | Prop | Type | Default |
@@ -1486,7 +1489,9 @@ import { TagInput, Field } from 'achery-ui/native'
 | `placeholder` | `string` | — |
 | `onLeather` | `boolean` | `false` (gold-deep chips + cream text) |
 | `normalize` | `(raw: string) => string` | lowercase + trim + collapse whitespace |
+| `separators` | `string[]` | `[',', ' ']` (characters that confirm a chip; return always does) |
 | `disabled` | `boolean` | `false` |
+| `accessibilityLabel` | `string` | the `placeholder` (names the text field) |
 
 ### `BarChart` (native)
 
