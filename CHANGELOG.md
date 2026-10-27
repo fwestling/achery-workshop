@@ -11,6 +11,14 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.26.0] - 2026-10-28
+
+### Added
+- TagInput (native): `separators`, the characters that confirm a tag (default comma and space). Leave out the space for tags that are phrases, like aliases ("the Captain")
+- TagInput (native): `accessibilityLabel` for the text field, which was unnamed for screen readers; defaults to the placeholder
+
+---
+
 ## [0.25.1] - 2026-10-26
 
 ### Fixed
@@ -735,7 +743,8 @@ Colours now follow the Achery design system's `tokens.json`. Error colours (`dan
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.25.1...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.26.0...HEAD
+[0.26.0]: https://github.com/fwestling/achery-workshop/compare/v0.25.1...v0.26.0
 [0.25.1]: https://github.com/fwestling/achery-workshop/compare/v0.25.0...v0.25.1
 [0.25.0]: https://github.com/fwestling/achery-workshop/compare/v0.24.1...v0.25.0
 [0.24.1]: https://github.com/fwestling/achery-workshop/compare/v0.24.0...v0.24.1

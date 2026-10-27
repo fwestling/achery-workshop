@@ -10,7 +10,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Tags as chips inside the field, with suggestions. Comma, space or return confirms a tag; backspace on an empty field removes the last.',
+          'Tags as chips inside the field, with suggestions. Comma, space or return confirms a tag (`separators` changes which characters do); backspace on an empty field removes the last.',
       },
     },
   },
@@ -40,3 +40,15 @@ export const Default: Story = { render: () => <Demo initial={['ink', 'pigment']}
 export const Empty: Story = { render: () => <Demo initial={[]} /> }
 
 export const Disabled: Story = { render: () => <Demo initial={['ink']} disabled /> }
+
+const PhrasesDemo = () => {
+  const [tags, setTags] = useState(['the Captain'])
+  return (
+    <View style={{ maxWidth: 360 }}>
+      <TagInput value={tags} onChange={setTags} separators={[',']} normalize={(raw) => raw.trim()} placeholder="Add an alias" />
+    </View>
+  )
+}
+
+/** Phrases as tags: only a comma or return confirms, so a space stays in the tag. */
+export const Phrases: Story = { render: () => <PhrasesDemo /> }
