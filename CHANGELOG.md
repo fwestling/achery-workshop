@@ -9,6 +9,9 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+- TagInput (native): `autoCapitalize`, passed to the keyboard (default `'none'`, as before). The field always turned capitals off, so tags that are names (aliases like "Kara Vass") came out lower case unless the author pressed shift for every word, even with a `normalize` that keeps case
+
 ---
 
 ## [0.26.0] - 2026-10-28

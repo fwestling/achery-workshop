@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, Pressable, TextInput, StyleSheet, type ViewStyle } from 'react-native'
+import { View, Pressable, TextInput, StyleSheet, type TextInputProps, type ViewStyle } from 'react-native'
 import { Text } from './Text'
 import { Glyph } from './Glyph'
 import { useTheme } from '../theme/ThemeContext'
@@ -26,6 +26,11 @@ export interface TagInputProps {
    * for tags that are phrases ("the Captain"). @default [',', ' ']
    */
   separators?: string[]
+  /**
+   * How the keyboard capitalises what's typed. Use `'words'` (or `'sentences'`) for tags that are
+   * names, so the keyboard offers capitals; `normalize` must keep case too. @default 'none'
+   */
+  autoCapitalize?: TextInputProps['autoCapitalize']
   disabled?: boolean
   /** Names the text field for screen readers. @default the placeholder */
   accessibilityLabel?: string
@@ -55,6 +60,7 @@ export const TagInput = ({
   onLeather = false,
   normalize = defaultNormalize,
   separators = DEFAULT_SEPARATORS,
+  autoCapitalize = 'none',
   disabled = false,
   accessibilityLabel,
   style,
@@ -120,7 +126,7 @@ export const TagInput = ({
           accessibilityLabel={accessibilityLabel ?? placeholder}
           placeholder={value.length === 0 ? placeholder : undefined}
           placeholderTextColor={placeholderColor}
-          autoCapitalize="none"
+          autoCapitalize={autoCapitalize}
           autoCorrect={false}
           style={[styles.input, { color: chipText, ...font('body') }]}
         />

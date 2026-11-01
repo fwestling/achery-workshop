@@ -1477,8 +1477,9 @@ import { TagInput, Field } from 'achery-ui/native'
 // Ghost-on-leather, e.g. over a shoot-mode HUD
 <TagInput value={tags} onChange={setTags} onLeather />
 
-// Phrases ("the Captain"): only comma or return confirms, and case is kept
-<TagInput value={aliases} onChange={setAliases} separators={[',']} normalize={(raw) => raw.trim()} />
+// Names and phrases ("Kara Vass", "the Captain"): only comma or return confirms, case is kept,
+// and the keyboard offers capitals
+<TagInput value={aliases} onChange={setAliases} separators={[',']} normalize={(raw) => raw.trim()} autoCapitalize="words" />
 ```
 
 | Prop | Type | Default |
@@ -1490,6 +1491,7 @@ import { TagInput, Field } from 'achery-ui/native'
 | `onLeather` | `boolean` | `false` (gold-deep chips + cream text) |
 | `normalize` | `(raw: string) => string` | lowercase + trim + collapse whitespace |
 | `separators` | `string[]` | `[',', ' ']` (characters that confirm a chip; return always does) |
+| `autoCapitalize` | `'none' \| 'sentences' \| 'words' \| 'characters'` | `'none'` (passed to the keyboard; pair with a case-keeping `normalize`) |
 | `disabled` | `boolean` | `false` |
 | `accessibilityLabel` | `string` | the `placeholder` (names the text field) |
 
