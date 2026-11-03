@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.29.1] - 2026-11-04
+
+### Fixed
+- Package: `src/tags` is published. 0.29.0's native TagInput imports `splitTags` from it, so `achery-ui/native` failed to load in 0.29.0
+
+---
+
 ## [0.29.0] - 2026-11-04
 
 ### Added
@@ -768,7 +775,8 @@ Colours now follow the Achery design system's `tokens.json`. Error colours (`dan
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.29.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.29.1...HEAD
+[0.29.1]: https://github.com/fwestling/achery-workshop/compare/v0.29.0...v0.29.1
 [0.29.0]: https://github.com/fwestling/achery-workshop/compare/v0.28.0...v0.29.0
 [0.28.0]: https://github.com/fwestling/achery-workshop/compare/v0.27.0...v0.28.0
 [0.27.0]: https://github.com/fwestling/achery-workshop/compare/v0.26.0...v0.27.0
