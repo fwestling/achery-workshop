@@ -160,8 +160,8 @@ const MyControl = () => <input {...useFieldControl()} />
 
 ### TagInput
 Chips-in-input for a list of short string tags. Web counterpart of the native `TagInput`.
-Enter to add, Backspace or × to remove; autocompletes from `suggestions`. Chips use the
-active accent.
+Enter to add (or a character in `separators`), Backspace or × to remove; autocompletes from `suggestions`.
+Chips use the active accent.
 
 ```tsx
 import { TagInput } from 'achery-ui'
@@ -182,6 +182,7 @@ const [tags, setTags] = useState<string[]>(['fiction', 'draft'])
 | `onChange` | `(tags: string[]) => void` | |
 | `suggestions` | `string[]` | Optional autocomplete list |
 | `normalize` | `(raw: string) => string` | Default: lowercase + trim + collapse whitespace |
+| `separators` | `string[]` | Characters that confirm a tag, as Enter does; pasted text splits at each. Default `[]` (Enter only, so phrases work). Pass `[',', ' ']` for single-word tags, the native default |
 | `placeholder` | `string` | Shown when empty |
 | `disabled` | `boolean` | |
 
@@ -1126,7 +1127,7 @@ These also make components findable in tests by role and name (`getByRole('butto
 | `AdaptivePanel` | Width-adaptive disclosure surface. A `BottomSheet` when narrow; a docked side column at ≥900pt, displacing content rather than covering it. Ships `useIsPanelDocked`. |
 | `BottomTabBar` | Root navigation bar (promotion ladder). ≤4 primary tabs; overflow into a "More" `BottomSheet`. 2px accent top stripe on active tab. |
 | `Marginalia` | Decorative corner glyph (RN counterpart to web `Marginalia`). `corner`/`inset`/`opacity`/`accent`. Non-interactive. |
-| `TagInput` | Chips-in-input tag field with autocomplete. Comma/space/return confirm (`separators` to change), Backspace removes last. `onLeather` variant for ghost-on-leather. |
+| `TagInput` | Chips-in-input tag field with autocomplete. Comma/space/return confirm (`separators` to change), and pasted text splits at each separator; Backspace removes last. `onLeather` variant for ghost-on-leather. |
 | `BarChart` | Native counterpart of web `BarChart` — same props, but `onPress` per bar instead of `href`/`onSelect`. Tapping a bar shows its values beneath the chart; with `onPress`, long-press does. |
 | `Sparkline` | Native counterpart of web `Sparkline` — same props, plus `accessibilityLabel` (without one it's decorative). Requires `react-native-svg`. |
 

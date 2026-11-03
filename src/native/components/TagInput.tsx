@@ -3,6 +3,7 @@ import { View, Pressable, TextInput, StyleSheet, type TextInputProps, type ViewS
 import { Text } from './Text'
 import { Glyph } from './Glyph'
 import { useTheme } from '../theme/ThemeContext'
+import { addTags, splitTags } from '../../tags/splitTags'
 
 export interface TagInputProps {
   /** Selected tags (controlled). */
@@ -42,7 +43,7 @@ const DEFAULT_SEPARATORS = [',', ' ']
 
 /**
  * Chips-in-input tag field. Type to add; a separator (comma or space by default,
- * see `separators`) confirms a chip; return also confirms; Backspace on an empty input removes the last chip.
+ * see `separators`) confirms a chip, and pasted text splits at each one; return also confirms; Backspace on an empty input removes the last chip.
  * Autocompletes from `suggestions`.
  *
  * @example
@@ -72,22 +73,21 @@ export const TagInput = ({
   const chipText = onLeather ? tokens.materialLeatherFg : tokens.fg
   const placeholderColor = onLeather ? `${tokens.materialLeatherFg}80` : tokens.fgMute
 
+  const addAll = (raws: string[]) => {
+    const next = addTags(value, raws, normalize)
+    if (next.length !== value.length) onChange(next)
+  }
   const add = (raw: string) => {
-    const t = normalize(raw)
-    if (t && !value.includes(t)) onChange([...value, t])
+    addAll([raw])
     setText('')
   }
   const remove = (t: string) => onChange(value.filter((x) => x !== t))
 
+  // A separator confirms what's before it, wherever it is: typed at the end or in pasted text
   const handleChange = (t: string) => {
-    const separator = separators.find((sep) => sep !== '' && t.endsWith(sep))
-    if (separator) {
-      const token = t.slice(0, -separator.length)
-      if (token.trim()) add(token)
-      else setText('')
-      return
-    }
-    setText(t)
+    const { confirmed, rest } = splitTags(t, separators)
+    if (confirmed.length) addAll(confirmed)
+    setText(rest)
   }
 
   const matches = text.trim()

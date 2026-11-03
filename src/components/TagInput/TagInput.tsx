@@ -2,6 +2,7 @@ import { useState, type KeyboardEvent } from 'react'
 import { Glyph } from '../../glyphs/Glyph'
 import * as styles from './TagInput.css'
 import { useFieldControl } from '../Input/Input'
+import { addTags, splitTags } from '../../tags/splitTags'
 
 /** Default tag normalisation: trim, lowercase, collapse internal whitespace.
  *  Matches typical server-side tag normalisation (and the native TagInput). */
@@ -22,15 +23,21 @@ export interface TagInputProps {
    * whitespace (matches the native `TagInput` and typical server normalisation).
    */
   normalize?: (raw: string) => string
+  /**
+   * Characters that confirm the tag being typed, as Enter does; pasted text splits at each one.
+   * Pass `[',', ' ']` for single-word tags, as the native `TagInput` does by default. @default [] (Enter only)
+   */
+  separators?: string[]
   className?: string
   'aria-label'?: string
 }
 
 const MAX_SUGGESTIONS = 6
+const NO_SEPARATORS: string[] = []
 
 /**
  * Chips-in-input for editing a list of short string tags: type a value and press
- * Enter to add it as a chip, click × (or Backspace on an empty input) to remove.
+ * Enter (or one of `separators`) to add it as a chip, click × (or Backspace on an empty input) to remove.
  * Autocompletes from `suggestions`. The web counterpart of the native `TagInput`;
  * hard-edged to match the workshop aesthetic, chips use the active accent.
  *
@@ -47,6 +54,7 @@ export function TagInput({
   placeholder,
   disabled = false,
   normalize = defaultNormalize,
+  separators = NO_SEPARATORS,
   className,
   'aria-label': ariaLabel,
 }: TagInputProps) {
@@ -54,10 +62,20 @@ export function TagInput({
   const field = useFieldControl()
   const [draft, setDraft] = useState('')
 
+  const addAll = (raws: string[]) => {
+    const next = addTags(value, raws, normalize)
+    if (next.length !== value.length) onChange(next)
+  }
   const add = (raw: string) => {
-    const tag = normalize(raw)
-    if (tag && !value.includes(tag)) onChange([...value, tag])
+    addAll([raw])
     setDraft('')
+  }
+
+  // A separator confirms what's before it, wherever it is: typed at the end or in pasted text
+  const onDraftChange = (text: string) => {
+    const { confirmed, rest } = splitTags(text, separators)
+    if (confirmed.length) addAll(confirmed)
+    setDraft(rest)
   }
 
   const removeAt = (index: number) => onChange(value.filter((_, i) => i !== index))
@@ -100,7 +118,7 @@ export function TagInput({
           className={styles.input}
           value={draft}
           disabled={disabled}
-          onChange={(e) => setDraft(e.target.value)}
+          onChange={(e) => onDraftChange(e.target.value)}
           onKeyDown={onKeyDown}
           onBlur={() => add(draft)}
           placeholder={value.length ? '' : placeholder}

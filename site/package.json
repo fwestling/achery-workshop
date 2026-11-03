@@ -1,7 +1,7 @@
 {
   "name": "achery-workshop-site",
   "private": true,
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "workshop.achery.dev \u2014 the public documentation site for achery-ui",
   "type": "module",
   "scripts": {

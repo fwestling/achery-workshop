@@ -100,6 +100,8 @@ export const ProgressBar = (props: ProgressBarProps) => {
 
   return (
     <View
+      // A plain View isn't an accessibility element on iOS unless it says so: without this, VoiceOver skips the bar
+      accessible
       accessibilityRole="progressbar"
       // aria-value* rather than accessibilityValue: React Native reads both, react-native-web only these.
       // Indeterminate leaves out the value, which is how a progress bar says "busy" (WAI-ARIA)

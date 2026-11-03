@@ -11,6 +11,17 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.29.0] - 2026-11-04
+
+### Added
+- TagInput (web): `separators`, characters that confirm a tag as Enter does. Default none, so existing fields (phrases, aliases) behave as before; pass `[',', ' ']` for single-word tags like the native default
+
+### Fixed
+- TagInput (web and native): text with a separator anywhere in it is split there, so pasting "brick wall" into a comma-and-space field makes two tags rather than one with a space. Only a separator typed at the end used to count
+- ProgressBar (native): VoiceOver can reach it. It had the progress-bar role and a label but wasn't marked `accessible`, which a plain View needs on iOS to be read at all
+
+---
+
 ## [0.28.0] - 2026-11-03
 
 ### Added
@@ -757,7 +768,8 @@ Colours now follow the Achery design system's `tokens.json`. Error colours (`dan
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.28.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.29.0...HEAD
+[0.29.0]: https://github.com/fwestling/achery-workshop/compare/v0.28.0...v0.29.0
 [0.28.0]: https://github.com/fwestling/achery-workshop/compare/v0.27.0...v0.28.0
 [0.27.0]: https://github.com/fwestling/achery-workshop/compare/v0.26.0...v0.27.0
 [0.26.0]: https://github.com/fwestling/achery-workshop/compare/v0.25.1...v0.26.0

@@ -11,6 +11,13 @@ is the library's tag and triggers the npm release.
 
 ---
 
+## [0.6.3] - 2026-11-04
+
+### Added
+- Tests: TagInput's tag splitting (`splitTags`, `addTags`), shared by the web and native fields
+
+---
+
 ## [0.6.2] - 2026-11-03
 
 ### Added
@@ -107,7 +114,8 @@ is the library's tag and triggers the npm release.
 - Home page: version, links to npm and GitHub, and `src/docs/GettingStarted.mdx` rendered as the page body
 - Docker image (nginx), `checks.yml` and `site-deploy.yml` workflows, compose block and `DEPLOY.md`
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.2...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.3...HEAD
+[0.6.3]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.2...site-v0.6.3
 [0.6.2]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.1...site-v0.6.2
 [0.6.1]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.0...site-v0.6.1
 [0.6.0]: https://github.com/fwestling/achery-workshop/compare/site-v0.5.1...site-v0.6.0
