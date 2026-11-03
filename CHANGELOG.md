@@ -9,6 +9,17 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+---
+
+## [0.28.0] - 2026-11-03
+
+### Added
+- ProgressBar (native): `indeterminate`, in place of `value`, for work of unknown size (uploads, syncing): a segment slides along the track, or pulses with Reduce Motion on, and the bar is announced as busy with no value
+
+---
+
+## [0.27.0] - 2026-11-01
+
 ### Added
 - TagInput (native): `autoCapitalize`, passed to the keyboard (default `'none'`, as before). The field always turned capitals off, so tags that are names (aliases like "Kara Vass") came out lower case unless the author pressed shift for every word, even with a `normalize` that keeps case
 
@@ -746,7 +757,9 @@ Colours now follow the Achery design system's `tokens.json`. Error colours (`dan
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.26.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.28.0...HEAD
+[0.28.0]: https://github.com/fwestling/achery-workshop/compare/v0.27.0...v0.28.0
+[0.27.0]: https://github.com/fwestling/achery-workshop/compare/v0.26.0...v0.27.0
 [0.26.0]: https://github.com/fwestling/achery-workshop/compare/v0.25.1...v0.26.0
 [0.25.1]: https://github.com/fwestling/achery-workshop/compare/v0.25.0...v0.25.1
 [0.25.0]: https://github.com/fwestling/achery-workshop/compare/v0.24.1...v0.25.0

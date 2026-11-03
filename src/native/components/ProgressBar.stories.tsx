@@ -8,7 +8,8 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'A determinate bar from 0 to 100, in two sizes and two tones.',
+        component:
+          'A bar from 0 to 100, in two sizes and two tones. `indeterminate` is for work whose size isn\'t known: a segment slides along the track (a slow pulse with Reduce Motion on).',
       },
     },
   },
@@ -26,6 +27,15 @@ export const Tones: Story = {
       <ProgressBar value={40} tone="neutral" accessibilityLabel="Neutral" />
       <ProgressBar value={70} tone="accent" accessibilityLabel="Accent" />
       <ProgressBar value={70} tone="accent" size="sm" accessibilityLabel="Accent, small" />
+    </View>
+  ),
+}
+
+export const Indeterminate: Story = {
+  render: () => (
+    <View style={{ gap: 16, maxWidth: 360 }}>
+      <ProgressBar indeterminate accessibilityLabel="Uploading" />
+      <ProgressBar indeterminate tone="accent" size="sm" accessibilityLabel="Uploading, small" />
     </View>
   ),
 }

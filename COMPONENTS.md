@@ -1110,7 +1110,7 @@ These also make components findable in tests by role and name (`getByRole('butto
 | `Glyph` | All 397 glyphs via react-native-svg-transformer. Requires setup above. |
 | `GlyphPicker` | Modal sheet with search + 8-column grid |
 | `Skeleton` | Animated opacity-pulse placeholder (lines or block) |
-| `ProgressBar` | 0–100 value, sm/md, neutral/accent tone. Announced as a progress bar with its value; name it with `accessibilityLabel` |
+| `ProgressBar` | 0–100 `value`, sm/md, neutral/accent tone. Announced as a progress bar with its value; name it with `accessibilityLabel`. `indeterminate` (instead of `value`) slides a segment along the track for work of unknown size, a slow pulse with Reduce Motion on, and is announced as busy |
 | `Checkbox` | Controlled/uncontrolled, indeterminate, optional label |
 | `Toggle` | Animated pill switch (`value`/`onChange` — note: differs from web's `pressed`/`onPressedChange`) |
 | `Tabs` | Horizontal scrollable tab bar with active underline. Announced as tabs with their selected state. |
@@ -1561,6 +1561,6 @@ Components not yet in achery-ui that commonly appear in apps:
 
 - **Radio** — no radio group primitives
 - **Breadcrumb** — no wayfinding
-- **Spinner** — no indeterminate loading indicator (ProgressBar exists for determinate values)
+- **Spinner** — no indeterminate loading indicator on web (web ProgressBar is determinate, or a Skeleton with `loading`; native ProgressBar has `indeterminate`)
 - **NumberInput / Stepper** — no numeric input with increment/decrement
 - **FAB** — no floating action button for quick capture on native
