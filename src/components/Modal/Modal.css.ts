@@ -124,6 +124,18 @@ export const contentSized = recipe({
       sm: { maxWidth: '400px' },
       md: { maxWidth: '560px' },
       lg: { maxWidth: '760px' },
+      full: {
+        width: '100vw',
+        height: '100dvh',
+        maxWidth: 'none',
+        maxHeight: 'none',
+        border: 'none',
+        boxShadow: 'none',
+        padding: vars.space.sp6,
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      },
     },
   },
   defaultVariants: { size: 'sm' },
@@ -133,4 +145,12 @@ export const bodyScrollable = style({
   overflowY: 'auto',
   maxHeight: '70vh',
   marginTop: vars.space.sp6,
+})
+
+/** A full-window dialog's body: the space between header and footer. */
+export const bodyFull = style({
+  flex: 1,
+  minHeight: 0,
+  overflow: 'auto',
+  marginTop: vars.space.sp4,
 })

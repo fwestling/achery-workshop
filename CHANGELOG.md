@@ -11,6 +11,22 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.30.0] - 2026-11-04
+
+Accessibility gaps found building Aperture 0.7.0, each worked around there until now.
+
+### Added
+- Field (native): the `Input`, `Textarea` or `TagInput` inside is named after the label for VoiceOver, with the error or hint as its hint; an explicit `accessibilityLabel` wins. `useFieldControl` gives custom controls the same (the web Field has done this since 0.25.1)
+- ScreenNav (native): `actionAccessibilityLabel`, a spoken name for a symbol action such as "⋯" (read as "horizontal ellipsis" otherwise)
+- Button (native): `accessibilityState` (`selected`, `checked`, `busy`, `expanded`), for a button that's one of a set of choices; `disabled` still follows the `disabled` prop
+- Modal (web): `size="full"`, the whole window with no border, its body filling the space between header and footer
+- Modal (web): `role`, `'dialog'` (default) or `'alertdialog'`
+
+### Changed
+- ConfirmDialog (web): the dialog is an `alertdialog`, as a confirmation interrupts to ask for a decision. Tests that find it with `getByRole('dialog')` need `'alertdialog'`
+
+---
+
 ## [0.29.1] - 2026-11-04
 
 ### Fixed
@@ -775,7 +791,8 @@ Colours now follow the Achery design system's `tokens.json`. Error colours (`dan
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.29.1...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.30.0...HEAD
+[0.30.0]: https://github.com/fwestling/achery-workshop/compare/v0.29.1...v0.30.0
 [0.29.1]: https://github.com/fwestling/achery-workshop/compare/v0.29.0...v0.29.1
 [0.29.0]: https://github.com/fwestling/achery-workshop/compare/v0.28.0...v0.29.0
 [0.28.0]: https://github.com/fwestling/achery-workshop/compare/v0.27.0...v0.28.0

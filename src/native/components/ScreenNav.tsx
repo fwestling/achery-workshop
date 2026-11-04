@@ -13,6 +13,11 @@ export interface ScreenNavProps {
   onAction?: () => void
   /** Label for the trailing action button. Required when `onAction` is provided. */
   actionLabel?: string
+  /**
+   * What screen readers call the trailing action, when `actionLabel` is a symbol (e.g. "⋯", which
+   * VoiceOver reads as "horizontal ellipsis"). @default actionLabel
+   */
+  actionAccessibilityLabel?: string
   /** Disables the trailing action button. */
   actionDisabled?: boolean
   /**
@@ -48,6 +53,7 @@ export const ScreenNav = ({
   title,
   onAction,
   actionLabel,
+  actionAccessibilityLabel,
   actionDisabled = false,
   compact = false,
 }: ScreenNavProps) => {
@@ -109,6 +115,7 @@ export const ScreenNav = ({
           onPress={actionDisabled ? undefined : onAction}
           disabled={actionDisabled}
           accessibilityRole="button"
+          accessibilityLabel={actionAccessibilityLabel}
           accessibilityState={{ disabled: !!actionDisabled }}
           hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
           style={{ minWidth: 48, alignItems: 'flex-end' }}

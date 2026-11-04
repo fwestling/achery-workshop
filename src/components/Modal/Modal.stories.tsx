@@ -96,6 +96,22 @@ export const LargeModal: Story = {
   ),
 }
 
+export const FullWindow: Story = {
+  render: () => (
+    <Modal
+      defaultOpen
+      size="full"
+      title="Full window"
+      trigger={<Button variant="accent">Open full</Button>}
+      footer={<Button variant="ghost">Close</Button>}
+    >
+      <div style={{ height: '100%', display: 'grid', placeItems: 'center', background: 'var(--achery-color-bg2)' }}>
+        <p style={{ fontSize: 13 }}>The body fills the space between header and footer — an image viewer, say.</p>
+      </div>
+    </Modal>
+  ),
+}
+
 export const ScrollableBody: Story = {
   render: () => (
     <Modal

@@ -232,13 +232,16 @@ Accessible dialog, portaled to `document.body`.
   description="…"               // ReactNode
   footer={<><Button>Cancel</Button><Button variant="accent">Save</Button></>}
   trigger={<Button>Open</Button>}// ReactNode — alternative to controlled open
-  size="md"                      // 'sm' (400px, default) | 'md' (560px) | 'lg' (760px)
+  size="md"                      // 'sm' (400px, default) | 'md' (560px) | 'lg' (760px) | 'full' (the whole window)
   scrollable                     // boolean — body overflow-y: auto, max-height: 70vh
+  role="alertdialog"             // 'dialog' (default) | 'alertdialog' — interrupts to ask for a decision
   aria-describedby={messageId}   // string — id of body text that describes it, when there's no `description`
 >
   {/* body content */}
 </Modal>
 ```
+
+`size="full"` fills the window with no border, for an image viewer or a full-screen editor: the body takes the space between header and footer and scrolls if it must.
 
 ---
 
@@ -919,7 +922,7 @@ if (await confirm({ title: 'Delete task?', message: "This can't be undone.", con
 | `confirmVariant` | `'accent' \| 'secondary' \| 'ghost'` | `'accent'` | Ignored when `destructive` |
 | `destructive` | `boolean` | `false` | Confirm uses Button's `danger` variant |
 
-The message describes the dialog (`aria-describedby`), so a screen reader announces it with the title when it opens. `useConfirm()` throws outside a `ConfirmDialogProvider`.
+It's an `alertdialog` (it interrupts to ask for a decision), and the message describes it (`aria-describedby`), so a screen reader announces it with the title when it opens. `useConfirm()` throws outside a `ConfirmDialogProvider`.
 
 ---
 
@@ -1091,7 +1094,10 @@ Native `Button` accessibility props:
 |---|---|---|
 | `accessibilityLabel` | `string` | — (read from text children) |
 | `accessibilityHint` | `string` | — |
+| `accessibilityState` | `{ selected?, checked?, busy?, expanded? }` | — (`disabled` follows the `disabled` prop) |
 | `testID` | `string` | — |
+
+Use `accessibilityState={{ selected }}` for one of a set of choices, such as colour swatches.
 
 A `Glyph` with an `accessibilityLabel` is announced as an image with that name; without one it is decorative. Label a glyph only when it carries meaning on its own — inside a labelled `Button`, the button's label is enough.
 
@@ -1106,7 +1112,7 @@ These also make components findable in tests by role and name (`getByRole('butto
 | `Button` | primary/secondary/accent/ghost/danger variants. Announced as a button (with disabled state); `accessibilityLabel` is required when the content is only a glyph — see below. |
 | `Card` | flat/stamp variants, optional header |
 | `Badge` | tone-based (neutral/saved/drafting/stopped/archived), solid/outline. Same colours as the web Badge (`badgeTones`): the label is `fg2`, the tone on the border and dot |
-| `Field` / `Input` | Label + hint + error wrapper + text input |
+| `Field` / `Input` | Label + hint + error wrapper + text input. The control inside a `Field` (`Input`, `Textarea`, `TagInput`) is named after its label for VoiceOver, with the error or hint as its hint; an explicit `accessibilityLabel` wins. Custom controls read the same with `useFieldControl(ownProps)`. |
 | `MaterialCard` / `MaterialEyebrow` | Leather/wood/copper material cards |
 | `Glyph` | All 397 glyphs via react-native-svg-transformer. Requires setup above. |
 | `GlyphPicker` | Modal sheet with search + 8-column grid |
@@ -1119,7 +1125,7 @@ These also make components findable in tests by role and name (`getByRole('butto
 | `Textarea` | Multi-line text input. `rows` prop controls min height. Wrap in `Field` for label. |
 | `StatusDot` | Small filled dot for compact status indicators. Same `tone` palette as `Badge`. |
 | `SegmentedControl` | Inline exclusive button group. `options` / `value` / `onChange`. Options are announced as tabs with their selected state; give a non-string `label` an `accessibilityLabel`. |
-| `ScreenNav` | Navigation bar for modal push screens: back button (`backLabel` default `"Back"`) + centred title (truncates to one line) + optional action. |
+| `ScreenNav` | Navigation bar for modal push screens: back button (`backLabel` default `"Back"`) + centred title (truncates to one line) + optional action. Give a symbol action (`actionLabel="⋯"`) a spoken name with `actionAccessibilityLabel`. |
 | `Disclosure` | Collapsible section (rung 3 — disclosure ladder). Labelled toggle, 44px hit area, height animation. |
 | `Modal` | Centred dialog — native counterpart of web `Modal`. Title/description/body/footer, scrollable body, `dismissible={false}` for questions that must be answered. |
 | `ConfirmDialogProvider` / `useConfirm` | Promise-based yes/no dialog — same options as web `useConfirm`. Mount once inside `NativeThemeProvider`. |

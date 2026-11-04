@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { View, Pressable, TextInput, StyleSheet, type TextInputProps, type ViewStyle } from 'react-native'
 import { Text } from './Text'
 import { Glyph } from './Glyph'
+import { useFieldControl } from './Input'
 import { useTheme } from '../theme/ThemeContext'
 import { addTags, splitTags } from '../../tags/splitTags'
 
@@ -68,6 +69,8 @@ export const TagInput = ({
 }: TagInputProps) => {
   const { tokens, font } = useTheme()
   const [text, setText] = useState('')
+  // Inside a Field, named after its label; otherwise by the placeholder
+  const field = useFieldControl({ accessibilityLabel })
 
   const chipBorder = onLeather ? tokens.goldDeep : tokens.border
   const chipText = onLeather ? tokens.materialLeatherFg : tokens.fg
@@ -123,7 +126,8 @@ export const TagInput = ({
               if (last) remove(last)
             }
           }}
-          accessibilityLabel={accessibilityLabel ?? placeholder}
+          accessibilityLabel={field.accessibilityLabel ?? placeholder}
+          accessibilityHint={field.accessibilityHint}
           placeholder={value.length === 0 ? placeholder : undefined}
           placeholderTextColor={placeholderColor}
           autoCapitalize={autoCapitalize}

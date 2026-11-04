@@ -8,7 +8,7 @@ export type {
 } from './theme/ThemeContext'
 
 export {
-  Text, Button, Card, Badge, Field, Input, Textarea, MaterialCard, MaterialEyebrow,
+  Text, Button, Card, Badge, Field, Input, Textarea, useFieldControl, MaterialCard, MaterialEyebrow,
   Glyph, GlyphPicker,
   Skeleton, ProgressBar, Checkbox, Toggle, Tabs,
   ToastProvider, useToast,
@@ -26,7 +26,7 @@ export type {
   ButtonProps, ButtonVariant, ButtonSize,
   CardProps, CardVariant, CardPadding,
   BadgeProps, BadgeTone, BadgeVariant,
-  FieldProps, InputProps, TextareaProps,
+  FieldControl, FieldProps, InputProps, TextareaProps,
   NativeMaterialCardProps, MaterialIntensity,
   NativeGlyphProps,
   GlyphPickerProps,

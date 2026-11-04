@@ -11,6 +11,13 @@ is the library's tag and triggers the npm release.
 
 ---
 
+## [0.6.5] - 2026-11-04
+
+### Added
+- Tests: native Field names its control, ScreenNav's action label, native Button's state; Modal's role and full size, and ConfirmDialog as an alertdialog (jsdom and Testing Library, dev only)
+
+---
+
 ## [0.6.4] - 2026-11-04
 
 ### Added
@@ -121,7 +128,8 @@ is the library's tag and triggers the npm release.
 - Home page: version, links to npm and GitHub, and `src/docs/GettingStarted.mdx` rendered as the page body
 - Docker image (nginx), `checks.yml` and `site-deploy.yml` workflows, compose block and `DEPLOY.md`
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.4...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.5...HEAD
+[0.6.5]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.4...site-v0.6.5
 [0.6.4]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.3...site-v0.6.4
 [0.6.3]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.2...site-v0.6.3
 [0.6.2]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.1...site-v0.6.2

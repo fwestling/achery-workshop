@@ -10,8 +10,8 @@ export type { CardProps, CardVariant, CardPadding } from './Card'
 export { Badge } from './Badge'
 export type { BadgeProps, BadgeTone, BadgeVariant } from './Badge'
 
-export { Field, Input, Textarea } from './Input'
-export type { FieldProps, InputProps, TextareaProps } from './Input'
+export { Field, Input, Textarea, useFieldControl } from './Input'
+export type { FieldControl, FieldProps, InputProps, TextareaProps } from './Input'
 
 export { MaterialCard, MaterialEyebrow } from './MaterialCard'
 export type { NativeMaterialCardProps, MaterialIntensity } from './MaterialCard'

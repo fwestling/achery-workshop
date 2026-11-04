@@ -42,9 +42,17 @@ export interface ModalProps {
    * - `sm` — 400px (default)
    * - `md` — 560px
    * - `lg` — 760px
+   * - `full` — the whole window, no border: an image viewer, a full-screen editor. The body
+   *   fills the space between header and footer and scrolls if it must.
    * @default 'sm'
    */
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'full'
+  /**
+   * `alertdialog` for a dialog that interrupts to ask for a decision, such as confirming a
+   * deletion: screen readers announce it, and its description, straight away.
+   * @default 'dialog'
+   */
+  role?: 'dialog' | 'alertdialog'
   /**
    * When true, the body area becomes scrollable with `max-height: 70vh`.
    * Use for modals with variable-length content.
@@ -90,6 +98,7 @@ export function Modal({
   trigger,
   size = 'sm',
   scrollable = false,
+  role = 'dialog',
   'aria-describedby': describedBy,
   className,
 }: ModalProps) {
@@ -104,6 +113,7 @@ export function Modal({
         <RadixDialog.Overlay className={styles.overlay} />
         <RadixDialog.Content
           className={[styles.contentSized({ size }), className].filter(Boolean).join(' ')}
+          role={role}
           // Radix links Description to the content with its own generated id. Without one, the caller's
           // describedBy (an element in the body) or, failing that, undefined: Radix's documented way to
           // say "no description" (no console warning)
@@ -124,7 +134,9 @@ export function Modal({
               <Glyph name="cross" size={14} aria-hidden="true" />
             </RadixDialog.Close>
           </div>
-          <div className={scrollable ? styles.bodyScrollable : styles.body}>{children}</div>
+          <div className={size === 'full' ? styles.bodyFull : scrollable ? styles.bodyScrollable : styles.body}>
+            {children}
+          </div>
           {footer && <div className={styles.footer}>{footer}</div>}
         </RadixDialog.Content>
       </RadixDialog.Portal>

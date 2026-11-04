@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { TouchableOpacity, View, Text, StyleSheet, type ViewStyle } from 'react-native'
+import { TouchableOpacity, View, Text, StyleSheet, type AccessibilityState, type ViewStyle } from 'react-native'
 import { spacing } from 'achery-ui/tokens'
 import { useTheme } from '../theme/ThemeContext'
 import type { SemanticTokens } from 'achery-ui/tokens'
@@ -18,6 +18,11 @@ export interface ButtonProps {
   accessibilityLabel?: string
   /** What happens on press, when the label alone doesn't say. */
   accessibilityHint?: string
+  /**
+   * Extra state for screen readers, e.g. `{ selected: true }` for one of a set of choices.
+   * `disabled` always follows the `disabled` prop.
+   */
+  accessibilityState?: Omit<AccessibilityState, 'disabled'>
   testID?: string
 }
 
@@ -40,7 +45,7 @@ function makeColors(variant: ButtonVariant, tokens: SemanticTokens) {
   }
 }
 
-export function Button({ variant = 'secondary', size = 'md', children, onPress, disabled, style, accessibilityLabel, accessibilityHint, testID }: ButtonProps) {
+export function Button({ variant = 'secondary', size = 'md', children, onPress, disabled, style, accessibilityLabel, accessibilityHint, accessibilityState, testID }: ButtonProps) {
   const { tokens, font } = useTheme()
   const colors = makeColors(variant, tokens)
   const textStyle = {
@@ -57,7 +62,12 @@ export function Button({ variant = 'secondary', size = 'md', children, onPress, 
       onPress={onPress}
       disabled={disabled}
       accessibilityRole="button"
-      accessibilityState={{ disabled: !!disabled }}
+      accessibilityState={{ ...accessibilityState, disabled: !!disabled }}
+      // The same state as aria-* too: React Native reads either, react-native-web (the docs site) only these
+      aria-selected={accessibilityState?.selected}
+      aria-checked={accessibilityState?.checked}
+      aria-busy={accessibilityState?.busy}
+      aria-expanded={accessibilityState?.expanded}
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
       testID={testID}
