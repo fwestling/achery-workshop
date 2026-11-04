@@ -11,6 +11,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.30.1] - 2026-11-04
+
+### Fixed
+- Modal (web): closing a controlled Modal (one with no `trigger`) gives focus back to whatever opened it; it went to the page body, because Radix returns focus only to its own Trigger. This covers `useConfirm` too
+
+---
+
 ## [0.30.0] - 2026-11-04
 
 Accessibility gaps found building Aperture 0.7.0, each worked around there until now.
@@ -791,7 +798,8 @@ Colours now follow the Achery design system's `tokens.json`. Error colours (`dan
 - Storybook 10 with autodocs, MDX documentation pages, accent picker, dark mode toggle
 - TSDoc on all public APIs
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.30.0...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/v0.30.1...HEAD
+[0.30.1]: https://github.com/fwestling/achery-workshop/compare/v0.30.0...v0.30.1
 [0.30.0]: https://github.com/fwestling/achery-workshop/compare/v0.29.1...v0.30.0
 [0.29.1]: https://github.com/fwestling/achery-workshop/compare/v0.29.0...v0.29.1
 [0.29.0]: https://github.com/fwestling/achery-workshop/compare/v0.28.0...v0.29.0

@@ -241,7 +241,7 @@ Accessible dialog, portaled to `document.body`.
 </Modal>
 ```
 
-`size="full"` fills the window with no border, for an image viewer or a full-screen editor: the body takes the space between header and footer and scrolls if it must.
+Closing gives focus back to the trigger or, for a controlled Modal with no `trigger`, to whatever had focus when it opened. `size="full"` fills the window with no border, for an image viewer or a full-screen editor: the body takes the space between header and footer and scrolls if it must.
 
 ---
 

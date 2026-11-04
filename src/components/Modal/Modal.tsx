@@ -1,5 +1,5 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
-import type { ReactNode } from 'react'
+import { useRef, type ReactNode } from 'react'
 import { Glyph } from '../../glyphs/Glyph'
 import * as styles from './Modal.css'
 
@@ -102,6 +102,9 @@ export function Modal({
   'aria-describedby': describedBy,
   className,
 }: ModalProps) {
+  // Radix gives focus back to its Trigger on close, and a controlled Modal has none, so focus fell to
+  // <body>. Without a trigger, focus goes back to whatever had it when the dialog opened.
+  const opener = useRef<HTMLElement | null>(null)
   return (
     <RadixDialog.Root
       {...(open !== undefined ? { open } : {})}
@@ -114,6 +117,14 @@ export function Modal({
         <RadixDialog.Content
           className={[styles.contentSized({ size }), className].filter(Boolean).join(' ')}
           role={role}
+          onOpenAutoFocus={() => {
+            opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+          }}
+          onCloseAutoFocus={(event) => {
+            if (trigger || !opener.current?.isConnected) return
+            event.preventDefault()
+            opener.current.focus()
+          }}
           // Radix links Description to the content with its own generated id. Without one, the caller's
           // describedBy (an element in the body) or, failing that, undefined: Radix's documented way to
           // say "no description" (no console warning)

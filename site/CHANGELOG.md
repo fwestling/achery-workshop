@@ -11,6 +11,13 @@ is the library's tag and triggers the npm release.
 
 ---
 
+## [0.6.6] - 2026-11-04
+
+### Added
+- Tests: a controlled Modal, and `useConfirm`, give focus back to what opened them
+
+---
+
 ## [0.6.5] - 2026-11-04
 
 ### Added
@@ -128,7 +135,8 @@ is the library's tag and triggers the npm release.
 - Home page: version, links to npm and GitHub, and `src/docs/GettingStarted.mdx` rendered as the page body
 - Docker image (nginx), `checks.yml` and `site-deploy.yml` workflows, compose block and `DEPLOY.md`
 
-[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.5...HEAD
+[Unreleased]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.6...HEAD
+[0.6.6]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.5...site-v0.6.6
 [0.6.5]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.4...site-v0.6.5
 [0.6.4]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.3...site-v0.6.4
 [0.6.3]: https://github.com/fwestling/achery-workshop/compare/site-v0.6.2...site-v0.6.3
